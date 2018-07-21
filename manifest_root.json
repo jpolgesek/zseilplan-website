@@ -1,0 +1,25 @@
+{
+	"short_name": "Plan Lekcji",
+	"name": "Plan Lekcji ZSEiL",
+	"display": "standalone",
+  "gcm_sender_id": "813029008340",
+	"theme_color": "#385bf5",
+	"icons": [
+		{
+		"src": "ztemp/zseilplan/launcher-icon-4x.png",
+		"type": "image/png",
+		"sizes": "192x192"
+	  },
+    {  
+      "src": "ztemp/zseilplan/launcher-icon-256.png",  
+      "sizes": "256x256",  
+      "type": "image/png"  
+    },
+    {  
+      "src": "ztemp/zseilplan/launcher-icon-512.png",  
+      "sizes": "512x512",  
+      "type": "image/png"  
+    }
+	],
+	"start_url": "ztemp/zseilplan/index.html?launcher=true"
+  }

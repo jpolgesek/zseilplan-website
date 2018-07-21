@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pl">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Super Clever Plan</title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+		<link rel="stylesheet" href="style.css?ver=12">
+		<link rel="manifest" href="/manifest.json">
+		
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113628218-1"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-113628218-1');
+		</script>
+	</head>
+	<body>
+		<div id='quicksearch' style='display:none;'>
+			<input id='search' type='text' list="suggestions">
+			<datalist id="suggestions"></datalist>
+		</div>
+		
+		<div id='preferences'></div>
+
+		<div class='container'>
+			<h1>✌ Super Clever Plan ✌</h1>
+			<div class="copyright">&copy; Jakub Półgęsek 2018</div>
+
+			
+			<div class='bar'>
+				<span title="Ustawienia" class="settings_icon" onclick="myStorage.generatePreferencesUI();ui.showPreferences(1)">⚙️</span>
+				<div id='status'>Ładowanie skryptu...</div>
+				<span title="Drukuj" class="print_icon" onclick="ui.print()">🖨️</span>
+			</div>
+			
+			
+
+			<div class='bar'>
+				<select id='units'><option value="default">Klasa</option></select>
+				<select id='teachers'><option value="default">Nauczyciel</option></select>
+				<select id='rooms'><option value="default">Sala</option></select>
+			</div>
+
+			<div class='bar'>
+				<button type='button' onclick='columns.setActive(-1)' id='btn_-1'>All</button>
+				<button type='button' onclick='columns.setActive(1)' id='btn_1'>Pn</button>
+				<button type='button' onclick='columns.setActive(2)' id='btn_2'>Wt</button>
+				<button type='button' onclick='columns.setActive(3)' id='btn_3'>Śr</button>
+				<button type='button' onclick='columns.setActive(4)' id='btn_4'>Cz</button>
+				<button type='button' onclick='columns.setActive(5)' id='btn_5'>Pt</button>
+				<button type='button' onclick='columns.setActive(0)' id='btn_0' class='selected'>Dziś</button>
+			</div>
+
+			<table id='maintable'><tr><td>Wybierz opcję z menu.</td></tr></table>
+			
+			<div id='networkStatus' style='display: block;'>
+				Uwaga, korzystasz z wersji testowej. Jeśli widzisz błąd napisz na 
+				<a class="contactMail" href="mailto:zseilplan@polgesek.pl">zseilplan@polgesek.pl</a>
+				<br>
+				Szukasz <a class="contactMail"  href="javascript:return false;" onclick="ui.showPreferences(1)">ustawień</a> 
+				lub funkcji <a class="contactMail"  href="javascript:return false;" onclick="ui.print()">drukowania</a>? 
+			</div>
+
+			<div class='hidden' id='storageControl'>
+				<button class='wideBtn' type='button' onclick='myStorage.clear()'>Skasuj ustawienia domyślne</button>
+				<button class='wideBtn' type='button' id='button_comment'></button>
+			</div>
+			<div id="toast"><div id="toast_img">Icon</div><div id="toast_desc">A notification message..</div></div>
+		</div>
+		
+		<!-- <script src="o.js?ver=12"></script> -->
+		<!-- <script src="debug.js?ver=12"></script> -->
+		<!-- <script src="style.js?ver=12"></script> -->
+		<!-- <script src="fetch.js?ver=12"></script> -->
+		<!-- <script src="columns.js?ver=12"></script> -->
+		<!-- <script src="utils.js?ver=12"></script> -->
+
+		<script src="overrides.js?ver=12"></script>
+		<script src="ui.js?ver=12"></script>
+		<script src="datetime.js?ver=12"></script>
+		<script src="storage.js?ver=12"></script>
+		<script src="quicksearch.js?ver=12"></script>
+		<script src="app.js?ver=12"></script>
+	</body>
+</html>
