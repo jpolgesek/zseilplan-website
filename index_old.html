@@ -7,6 +7,8 @@
 		<title>Super Clever Plan</title>
 		<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
 		<link rel="stylesheet" href="style.css?ver=12">
+		<link rel="stylesheet" href="style-new.css?ver=12">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 		<link rel="manifest" href="/manifest.json">
 		
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113628218-1"></script>
@@ -18,33 +20,66 @@
 		</script>
 	</head>
 	<body>
-		<div id='quicksearch' style='display:none;'>
+		<nav class="navbar acrylic shadow">
+			<!-- <span class="navbar-logo">✌</span> -->
+			<span class="navbar-title">Super Clever Plan All Stars</span>
+
+			<div class="navbar-buttons">
+				<button class='' onclick="myStorage.generatePreferencesUI();ui.showPreferences(1)">
+					<div class='icon'><i class="fas fa-cog"></i></div>
+					<div class='text shadow'><span>Ustawienia</span></div>
+				</button>
+
+				<button class='' onclick="ui.print()">
+					<div class='icon'><i class="fas fa-print"></i></div>
+					<div class='text shadow'><span>Drukuj</span></div>
+				</button>
+			</div>
+		</nav>
+
+		<div id='quicksearch' style='display:none;'> <!-- TODO: create me dynamically-->
 			<input id='search' type='text' list="suggestions">
 			<datalist id="suggestions"></datalist>
 		</div>
 		
-		<div id='preferences'></div>
+		<div id='preferences'></div> <!-- TODO: create me dynamically-->
 
 		<div class='container'>
-			<h1>✌ Super Clever Plan ✌</h1>
-			<div class="copyright">&copy; Jakub Półgęsek 2018</div>
-
+			<!-- <h1>✌ Super Clever Plan ✌</h1>
+			<div class="copyright">&copy; Jakub Półgęsek 2018</div> -->
+			
+			<!-- 
 			
 			<div class='bar'>
 				<span title="Ustawienia" class="settings_icon" onclick="myStorage.generatePreferencesUI();ui.showPreferences(1)">⚙️</span>
 				<div id='status'>Ładowanie skryptu...</div>
 				<span title="Drukuj" class="print_icon" onclick="ui.print()">🖨️</span>
+			</div> -->
+			
+			<div id='status'>Ładowanie skryptu...</div>
+			
+			<div class='bar'>
+				<nav class="tabs">
+					<div class="selector"></div>
+					<a href="#" onclick='columns.setActive(-1)' class="active" id='btn_-1'>Cały tydzień</a>
+					<a href="#" onclick='columns.setActive(1)' id='btn_1'>Poniedziałek</a>
+					<a href="#" onclick='columns.setActive(2)' id='btn_2'>Wtorek</a>
+					<a href="#" onclick='columns.setActive(3)' id='btn_3'>Środa</a>
+					<a href="#" onclick='columns.setActive(4)' id='btn_4'>Czwartek</a>
+					<a href="#" onclick='columns.setActive(5)' id='btn_5'>Piątek</a>
+					<a href="#" onclick='columns.setActive(0)' id='btn_0'>Dziś</a>
+				</nav>
+			</div>
+
+			<div class='bar shadow'>
+				<select id='units' class='reveal-focus'><option value="default">Klasa</option></select>
+				<select id='teachers' class='reveal-focus'><option value="default">Nauczyciel</option></select>
+				<select id='rooms' class='reveal-focus'><option value="default">Sala</option></select>
 			</div>
 			
-			
+			<table id='maintable' class='shadow'><tr><td>Wybierz opcję z menu.</td></tr></table>
 
-			<div class='bar'>
-				<select id='units'><option value="default">Klasa</option></select>
-				<select id='teachers'><option value="default">Nauczyciel</option></select>
-				<select id='rooms'><option value="default">Sala</option></select>
-			</div>
-
-			<div class='bar'>
+			<div class='bar shadow'>
 				<button type='button' onclick='columns.setActive(-1)' id='btn_-1'>All</button>
 				<button type='button' onclick='columns.setActive(1)' id='btn_1'>Pn</button>
 				<button type='button' onclick='columns.setActive(2)' id='btn_2'>Wt</button>
@@ -54,7 +89,6 @@
 				<button type='button' onclick='columns.setActive(0)' id='btn_0' class='selected'>Dziś</button>
 			</div>
 
-			<table id='maintable'><tr><td>Wybierz opcję z menu.</td></tr></table>
 			
 			<div id='networkStatus' style='display: block;'>
 				Uwaga, korzystasz z wersji testowej. Jeśli widzisz błąd napisz na 
@@ -68,7 +102,7 @@
 				<button class='wideBtn' type='button' onclick='myStorage.clear()'>Skasuj ustawienia domyślne</button>
 				<button class='wideBtn' type='button' id='button_comment'></button>
 			</div>
-			<div id="toast"><div id="toast_img">Icon</div><div id="toast_desc">A notification message..</div></div>
+			<div id="toast"><div id="toast_img"></div><div id="toast_desc"></div></div> <!-- TODO: create me dynamically-->
 		</div>
 		
 		<!-- <script src="o.js?ver=12"></script> -->
@@ -84,5 +118,6 @@
 		<script src="storage.js?ver=12"></script>
 		<script src="quicksearch.js?ver=12"></script>
 		<script src="app.js?ver=12"></script>
+		<script src="temp1.js"></script>
 	</body>
 </html>

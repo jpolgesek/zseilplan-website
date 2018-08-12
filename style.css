@@ -78,6 +78,7 @@ h1{
     overflow: hidden;
 }
 
+/*
 button{
 	padding: 5px;
 	font-size: 1em;
@@ -91,7 +92,7 @@ button{
 button:focus, select:focus{
 	outline: none;
 }
-
+*/
 #units, #rooms{
 	width: 25%;
 	margin: 3px;
@@ -520,6 +521,10 @@ input:checked + .slider:before {
 .dark{
 	background: rgb(49, 49, 49);
 	color: #EEE !important;
+}
+
+.dark .acrylic::before{
+	background: rgb(49, 49, 49);
 }
 
 .dark .copyright{
