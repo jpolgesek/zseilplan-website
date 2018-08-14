@@ -64,11 +64,11 @@ var columns = {
 		}
 	},
 	setActive: function(n){
-		/*for(i=-1; i<6; i++){
+		for(i=-1; i<6; i++){
 			document.getElementById("btn_"+i).className="";
 		}
-		document.getElementById("btn_"+n).className="selected";
-		*/
+		document.getElementById("btn_"+n).className="active";
+		
 		if (n == 0){
 			n = 9000;
 		}

@@ -1,0 +1,14 @@
+{
+	"short_name": "testplan",
+	"name": "testplan",
+	"display": "standalone",
+	"theme_color": "#046edd",
+	"icons": [
+		{
+		"src": "/launcher-icon-4x.png",
+		"type": "image/png",
+		"sizes": "192x192"
+		}
+	],
+	"start_url": "/index.html?launcher=true"
+	}

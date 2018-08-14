@@ -141,14 +141,16 @@ var ui = {
 	print: function(){
 		old_overrides_disabled = overrides_disabled;
 		overrides_disabled = true;
+		oldActiveColumn = columns.activeColumn;
+		columns.setActive(-1);
 		refreshView();
 		
 		o_copy = document.getElementsByClassName("copyright")[0].innerHTML;
 		o_status = document.getElementById("status").innerHTML;
 
-		document.getElementsByClassName("copyright")[0].innerHTML = "<i>(dev.polgesek.pl/zseilplan)</i><br>"+o_copy+"<br>";
-		document.getElementsByClassName("copyright")[0].innerHTML = " <span class='copyright_small'>"+document.getElementsByClassName("copyright")[0].innerHTML+"</span>";
-		document.getElementsByClassName("copyright")[0].innerHTML += "Plan lekcji z dnia "+data._updateDate_min+" dla&nbsp;";
+		/*document.getElementsByClassName("copyright")[0].innerHTML = "<i>(dev.polgesek.pl/zseilplan)</i><br>"+o_copy+"<br>";*/
+		// document.getElementsByClassName("copyright")[0].innerHTML = " <span class='copyright_small'>"+document.getElementsByClassName("copyright")[0].innerHTML+"</span>";
+		document.getElementsByClassName("copyright")[0].innerHTML = "Plan lekcji z dnia <b>"+data._updateDate_min+"</b> dla&nbsp;<b>";
 		if (this.itemDisplayType == 0){
 			document.getElementsByClassName("copyright")[0].innerHTML += "nauczyciela ";
 			try {
@@ -157,17 +159,22 @@ var ui = {
 				document.getElementsByClassName("copyright")[0].innerHTML += select_teachers.value;
 			}
 		}else if (this.itemDisplayType == 1){
-			document.getElementsByClassName("copyright")[0].innerHTML += "sali ";
-			document.getElementsByClassName("copyright")[0].innerHTML += select_rooms.value;
+			document.getElementsByClassName("copyright")[0].innerHTML += "<b>sali " + select_rooms.value + "</b>";
 		}else if (this.itemDisplayType == 2){
-			document.getElementsByClassName("copyright")[0].innerHTML += "klasy ";
-			document.getElementsByClassName("copyright")[0].innerHTML += select_units.value;
+			document.getElementsByClassName("copyright")[0].innerHTML += "<b> klasy " + select_units.value + "</b>";
 		}
+
+		document.getElementsByClassName("navbar-buttons")[0].classList.add("opacity-0");
+
 		print();
 		
+		document.getElementsByClassName("navbar-buttons")[0].classList.remove("opacity-0");
 		document.getElementsByClassName("copyright")[0].innerHTML = o_copy;
 		document.getElementById("status").innerHTML = o_status;
 		overrides_disabled = old_overrides_disabled;
+		
+		if (oldActiveColumn != 9000) columns.setActive(oldActiveColumn);
+
 		try { gtag('event', 'ui.print', {'event_category': 'ui.print', 'event_label': 'Printed'}); } catch (e) {}
 	},
 

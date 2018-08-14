@@ -1,0 +1,40 @@
+/* Mobile support */
+
+@media screen and (max-width: 768px) {
+	.container{
+		width: 90%;
+	}
+	.wideBtn {
+		width: calc(100% - 10px) !important;
+	}
+	#preferences{
+		width: 100%;
+		z-index: 99999;
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		padding: 0;
+		min-width: 0;
+		font-size: 0.9em;
+	}
+	button:hover .text {
+		width: inherit;
+	}
+	.tab-long-name{
+		display: none;
+	}
+	.tab-short-name{
+		display: inline;
+	}
+	.copyright{
+		display: none;
+	}
+}
+
+
+@media screen and (max-width: 1600px) {
+	.container{
+		width: 100%;
+	}
+}

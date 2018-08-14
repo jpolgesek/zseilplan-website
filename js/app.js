@@ -13,6 +13,7 @@ var select_teachers = document.getElementById("teachers");
 var select_rooms = document.getElementById("rooms");
 var status_span = document.getElementById("status");
 var networkstatus = document.getElementById("networkStatus");
+var loaderstatus = document.getElementById("loader-status");
 
 
 /* Global variables */
@@ -32,12 +33,14 @@ function sortAsc (a, b) {
 
 function init(){
 	console.log("init");
+	try{loaderstatus.innerHTML="Ładuje preferencje";}catch(e){};	
 	status_span.innerText = "Ładowanie preferencji...";
 	/* If HTML5 storage is available, try to load user saved settings */
 	if (typeof(Storage) !== "undefined") {
 		myStorage.load();
 	}
 	status_span.innerText = "Ładowanie danych planu...";
+	try{loaderstatus.innerHTML="Pobieram dane";}catch(e){};	
 	fetchData();
 }
 
@@ -58,6 +61,7 @@ function debug(){
 
 function init2(){
 	console.log("init 2");
+	try{loaderstatus.innerHTML="Wczytuję dane";}catch(e){};	
 	
 	/* Show data comment */
 	try {
@@ -121,6 +125,10 @@ function init2(){
 	setInterval(myTime.checkTime,60*1000);
 
 	quicksearch.init();
+	try{loaderstatus.innerHTML="Ładuję interfejs";}catch(e){};	
+	document.getElementsByClassName('loader')[0].classList.add('opacity-0');
+	document.getElementsByClassName('container')[0].classList.remove('opacity-0');
+	document.getElementsByClassName('loader')[0].parentElement.removeChild(document.getElementsByClassName('loader')[0]);
 
 
 	/* If HTML5 storage is available, try to load user saved settings */
@@ -299,10 +307,8 @@ function insertNumber(table, y){
 	var row = table.insertRow(-1); //-1 for backwards compatibility
 	var cell = row.insertCell(-1); //-1 for backwards compatibility
 	
-	cell.innerHTML = "<b>"+y+"</b><br>";
-	cell.innerHTML += timeSteps[(y*2-2)];
-	cell.innerHTML += " - ";
-	cell.innerHTML += timeSteps[(y*2)-1];
+	cell.innerHTML = "<b class='col-lesson-number'>"+y+"</b>"; //TODO: fix me
+	cell.innerHTML += "<span class='col-lesson-timespan'>" + timeSteps[(y*2-2)] + " - "+ timeSteps[(y*2)-1] + "</span>"; //TODO: fix me
 	return row;
 }
 
