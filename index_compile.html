@@ -5,12 +5,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>Super Clever Plan</title>
-		<!-- <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"> -->
-		<!-- <link rel="stylesheet" href="css/style-new.css?ver=17"> -->
-		<link rel="stylesheet" href="css/style.css?ver=17">
+
+		<!-- %compile_css_start%-->
+		<link rel="stylesheet" href="/assets/css/style.css?ver=%build%">
+		<!-- %compile_css_end%-->
+
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 		<link rel="manifest" href="/manifest.json">
-		
 		<!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113628218-1"></script>
 		<script>
 		window.dataLayer = window.dataLayer || [];
@@ -24,64 +25,6 @@
 			<input id='search' type='text' list="suggestions">
 			<datalist id="suggestions"></datalist>
 		</div>
-
-		<!--<div class='modal shadow'>
-			<span class="title">Ustawienia</span>
-			<span class="close"><i class="fas fa-times"></i></span>
-
-			<div class="row">
-				<p class="mdesc">Tutaj możesz dostosować Super Clever Plan do swoich preferencji</p>
-			</div>
-
-			<div class="row">
-				<label class="switch">
-					<input type="checkbox">
-					<span class="slider round"></span>
-				</label>
-				<span class="desc">Checkbox numer jeden</span>
-			</div>
-
-			<div class="row">
-				<label class="switch">
-					<input type="checkbox">
-					<span class="slider round"></span>
-				</label>
-				<span class="desc">Checkbox numer dwa</span>
-			</div>
-
-			<div class="row">
-				<label class="switch">
-					<input type="checkbox">
-					<span class="slider round"></span>
-				</label>
-				<span class="desc">Checkbox numer trzy</span>
-			</div>
-
-			<div class="row">
-				<input type="text" placeholder="Wejście tekstowe, długie">
-				<span class="desc">Coś coś coś</span>
-			</div>
-
-			<div class="row">
-				<select>
-					<option>Opcja pierwsza</option>
-					<option>Opcja druga</option>
-					<option>Opcja trzecia</option>
-				</select>
-				<span class="desc">Checkbox numer trzy</span>
-			</div>
-			
-
-			<div class="row">
-				<button type="button" class="button-red">Przycisk jeden</button>
-				<button type="button" class="button-green">Przycisk dwa</button>
-				<button type="button" class="button-blue">Zapisz zmiany</button>
-				<button type="button" class="button-white">Anuluj</button>
-			</div>
-	
-			
-		</div>
-		-->
 
 		<div class="loader">
 			<svg id="loading" viewbox="0 0 100 80">
@@ -140,7 +83,7 @@
 
 			<div class='bar'>
 				<nav class="tabs">
-					<a href="#" onclick='columns.setActive(-1)' class="active" style="" id='btn_-1'>
+					<a href="#" onclick='columns.setActive(-1)' class="active" id='btn_-1'>
 						<span class="mobile-only">All</span>
 						<span class="desktop-only">Cały tydzień</span>
 					</a>
@@ -187,6 +130,7 @@
 			<!-- <div class="footer">footer here</div> -->
 		</div>
 
+		<!-- %compile_js_start%-->
 		<script src="js/modal.js?ver=17"></script>
 		<script src="js/overrides.js?ver=17"></script>
 		<script src="js/ui.js?ver=17"></script>
@@ -195,5 +139,7 @@
 		<script src="js/quicksearch.js?ver=17"></script>
 		<script src="js/app.js?ver=17"></script>
 		<script src="js/temp1.js?ver=17"></script>
+		<!-- %compile_js_end%-->
+
 	</body>
 </html>

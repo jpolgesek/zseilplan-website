@@ -1,0 +1,66 @@
+
+/* Print */
+@media print{
+	@page {
+		size: landscape;
+		margin: 5mm 5mm 5mm 5mm; /* change the margins as you want them to be. */
+	}
+
+	.bar, #storageControl, #networkStatus{
+		display: none !important;
+	}
+
+	.container{
+		width: 98%;
+	}
+
+	.maintable{
+		width: 99%;
+		margin-left: auto;
+		margin-right: auto;
+		font-size: 0.86em;
+	}
+
+	.maintable .item{
+		padding: 1.5px;
+	}
+
+	td, th, tr, body, .item, .clickable, h1, #status, .copyright{
+		color: #000000 !important;
+	}
+	
+	.clickable{
+		font-style: italic;
+	}
+
+	h1{
+		margin: 0 !important;
+	}
+
+	.copyright_small{
+		font-size: 0.9em;
+	}
+
+	.print-only{
+		display: initial;
+	}
+
+	.print-hide{
+		display: none;
+	}
+
+	.navbar{
+		box-shadow: none;
+		margin-bottom: 0;
+	}
+
+	.print-logo{
+		margin-left: 10px;
+	}
+
+	.print-logo::before{
+		content: "✌";
+		margin-right: 5px;
+		display: inline-block;
+	}
+}

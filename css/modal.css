@@ -1,0 +1,92 @@
+.modal{
+	width: 550px;
+	background: rgba(0, 89, 183, 0.78);
+    padding: 16px;
+	border-radius: 5px;
+	z-index: 300;
+    color: #fafafa;
+	text-shadow: 1px 1px 1px #000;
+}
+
+.modal > button{
+	/* width: calc(50% - 6px); */
+	background: none;
+	/* border: solid 1px #FAFAFA; */
+	border-style: none;
+	/* padding: 20px; */
+    font-size: 1.1em;
+    color: #FAFAFA;
+	margin: 20px;
+  	margin-left: 0px;
+}
+
+.modal > button:hover{
+	/*width: calc(50% - 6px);
+	background: #FAFAFA;
+	border: solid 1px #FAFAFA;
+    color: #0a1b3c;
+	padding: 20px;*/
+	text-shadow: 0px 3px 1px #000;
+}
+
+.modal .row{
+	display: flex;
+	align-items: center;
+	margin: 20px;	
+}
+
+
+.modal .close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 19px;
+    font-size: 1.5em;
+    border-top-right-radius: 5px;
+    float: right;
+}
+
+.modal .close:hover{
+	background: #0b60ca;
+	cursor: pointer;
+}
+
+.modal .title{
+	position: absolute;
+	font-size: 2em;
+    padding: 15px;
+    top: 0;
+    left: 0;
+    width: 85%;
+	padding-left: 30px;
+    /* background: linear-gradient(-90deg, #046edd00, #0050b3); */
+}
+
+.modal .mdesc{
+	margin-top: 64px;
+}
+
+.modal .desc{
+	margin-left: 8px;
+}
+
+
+.modal .preferences_default_big{
+    text-align: center;
+	width: 46px;
+    height: 34px;
+    padding: 8px;
+    font-size: 2em;
+    background: #2196f3;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 13px;
+	line-height: 34px;
+}
+
+.modal .preferences_default_inactive{
+    background: #ccc;
+}
+
+.modal .btn-primary{
+	font-weight: 600;
+}

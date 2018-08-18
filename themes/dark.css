@@ -1,0 +1,146 @@
+/* Dark mode */
+
+.dark .container{
+	background: none;
+}
+
+
+.dark{
+	background: rgb(49, 49, 49);
+	color: #EEE !important;
+	/* background: linear-gradient(180deg, #313131, #151515); */
+}
+
+.dark .acrylic::before{
+	background: rgb(49, 49, 49);
+}
+
+.dark .copyright{
+	border-bottom-color: rgb(113, 113, 113);
+}
+
+.dark .clickable{
+	background: rgb(20, 20, 20);
+}
+
+.dark .clickable:hover{
+	color: #222;
+	background: rgba(79, 133, 255, 0.63);
+}
+
+
+.dark select{
+	color: #EEE;
+	background: #222;
+	border-color: #222;
+    border: 1px solid rgba(191, 191, 191, 0);
+}
+
+.dark .navbar button {
+	color: #EEE;
+	background: none;
+}
+
+.dark .selected{
+	border-bottom-color: rgba(79, 133, 255, 0.63);
+    border-bottom-style: solid;
+}
+
+.dark .header {
+	background-color: rgb(37, 37, 37);
+	color: #EEE;
+}
+
+.dark #maintable td, #maintable th {
+	border: 1px solid #565656;
+}
+
+.dark #maintable tr:nth-child(even){background-color: #1d1d1d;}
+
+.dark #maintable tr:nth-child(odd){background-color: #272727;}
+
+.dark .currentTimeFull{
+	background-color: rgba(14, 65, 140, 0.42) !important;
+}
+
+.dark #status > a{
+    color: #5d9bf7 !important;
+}
+
+.dark .override{
+    background: rgba(99, 0, 0, 0.77);
+    outline: solid 2px #7d0000;
+}
+
+.dark .zMark{    
+	border: 2px solid #e2e2e2;
+    background: #3f61ae;
+    color: gainsboro;
+}
+
+.dark .modal{
+	background: linear-gradient(0deg, #040080ad, #00142bd9);
+	color: rgb(250, 250, 250);
+}
+
+.dark .modal > button{
+	/* border: solid 1px #FAFAFA; */
+}
+/*
+.dark .modal > button:hover{
+	background: #FAFAFA;
+	border: solid 1px #FAFAFA;
+    color: #0a1b3c;
+}
+*/	
+
+.dark #toast {
+    background-color: #aaa;
+    color: #222;
+}
+
+.dark #toast_img{
+	color: #fff;
+}
+
+.dark .navbar-title{
+    color: #ececec;
+}
+
+.dark .navbar-info{
+    color: #ececec;
+}
+
+.dark .navbar{
+	background-color: #111;
+}
+
+.dark button .icon {
+  color: #ccc;
+  background: none;
+}
+
+.dark button .text {
+	background: none;
+  	color: #fff;
+}
+
+.dark .tabs{
+	background: #1d1d1d;
+}
+
+.dark .tabs a{
+	color: #c1c1c1;
+}
+
+.dark .tabs a.active{
+	color: #f3f3f3;
+}
+
+.dark #loader-status{
+	color: #fafafa;
+}
+
+.dark .loader h1 {
+	color: #fafafa;
+}

@@ -3,11 +3,17 @@
 	"name": "testplan",
 	"display": "standalone",
 	"theme_color": "#046edd",
+	"background_color": "linear-gradient(0deg, #042f5f, #2657b3)",
 	"icons": [
 		{
 		"src": "/launcher-icon-4x.png",
 		"type": "image/png",
 		"sizes": "192x192"
+		},
+		{
+		"src": "/launcher-icon-512.png",
+		"type": "image/png",
+		"sizes": "512x512"
 		}
 	],
 	"start_url": "/index.html?launcher=true"

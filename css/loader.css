@@ -1,0 +1,58 @@
+.loader{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #191919;
+	font-weight: 100;
+	z-index: 1000;
+}
+
+.loader h1{
+	font-display: fallback;
+	font-weight: 100;
+	color: #191919;
+}
+
+.loader div{
+	font-display: fallback;
+	text-align: center;
+	color: #191919;
+}
+
+
+@keyframes slide {
+	0% 		{ transform: translate(0, 0); 			}
+	2% 		{ transform: translate(33px, 0);		}
+	12.5% 	{ transform: translate(33px, 0);		}
+	15.5% 	{ transform: translate(66px, 0);		}
+	25% 	{ transform: translate(66px, 0);		}
+	27% 	{ transform: translate(66px, 33px);		}
+	37.5%	{ transform: translate(66px, 33px);		}
+	39.5%	{ transform: translate(33px, 33px);		}
+	50% 	{ transform: translate(33px, 33px);		}
+	52% 	{ transform: translate(33px, 66px);		}
+	62.5% 	{ transform: translate(33px, 66px);		}
+	64.5% 	{ transform: translate(0, 66px); 		}
+	75% 	{ transform: translate(0, 66px); 		}
+	77% 	{ transform: translate(0, 33px); 		}
+	87.5% 	{ transform: translate(0, 33px); 		}
+	89.5% 	{ transform: translate(0, 0); 			}
+	100% 	{ transform: translate(0, 0); 			}
+}
+
+svg#loading {
+	display: block;
+	margin: auto;
+	width: 20rem;
+	height: auto;
+}
+
+svg#loading .rect  {animation: slide 10s ease infinite;}
+svg#loading #rect1 {animation-delay: 0s;}
+svg#loading #rect2 {animation-delay: -1.42857143s;}
+svg#loading #rect3 {animation-delay: -2.85714286s;}
+svg#loading #rect4 {animation-delay: -4.28571429s;}
+svg#loading #rect5 {animation-delay: -5.71428571s;}
+svg#loading #rect6 {animation-delay: -7.14285714s;}
+svg#loading #rect7 {animation-delay: -8.57142857s;}

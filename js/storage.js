@@ -79,8 +79,9 @@ var myStorage = {
 		//TODO: updateStyle();
 	},
 	generatePreferencesUI: function(){
-		preferencesDiv = document.getElementById("preferences");
-		preferencesDiv.innerHTML = "";
+		// preferencesDiv = document.getElementById("preferences");
+		// preferencesDiv.innerHTML = "";
+		preferencesDiv = modal.create('preferences', "Ustawienia", "Tutaj możesz dostosować Super Clever Plan do swoich preferencji", function(){ui.showPreferences(0)});
 		prefsList = [
 			//Source, Change, Name
 			["checkbox", ui.breakLineInItem, function(x){ui.setLineBreak(x)}, "Zawijaj wiersze po nazwie przedmiotu", "ui.setLineBreak"],
@@ -92,14 +93,13 @@ var myStorage = {
 			["timetable", undefined, undefined, undefined, undefined]
 		];
 		
-		prefsTitle = document.createElement('h1');
-		prefsTitle.innerText = "Ustawienia";
-		preferencesDiv.appendChild(prefsTitle);
-
+		// prefsTitle = document.createElement('h1');
+		// prefsTitle.innerText = "Ustawienia";
+		// preferencesDiv.appendChild(prefsTitle);
 		for(var p_i=0; p_i<prefsList.length ; p_i++){
 			element = prefsList[p_i];
-			flex = document.createElement('div');
-			flex.className = "flex-vcenter";
+			row = document.createElement('div');
+			row.className = "row";
 
 			if(element[0] == "checkbox"){
 				label = document.createElement('label');
@@ -122,17 +122,19 @@ var myStorage = {
 				span.className = "slider round";
 	
 				title = document.createElement("span");
+				title.className = "desc";
 				title.innerText = element[3];
 	
 				label.appendChild(input);
 				label.appendChild(span);
-				flex.appendChild(label);
-				flex.appendChild(title);
+				row.appendChild(label);
+				row.appendChild(title);
 			}else if(element[0] == "timetable"){
 				biginfo = document.createElement("span");
 				biginfo.className = "preferences_default_big";
 
 				title = document.createElement("span");
+				title.className = "desc";
 
 				if ((localStorage.getItem("select_units") != "default") && (localStorage.getItem("select_units") != null)){
 					title.innerHTML = "Przy uruchamianiu ładuję automatycznie plan klasy <b>"+localStorage.getItem("select_units")+"</b>.<br>Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i zapisz zmiany.";
@@ -148,18 +150,21 @@ var myStorage = {
 					biginfo.innerHTML = "??";
 					biginfo.className = "preferences_default_big preferences_default_inactive";
 				}
+
+				title.innerHTML = "TODO: fix wrapping";
 				
-				flex.appendChild(biginfo);
-				flex.appendChild(title);
+				row.appendChild(biginfo);
+				row.appendChild(title);
 			}
 
-			preferencesDiv.appendChild(flex);
+			preferencesDiv.appendChild(row);
 		}
 		
 
 		prefsBtnSave = document.createElement('button');
 		prefsBtnSave.innerText = "Zapisz zmiany";
 		prefsBtnSave.onclick = function(){myStorage.save();ui.showPreferences(0);};
+		prefsBtnSave.className = "btn-primary";
 		preferencesDiv.appendChild(prefsBtnSave);
 
 		prefsBtnCancel = document.createElement('button');
@@ -173,6 +178,7 @@ var myStorage = {
 		prefsBtnClear.onclick = function(){myStorage.CLEAR();ui.showPreferences(0)};
 		preferencesDiv.appendChild(prefsBtnClear);
 		*/
+		document.body.appendChild(preferencesDiv);
 		try { gtag('event', 'show', {'event_category': 'prefs.generate', 'event_label': 'prefs.generate'}); } catch (e) {}
 	}
 } 	

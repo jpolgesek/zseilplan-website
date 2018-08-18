@@ -55,12 +55,18 @@ console.log = function(){
 }
 
 function debug(){
-	alert("Dane: "+JSON.stringify(dbg_console_store));
+	//alert("Dane: "+JSON.stringify(dbg_console_store));
 }
 */
 
 function init2(){
 	console.log("init 2");
+
+	if (!navigator.onLine){
+		document.getElementsByClassName("navbar-info")[0].innerHTML = "<b>TRYB OFFLINE</b>";
+		document.getElementsByClassName("navbar")[0].style.backgroundColor = "#ff0000";
+	}
+
 	try{loaderstatus.innerHTML="Wczytuję dane";}catch(e){};	
 	
 	/* Show data comment */
@@ -349,13 +355,16 @@ function jumpTo(type, value){
 
 
 function fetchData(){
+	try{loaderstatus.innerHTML="fd - 1";}catch(e){};	
 	try {
 		console.log("Fetch znaleziony: "+fetch);
 	} catch (error) {
 		compat = true
 	}
+	try{loaderstatus.innerHTML="fd - 2";}catch(e){};	
 	if (compat){
 		//Compatibility mode
+		try{loaderstatus.innerHTML="fd - 3";}catch(e){};
 		console.log("Wlaczam tryb kompatybilnosci wstecznej - fetch.")
 		timestamp = Date.now();
 		var fetchDataCompatXHR = new XMLHttpRequest();
@@ -385,9 +394,16 @@ function fetchData(){
 		fetchDataCompatXHR.send();
 		return true;
 	}
+	
+	try{loaderstatus.innerHTML="fd - 4";}catch(e){};
 	isOK = true;
 	timestamp = Date.now();
+	try{loaderstatus.innerHTML="fd - 4.5";}catch(e){};
+	if (!navigator.onLine) timestamp = "localstorage";
+	try{loaderstatus.innerHTML="fd - 5";}catch(e){};
+
 	fetch('data.json?ver='+timestamp).then(function(response) {
+		try{loaderstatus.innerHTML="fd - 6";}catch(e){};
 		return response.json();
 	}).then(function(jdata) {
 		console.log("Pobrano data.json!");
@@ -405,8 +421,10 @@ function fetchData(){
 
 		console.log("Wczytano data.json!");
 		init2();
+		try{loaderstatus.innerHTML="fd - 6.5";}catch(e){};
 	}).catch(function(error){isOK=false});
 
+	try{loaderstatus.innerHTML="fd - 7";}catch(e){};
 	return isOK;
 }
 
@@ -421,21 +439,23 @@ var notifications_enabled = false;
 if ('serviceWorker' in navigator) {
 	window.addEventListener('load', function() {
 		navigator.serviceWorker.register('sw.js').then(function(registration) {
-		// Registration was successful
-		console.log('ServiceWorker registration successful with scope: ', registration.scope);
-		registration.pushManager.getSubscription().then(function(sub) {
-			if (sub === null) {
-				// Update UI to ask user to register for Push
-				console.log('Not subscribed to push service!');
-				// document.getElementById("notificationSubscribe").innerText = "Włącz powiadomienia";
-			} else {
-				// We have a subscription, _update the database_???
-				console.log('Subscription object: ', sub);
-				subscribeUser();
-				// document.getElementById("notificationSubscribe").innerText = "Powiadomienia włączone";
-				// document.getElementById("notificationSubscribe").onclick = unsubscribeUser;
-			}
-			});
+			// Registration was successful
+			console.log('ServiceWorker registration successful with scope: ', registration.scope);
+			registration.pushManager.getSubscription().then(function(sub) {
+				if (sub === null) {
+					// Update UI to ask user to register for Push
+					console.log('Not subscribed to push service!');
+					////alert("niepodłączony pod powiadomienia, podłączam");
+					// toggleNotifications(1);
+					// document.getElementById("notificationSubscribe").innerText = "Włącz powiadomienia";
+				} else {
+					// We have a subscription, _update the database_???
+					console.log('Subscription object: ', sub);
+					subscribeUser();
+					// document.getElementById("notificationSubscribe").innerText = "Powiadomienia włączone";
+					// document.getElementById("notificationSubscribe").onclick = unsubscribeUser;
+				}
+				});
 		}, function(err) {
 		// registration failed :(
 		console.log('ServiceWorker registration failed: ', err);
@@ -466,17 +486,37 @@ if ('serviceWorker' in navigator) {
 		  });
 	}
 
+	function urlBase64ToUint8Array(base64String) {
+		const padding = '='.repeat((4 - base64String.length % 4) % 4);
+		const base64 = (base64String + padding)
+		  .replace(/-/g, '+')
+		  .replace(/_/g, '/');
+	  
+		const rawData = window.atob(base64);
+		const outputArray = new Uint8Array(rawData.length);
+	  
+		for (let i = 0; i < rawData.length; ++i) {
+		  outputArray[i] = rawData.charCodeAt(i);
+		}
+		return outputArray;
+	  }
+
 	function subscribeUser() {
 	if ('serviceWorker' in navigator) {
+		//alert("start su - 1");
 		navigator.serviceWorker.ready.then(function(reg) {
-	
+			//alert("start su - 2");
 		reg.pushManager.subscribe({
-			userVisibleOnly: true
+			userVisibleOnly: true,
+			applicationServerKey: urlBase64ToUint8Array('BONWBKVMibu_3nM_nAlQoiLCPm1BFTcag06eSaCnbgPx_QHtwv1mYIuR81nyzqldPeN4LeIiVNqi3WRtCH0CKRE')
 		}).then(function(sub) {
+			//alert("start su - 3");
 			console.log('Endpoint URL: ', sub.endpoint);
+			//alert('Endpoint URL: '+ sub.endpoint);
 			// document.getElementById("notificationSubscribe").innerText = "Powiadomienia włączone";
 			// document.getElementById("notificationSubscribe").onclick = unsubscribeUser;
 
+			//alert("start su - 4");
 			notifications_enabled = true;
 			fetch("registerNotification.php?new", {
 				method: 'POST', // or 'PUT'
@@ -484,16 +524,21 @@ if ('serviceWorker' in navigator) {
 				headers: new Headers({
 				  'Content-Type': 'application/json'
 				})
-			  }).then(console.log("Wyslano"))
+			  }).then(function(){
+				  console.log("Wyslano");
+					//alert("zarejestrowano")
+			  })
 			  .catch(function(error){console.error('Error:', error)})
 			  .then(function(response){console.log('Success:', response)});
 			
 		}).catch(function(e) {
 			if (Notification.permission === 'denied') {
+				//alert("Nie dostałem uprawnień");
 				console.warn('Permission for notifications was denied');
 				ui.createToast("Brak uprawnień :(");
 				// document.getElementById("notificationSubscribe").innerText = "Brak uprawnień :/";
 			} else {
+				//alert("Błąd: "+e);
 				console.error('Unable to subscribe to push', e);
 				ui.createToast("Wystąpił nieznany błąd :(");
 				// document.getElementById("notificationSubscribe").innerText = "Błąd :/";
@@ -524,7 +569,7 @@ function tempTest(){
 	o += ",dw:"+document.width;
 	o += ",sw:"+screen.width;
 	o += ",aw:"+screen.availWidth;
-	alert(o);
+	//alert(o);
 }
 
 function detectIE() {

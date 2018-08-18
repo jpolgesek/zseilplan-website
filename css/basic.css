@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:100,200,300,400,500,600,700,800,900');
 
+*{
+	outline-style: none;
+}
+
 html, body{
 	margin: 0;
 	padding: 0;
@@ -12,8 +16,8 @@ body{
 	font-weight: 500;
 	font-style: normal;
 	font-display: fallback;
+	background: linear-gradient(180deg, #fbfbfb, #ececec);
 }
-
 
 .container{
 	width: 70%;
@@ -23,4 +27,32 @@ body{
 	transition: opacity 0.3s;
 	padding: 1%;
    	border-radius: 3px;
+}
+
+.separator{
+	display: inline-block;
+    width: 1px;
+    background: #636363;
+}
+
+.print-only, .mobile-only{
+	display: none;
+}
+
+
+.bar{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: flex;
+	justify-content: center;
+    overflow: hidden;
+}
+
+.hidden{
+	display: none;
+}
+
+::selection, ::-moz-selection{
+	background: #0767d3;
+    color: #FFFFFF;
 }

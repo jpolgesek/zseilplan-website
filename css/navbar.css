@@ -1,0 +1,141 @@
+.navbar{
+	position: sticky;
+	top: 0;
+	width: 100%;
+    padding-top: 5px;
+	padding-bottom: 5px;
+	z-index: 1000;
+	margin-bottom: 30px;
+}
+
+.navbar-title{
+    font-size: 1.5em;
+    color: #ececec;
+    font-weight: 100;
+    text-shadow: 2px 1px 2px rgba(0, 0, 0, 0.45);
+	margin-left: 60px;
+    line-height: 178%;
+}
+
+.navbar-buttons{
+	float: right;
+	margin-right: 0.5%;
+}
+
+.navbar{
+	background: #fbfbfb;
+	/* box-shadow: none; */
+    background-image: url("../img/icon_square.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+	height: 42px;
+}
+
+.navbar-title{
+    color: #111;
+	text-shadow: 2px 1px 2px #00000021;
+}
+
+.navbar-logo{
+	display: inline-block;
+	width: 52px;
+	font-size: 1.5em;
+	text-align: center;
+}
+
+.navbar button {
+	display: inline-flex;
+	cursor: pointer;
+	border: 0;
+	overflow: hidden;
+	/* background: rgb(16, 128, 245); */
+	background: #0b60ca;
+}
+
+.navbar button .icon {
+	position: relative;
+	/* background: rgba(0, 0, 0, 0.45); */
+	line-height: 42px;
+	width: 40px;
+    height: 40px;
+    text-align: center;
+    color: #fff;
+    font-size: 29px;
+	transition: .2s color;
+	border-radius: 2px;
+}
+
+.navbar button .icon .fa {
+	width: 30px;
+	transition: .2s all;
+}
+
+.navbar button .text {
+	position: relative;
+	width: 0;
+	height: 40px;
+	overflow: hidden;
+	font-family: "Roboto", sans-serif;
+  	/* background: #046edd; */
+	text-align: center;
+	line-height: 40px;
+	color: #fff;
+	font-weight: 300;
+	transition: .2s all;
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
+	font-size: 1.3em;
+}
+
+.navbar button .text span {
+	width: 100%;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+			transform: translateX(-50%);
+	transition: .3s all;
+}
+
+.navbar button:hover .text span {
+	opacity: 1;
+}
+
+.navbar button:hover .text {
+	width: 120px;
+}
+
+.navbar button:hover .icon {
+	/* color: #5c53f3; */
+	/* background: none; */
+	border-radius: 0;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+}
+
+.navbar button:hover {
+	/* background: rgba(0, 0, 0, 0.45); */
+}
+
+.navbar button:hover .icon:after {
+	right: -2px;
+}
+
+.navbar-info{
+	color: #111;
+  	text-shadow: 2px 1px 2px #00000021;
+	font-weight: 300;
+	font-size: 1.5em;
+	border-left: 1px solid #8a8a8a;
+	margin-left: 10px;
+	padding-left: 10px;
+	line-height: 178%;
+}
+
+.navbar-copyright{
+    color: #eee;
+    margin-right: 15px;
+    float: right;
+    line-height: 263%;
+}

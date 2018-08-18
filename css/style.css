@@ -6,8 +6,22 @@
 
 @import url("select.css");
 
-@import url("buttons.css");
+@import url("tabs.css");
+
+@import url("effects.css");
+
+@import url("modal.css");
+
+@import url("inputs.css");
+
+@import url("table.css");
+
+@import url("loader.css");
 
 @import url("select.css");
 
 @import url("responsive.css");
+
+@import url("print.css");
+
+@import url("../themes/dark.css");

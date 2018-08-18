@@ -10,6 +10,7 @@ var ui = {
 			zMark = document.createElement('span');
 			zMark.className = "zMark";
 			zMark.innerHTML = "Z";
+			zMark.title = "Załadowano zastępstwa na ten dzień";
 			document.getElementsByClassName("header")[0].children[n].appendChild(zMark);
 		}
 	},
@@ -150,7 +151,7 @@ var ui = {
 
 		/*document.getElementsByClassName("copyright")[0].innerHTML = "<i>(dev.polgesek.pl/zseilplan)</i><br>"+o_copy+"<br>";*/
 		// document.getElementsByClassName("copyright")[0].innerHTML = " <span class='copyright_small'>"+document.getElementsByClassName("copyright")[0].innerHTML+"</span>";
-		document.getElementsByClassName("copyright")[0].innerHTML = "Plan lekcji z dnia <b>"+data._updateDate_min+"</b> dla&nbsp;<b>";
+		document.getElementsByClassName("copyright")[0].innerHTML = "Plan lekcji dla&nbsp;<b>";
 		if (this.itemDisplayType == 0){
 			document.getElementsByClassName("copyright")[0].innerHTML += "nauczyciela ";
 			try {
@@ -163,12 +164,13 @@ var ui = {
 		}else if (this.itemDisplayType == 2){
 			document.getElementsByClassName("copyright")[0].innerHTML += "<b> klasy " + select_units.value + "</b>";
 		}
+		document.getElementsByClassName("copyright")[0].innerHTML += " z dnia <b>"+data._updateDate_min+"</b>";
 
-		document.getElementsByClassName("navbar-buttons")[0].classList.add("opacity-0");
+		document.getElementsByClassName("navbar-buttons")[0].classList.add("hidden");
 
 		print();
 		
-		document.getElementsByClassName("navbar-buttons")[0].classList.remove("opacity-0");
+		document.getElementsByClassName("navbar-buttons")[0].classList.remove("hidden");
 		document.getElementsByClassName("copyright")[0].innerHTML = o_copy;
 		document.getElementById("status").innerHTML = o_status;
 		overrides_disabled = old_overrides_disabled;

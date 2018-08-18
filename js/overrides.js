@@ -4,7 +4,7 @@ function getDay(n) {
 	date = new Date();
     var day = date.getDay() || 7;  
     if( day !== n ) 
-        date.setHours(-24 * (day - n)); 
+		date.setHours(-24 * (day - n)); 
 	return date.toLocaleString(); 
 }
 
@@ -21,6 +21,7 @@ function IEgetDay(n) {
 	out += String(date.getMonth()+1);
 	out += "."
 	out += String(date.getFullYear());
+	return "28.05.2018";
 	return out;
 }
 
