@@ -31,7 +31,7 @@
     padding-bottom: 16px;
     box-sizing: border-box;
     color: #fafafa;
-	background: url("icon_square.png");
+	background: url("../img/icon_square.png");
     background-size: contain;
 }
 
@@ -95,4 +95,24 @@
 @keyframes fadeout {
     from {top: 30px; opacity: 1;}
     to {top: 60px; opacity: 0;}
+}
+
+
+
+#networkStatus{
+	text-align: center;
+    padding: 5px;
+	background-color: #046edd;
+    color: #FAFAFA;
+    margin: 5px;
+    border-radius: 5px;
+	width: 97%;
+}
+
+#status{
+	text-align: center;
+    padding: 5px;
+    background-color: #fbfbfb;
+    color: #151515;
+    border-radius: 5px;
 }

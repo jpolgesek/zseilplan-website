@@ -14,7 +14,7 @@
     font-weight: 100;
     text-shadow: 2px 1px 2px rgba(0, 0, 0, 0.45);
 	margin-left: 60px;
-    line-height: 178%;
+	line-height: 178%;
 }
 
 .navbar-buttons{
@@ -134,8 +134,20 @@
 }
 
 .navbar-copyright{
-    color: #eee;
+    color: rgb(209, 209, 209);
     margin-right: 15px;
     float: right;
-    line-height: 263%;
+    height: 42px;
+	text-align: right;
+}
+
+.navbar-copyright::before{
+    content: "www.example.com";
+    position: absolute;
+    top: -26px;
+    left: 0;
+    font-size: 0.7em;
+    color: black;
+    width: 100%;
+    text-align: center;
 }

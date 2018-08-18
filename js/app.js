@@ -79,6 +79,7 @@ function init2(){
 
 	/* Add units to select_units and quicksearch */
 	status_span.innerText = "Przygotowywanie interfejsu: klasy";
+	select_units.options[0] = new Option("Klasa", "default");
 	for (unit in data.units) {
 		select_units.options[select_units.options.length] = new Option(data.units[unit], data.units[unit]);
 		//quicksearch.add("Klasa "+data.units[unit], "K"+data.units[unit]);
@@ -86,8 +87,7 @@ function init2(){
 
 
 	status_span.innerText = "Przygotowywanie interfejsu: nauczyciele";
-
-
+	select_teachers.options[0] = new Option("Nauczyciel", "default");
 	for (key in data.teachermap){
 		select_teachers.options[select_teachers.options.length] = new Option(data.teachermap[key]+' ('+key+')', key);
 	}
@@ -95,6 +95,7 @@ function init2(){
 	
 	/* Add classrooms to select_rooms and quicksearch */
 	status_span.innerText = "Przygotowywanie interfejsu: sale";
+	select_rooms.options[0] = new Option("Sala", "default");
 	for (i in data.classrooms) {
 		select_rooms.options[select_rooms.options.length] = new Option(data.classrooms[i], data.classrooms[i]);
 		//quicksearch.add("Sala "+data.classrooms[i], "S"+data.classrooms[i]);
@@ -109,13 +110,15 @@ function init2(){
 	select_rooms.onchange = refreshView;
 	select_rooms.oninput = refreshView;
 
+	/* TODO: fix me */
 	/* Show timetable update date */
 	if (data._updateDate_max == data._updateDate_min){
 		status_span.innerText = "Plan z dnia "+data._updateDate_max;
 	}else{
 		status_span.innerText = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min;
 	}
-
+	
+	
 	overrideData = data.overrideData;
 	
 	/* TODO: fix me */
@@ -186,6 +189,14 @@ function init2(){
 			jumpTo(2,location.hash.substr(2).toUpperCase());
 		}
 	}
+
+	try {
+		if(ZSEILPLAN_BUILD == undefined){
+			document.getElementById("footer").innerText = "Python build not triggered";
+		}else{
+			document.getElementById("footer").innerText = "Python build " + ZSEILPLAN_BUILD;
+		}
+	} catch (error) {}
 
 }
 

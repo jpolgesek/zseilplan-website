@@ -1,64 +1,55 @@
 console.log("service worker OK3!");
 // self.addEventListener("fetch", function(event) {}); //Ciekawe jak mocno to psuje fetcha
 
+var SW_CHECKSUM = "%compiler_checksums%";
+
 /* Witaj cache 2.0 */
 
-var CACHE_NAME = 'my-site-cache-v4';
+var ENABLE_CACHE = false;
+
+var CACHE_NAME = 'my-site-cache-'+SW_CHECKSUM;
 var urlsToCache = [
 	'./index.html',
 	'./index.html?launcher=true',
-	'./js/app.js?ver=17',
-	'./js/datetime.js?ver=17',
-	'./js/modal.js?ver=17',
-	'./js/overrides.js?ver=17',
-	'./js/quicksearch.js?ver=17',
-	'./js/storage.js?ver=17',
-	'./js/temp1.js?ver=17',
-	'./js/ui.js?ver=17',
-	'./css/style.css?ver=17',
-	'./css/basic.css',
-	'./css/effects.css',
-	'./css/inputs.css',
-	'./css/loader.css',
-	'./css/modal.css',
-	'./css/navbar.css',
-	'./css/print.css',
-	'./css/quicksearch.css',
-	'./css/responsive.css',
-	'./css/select.css',
-	'./css/table.css',
-	'./css/tabs.css',
-	'./css/toast.css',
-	'./themes/dark.css',
 	'./data.json?ver=localstorage',
+	'./assets/js/c_app.js',
+	'./assets/css/c_style.css',
 	'./',
 ];
 
-self.addEventListener('install', function(event) {
-	// Perform install steps
-	event.waitUntil(
-		caches.open(CACHE_NAME)
-			.then(function(cache) {
-				console.log('Opened cache');
-				return cache.addAll(urlsToCache);
-			})
-	);
-});
-
-self.addEventListener('fetch', function(event) {
-	event.respondWith(
-		caches.match(event.request)
-			.then(function(response) {
-				// Cache hit - return response
-				if (response) {
-					return response;
+if (ENABLE_CACHE){
+	console.log("cache is enabled");
+	self.addEventListener('install', function(event) {
+		// Perform install steps
+		event.waitUntil(
+			caches.open(CACHE_NAME)
+				.then(function(cache) {
+					console.log('Opened cache');
+					return cache.addAll(urlsToCache);
+				})
+		);
+	});
+	
+	self.addEventListener('fetch', function(event) {
+		console.log("Cache used, network status: "+navigator.onLine);
+		event.respondWith(
+			caches.match(event.request)
+				.then(function(response) {
+					if (navigator.onLine){
+						return fetch(event.request);
+					}
+					// Cache hit - return response
+					if (response) {
+						return response;
+					}
+					return fetch(event.request);
 				}
-				return fetch(event.request);
-			}
-		)
-	);
-});
-
+			)
+		);
+	});
+}else{
+	console.log("cache is disabled");
+}
 
 
 /* Zegnaj cache */

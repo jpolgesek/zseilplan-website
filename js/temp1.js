@@ -21,7 +21,7 @@ items.forEach(element => {
 });
 */
 var pageWidth = window.innerWidth || document.body.clientWidth;
-var treshold = Math.max(1,Math.floor(0.01 * (pageWidth)));
+var threshold = Math.max(1,Math.floor(0.01 * (pageWidth)));
 var touchstartX = 0;
 var touchstartY = 0;
 var touchendX = 0;
@@ -33,20 +33,20 @@ var gestureZone = document.getElementsByClassName('container')[0];
 gestureZone.addEventListener('touchstart', function(event) {
     touchstartX = event.changedTouches[0].screenX;
     touchstartY = event.changedTouches[0].screenY;
-}, false);
+}, {passive: true});
 
 gestureZone.addEventListener('touchend', function(event) {
     touchendX = event.changedTouches[0].screenX;
     touchendY = event.changedTouches[0].screenY;
     handleGesture(event);
-}, false);
+}, {passive: true});
 
 function handleGesture(e) {
     var x = touchendX - touchstartX;
     var y = touchendY - touchstartY;
     var xy = Math.abs(x / y);
     var yx = Math.abs(y / x);
-    if (Math.abs(x) > treshold || Math.abs(y) > treshold) {
+    if (Math.abs(x) > threshold || Math.abs(y) > threshold) {
         if (yx <= limit) {
             if (x < 0) {
 				console.log("left");

@@ -46,7 +46,7 @@
 	}
 
 	.print-hide{
-		display: none;
+		display: none !important;
 	}
 
 	.navbar{
@@ -58,9 +58,12 @@
 		margin-left: 10px;
 	}
 
-	.print-logo::before{
-		content: "✌";
-		margin-right: 5px;
+	.print-logo{
 		display: inline-block;
+		font-size: 1.5em;
+	}
+
+	.navbar-title{
+		margin-left: 5px;
 	}
 }

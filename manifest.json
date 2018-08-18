@@ -3,7 +3,7 @@
 	"name": "testplan",
 	"display": "standalone",
 	"theme_color": "#046edd",
-	"background_color": "linear-gradient(0deg, #042f5f, #2657b3)",
+	"background_color": "#042f5f",
 	"icons": [
 		{
 		"src": "/launcher-icon-4x.png",

@@ -4,10 +4,16 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta name="theme-color" content="#046edd">
+		<meta name="description" content="Ładny i wygodny plan ZSEiL.">
 		<title>Super Clever Plan</title>
 		<!-- <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"> -->
 		<!-- <link rel="stylesheet" href="css/style-new.css?ver=17"> -->
+		
+		<!-- %compile_css_start%-->
 		<link rel="stylesheet" href="css/style.css?ver=17">
+		<!-- %compile_css_end%-->
+
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 		<link rel="manifest" href="/manifest.json">
 		
@@ -102,43 +108,61 @@
 				</g>
 			</svg>
 			<h1>Ładuję Super Clever Plan</h1>
-			<div id='loader-status'>Uruchamianie</div>
+			<div id='loader-status'>Uruchamianie aplikacji</div>
 		</div>
 
 		<div class='container opacity-0'>
-			
+			<!-- TODO: create me dynamically-->
 			<nav class="navbar shadow">
-				<span class="navbar-title print-logo">Super Clever Plan</span>
-	
-				<span class="copyright navbar-info">Plan z dnia 01.01.2018</span>
-
-				<div class="navbar-copyright print-only">&copy; Jakub Półgęsek 2018</div>
-	
+				<span class="print-only print-logo">✌</span>
+				<span class="navbar-title">Super Clever Plan</span>
+				<span class="copyright navbar-info">Plan z dnia 12.34.2018</span> <!-- TODO: create me! -->
+				<div class="navbar-copyright print-only">
+					<div>example.com</div>
+					<div>&copy; Jakub Półgęsek 2018</div>
+				</div> <!-- TODO: create me dynamically -->
+				
 				<div class="navbar-buttons">
 					<button class='print-hide desktop-only' onclick="alert('todo')">
 						<div class='icon'><i class="fab fa-android"></i></div>
-						<div class='text'><span>Aplikacja Mobilna</span></div>
+						<div class='text'>Aplikacja Mobilna</div>
 					</button>
 
 					<button class='print-hide' onclick="myStorage.generatePreferencesUI();ui.showPreferences(1)">
 						<div class='icon'><i class="fas fa-cog"></i></div>
-						<div class='text'><span>Ustawienia</span></div>
+						<div class='text'>Ustawienia</div>
 					</button>
 	
 					<button class='print-hide' onclick="ui.print()">
 						<div class='icon'><i class="fas fa-print"></i></div>
-						<div class='text'><span>Drukuj</span></div>
+						<div class='text'>Drukuj</div>
 					</button>
 				</div>
 			</nav>
 			
-			<div class='bar'>
-				<select id='units'><option value="default">Klasa</option></select>
-				<select id='teachers'><option value="default">Nauczyciel</option></select>
-				<select id='rooms'><option value="default">Sala</option></select>
+
+			<!-- TODO: create me dynamically -->	
+			<div id='status' class="shadow print-hide">Ładowanie skryptu...</div>
+			
+			<!-- TODO: create me dynamically -->	
+			<!-- TODO: fix my css! -->
+			<div class='bar print-hide'>
+				<label style="width: 25%; margin: 3px;">
+					<select style="width: 100%;" id='units'></select>
+				</label>
+
+				<label style="width: 44%; margin: 3px;">
+					<select style="width: 100%;" id='teachers'></select>
+				</label>
+
+				<label style="width: 25%; margin: 3px;">
+					<select style="width: 100%;" id='rooms'></select>
+				</label>
 			</div>
 
-			<div class='bar'>
+			
+			<!-- TODO: create me dynamically-->	
+			<div class='bar print-hide'>
 				<nav class="tabs">
 					<a href="#" onclick='columns.setActive(-1)' class="active" style="" id='btn_-1'>
 						<span class="mobile-only">All</span>
@@ -169,24 +193,26 @@
 				</nav>
 			</div>
 
+			<!-- TODO: create me dynamically-->	
+			<div id='networkStatus' style='display: none;'></div>
 			
+			<!-- TODO: create me dynamically-->	
 			<table id='maintable' class='maintable shadow'><tr><td>Wybierz opcję z menu.</td></tr></table>
 
-			<div id='networkStatus' style='display: block;'>
-				Wersja prerelease
-			</div>
-
+			<!-- TODO: create me dynamically-->	
 			<div class='hidden' style="display: none;" id='storageControl'>
 				<button class='wideBtn' type='button' onclick='myStorage.clear()'>Skasuj ustawienia domyślne</button>
 				<button class='wideBtn' type='button' id='button_comment'></button>
 			</div>
-			<div id="toast"><div id="toast_img"></div><div id="toast_desc"></div></div> <!-- TODO: create me dynamically-->
-
-			<div id='status'>Ładowanie skryptu...</div>
 			
-			<!-- <div class="footer">footer here</div> -->
-		</div>
+			<!-- TODO: create me dynamically-->	
+			<div id="toast"><div id="toast_img"></div><div id="toast_desc"></div></div>
 
+		</div>
+			
+		<div id="footer" class="footer"></div>
+
+		<!-- %compile_js_start%-->
 		<script src="js/modal.js?ver=17"></script>
 		<script src="js/overrides.js?ver=17"></script>
 		<script src="js/ui.js?ver=17"></script>
@@ -195,5 +221,6 @@
 		<script src="js/quicksearch.js?ver=17"></script>
 		<script src="js/app.js?ver=17"></script>
 		<script src="js/temp1.js?ver=17"></script>
+		<!-- %compile_js_end%-->
 	</body>
 </html>

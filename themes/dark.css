@@ -144,3 +144,8 @@
 .dark .loader h1 {
 	color: #fafafa;
 }
+
+.dark .footer {
+    background: #4e4e4e;
+    color: #e6e6e6;
+}
