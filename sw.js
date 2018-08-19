@@ -8,6 +8,7 @@ var SW_CHECKSUM = "%compiler_checksums%";
 var ENABLE_CACHE = false;
 
 var CACHE_NAME = 'my-site-cache-'+SW_CHECKSUM;
+//var CACHE_NAME = 'my-site-cache-A';
 var urlsToCache = [
 	'./index.html',
 	'./index.html?launcher=true',
@@ -111,7 +112,7 @@ self.addEventListener('push', function(e) {
 
 	if ((data.clickUrl == undefined) || (data.clickUrl.length = 0)){
 		// data.clickUrl = document.URL;
-		data.clickUrl = "https://example.com";
+		data.clickUrl = "https://example.com"; //TODO
 	}
 
 	var options = {

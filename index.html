@@ -9,12 +9,12 @@
 		<title>Super Clever Plan</title>
 		<!-- <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"> -->
 		<!-- <link rel="stylesheet" href="css/style-new.css?ver=17"> -->
-		
+
 		<!-- %compile_css_start%-->
 		<link rel="stylesheet" href="css/style.css?ver=17">
 		<!-- %compile_css_end%-->
 
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+		<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> -->
 		<link rel="manifest" href="/manifest.json">
 		
 		<!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113628218-1"></script>
@@ -124,17 +124,17 @@
 				
 				<div class="navbar-buttons">
 					<button class='print-hide desktop-only' onclick="alert('todo')">
-						<div class='icon'><i class="fab fa-android"></i></div>
+						<div class='icon'><i class="icon-android"></i></div>
 						<div class='text'>Aplikacja Mobilna</div>
 					</button>
 
 					<button class='print-hide' onclick="myStorage.generatePreferencesUI();ui.showPreferences(1)">
-						<div class='icon'><i class="fas fa-cog"></i></div>
+						<div class='icon'><i class="icon-cog"></i></div>
 						<div class='text'>Ustawienia</div>
 					</button>
 	
 					<button class='print-hide' onclick="ui.print()">
-						<div class='icon'><i class="fas fa-print"></i></div>
+						<div class='icon'><i class="icon-print"></i></div>
 						<div class='text'>Drukuj</div>
 					</button>
 				</div>
@@ -194,7 +194,8 @@
 			</div>
 
 			<!-- TODO: create me dynamically-->	
-			<div id='networkStatus' style='display: none;'></div>
+			<!-- <div id='networkStatus' style='display: none;'></div> -->
+			<div id='networkStatus' style="display: none;"></div>
 			
 			<!-- TODO: create me dynamically-->	
 			<table id='maintable' class='maintable shadow'><tr><td>Wybierz opcję z menu.</td></tr></table>
@@ -207,10 +208,10 @@
 			
 			<!-- TODO: create me dynamically-->	
 			<div id="toast"><div id="toast_img"></div><div id="toast_desc"></div></div>
+			
+			<div id="footer" class="footer"></div>
 
 		</div>
-			
-		<div id="footer" class="footer"></div>
 
 		<!-- %compile_js_start%-->
 		<script src="js/modal.js?ver=17"></script>

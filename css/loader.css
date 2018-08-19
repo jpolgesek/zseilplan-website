@@ -4,14 +4,18 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: #191919;
-	font-weight: 100;
+	font-weight: 300;
 	z-index: 1000;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	
 }
 
 .loader h1{
 	font-display: fallback;
-	font-weight: 100;
+	font-weight: 300;
 	color: #191919;
+	font-size: 1.8em;
+	text-align: center;
 }
 
 .loader div{

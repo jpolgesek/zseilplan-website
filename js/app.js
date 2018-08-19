@@ -63,8 +63,11 @@ function init2(){
 	console.log("init 2");
 
 	if (!navigator.onLine){
-		document.getElementsByClassName("navbar-info")[0].innerHTML = "<b>TRYB OFFLINE</b>";
-		document.getElementsByClassName("navbar")[0].style.backgroundColor = "#ff0000";
+		// document.getElementsByClassName("navbar-info")[0].innerHTML = "<b>TRYB OFFLINE</b>";
+		// document.getElementsByClassName("navbar")[0].style.backgroundColor = "#ff0000";
+		document.getElementById("networkStatus").classList.add("bad");
+		document.getElementById("networkStatus").style.display = "block";
+		document.getElementById("networkStatus").innerText = "Nie masz połączenia z internetem, plan może być nieaktualny.";
 	}
 
 	try{loaderstatus.innerHTML="Wczytuję dane";}catch(e){};	
@@ -192,11 +195,22 @@ function init2(){
 
 	try {
 		if(ZSEILPLAN_BUILD == undefined){
-			document.getElementById("footer").innerText = "Python build not triggered";
+			document.getElementById("footer").innerText = "Super Clever Build TEST BUILD";
 		}else{
-			document.getElementById("footer").innerText = "Python build " + ZSEILPLAN_BUILD;
+			document.getElementById("footer").innerText = "Super Clever Plan build " + ZSEILPLAN_BUILD;
 		}
-	} catch (error) {}
+	} catch (e) {}
+
+	window.addEventListener('offline', function(e) { 
+		document.getElementById("networkStatus").classList.add("bad");
+		document.getElementById("networkStatus").style.display = "block";
+		document.getElementById("networkStatus").innerText = "Nie masz połączenia z internetem, plan może być nieaktualny.";
+	});
+	window.addEventListener('online', function(e) { 
+		document.getElementById("networkStatus").style.display = "none";
+		document.getElementById("networkStatus").innerText = "";
+		document.getElementById("networkStatus").className = "";
+	});
 
 }
 
@@ -365,17 +379,15 @@ function jumpTo(type, value){
 
 
 
-function fetchData(){
-	try{loaderstatus.innerHTML="fd - 1";}catch(e){};	
+function fetchData(){	
 	try {
 		console.log("Fetch znaleziony: "+fetch);
 	} catch (error) {
 		compat = true
 	}
-	try{loaderstatus.innerHTML="fd - 2";}catch(e){};	
 	if (compat){
 		//Compatibility mode
-		try{loaderstatus.innerHTML="fd - 3";}catch(e){};
+		try{loaderstatus.innerHTML="Rozpoczynam pobieranie danych w trybie kompatybilności wstecznej";}catch(e){};
 		console.log("Wlaczam tryb kompatybilnosci wstecznej - fetch.")
 		timestamp = Date.now();
 		var fetchDataCompatXHR = new XMLHttpRequest();
@@ -406,15 +418,14 @@ function fetchData(){
 		return true;
 	}
 	
-	try{loaderstatus.innerHTML="fd - 4";}catch(e){};
 	isOK = true;
 	timestamp = Date.now();
-	try{loaderstatus.innerHTML="fd - 4.5";}catch(e){};
-	if (!navigator.onLine) timestamp = "localstorage";
-	try{loaderstatus.innerHTML="fd - 5";}catch(e){};
+	if (!navigator.onLine) {
+		try{loaderstatus.innerHTML="Jesteś offline, próbuję pobrać plan z lokalnego cache";}catch(e){};
+		timestamp = "localstorage";
+	}
 
 	fetch('data.json?ver='+timestamp).then(function(response) {
-		try{loaderstatus.innerHTML="fd - 6";}catch(e){};
 		return response.json();
 	}).then(function(jdata) {
 		console.log("Pobrano data.json!");
@@ -432,10 +443,13 @@ function fetchData(){
 
 		console.log("Wczytano data.json!");
 		init2();
-		try{loaderstatus.innerHTML="fd - 6.5";}catch(e){};
 	}).catch(function(error){isOK=false});
 
-	try{loaderstatus.innerHTML="fd - 7";}catch(e){};
+	if (!isOK){
+		try{loaderstatus.innerHTML="<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.";}catch(e){};
+	}else{
+		try{loaderstatus.innerHTML="Pobrano plan lekcji";}catch(e){};
+	}
 	return isOK;
 }
 

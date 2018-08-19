@@ -15,7 +15,7 @@ var modal = {
 		modalTitle.className = "title";
 
 		modalClose = document.createElement("span");
-		modalClose.innerHTML = '<i class="fas fa-times"></i>';
+		modalClose.innerHTML = '<i class="icon-cancel"></i>';
 		modalClose.className = "close";
 		modalClose.onclick = function(){closeAction();};
 

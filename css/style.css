@@ -1,6 +1,9 @@
 /* @import url("style1.css"); */
+/* @import url("fontello-ie7.css"); */
 
 @import url("basic.css");
+
+@import url("fontello.css");
 
 @import url("navbar.css");
 

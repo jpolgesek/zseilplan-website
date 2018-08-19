@@ -149,3 +149,13 @@
     background: #4e4e4e;
     color: #e6e6e6;
 }
+
+.dark #networkStatus.bad {
+    background-color: #840f0f;
+    color: #ffffff;
+}
+
+.dark #status {
+    background-color: #1d1d1d;
+    color: #fafafa;
+}
