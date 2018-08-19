@@ -8,10 +8,10 @@
 		<meta name="description" content="Ładny i wygodny plan ZSEiL.">
 		<title>Super Clever Plan</title>
 		<!-- <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"> -->
-		<!-- <link rel="stylesheet" href="css/style-new.css?ver=17"> -->
+		<!-- <link rel="stylesheet" href="css/style-new.css?ver=%build%"> -->
 
 		<!-- %compile_css_start%-->
-		<link rel="stylesheet" href="css/style.css?ver=17">
+		<link rel="stylesheet" href="css/style.css?ver=%build%">
 		<!-- %compile_css_end%-->
 
 		<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> -->
@@ -87,7 +87,7 @@
 	
 			
 		</div>
-		-->
+		
 
 		<div class="loader">
 			<svg id="loading" viewbox="0 0 100 80">
@@ -109,9 +109,9 @@
 			</svg>
 			<h1>Ładuję Super Clever Plan</h1>
 			<div id='loader-status'>Uruchamianie aplikacji</div>
-		</div>
+		</div>-->
 
-		<div class='container opacity-0'>
+		<div class='container'>
 			<!-- TODO: create me dynamically-->
 			<nav class="navbar shadow">
 				<span class="print-only print-logo">✌</span>
@@ -144,6 +144,8 @@
 			<!-- TODO: create me dynamically -->	
 			<div id='status' class="shadow print-hide">Ładowanie skryptu...</div>
 			
+			<button class='print-hide' onclick="ui.showPreferences(1)">prefs</button>
+			<button class='print-hide' onclick="myStorage.generatePreferencesUI();ui.showPreferences(1)">prefs</button>
 			<!-- TODO: create me dynamically -->	
 			<!-- TODO: fix my css! -->
 			<div class='bar print-hide'>
@@ -214,14 +216,15 @@
 		</div>
 
 		<!-- %compile_js_start%-->
-		<script src="js/modal.js?ver=17"></script>
-		<script src="js/overrides.js?ver=17"></script>
-		<script src="js/ui.js?ver=17"></script>
-		<script src="js/datetime.js?ver=17"></script>
-		<script src="js/storage.js?ver=17"></script>
-		<script src="js/quicksearch.js?ver=17"></script>
-		<script src="js/app.js?ver=17"></script>
-		<script src="js/temp1.js?ver=17"></script>
+		<script src="js/dom.js?ver=%build%"></script>
+		<script src="js/modal.js?ver=%build%"></script>
+		<script src="js/overrides.js?ver=%build%"></script>
+		<script src="js/ui.js?ver=%build%"></script>
+		<script src="js/datetime.js?ver=%build%"></script>
+		<script src="js/storage.js?ver=%build%"></script>
+		<script src="js/quicksearch.js?ver=%build%"></script>
+		<script src="js/app.js?ver=%build%"></script>
+		<script src="js/temp1.js?ver=%build%"></script>
 		<!-- %compile_js_end%-->
 	</body>
 </html>

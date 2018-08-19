@@ -166,11 +166,11 @@ var ui = {
 		}
 		document.getElementsByClassName("copyright")[0].innerHTML += " z dnia <b>"+data._updateDate_min+"</b>";
 
-		document.getElementsByClassName("navbar-buttons")[0].classList.add("hidden");
+		dom.addClass(document.getElementsByClassName("navbar-buttons")[0],"hidden");
 
 		print();
 		
-		document.getElementsByClassName("navbar-buttons")[0].classList.remove("hidden");
+		dom.removeClass(document.getElementsByClassName("navbar-buttons")[0],"hidden");
 		document.getElementsByClassName("copyright")[0].innerHTML = o_copy;
 		document.getElementById("status").innerHTML = o_status;
 		overrides_disabled = old_overrides_disabled;
@@ -181,6 +181,7 @@ var ui = {
 	},
 
 	resetSelects: function(without){
+		if (detectIE() && document.super_fucking_old_ie) return;
 		toClear = ["units", "rooms", "teachers"];
 		toClear.splice(toClear.indexOf(without),1);
 		for (x in toClear){

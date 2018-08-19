@@ -127,8 +127,8 @@ function init2(){
 	
 	/* TODO: fix me */
 	try {
-	status_span.innerHTML += "<br>Zastępstwa na "+Object.keys(overrideData).map(function(s){return s.substr(0,5)}).join();
-	status_span.innerHTML += "<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a> | <a href='changelog.html'>Changelog</a>";
+		status_span.innerHTML += "<br>Zastępstwa na "+Object.keys(overrideData).map(function(s){return s.substr(0,5)}).join();
+		status_span.innerHTML += "<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a> | <a href='changelog.html'>Changelog</a>";
 	} catch (e) {}
 
 
@@ -324,11 +324,11 @@ function refreshView(){
 function createHeader(table){
 	//compat
 	//var header = table.insertRow();
-	var header = table.insertRow(-1); //-1 for backwards compatibility
+	header = table.insertRow(-1); //-1 for backwards compatibility
 
 	header.className = "header";
 	for (i=0; i<6; i++){
-		header.insertCell();
+		header.insertCell(-1);
 	}
 	
 	table.rows[0].cells[0].innerHTML = "Nr";
@@ -430,8 +430,7 @@ function fetchData(){
 	
 	isOK = true;
 	timestamp = Date.now();
-	
-	/* %old-ie-remove-start% */
+	/*
 	if (!navigator.onLine) {
 		try{loaderstatus.innerHTML="Jesteś offline, próbuję pobrać plan z lokalnego cache";}catch(e){};
 		timestamp = "localstorage";
@@ -456,7 +455,6 @@ function fetchData(){
 		console.log("Wczytano data.json!");
 		init2();
 	}).catch(function(error){isOK=false});
-	/* %old-ie-remove-end% */
 
 	if (!isOK){
 		try{loaderstatus.innerHTML="<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.";}catch(e){};
@@ -464,6 +462,7 @@ function fetchData(){
 		try{loaderstatus.innerHTML="Pobrano plan lekcji";}catch(e){};
 	}
 	return isOK;
+	*/
 }
 
 
@@ -473,125 +472,6 @@ document.body.onload = init();
 
 var notifications_enabled = false;
 
-/* %old-ie-remove-start% */
-/* Tak. */
-if ('serviceWorker' in navigator) {
-	window.addEventListener('load', function() {
-		navigator.serviceWorker.register('sw.js').then(function(registration) {
-			// Registration was successful
-			console.log('ServiceWorker registration successful with scope: ', registration.scope);
-			registration.pushManager.getSubscription().then(function(sub) {
-				if (sub === null) {
-					// Update UI to ask user to register for Push
-					console.log('Not subscribed to push service!');
-					////alert("niepodłączony pod powiadomienia, podłączam");
-					// toggleNotifications(1);
-					// document.getElementById("notificationSubscribe").innerText = "Włącz powiadomienia";
-				} else {
-					// We have a subscription, _update the database_???
-					console.log('Subscription object: ', sub);
-					subscribeUser();
-					// document.getElementById("notificationSubscribe").innerText = "Powiadomienia włączone";
-					// document.getElementById("notificationSubscribe").onclick = unsubscribeUser;
-				}
-				});
-		}, function(err) {
-		// registration failed :(
-		console.log('ServiceWorker registration failed: ', err);
-		});
-	});
-	}
-
-	function toggleNotifications(v){
-		if (v){
-			subscribeUser();
-		}else{
-			unsubscribeUser();
-		}
-	}
-	
-	function unsubscribeUser() {
-		navigator.serviceWorker.ready.then(function(reg) {
-			reg.pushManager.getSubscription().then(function(subscription) {
-			  subscription.unsubscribe().then(function(successful) {
-				ui.createToast("Wyłączyłem powiadomienia");
-				// document.getElementById("notificationSubscribe").innerText = "Powiadomienia wyłączone";
-				// document.getElementById("notificationSubscribe").onclick = subscribeUser;
-			  }).catch(function(e) {
-				ui.createToast("Wystąpił nieznany błąd :(");
-				// document.getElementById("notificationSubscribe").innerText = "Nie udało sie wyłączyć powiadomień";
-			  })
-			})        
-		  });
-	}
-
-	function urlBase64ToUint8Array(base64String) {
-		var padding = '='.repeat((4 - base64String.length % 4) % 4);
-		var base64 = (base64String + padding)
-		  .replace(/-/g, '+')
-		  .replace(/_/g, '/');
-	  
-		var rawData = window.atob(base64);
-		var outputArray = new Uint8Array(rawData.length);
-	  
-		for (var i = 0; i < rawData.length; ++i) {
-		  outputArray[i] = rawData.charCodeAt(i);
-		}
-		return outputArray;
-	  }
-
-	function subscribeUser() {
-	if ('serviceWorker' in navigator) {
-		//alert("start su - 1");
-		navigator.serviceWorker.ready.then(function(reg) {
-			//alert("start su - 2");
-		reg.pushManager.subscribe({
-			userVisibleOnly: true,
-			applicationServerKey: urlBase64ToUint8Array('BONWBKVMibu_3nM_nAlQoiLCPm1BFTcag06eSaCnbgPx_QHtwv1mYIuR81nyzqldPeN4LeIiVNqi3WRtCH0CKRE')
-		}).then(function(sub) {
-			//alert("start su - 3");
-			console.log('Endpoint URL: ', sub.endpoint);
-			//alert('Endpoint URL: '+ sub.endpoint);
-			// document.getElementById("notificationSubscribe").innerText = "Powiadomienia włączone";
-			// document.getElementById("notificationSubscribe").onclick = unsubscribeUser;
-
-			//alert("start su - 4");
-			notifications_enabled = true;
-			fetch("registerNotification.php?new", {
-				method: 'POST', // or 'PUT'
-				body: JSON.stringify(sub), 
-				headers: new Headers({
-				  'Content-Type': 'application/json'
-				})
-			  }).then(function(){
-				  console.log("Wyslano");
-					//alert("zarejestrowano")
-			  })
-			  .catch(function(error){console.error('Error:', error)})
-			  .then(function(response){console.log('Success:', response)});
-			
-		}).catch(function(e) {
-			if (Notification.permission === 'denied') {
-				//alert("Nie dostałem uprawnień");
-				console.warn('Permission for notifications was denied');
-				ui.createToast("Brak uprawnień :(");
-				// document.getElementById("notificationSubscribe").innerText = "Brak uprawnień :/";
-			} else {
-				//alert("Błąd: "+e);
-				console.error('Unable to subscribe to push', e);
-				ui.createToast("Wystąpił nieznany błąd :(");
-				// document.getElementById("notificationSubscribe").innerText = "Błąd :/";
-			}
-		});
-		})
-	}
-	}
-
-function dbg_clearCache(){
-	return;
-}
-
-/* %old-ie-remove-end% */
 
 
 function updateData(){
