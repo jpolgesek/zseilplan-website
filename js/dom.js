@@ -1,6 +1,6 @@
 var dom = {
 	addClass: function(elementObject, className){
-		if (typeof(Element.prototype.classList) == "undefined"){
+		if (typeof(document.body.classList) == "undefined"){
 			classList = elementObject.className.split(" ");
 			if (classList.indexOf(className) != -1){
 				return false; //element ma już taką klasę
@@ -13,7 +13,7 @@ var dom = {
 		}
 	},
 	removeClass: function(elementObject, className){
-		if (typeof(Element.prototype.classList) == "undefined"){
+		if (typeof(document.body.classList) == "undefined"){
 			classList = elementObject.className.split(" ");
 			if (classList.indexOf(className) == -1){
 				return false; //element nie ma takiej klasy
