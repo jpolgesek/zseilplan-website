@@ -423,7 +423,7 @@ function fetchData(){
 				init2();
 			}
 		};
-		fetchDataCompatXHR.open("GET", "data.json", true);
+		fetchDataCompatXHR.open("GET", "data.php", true);
 		fetchDataCompatXHR.send();
 		return true;
 	}
@@ -437,7 +437,11 @@ function fetchData(){
 		timestamp = "localstorage";
 	}
 
-	fetch('data.json?ver='+timestamp).then(function(response) {
+	try {
+		fetch('data.php?ver=localstorage').then(function(response) {return response.json();}).catch();
+	} catch (e) {}
+
+	fetch('data.php?ver='+timestamp).then(function(response) {
 		return response.json();
 	}).then(function(jdata) {
 		console.log("Pobrano data.json!");

@@ -1,5 +1,5 @@
 var pageWidth = window.innerWidth || document.body.clientWidth;
-var threshold = Math.max(1,Math.floor(0.01 * (pageWidth)));
+var threshold = Math.max(1,Math.floor(0.1 * (pageWidth)));
 var touchstartX = 0;
 var touchstartY = 0;
 var touchendX = 0;
@@ -26,15 +26,15 @@ function handleGesture(e) {
     var yx = Math.abs(y / x);
     if (Math.abs(x) > threshold || Math.abs(y) > threshold) {
         if (yx <= limit) {
-            if (x < 0) {
-				console.log("left");
+            if (x >= 0) {
+				console.log("!left");
 				if (columns.activeColumn == 9000){
 					return;
 				}else if (columns.activeColumn > -1){
 					columns.setActive(columns.activeColumn-1);
 				}
             } else {
-				console.log("right");
+				console.log("!right");
 				console.log(columns.activeColumn);
 				if (columns.activeColumn == 9000){columns.activeColumn = 0};
 				if (columns.activeColumn == -1){

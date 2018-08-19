@@ -12,9 +12,9 @@ var CACHE_NAME = 'my-site-cache-'+SW_CHECKSUM;
 var urlsToCache = [
 	'./index.html',
 	'./index.html?launcher=true',
-	'./data.json?ver=localstorage',
-	'./assets/js/c_app.js',
-	'./assets/css/c_style.css',
+	'./data.php?ver=localstorage',
+	'./assets/js/c_app.js?ver=%build%',
+	'./assets/css/c_style.css?ver=%build%',
 	'./',
 ];
 
@@ -25,13 +25,56 @@ if (ENABLE_CACHE){
 		event.waitUntil(
 			caches.open(CACHE_NAME)
 				.then(function(cache) {
+					console.log("swc2");
 					console.log('Opened cache');
 					return cache.addAll(urlsToCache);
 				})
 		);
 	});
-	
+
 	self.addEventListener('fetch', function(event) {
+		event.respondWith(
+		  fetch(event.request).catch(function() {
+			return caches.match(event.request);
+		  })
+		);
+	});
+
+	self.addEventListener('fetch', function(event) {
+		event.respondWith(
+			caches.open(cacheName).then(function(cache) {
+				if (navigator.onLine){
+					fetch(event.request).then(function(response) {
+						cache.put(event.request, response.clone());
+						return response;
+					});
+				}else{
+					fetch(event.request).catch(function() {
+					  return caches.match(event.request);
+					})
+				}
+			})
+		);
+	});
+	
+	self.addEventListener('activate', function(event) {
+		console.log("activate new sw!")
+		event.waitUntil(
+		  caches.keys().then(function(cacheNames) {
+			return Promise.all(
+			  cacheNames.filter(function(cacheName) {
+				// Return true if you want to remove this cache,
+				// but remember that caches are shared across
+				// the whole origin
+				return true;
+			  }).map(function(cacheName) {
+				return caches.delete(cacheName);
+			  })
+			);
+		  })
+		);
+	  });
+	/*self.addEventListener('fetch', function(event) {
 		console.log("Cache used, network status: "+navigator.onLine);
 		event.respondWith(
 			caches.match(event.request)
@@ -47,7 +90,7 @@ if (ENABLE_CACHE){
 				}
 			)
 		);
-	});
+	});*/
 }else{
 	console.log("cache is disabled");
 }
