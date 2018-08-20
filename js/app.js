@@ -221,10 +221,12 @@ function init2(){
 function refreshView(){
 	console.time('refreshView-pre');
 	/* TODO: Do not refresh view if there is nothing selected */
+
 	if (select_units.value == "default" && select_teachers.value == "default" && select_rooms.value == "default"){
 		console.log("nic nie jest wybrane, nie odswiezam");
 		return;
 	}
+	
 	console.log("Refreshing view");
 
 	if (this.id != undefined){
@@ -243,6 +245,7 @@ function refreshView(){
 	
 	console.time('refreshView-1');
 	/* This looks terrible */
+
 	for (hour=1; hour<maxHours; hour++){
 		row = insertNumber(table,hour);
 		for (day=1; day<6; day++){

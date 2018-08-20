@@ -18,7 +18,8 @@ body{
 	font-style: normal;
 	font-display: fallback;
 	background: linear-gradient(180deg,#fbfbfb,#ececec);
-  	height: 100vh;
+   	/* height: 100vh; */
+  	min-height: 100vh;
 }
 
 .container{

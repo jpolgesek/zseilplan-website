@@ -32,23 +32,32 @@ if (ENABLE_CACHE){
 		);
 	});
 
+	
 	self.addEventListener('fetch', function(event) {
+		console.log("Fetch event");
+		console.log(event);
 		event.respondWith(
 		  fetch(event.request).catch(function() {
 			return caches.match(event.request);
 		  })
 		);
 	});
-
+	
+	/*
 	self.addEventListener('fetch', function(event) {
 		event.respondWith(
-			caches.open(cacheName).then(function(cache) {
+			caches.open(CACHE_NAME).then(function(cache) {
 				if (navigator.onLine){
+					console.log("navigator online, fetch live");
 					fetch(event.request).then(function(response) {
-						cache.put(event.request, response.clone());
+						console.log("aaaaa");
+						//cache.put(event.request, response.clone());
+						console.log("bbbbbb");
+						console.log(response);
 						return response;
 					});
 				}else{
+					console.log("navigator offline, fetch cache");
 					fetch(event.request).catch(function() {
 					  return caches.match(event.request);
 					})
@@ -56,6 +65,7 @@ if (ENABLE_CACHE){
 			})
 		);
 	});
+	*/
 	
 	self.addEventListener('activate', function(event) {
 		console.log("activate new sw!")
