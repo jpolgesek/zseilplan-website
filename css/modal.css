@@ -8,7 +8,7 @@
 	text-shadow: 1px 1px 1px #000;
 }
 
-.modal > button{
+.modal  button{
 	/* width: calc(50% - 6px); */
 	background: none;
 	/* border: solid 1px #FAFAFA; */
@@ -16,11 +16,10 @@
 	/* padding: 20px; */
     font-size: 1.1em;
     color: #FAFAFA;
-	margin: 20px;
-  	margin-left: 0px;
+	margin-right: 20px;
 }
 
-.modal > button:hover{
+.modal  button:hover{
 	/*width: calc(50% - 6px);
 	background: #FAFAFA;
 	border: solid 1px #FAFAFA;

@@ -1,0 +1,68 @@
+.diff {
+    color: #fafafa;
+    text-shadow: 1px 1px 1px #444;
+}
+
+.diff.added     { background: rgb(33, 193, 41); }
+.diff.modified  { background: rgb(241, 151, 40); }
+.diff.removed   { background: #dc1b1b; }
+
+.pName.diff.modified{
+    padding: 3px;
+    border-radius: 4px;
+}
+
+
+.diff-help{
+	text-align: center;	
+}
+
+.diff-help h1{
+	margin: 0;
+}
+
+.diff-demo{
+    padding: 8px;
+    margin: 7px;
+	border-radius: 4px;
+	text-shadow: 1px 1px 1px #000;
+}
+
+
+.item.diff.removed{
+	position: relative;
+}
+
+.item.diff.removed::before{
+    content: " ";
+    background: white;
+    position: absolute;
+    opacity: 0.8;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100%;
+    text-align: center;
+    line-height: 200%;
+}
+
+.item.diff.removed:hover::before{
+    opacity: 0.2;
+}
+
+.item.diff.removed::after{
+    content: "Usunięte";
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100%;
+    text-align: center;
+    line-height: 200%;
+    color: #000;
+    text-shadow: none;
+}
+
+.item.diff.removed:hover::after{
+    opacity: 0.1;
+}

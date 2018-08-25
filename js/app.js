@@ -197,9 +197,9 @@ function init2(){
 	}
 
 	try {
-		if(ZSEILPLAN_BUILD == undefined){
+		if (ZSEILPLAN_BUILD == undefined){
 			document.getElementById("footer").innerText = "Super Clever Build TEST BUILD";
-		}else{
+		} else {
 			document.getElementById("footer").innerText = "Super Clever Plan build " + ZSEILPLAN_BUILD;
 		}
 	} catch (e) {}
@@ -226,7 +226,7 @@ function refreshView(){
 		console.log("nic nie jest wybrane, nie odswiezam");
 		return;
 	}
-	
+
 	console.log("Refreshing view");
 
 	if (this.id != undefined){

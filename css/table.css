@@ -34,6 +34,7 @@
     margin: 2px;
 }
 
+
 /*
 .maintable b{
 	line-height: 200%;
@@ -78,7 +79,6 @@
 .maintable .override{    
 	background: rgba(199, 0, 0, 0.78);
     outline: solid 2px #e60000;
-    outline-style: dotted;
     color: #ffffff;
 }
 

@@ -91,6 +91,14 @@ var ui = {
 			jumpButtonsDiv.appendChild(span[2]);
 			element.appendChild(jumpButtonsDiv);	
 		}
+
+		element.zseilplanitem = {
+			"p": itemData.p,
+			"n": itemData.n,
+			"s": itemData.s,
+			"g": itemData.g,
+			"k": itemData.k
+		}
 		
 		return element;
 	},

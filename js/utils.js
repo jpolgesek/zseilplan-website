@@ -1,87 +1,68 @@
-/* Storage */
-if (typeof(Storage) !== "undefined") {
-    document.getElementById("storageControl").className = "";
-}
+var utils = {
+	log: function(caller, text){
+		console.log("["+caller+"] " + text);
+	},
+	warn: function(caller, text){
+		console.warn("["+caller+"] " + text);
+	},
+	error: function(caller, text){
+		console.error("["+caller+"] " + text);
+	},
+	androidDemo: function(){
+		
+		instruction = "<div class='android-close-btn' onclick='location.reload()'><i class='icon-cancel'></i> Wróć do planu</div>";
+		
+		instruction += "<div id='android_instruction' class='android-instruction'>";
+		
+		instruction += "<div class='android-desc'>Jak zainstalować Super Clever Plan na Androidzie</div>";
 
-var myStorage = {
-	save: function(){
+		// instruction += "<ol>";
+
+		instruction += "<div class='android-step-div'>";
+		instruction += "<div class='android-step-no'>1</div>";
+		instruction += "<div class='android-step-desc'>"; 
+		instruction += "<div class='android-step'>Otwórz Super Clever Plan w przeglądarce (najlepiej Chrome)</div>";
+		instruction += "<img class='android-img' src='assets/img/android_step_1.png'>";
+		instruction += "</div>";
+		instruction += "</div>";
+
+		instruction += "<div class='android-step-div'>";
+		instruction += "<div class='android-step-no'>2</div>";
+		instruction += "<div class='android-step-desc'>"; 
+		instruction += "<div class='android-step'>Otwórz menu</div>";
+		instruction += "<img class='android-img' src='assets/img/android_step_2.png'>";
+		instruction += "</div>";
+		instruction += "</div>";
+
+		instruction += "<div class='android-step-div'>";
+		instruction += "<div class='android-step-no'>3</div>";
+		instruction += "<div class='android-step-desc'>"; 
+		instruction += "<div class='android-step'>Wybierz 'dodaj do ekranu głównego'</div>";
+		instruction += "<img class='android-img' src='assets/img/android_step_3.png'>";
+		instruction += "</div>";
+		instruction += "</div>";
+
+		instruction += "<div class='android-step-div'>";
+		instruction += "<div class='android-step-no'>4</div>";
+		instruction += "<div class='android-step-desc'>"; 
+		instruction += "<div class='android-step'>Kliknij 'dodaj'</div>";
+		instruction += "<img class='android-img' src='assets/img/android_step_4.png'>";
+		instruction += "</div>";
+		instruction += "</div>";
+
+		// instruction += "</ol>";
+		instruction += "</div>";
+
+		document.body.innerHTML = instruction;
+
+		setTimeout(function(){
+			dom.addClass(document.getElementById("android_instruction"), "anim");
+		}, 1)
+		
+
+		// androidDemoDiv = modal.create('test', "Aplikacja na Androida", instruction, function(){});
+		
 		/*
-			select_units = document.getElementById("units").value;
-			select_teachers = document.getElementById("teachers").value;
-			select_rooms = document.getElementById("rooms").value;
-		*/
-
-		localStorage.setItem("select_units", select_units.value);
-		localStorage.setItem("select_teachers", select_teachers.value);
-		localStorage.setItem("select_rooms", select_rooms.value);
-		
-		localStorage.setItem("columns.activeColumn", columns.activeColumn);
-
-		localStorage.setItem("ui.darkMode", ui.darkMode);
-		localStorage.setItem("ui.breakLineInItem", ui.breakLineInItem);
-		localStorage.setItem("ui.jumpButtonsFloatRight", ui.jumpButtonsFloatRight);
-
-		localStorage.setItem("saved", true);
-		ui.createToast("Zapisałem ustawienia");
-		try { gtag('event', 'show', {'event_category': 'prefs.save', 'event_label': 'prefs.save'}); } catch (e) {}
-	},
-	clear: function(){
-		localStorage.removeItem("saved");
-		localStorage.removeItem("select_units");
-		localStorage.removeItem("select_teachers");
-		localStorage.removeItem("select_rooms");
-		localStorage.removeItem("columns.activeColumn");
-		localStorage.removeItem("ui.darkMode");
-		localStorage.removeItem("ui.breakLineInItem");
-		localStorage.removeItem("ui.jumpButtonsFloatRight");
-		ui.createToast("Wyczyściłem ustawienia domyślne");
-	},
-	load: function(){
-		if (localStorage.getItem("saved") != "true"	){
-			return;
-		}
-		
-		if (localStorage.getItem("displayColumn") != undefined){
-			localStorage.setItem("activeColumn", localStorage.getItem("displayColumn"));
-			localStorage.removeItem("displayColumn");
-		}
-	
-		document.getElementById("units").value = localStorage.getItem("select_units");
-		document.getElementById("teachers").value = localStorage.getItem("select_teachers");
-		document.getElementById("rooms").value = localStorage.getItem("select_rooms");
-	
-		
-		if(localStorage.getItem("ui.darkMode") == "true"){
-			ui.setDarkMode(true);
-		}
-		
-		if(localStorage.getItem("ui.breakLineInItem") == "true"){
-			ui.breakLineInItem = true;
-		}
-
-		if(localStorage.getItem("ui.jumpButtonsFloatRight") == "true"){
-			ui.jumpButtonsFloatRight = true;
-		}
-
-		try {
-			columns.setActive(localStorage.getItem("columns.activeColumn"));
-		} catch (error) {
-			console.log("Domyslny layout, ale bez selektora. E:"+error)
-		}
-
-		
-		if(localStorage.getItem("showTests") == "true"){
-			console.log(12);
-		}
-
-
-		//refreshView();
-		//TODO: updateStyle();
-	},
-	generatePreferencesUI: function(){
-		// preferencesDiv = document.getElementById("preferences");
-		// preferencesDiv.innerHTML = "";
-		preferencesDiv = modal.create('preferences', "Ustawienia", "Tutaj możesz dostosować Super Clever Plan do swoich preferencji", function(){ui.showPreferences(0)});
 		prefsList = [
 			//Source, Change, Name
 			["checkbox", ui.breakLineInItem, function(x){ui.setLineBreak(x)}, "Zawijaj wiersze po nazwie przedmiotu", "ui.setLineBreak"],
@@ -95,7 +76,7 @@ var myStorage = {
 		
 		// prefsTitle = document.createElement('h1');
 		// prefsTitle.innerText = "Ustawienia";
-		// preferencesDiv.appendChild(prefsTitle);
+		// androidDemoDiv.appendChild(prefsTitle);
 		for(var p_i=0; p_i<prefsList.length ; p_i++){
 			element = prefsList[p_i];
 			row = document.createElement('div');
@@ -109,15 +90,7 @@ var myStorage = {
 				input.type = "checkbox";
 				input.checked = element[1];
 				
-				/* This is very bad. */
 				input.setAttribute("onclick",""+element[4]+"(this.checked)");
-				/*
-				if (isIE){
-					input.setAttribute("onclick",""+element[4]+"(this.checked)");
-				}else{
-					input.onchange = function(){prefsList[(p_i+1)-1][2](this.checked)};
-				}
-				*/
 				span = document.createElement('span');
 				span.className = "slider round";
 	
@@ -157,7 +130,7 @@ var myStorage = {
 				row.appendChild(title);
 			}
 
-			preferencesDiv.appendChild(row);
+			androidDemoDiv.appendChild(row);
 		}
 		
 		row = document.createElement('div');
@@ -174,14 +147,8 @@ var myStorage = {
 		prefsBtnCancel.onclick = function(){ui.showPreferences(0)};
 		row.appendChild(prefsBtnCancel);
 
-		preferencesDiv.appendChild(row);
-		/*
-		prefsBtnClear = document.createElement('button');
-		prefsBtnClear.innerText = "Usuń ustawienia domyślne";
-		prefsBtnClear.onclick = function(){myStorage.CLEAR();ui.showPreferences(0)};
-		preferencesDiv.appendChild(prefsBtnClear);
+		androidDemoDiv.appendChild(row);
 		*/
-		document.body.appendChild(preferencesDiv);
-		try { gtag('event', 'show', {'event_category': 'prefs.generate', 'event_label': 'prefs.generate'}); } catch (e) {}
+		// document.body.appendChild(androidDemoDiv);
 	}
-} 	
+};

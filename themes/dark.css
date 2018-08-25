@@ -24,10 +24,15 @@
 }
 
 .dark .clickable:hover{
-	color: #222;
-	background: rgba(79, 133, 255, 0.63);
+	color: #fff;
+    background: rgb(44, 109, 208);
+    box-shadow: 1px 1px 1px 0px #000;
 }
 
+.dark .clickable.diff-modified:hover{
+	color: #FFF;
+	text-shadow: 1px 1px 1px #000;
+}
 
 .dark select{
 	color: #EEE;
@@ -51,6 +56,10 @@
 	color: #EEE;
 }
 
+.dark .maintable {
+    background: #000000;
+}
+
 .dark #maintable td, #maintable th {
 	border: 1px solid #565656;
 }
@@ -59,8 +68,13 @@
 
 .dark #maintable tr:nth-child(odd){background-color: #272727;}
 
+.dark .maintable td:hover {
+    background-color: rgba(21, 82, 146, 0.8) !important;
+    box-shadow: inset 1px 1px 5px 0px rgba(0, 0, 0, 0.4);
+}
+
 .dark .currentTimeFull{
-	background-color: rgba(14, 65, 140, 0.42) !important;
+    background-color: rgba(14, 65, 140, 0.42) !important;
 }
 
 .dark #status > a{
@@ -158,4 +172,19 @@
 .dark #status {
     background-color: #1d1d1d;
     color: #fafafa;
+}
+
+
+/* diff */
+.dark .diff.added 		{ background: rgb(4, 121, 10) }
+.dark .diff.modified 	{ background: rgb(185, 102, 30); }
+.dark .diff.removed 	{ background: darkred; }
+
+
+.dark .item.diff.removed::before{
+    background: #000;
+}
+.dark .item.diff.removed::after{
+    color: #FAFAFA;
+    text-shadow: none;
 }
