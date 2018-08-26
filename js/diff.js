@@ -184,85 +184,89 @@ var diff = {
 						}
 					} else if (this.selectedType == "unit"){
 						//todo: tortury
-						try {
-							classesArr = this.data.timetable[day][hour][select_units.value];
-							if (classesArr != undefined){
-								foundSimilar = false;
-								notFound = [];
+						classesArr = this.data.timetable[day][hour][select_units.value];
+						if (classesArr != undefined){
+							foundSimilar = false;
+							notFound = [];
 
-								newClassesArr = [];
-								
-								//remove duplicates
-								for (cls in classesArr){
-									duplicate = false;
+							newClassesArr = [];
+							
+							//remove duplicates
+							for (cls in classesArr){
+								duplicate = false;
 
-									oldItem = classesArr[cls];
-									for(q = 0; q < il; q++ ){
-										i_currentItemElement = items[q];
-										i_currentItem = i_currentItemElement.zseilplanitem;
-										if ((oldItem.p == i_currentItem.p) && (oldItem.n == i_currentItem.n) && (oldItem.s == i_currentItem.s)){
-											duplicate = true;
-										}
-									}
-
-									if (!duplicate){
-										newClassesArr.push(oldItem);
+								oldItem = classesArr[cls];
+								for(q = 0; q < il; q++ ){
+									i_currentItemElement = items[q];
+									i_currentItem = i_currentItemElement.zseilplanitem;
+									if ((oldItem.p == i_currentItem.p) && (oldItem.n == i_currentItem.n) && (oldItem.s == i_currentItem.s)){
+										duplicate = true;
 									}
 								}
-								classesArr = newClassesArr;
 
-								for (cls in classesArr){
-									oldItem = classesArr[cls];
+								if (!duplicate){
+									newClassesArr.push(oldItem);
+								}
+							}
+							classesArr = newClassesArr;
 
-									if ((oldItem.p == currentItem.p) && (oldItem.n == currentItem.n) && (oldItem.s != currentItem.s)){
-										currentItem.diffModified2 = "Był " + oldItem.s + "; Jest " + currentItem.s;
-										currentItem.diff = "modified";
-										foundSimilar = true;
-									}else if ((oldItem.s == currentItem.s) && (oldItem.n == currentItem.n) && (oldItem.p != currentItem.p)){
+							for (cls in classesArr){
+								oldItem = classesArr[cls];
+
+								if ((oldItem.p == currentItem.p) && (oldItem.n == currentItem.n) && (oldItem.s != currentItem.s)){
+									currentItem.diffModified2 = "Był " + oldItem.s + "; Jest " + currentItem.s;
+									currentItem.diff = "modified";
+									foundSimilar = true;
+								}else if ((oldItem.s == currentItem.s) && (oldItem.n == currentItem.n) && (oldItem.p != currentItem.p)){
+									currentItem.diffModifiedP = "Był " + oldItem.p + "; Jest " + currentItem.p;
+									currentItem.diff = "modified";
+									foundSimilar = true;
+								}else if ((oldItem.s == currentItem.s) && (oldItem.n == currentItem.n) && (oldItem.p == currentItem.p)){
+									foundSimilar = true;
+								}
+								
+								if (currentItem.diff == "modified"){
+									currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+								}else{
+									notFound.push(classesArr[cls]);
+									foundSimilar = false;
+								}
+							}
+							
+							if (notFound.length > 0){
+								for (i = 0; i < notFound.length; i++){
+									if (il == 1){
+										//tu była tylko jedna lekcja
 										currentItem.diffModifiedP = "Był " + oldItem.p + "; Jest " + currentItem.p;
-										currentItem.diff = "modified";
-										foundSimilar = true;
-									}else if ((oldItem.s == currentItem.s) && (oldItem.n == currentItem.n) && (oldItem.p == currentItem.p)){
-										foundSimilar = true;
-									}
-									
-									if (currentItem.diff == "modified"){
-										currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
-									}else{
-										notFound.push(classesArr[cls]);
-										foundSimilar = false;
-									}
-								}
-								
-								if (notFound.length > 0){
-									for (i = 0; i < notFound.length; i++){
-										if (il == 1){
-											//tu była tylko jedna lekcja
-											currentItem.diffModifiedP = "Był " + oldItem.p + "; Jest " + currentItem.p;
-											currentItem.diffModified1 = "Był " + oldItem.n + "; Jest " + currentItem.n;
-											currentItem.diffModified2 = "Był " + oldItem.s + "; Jest " + currentItem.s;
-											currentItem.diff = "modified";	
+										currentItem.diffModified1 = "Był " + oldItem.n + "; Jest " + currentItem.n;
+										currentItem.diffModified2 = "Był " + oldItem.s + "; Jest " + currentItem.s;
+										currentItem.diff = "modified";	
+										try {
 											currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
-										}else{
-											for(q = 0; q < il; q++ ){
-												i_currentItemElement = items[q];
-												i_currentItem = i_currentItemElement.zseilplanitem;
-												//TODO: fix me plz xD
-												if (i_currentItem.isDiff){
-												}else if ((oldItem.p == i_currentItem.p) && (oldItem.n == i_currentItem.n) && (oldItem.s != i_currentItem.s)){
-												}else if ((oldItem.s == i_currentItem.s) && (oldItem.n == i_currentItem.n) && (oldItem.p != i_currentItem.p)){
-												}else if ((oldItem.s == i_currentItem.s) && (oldItem.n == i_currentItem.n) && (oldItem.p == i_currentItem.p)){
-												}else{
-													notFound[i].diff = "removed";
-													itemsContainer.appendChild(ui.createItem(notFound[i]));
-												}
+										} catch (e) {}
+									}else{
+										for(q = 0; q < il; q++ ){
+											i_currentItemElement = items[q];
+											i_currentItem = i_currentItemElement.zseilplanitem;
+											//TODO: fix me plz xD
+											if (i_currentItem.isDiff){
+											}else if ((oldItem.p == i_currentItem.p) && (oldItem.n == i_currentItem.n) && (oldItem.s != i_currentItem.s)){
+											}else if ((oldItem.s == i_currentItem.s) && (oldItem.n == i_currentItem.n) && (oldItem.p != i_currentItem.p)){
+											}else if ((oldItem.s == i_currentItem.s) && (oldItem.n == i_currentItem.n) && (oldItem.p == i_currentItem.p)){
+											}else{
+												notFound[i].diff = "removed";
+												itemsContainer.appendChild(ui.createItem(notFound[i]));
 											}
-											
 										}
+										
 									}
 								}
 							}
-						} catch (e) {}
+						} else {
+							currentItem.diff = "added";
+							console.log(currentItemElement);
+							currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+						}
 					}
 				}
 			}
