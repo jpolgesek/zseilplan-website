@@ -6,6 +6,7 @@
 }
 
 /* Mobile support */
+.mobile-only-flex	{ display: none; }
 
 @media screen and (max-width: 768px) {
 	.container{
@@ -56,8 +57,9 @@
 		display: none;
 	}
 
-	.mobile-only{ display: inline-block; }
-	.desktop-only{ display: none !important;}
+	.mobile-only		{ display: inline-block; }
+	.mobile-only-flex	{ display: flex; }
+	.desktop-only		{ display: none !important;}
 
 	.navbar-buttons {
 		top: 0;
