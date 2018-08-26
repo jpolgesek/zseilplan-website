@@ -1,13 +1,38 @@
 var diff = {
 	/* json object will be loaded here */
 	data: undefined,
+	index: undefined,
+
+	select_timetable_old: document.getElementById("select_timetable_old"),
+	select_timetable_new: document.getElementById("select_timetable_new"),
 
 	diffInfoElement: document.getElementById("diff-info"),
 
+	loadIndex: function(){
+		fetch("data/index.json").then(function(resp) {
+			return resp.json();
+		}).then(function(jsondata) {
+			diff.index = jsondata;
+			diff.updateIndexUI();
+		}).catch(function(error){
+			utils.error('diff', 'Nie udało się pobrać pliku z danymi. ' + error);
+		});
+	},
+
+	updateIndexUI: function(){
+
+		for(i = 0; i < diff.index.timetable_archives.length; i++){
+			item = diff.index.timetable_archives[i];
+			console.log(item);
+			select_timetable_old.options[select_timetable_old.length] = new Option(item.date + " ("+ item.hash +")", item.filename);
+			select_timetable_new.options[select_timetable_new.length] = new Option(item.date + " ("+ item.hash +")", item.filename);
+		}
+	},
 	
 	/* function to fetch json object */
 	/* filename - filename of fetched file */
 	loadData: function(filename){
+		filename = "data/"+filename;
 		fetch(filename).then(function(resp) {
 			return resp.json();
 		}).then(function(jsondata) {
@@ -20,6 +45,12 @@ var diff = {
 	loadDataCallback: function(jsondata){
 		this.data = jsondata;
 		utils.log('diff', 'Pomyślnie załadowano do porównania plan z dnia ' + diff.data._updateDate_min);
+		this.generateDiff();
+	},
+
+	compareSelected: function(){
+		//TODO: Load "new" timetable
+		diff.loadData(select_timetable_old.value);
 	},
 
 	generateDiff: function(){
@@ -33,15 +64,17 @@ var diff = {
 			return false;
 		}
 
+		/* Prepare table UI */
 		ui.jumpButtonsFloatRight = true;
 		old_overrides_disabled = overrides_disabled;
 		overrides_disabled = true;
 		oldActiveColumn = columns.activeColumn;
-		columns.setActive(-1);
+		columns.setActive(-1); //todo: check if mobile
 		refreshView();
 
+		/* Show info about current diff */
 		this.diffInfoElement.innerHTML = "";
-		
+
 		if (select_units.value != "default"){
 			this.selectedType = "unit";
 			this.diffInfoElement.innerHTML += "Porównujesz plan klasy "+select_units.value + "<br>";
@@ -53,88 +86,97 @@ var diff = {
 			this.diffInfoElement.innerHTML += "Porównujesz plan sali "+select_rooms.value + "<br>";
 		}
 
-		
 		this.diffInfoElement.innerHTML += "Stary plan z dnia: " + this.data._updateDate_max + " <br>";
 		this.diffInfoElement.innerHTML += "Nowy plan z dnia: " + data._updateDate_max + " (aktualny) <br>";
 
-		//For each day
+
 		for (day=1; day<6; day++){
-			//For every hour
 			for (hour=1; hour<maxHours; hour++){
 				itemsContainer = table.rows[hour].cells[day];
 				items = itemsContainer.children;
 				il = items.length;
+
 				if (il == 0){
+					/* Lekcja została usunięta */
 					if (this.selectedType == "teacher"){
 						oldItem = this.data.teachers[select_teachers.value][day][hour];
 						if (oldItem != undefined){
-							console.log("Tu coś było");
-							temp = ui.createItem(oldItem);
-							dom.addClass(temp, "diff");
-							dom.addClass(temp, "removed");
-							temp.getElementsByClassName("jumpButtons")[0].children[1].style.background = 'rgba(0,0,0,0.3)';
-							temp.getElementsByClassName("jumpButtons")[0].children[0].style.background = 'rgba(0,0,0,0.3)';
-							itemsContainer.append(temp);
+							oldItem.diff = "removed";
+							itemsContainer.append(ui.createItem(oldItem));
 						}
+					} else if (this.selectedType == "room"){
+						for (unit in this.data.timetable[day][hour]){
+							oldItem = this.data.timetable[day][hour][unit].filter(function(v){return v.s == select_rooms.value;});
+							if (oldItem.length > 0){
+								oldItem = oldItem[0];
+								oldItem.k = unit;
+								oldItem.diff = "removed";
+								itemsContainer.appendChild(ui.createItem(oldItem));
+							}
+						}
+					} else if (this.selectedType == "unit"){
+						//todo: tortury
 					}
 				}
-				console.log("IL: "+il);
+				
 				for (i = 0; i < il; i++){
 					currentItemElement = items[i];
 					currentItem = currentItemElement.zseilplanitem;
-					
-					currentItemElement.Element0 = currentItemElement.getElementsByClassName("pName")[0];
-					currentItemElement.Element1 = currentItemElement.getElementsByClassName("jumpButtons")[0].children[0];
-					currentItemElement.Element2 = currentItemElement.getElementsByClassName("jumpButtons")[0].children[1];
+
 					if (this.selectedType == "teacher"){
 						oldItem = this.data.teachers[select_teachers.value][day][hour];
 						
 						if (oldItem == undefined){
-							console.log("Tego tu nie było");
-							//currentItemElement.style.background = "green";
-							dom.addClass(currentItemElement, "diff");
-							dom.addClass(currentItemElement, "added");
-							// currentItemElement.getElementsByClassName("pName")[0].style.background = 'green';
-							currentItemElement.getElementsByClassName("jumpButtons")[0].children[1].style.background = 'rgba(0,0,0,0.3)';
-							currentItemElement.getElementsByClassName("jumpButtons")[0].children[0].style.background = 'rgba(0,0,0,0.3)';
-						}else{
-							oldItem.Element0 = currentItemElement.getElementsByClassName("pName")[0];
-							oldItem.Element1 = currentItemElement.getElementsByClassName("jumpButtons")[0].children[0];
-							oldItem.Element2 = currentItemElement.getElementsByClassName("jumpButtons")[0].children[1];
-
-							temp = ui.createItem(oldItem);
-							isChanged = false;
-							// console.log(oldItem);
+							currentItem.diff = "added";
+							currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+						} else {
 							if (oldItem.p != currentItem.p){
-								// console.log("zmienił się przedmiot z " + oldItem.p + " na " + currentItem.p);
-								dom.addClass(oldItem.Element0, "diff");
-								dom.addClass(oldItem.Element0, "modified");
-								currentItemElement.getElementsByClassName("pName")[0].title = "Był " + oldItem.p + "; Jest " + currentItem.p;
-								// temp.getElementsByClassName("pName")[0].style.background = 'red';
-								isChanged = true;
+								currentItem.diffModifiedP = "Był " + oldItem.p + "; Jest " + currentItem.p;
+								currentItem.diff = "modified";
 							}
 							if (oldItem.s != currentItem.s){
-								// console.log("zmieniła się sala z " + oldItem.s + " na " + currentItem.s);
-								dom.addClass(oldItem.Element2, "diff");
-								dom.addClass(oldItem.Element2, "modified");
-								currentItemElement.getElementsByClassName("jumpButtons")[0].children[1].title = "Była " + oldItem.s + "; Jest " + currentItem.s;
-								isChanged = true;
+								currentItem.diffModified2 = "Była " + oldItem.s + "; Jest " + currentItem.s;
+								currentItem.diff = "modified";
 							}
 							if (oldItem.k != currentItem.k){
-								// console.log("zmieniła się klasa z " + oldItem.k + " na " + currentItem.k);
-								dom.addClass(oldItem.Element1, "diff");
-								dom.addClass(oldItem.Element1, "modified");
-								currentItemElement.getElementsByClassName("jumpButtons")[0].children[0].title = "Była " + oldItem.k + "; Jest " + currentItem.k;
-								isChanged = true;
+								currentItem.diffModified1 = "Była " + oldItem.k + "; Jest " + currentItem.k;
+								currentItem.diff = "modified";
 							}
-							/*
-							if (isChanged){
-								console.log(itemsContainer);
-								// temp.style.background = "red";
-								itemsContainer.insertBefore(temp, currentItemElement);
-							}
-							*/
+							currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
 						}
+					} else if (this.selectedType == "room"){
+						wasEmpty = true;
+
+						for (unit in this.data.timetable[day][hour]){
+							oldItem = this.data.timetable[day][hour][unit].filter(function(v){return v.s == select_rooms.value;});
+							if (oldItem[0] == undefined) continue;
+							
+							wasEmpty = false;
+							oldItem = oldItem[0];
+							oldItem.k = unit;
+							
+							if (oldItem.k != currentItem.k){
+								currentItem.diffModified1 = "Był " + oldItem.k + "; Jest " + currentItem.k;
+								currentItem.diff = "modified";
+							}
+							if (oldItem.p != currentItem.p){
+								currentItem.diffModifiedP = "Był " + oldItem.p + "; Jest " + currentItem.p;
+								currentItem.diff = "modified";
+							}
+							if (oldItem.n != currentItem.n){
+								currentItem.diffModified2 = "Był " + oldItem.n + "; Jest " + currentItem.n;
+								currentItem.diff = "modified";
+							}
+
+							currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+						}
+
+						if (wasEmpty){
+							currentItem.diff = "added";
+							currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+						}
+					} else if (this.selectedType == "unit"){
+						//todo: tortury
 					}
 				}
 			}

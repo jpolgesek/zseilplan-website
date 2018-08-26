@@ -166,7 +166,7 @@
 			<!-- TODO: create me dynamically-->	
 			<div class='bar print-hide'>
 				<nav class="tabs">
-					<a href="#" onclick='columns.setActive(-1)' class="active" style="" id='btn_-1'>
+					<a href="#" onclick='columns.setActive(-1)' class="active" id='btn_-1'>
 						<span class="mobile-only">All</span>
 						<span class="desktop-only">Cały tydzień</span>
 					</a>
@@ -194,16 +194,38 @@
 					</a>
 				</nav>
 			</div>
+
+			
+			
+			<div>
+			</div>
 			
 			<!-- TODO: create me dynamically-->	
 			<div class='diff-help print-hide'>
 				<h3>Zmiany w planie</h3>
+
 				<span id="diff-info">
-					<b>[TODO]</b><br>
-					Porównujesz plan [n/p/s] [value]<br>
-					Stary plan: z dnia 01.01.2018 [hash] (stary)<br>
-					Nowy plan: z dnia 02.02.2018 [hash] (aktualny)
+					Porównujesz plan [n/p/s] [value]
 				</span>
+				
+				<div class='bar print-hide'>
+					<div>
+						Wybierz stary plan do porównania
+						<label style="width: 25%; margin: 3px;">
+							<select style="width: 100%;" id='select_timetable_old'></select>
+						</label>
+					</div>
+					<span> - </span>
+					<div>
+						Wybierz nowy plan do porównania
+						<label style="width: 25%; margin: 3px;">
+							<select style="width: 100%;" id='select_timetable_new'></select>
+						</label>
+					</div>
+				</div>
+
+				<button onclick="diff.compareSelected()">Porównaj plany</button><br>
+
 				<div class="bar">
 					<span class="diff-demo diff added">Nowa lekcja</span>
 					<span class="diff-demo diff removed">Usunięta lekcja</span>

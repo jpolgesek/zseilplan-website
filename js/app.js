@@ -214,6 +214,8 @@ function init2(){
 		document.getElementById("networkStatus").innerText = "";
 		document.getElementById("networkStatus").className = "";
 	});
+	
+	diff.loadIndex();
 
 }
 

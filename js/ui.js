@@ -64,11 +64,45 @@ var ui = {
 		}
 		
 		element = document.createElement('div');
+
 		if (this.isOverride){
 			element.className = 'item override';
 		}else{
 			element.className = 'item';
 		}
+		
+		if (itemData.diff != undefined){
+			if (itemData.diff == "removed"){
+				element.className += ' diff removed';
+			} else if (itemData.diff == "added"){
+				element.className += ' diff added';
+			}
+		}
+		
+
+		if (itemData.diff != undefined){
+			if (itemData.diff == "removed"){
+				span[1].style.background = 'rgba(0,0,0,0.3)';
+				span[2].style.background = 'rgba(0,0,0,0.3)';
+			} else if (itemData.diff == "added"){
+				span[1].style.background = 'rgba(0,0,0,0.3)';
+				span[2].style.background = 'rgba(0,0,0,0.3)';
+			} else if (itemData.diff == "modified"){
+				if (itemData.diffModifiedP != undefined){
+					span[0].className += " diff modified";
+					span[0].title = itemData.diffModifiedP;
+				}
+				if (itemData.diffModified1 != undefined){
+					span[1].className += " diff modified";
+					span[1].title = itemData.diffModified1;
+				}
+				if (itemData.diffModified2 != undefined){
+					span[2].className += " diff modified";
+					span[2].title = itemData.diffModified2;
+				}
+			}
+		}
+
 		element.appendChild(span[0]);
 		element.appendChild(this.itemLineBreak());
 		
