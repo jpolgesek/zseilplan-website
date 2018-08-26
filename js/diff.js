@@ -20,13 +20,12 @@ var diff = {
 	},
 
 	updateIndexUI: function(){
-
 		for(i = 0; i < diff.index.timetable_archives.length; i++){
 			item = diff.index.timetable_archives[i];
-			console.log(item);
 			select_timetable_old.options[select_timetable_old.length] = new Option(item.date + " ("+ item.hash +")", item.filename);
 			select_timetable_new.options[select_timetable_new.length] = new Option(item.date + " ("+ item.hash +")", item.filename);
 		}
+		utils.table(diff.index.timetable_archives);
 	},
 	
 	/* function to fetch json object */
@@ -96,8 +95,8 @@ var diff = {
 				items = itemsContainer.children;
 				il = items.length;
 
+				/* Lekcja została usunięta */
 				if (il == 0){
-					/* Lekcja została usunięta */
 					if (this.selectedType == "teacher"){
 						oldItem = this.data.teachers[select_teachers.value][day][hour];
 						if (oldItem != undefined){
@@ -115,7 +114,15 @@ var diff = {
 							}
 						}
 					} else if (this.selectedType == "unit"){
-						//todo: tortury
+						try {
+							classesArr = this.data.timetable[day][hour][select_units.value];
+							if (classesArr != undefined){
+								for (cls in classesArr){
+									classesArr[cls].diff = "removed";
+									itemsContainer.appendChild(ui.createItem(classesArr[cls]));
+								}
+							}
+						} catch (e) {}
 					}
 				}
 				
@@ -177,6 +184,85 @@ var diff = {
 						}
 					} else if (this.selectedType == "unit"){
 						//todo: tortury
+						try {
+							classesArr = this.data.timetable[day][hour][select_units.value];
+							if (classesArr != undefined){
+								foundSimilar = false;
+								notFound = [];
+
+								newClassesArr = [];
+								
+								//remove duplicates
+								for (cls in classesArr){
+									duplicate = false;
+
+									oldItem = classesArr[cls];
+									for(q = 0; q < il; q++ ){
+										i_currentItemElement = items[q];
+										i_currentItem = i_currentItemElement.zseilplanitem;
+										if ((oldItem.p == i_currentItem.p) && (oldItem.n == i_currentItem.n) && (oldItem.s == i_currentItem.s)){
+											duplicate = true;
+										}
+									}
+
+									if (!duplicate){
+										newClassesArr.push(oldItem);
+									}
+								}
+								classesArr = newClassesArr;
+
+								for (cls in classesArr){
+									oldItem = classesArr[cls];
+
+									if ((oldItem.p == currentItem.p) && (oldItem.n == currentItem.n) && (oldItem.s != currentItem.s)){
+										currentItem.diffModified2 = "Był " + oldItem.s + "; Jest " + currentItem.s;
+										currentItem.diff = "modified";
+										foundSimilar = true;
+									}else if ((oldItem.s == currentItem.s) && (oldItem.n == currentItem.n) && (oldItem.p != currentItem.p)){
+										currentItem.diffModifiedP = "Był " + oldItem.p + "; Jest " + currentItem.p;
+										currentItem.diff = "modified";
+										foundSimilar = true;
+									}else if ((oldItem.s == currentItem.s) && (oldItem.n == currentItem.n) && (oldItem.p == currentItem.p)){
+										foundSimilar = true;
+									}
+									
+									if (currentItem.diff == "modified"){
+										currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+									}else{
+										notFound.push(classesArr[cls]);
+										foundSimilar = false;
+									}
+								}
+								
+								if (notFound.length > 0){
+									for (i = 0; i < notFound.length; i++){
+										if (il == 1){
+											//tu była tylko jedna lekcja
+											currentItem.diffModifiedP = "Był " + oldItem.p + "; Jest " + currentItem.p;
+											currentItem.diffModified1 = "Był " + oldItem.n + "; Jest " + currentItem.n;
+											currentItem.diffModified2 = "Był " + oldItem.s + "; Jest " + currentItem.s;
+											currentItem.diff = "modified";	
+											currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+										}else{
+											for(q = 0; q < il; q++ ){
+												i_currentItemElement = items[q];
+												i_currentItem = i_currentItemElement.zseilplanitem;
+												//TODO: fix me plz xD
+												if (i_currentItem.isDiff){
+												}else if ((oldItem.p == i_currentItem.p) && (oldItem.n == i_currentItem.n) && (oldItem.s != i_currentItem.s)){
+												}else if ((oldItem.s == i_currentItem.s) && (oldItem.n == i_currentItem.n) && (oldItem.p != i_currentItem.p)){
+												}else if ((oldItem.s == i_currentItem.s) && (oldItem.n == i_currentItem.n) && (oldItem.p == i_currentItem.p)){
+												}else{
+													notFound[i].diff = "removed";
+													itemsContainer.appendChild(ui.createItem(notFound[i]));
+												}
+											}
+											
+										}
+									}
+								}
+							}
+						} catch (e) {}
 					}
 				}
 			}

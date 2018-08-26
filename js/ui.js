@@ -126,12 +126,19 @@ var ui = {
 			element.appendChild(jumpButtonsDiv);	
 		}
 
+		if (itemData.diff != undefined){
+			itemData.diff = true;
+		} else {
+			itemData.diff = false;
+		}
+
 		element.zseilplanitem = {
 			"p": itemData.p,
 			"n": itemData.n,
 			"s": itemData.s,
 			"g": itemData.g,
-			"k": itemData.k
+			"k": itemData.k,
+			"isDiff": itemData.diff
 		}
 		
 		return element;

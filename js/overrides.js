@@ -21,7 +21,7 @@ function IEgetDay(n) {
 	out += String(date.getMonth()+1);
 	out += "."
 	out += String(date.getFullYear());
-	return "28.05.2018";
+	return "28.05.2018"; //TODO: remove me
 	return out;
 }
 
@@ -32,12 +32,11 @@ function toggleOverrides(value){
 }
 
 function checkForOverrides(){
-	console.log("Overrides start");
-
-	if (overrides_disabled == true){
-		console.log("Overrides are disabled. Exiting.");
+	if (overrides_disabled){
+		utils.log("override", "Overrides are disabled");
 		return;
 	}
+	utils.log("override", "Start checkForOverrides()");
 	
 	type = null;
 	value = null
@@ -98,9 +97,10 @@ function unitParse(unit, override, cell){
 			if (a[0].innerText.split("-").length > 1){
 				gg = a[0].innerText.split("-")[1];
 			}
-			console.log("teacher="+teacher);
+			//console.log("teacher="+teacher);
 			if (teacher == override[o].oldTeacherShort){
-				console.log("Trafiony");
+				utils.log("override", "Found override for unit="+unit+", teacher="+teacher);
+				//console.log("Trafiony");
 
 				temp_data = Object();
 				try {
@@ -162,7 +162,7 @@ function teacherParse(teacher, override, cell){
 
 
 function roomParse(room, override, cell){
-	console.log("rp");
+	//console.log("rp");
 	for (unit in override){
 		for (o in override[unit]){
 			// console.log(override[unit][o]);

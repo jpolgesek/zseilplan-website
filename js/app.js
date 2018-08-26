@@ -32,14 +32,16 @@ function sortAsc (a, b) {
 }
 
 function init(){
+	utils.log("app", "Initializing");
 
-	console.log("init");
 	try{loaderstatus.innerHTML="Ładuje preferencje";}catch(e){};	
 	status_span.innerText = "Ładowanie preferencji...";
+
 	/* If HTML5 storage is available, try to load user saved settings */
 	if (typeof(Storage) !== "undefined") {
 		myStorage.load();
 	}
+
 	status_span.innerText = "Ładowanie danych planu...";
 	try{loaderstatus.innerHTML="Pobieram dane";}catch(e){};	
 	fetchData();
@@ -61,9 +63,10 @@ function debug(){
 */
 
 function init2(){
-	console.log("init 2");
+	utils.log("app", "Loading app");
 
 	if (!navigator.onLine){
+		utils.warn("app", "App is offline, be careful");
 		// document.getElementsByClassName("navbar-info")[0].innerHTML = "<b>TRYB OFFLINE</b>";
 		// document.getElementsByClassName("navbar")[0].style.backgroundColor = "#ff0000";
 		dom.addClass(document.getElementById("networkStatus"),"bad");
@@ -127,8 +130,8 @@ function init2(){
 	
 	/* TODO: fix me */
 	try {
-	status_span.innerHTML += "<br>Zastępstwa na "+Object.keys(overrideData).map(function(s){return s.substr(0,5)}).join();
-	status_span.innerHTML += "<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a> | <a href='changelog.html'>Changelog</a>";
+		status_span.innerHTML += "<br>Zastępstwa na "+Object.keys(overrideData).map(function(s){return s.substr(0,5)}).join();
+		status_span.innerHTML += "<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a> | <a href='changelog.html'>Changelog</a>";
 	} catch (e) {}
 
 
@@ -214,14 +217,14 @@ function init2(){
 		document.getElementById("networkStatus").innerText = "";
 		document.getElementById("networkStatus").className = "";
 	});
-	
+
 	diff.loadIndex();
 
 }
 
 
 function refreshView(){
-	console.time('refreshView-pre');
+	//console.time('refreshView-pre');
 	/* TODO: Do not refresh view if there is nothing selected */
 
 	if (select_units.value == "default" && select_teachers.value == "default" && select_rooms.value == "default"){
@@ -229,7 +232,8 @@ function refreshView(){
 		return;
 	}
 
-	console.log("Refreshing view");
+	utils.log("app", "Refreshing view");
+	// console.log("Refreshing view");
 
 	if (this.id != undefined){
 		ui.resetSelects(this.id);
@@ -243,9 +247,9 @@ function refreshView(){
 		table.innerHTML = "";
 	}
 	createHeader(table);
-	console.timeEnd('refreshView-pre');
+	//console.timeEnd('refreshView-pre');
 	
-	console.time('refreshView-1');
+	//console.time('refreshView-1');
 	/* This looks terrible */
 
 	for (hour=1; hour<maxHours; hour++){
@@ -271,6 +275,7 @@ function refreshView(){
 					itemData = data.teachers[select_teachers.value][day][hour];
 					cell.appendChild(ui.createItem(itemData));
 				}catch (e){}
+			
 			/* Show room view */
 			}else if (select_rooms.value != "default"){
 				ui.itemDisplayType = 1;
@@ -308,13 +313,13 @@ function refreshView(){
 		try { gtag('event', 'show.room', {'event_category': 'ui.room', 'event_label': 'show.room='+select_rooms.value}); } catch (e) {}
 	}
 
-	console.timeEnd('refreshView-1');
-	console.time('refreshView-2');
+	//console.timeEnd('refreshView-1');
+	//console.time('refreshView-2');
 	//style.update();
 	columns.showSelected();	
-	console.timeEnd('refreshView-2');
+	//console.timeEnd('refreshView-2');
 		
-	console.time('refreshView-3');
+	//console.time('refreshView-3');
 	/*
 	if(localStorage.getItem("autocfo") == "true"){
 		checkForOverrides();
@@ -322,7 +327,7 @@ function refreshView(){
 	*/
 	checkForOverrides();
 
-	console.timeEnd('refreshView-3');
+	//console.timeEnd('refreshView-3');
 	myTime.checkTime();
 }
 
@@ -395,15 +400,16 @@ function jumpTo(type, value){
 
 function fetchData(){	
 	try {
-		console.log("Fetch znaleziony: "+fetch);
+		utils.log("app", "Found fetch" + fetch.toString().substr(0,0));
 	} catch (error) {
+		utils.warn("app", "Fetch not found, enabling compatibility layer");
 		compat = true
 	}
 	
 	if (compat){
 		//Compatibility mode
 		try{loaderstatus.innerHTML="Rozpoczynam pobieranie danych w trybie kompatybilności wstecznej";}catch(e){};
-		console.log("Wlaczam tryb kompatybilnosci wstecznej - fetch.")
+		
 		timestamp = Date.now();
 		var fetchDataCompatXHR = new XMLHttpRequest();
 		fetchDataCompatXHR.onreadystatechange = function() {
@@ -423,8 +429,7 @@ function fetchData(){
 				*/
 				timeSteps = data.timesteps['default'];
 					
-		
-				console.log("[COMPAT] Wczytano data.json!");
+				utils.log("app", "Downloaded data.json using XHR");
 				init2();
 			}
 		};
@@ -449,7 +454,6 @@ function fetchData(){
 	fetch('data.php?ver='+timestamp).then(function(response) {
 		return response.json();
 	}).then(function(jdata) {
-		console.log("Pobrano data.json!");
 		data = jdata;
 		teachermap = data.teachermap;
 		teacherMapping = data.teachermap;
@@ -462,13 +466,14 @@ function fetchData(){
 		}
 			
 
-		console.log("Wczytano data.json!");
+		utils.log("app", "Downloaded data.json using fetch");
 		init2();
 	}).catch(function(error){isOK=false});
 	/* %old-ie-remove-end% */
 
 	if (!isOK){
 		try{loaderstatus.innerHTML="<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.";}catch(e){};
+		utils.error("app", "Failed to download data.json");
 	}else{
 		try{loaderstatus.innerHTML="Pobrano plan lekcji";}catch(e){};
 	}
@@ -487,18 +492,21 @@ var notifications_enabled = false;
 if ('serviceWorker' in navigator) {
 	window.addEventListener('load', function() {
 		navigator.serviceWorker.register('sw.js').then(function(registration) {
-			// Registration was successful
-			console.log('ServiceWorker registration successful with scope: ', registration.scope);
+			// Registration was successful			
+			utils.log("app", "ServiceWorker registration successful with scope: " + registration.scope);
+			// console.log('ServiceWorker registration successful with scope: ', registration.scope);
 			registration.pushManager.getSubscription().then(function(sub) {
 				if (sub === null) {
 					// Update UI to ask user to register for Push
-					console.log('Not subscribed to push service!');
+					utils.log("app", "Not subscribed to push service");
+					// console.log('Not subscribed to push service!');
 					////alert("niepodłączony pod powiadomienia, podłączam");
 					// toggleNotifications(1);
 					// document.getElementById("notificationSubscribe").innerText = "Włącz powiadomienia";
 				} else {
 					// We have a subscription, _update the database_???
-					console.log('Subscription object: ', sub);
+					// console.log('Subscription object: ', sub);
+					utils.log("app", "Subscription object: " + sub);
 					subscribeUser();
 					// document.getElementById("notificationSubscribe").innerText = "Powiadomienia włączone";
 					// document.getElementById("notificationSubscribe").onclick = unsubscribeUser;
@@ -506,7 +514,8 @@ if ('serviceWorker' in navigator) {
 				});
 		}, function(err) {
 		// registration failed :(
-		console.log('ServiceWorker registration failed: ', err);
+		// console.log('ServiceWorker registration failed: ', err);
+		utils.error("app", "ServiceWorker registration failed: " + err);
 		});
 	});
 	}

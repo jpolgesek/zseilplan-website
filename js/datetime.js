@@ -80,14 +80,20 @@ var columns = {
 
 var myTime = {
 	time: d.getHours() + ":" + d.getMinutes(),
-	//time: "10:13", //DEBUG ONLY!!!
 	table: document.getElementById("maintable"),
+	updateTime: function(){
+		this.time =  d.getHours() + ":" + d.getMinutes();
+		//this.time = "10:13", //DEBUG ONLY!!!
+	},
 	checkTime: function(){
+		myTime.updateTime();
 		for (step in timeSteps){
 			if (Date.parse('01/01/1970 '+this.time+':00') < Date.parse('01/01/1970 '+timeSteps[step]+':00')){
-				console.log("time = "+this.time)
+				// console.log("time = "+this.time)
+				utils.log("datetime", "Current time = " + this.time)
 				if (step%2){
-					console.log("Lekcja "+((step-1+2)/2))
+					utils.log("datetime", "Lesson = " + ((step-1+2)/2))
+					// console.log("Lekcja "+((step-1+2)/2))
 					for (y=1; y<this.table.rows.length; y++){
 						this.table.rows[y].className = "";
 					}
