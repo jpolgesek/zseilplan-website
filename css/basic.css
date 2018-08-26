@@ -79,7 +79,7 @@ body{
 	min-width: 600px;
 	max-width: 900px;
 	margin-top: 1%;
-	z-index: 500;
+	z-index: 250;
 	top: -100%;
     left: 50%;
     position: absolute;

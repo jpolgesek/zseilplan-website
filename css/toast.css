@@ -1,7 +1,7 @@
 /* Toast */
 
 #toast {
-	z-index: 99999999;
+	z-index: 300;
     visibility: hidden;
     max-width: 50px;
     height: 50px;
