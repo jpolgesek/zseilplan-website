@@ -89,7 +89,6 @@ function unitParse(unit, override, cell){
 	if (override == undefined) return;
 
 	for (o=0; o<override.length; o++){
-
 		for (i=0; i<cell.children.length; i++){
 			a = cell.children[i].children;
 			teacher = a[2].children[0].innerText;
@@ -100,9 +99,8 @@ function unitParse(unit, override, cell){
 			//console.log("teacher="+teacher);
 			if (teacher == override[o].oldTeacherShort){
 				utils.log("override", "Found override for unit="+unit+", teacher="+teacher);
-				//console.log("Trafiony");
-
-				temp_data = Object();
+				
+				temp_data = {};
 				try {
 					temp_data.n = override[o].newTeacherShort;
 				} catch (error) {
@@ -111,7 +109,7 @@ function unitParse(unit, override, cell){
 				temp_data.k = value;
 				temp_data.p = override[o].subject;
 				if (gg != -1){
-					temp_data.p += "-" + gg;
+					temp_data.p += "-" + gg; //TODO: is this needed
 					temp_data.g = gg;
 				}
 				temp_data.s = override[o].s;

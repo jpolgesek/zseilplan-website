@@ -135,8 +135,11 @@ function init2(){
 	} catch (e) {}
 
 
-	if (screen.width >= 1000){
+	if (screen.width >= 768){
+		utils.log("app", "Screen width >= 768, displaying whole week.");
 		columns.setActive(-1);
+	}else if ((d.getDay() == 6) || (d.getDay() == 0)){
+		columns.setActive(1);
 	}
 
 	myTime.checkTime();
@@ -173,7 +176,7 @@ function init2(){
 		XPinfo.innerHTML += "<li>AMD wypadło z gry</li>"
 		XPinfo.innerHTML += "<li>Dokonała się rewolucja Smart urządzeń</li>"
 		XPinfo.innerHTML += "<li>AMD wróciło do gry</li>"
-		XPinfo.innerHTML += "<li>strona szkoły jest jeszcze brzydsza</li>"
+		XPinfo.innerHTML += "<li>Strona szkoły jest jeszcze brzydsza</li>"
 		XPinfo.innerHTML += "</ul><br>"
 		XPinfo.innerHTML += "Więc w trosce o zdrowie psychiczne twoje oraz autora tej aplikacji polecam zaprzestać użytkowania <strong>17 LETNIEGO</strong> systemu operacyjnego."
 		XPinfo.innerHTML += "<br><br> <button class='wideBtn' type='button' onclick='document.getElementById(\"XPinfo\").style.display=\"none\"'>Obiecuję zainstalować nowy system, zamknij ten komunikat</button>"
@@ -200,8 +203,8 @@ function init2(){
 	}
 
 	try {
-		if (ZSEILPLAN_BUILD == undefined){
-			document.getElementById("footer").innerText = "Super Clever Build TEST BUILD";
+		if (typeof(ZSEILPLAN_BUILD) == "undefined"){
+			document.getElementById("footer").innerText = "Super Clever Build internal build";
 		} else {
 			document.getElementById("footer").innerText = "Super Clever Plan build " + ZSEILPLAN_BUILD;
 		}

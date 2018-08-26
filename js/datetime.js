@@ -23,6 +23,15 @@ var columns = {
 	currentDay: d.getDay(),
 	activeColumn: 9000,
 	table: document.getElementById("maintable"),
+
+	getCurrentDay: function(){
+		day = d.getDay();
+		if ((day == 6) || (day == 0)){ //saturday & sunday => monday
+			day = 1;
+		}
+		return day;
+	},
+
 	hideAll: function(){
 		for (y=0; y<this.table.rows.length; y++){
 			for (x=1; x<this.table.rows[y].cells.length; x++){
@@ -30,6 +39,7 @@ var columns = {
 			}
 		}
 	},
+
 	showAll: function(){
 		for (y=0; y<this.table.rows.length; y++){
 			for (x=0; x<this.table.rows[y].cells.length; x++){
@@ -37,42 +47,49 @@ var columns = {
 			}
 		}
 	},
+
+	updateUI: function(active){
+		for(i=-1; i<6; i++){
+			document.getElementById("btn_"+i).className = "";
+		}
+		dom.addClass(document.getElementById("btn_" + this.getCurrentDay()), "underlined");
+		dom.addClass(document.getElementById("btn_"+active), "active");
+	},
+
 	showSelected: function(){
+		myTime.updateTime();
+
 		if (this.activeColumn == -1){
+			this.updateUI(-1);
 			this.showAll();
-			myTime.checkAll();//Check for current day, only when looking at whole week, otherwise it will show unwanted columns.
+			myTime.checkAll(); //Check for current day, only when looking at whole week, otherwise it will show unwanted columns.
 			return;
 		}
 
+		if (this.activeColumn == 9000) this.activeColumn = this.getCurrentDay();
+
 		this.hideAll();
-		if (this.activeColumn == 9000){
-			cells = document.getElementsByClassName("col_"+this.currentDay)
-			for (i=0; i<cells.length; i++){
-				cells[i].className = "col_"+this.currentDay;
-			}
-		}else{
-			cells = document.getElementsByClassName("col_"+this.activeColumn)
-			for (i=0; i<cells.length; i++){
-				cells[i].className = "col_"+this.activeColumn;
-			}
+		
+		this.updateUI(this.activeColumn);
+
+		cells = document.getElementsByClassName("col_"+this.activeColumn)
+		for (i=0; i<cells.length; i++){
+			cells[i].className = "col_" + this.activeColumn;
 		}
 		
-		if((this.activeColumn == this.currentDay) || (this.activeColumn == 9000)){
+		/* TODO: CO TO MIAŁO ROBIĆ?!?! */
+		if((this.activeColumn == this.getCurrentDay()) || (this.activeColumn == 9000)){
 			myTime.checkTime();
 		}else{
 			myTime.clear();
 		}
 	},
-	setActive: function(n){
-		for(i=-1; i<6; i++){
-			document.getElementById("btn_"+i).className="";
-		}
-		document.getElementById("btn_"+n).className="active";
-		
-		if (n == 0){
-			n = 9000;
-		}
 
+	setActive: function(n){
+		if (n == 0) n = this.getCurrentDay();
+		
+		this.updateUI(n);
+		
 		this.activeColumn = n;
 		this.showSelected();
 	} 
@@ -82,7 +99,9 @@ var myTime = {
 	time: d.getHours() + ":" + d.getMinutes(),
 	table: document.getElementById("maintable"),
 	updateTime: function(){
+		window.d = new Date();
 		this.time =  d.getHours() + ":" + d.getMinutes();
+		columns.currentDay = d.getDay();
 		//this.time = "10:13", //DEBUG ONLY!!!
 	},
 	checkTime: function(){
