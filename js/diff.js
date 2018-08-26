@@ -264,7 +264,6 @@ var diff = {
 							}
 						} else {
 							currentItem.diff = "added";
-							console.log(currentItemElement);
 							currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
 						}
 					}
