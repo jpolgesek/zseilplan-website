@@ -41,9 +41,12 @@ var myStorage = {
 			return;
 		}
 		
+		/* Deprecated in zseilplan 1.0 */
 		if (localStorage.getItem("displayColumn") != undefined){
-			localStorage.setItem("activeColumn", localStorage.getItem("displayColumn"));
+			// localStorage.setItem("activeColumn", localStorage.getItem("displayColumn")); /* Deprecated in zseilplan 2.0 */
 			localStorage.removeItem("displayColumn");
+			localStorage.removeItem("activeColumn");
+			localStorage.removeItem("columns.activeColumn");
 		}
 	
 		document.getElementById("units").value = localStorage.getItem("select_units");
@@ -63,11 +66,13 @@ var myStorage = {
 			ui.jumpButtonsFloatRight = true;
 		}
 
+		/* Deprecated in zseilplan 2.0 */
+		/*
 		try {
 			columns.setActive(localStorage.getItem("columns.activeColumn"));
 		} catch (error) {
 			console.log("Domyslny layout, ale bez selektora. E:"+error)
-		}
+		}*/
 
 		
 		if(localStorage.getItem("showTests") == "true"){
@@ -182,6 +187,9 @@ var myStorage = {
 		preferencesDiv.appendChild(prefsBtnClear);
 		*/
 		document.body.appendChild(preferencesDiv);
+		setTimeout(function(){
+			dom.addClass(preferencesDiv, "modal-anim");
+		}, 1)
 		try { gtag('event', 'show', {'event_category': 'prefs.generate', 'event_label': 'prefs.generate'}); } catch (e) {}
 	}
 } 	
