@@ -105,21 +105,28 @@ var ui = {
 
 		element.appendChild(span[0]);
 		element.appendChild(this.itemLineBreak());
+
+		//Todo - nice function:
+		span[0].innerHTML = span[0].innerHTML.replace("Wychowanie fizyczne", "WF");
+		span[0].innerHTML = span[0].innerHTML.replace("Język ", "J.");
 		
 		if (itemData.n == "Uczniowie przychodzą p&#243;źniej"){
 			span[0].innerHTML = "Uczniowie przychodzą później";
 			if(itemData.g != undefined){
-				span[0].innerHTML += " ([info2]Grupa "+itemData.g+")";
+				// span[0].innerHTML += " ([info2]Grupa "+itemData.g+")";
+				span[0].innerHTML += "-"+itemData.g+"";
 			}
 		}else if(itemData.n == "-1"){
 			span[0].innerHTML = "Uczniowie zwolnieni";
 			if(itemData.g != undefined){
-				span[0].innerHTML += " (Grupa "+itemData.g+")";
+				// span[0].innerHTML += " (Grupa "+itemData.g+")";
+				span[0].innerHTML += "-"+itemData.g+"";
 			}
 
 		}else{
 			if(itemData.g != undefined){
-				span[0].innerHTML += " (Grupa "+itemData.g+")";
+				// span[0].innerHTML += " (Grupa "+itemData.g+")";
+				span[0].innerHTML += "-"+itemData.g+"";
 			}
 			jumpButtonsDiv.appendChild(span[1]);
 			jumpButtonsDiv.appendChild(span[2]);

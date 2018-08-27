@@ -109,7 +109,7 @@ function unitParse(unit, override, cell){
 				temp_data.k = value;
 				temp_data.p = override[o].subject;
 				if (gg != -1){
-					temp_data.p += "-" + gg; //TODO: is this needed
+					// temp_data.p += "-" + gg; //TODO: is this needed
 					temp_data.g = gg;
 				}
 				temp_data.s = override[o].s;
