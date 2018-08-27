@@ -1,3 +1,15 @@
+.navbar-container{
+	position: relative;
+}
+
+.navbar-container.notification .navbar{
+	transform: rotateX(90deg) translateZ(26px);
+}
+
+.navbar-container.notification .navbar-notification{
+	transform: rotateX(0deg) translateZ(26px);
+}
+
 .navbar{
 	position: sticky;
 	top: 0;
@@ -6,6 +18,8 @@
 	padding-bottom: 5px;
 	z-index: 200;
 	margin-bottom: 30px;
+	transition: transform 0.5s;
+	transition-timing-function: ease-in-out;
 }
 
 .navbar-title{
@@ -150,4 +164,23 @@
     color: black;
     width: 100%;
     text-align: center;
+}
+
+
+
+.navbar-notification{
+	background: red;
+	position: sticky;
+	top: 0;
+	width: 100%;
+    padding-top: 5px;
+	padding-bottom: 5px;
+	z-index: 2100;
+	margin-bottom: 30px;
+	transition: transform 0.5s;
+	transition-timing-function: ease-in-out;
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: rotateX(-90deg) translateZ(26px);
 }
