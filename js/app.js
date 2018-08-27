@@ -14,7 +14,7 @@ var select_rooms = document.getElementById("rooms");
 var status_span = document.getElementById("status");
 var networkstatus = document.getElementById("networkStatus");
 var loaderstatus = document.getElementById("loader-status");
-
+var navbar_info = document.getElementById("navbar-info");
 
 /* Global variables */
 var data = "wait";
@@ -120,9 +120,11 @@ function init2(){
 	/* TODO: fix me */
 	/* Show timetable update date */
 	if (data._updateDate_max == data._updateDate_min){
-		status_span.innerText = "Plan z dnia "+data._updateDate_max;
+		status_span.innerText = "Plan z dnia "+data._updateDate_max; //do not show on desktop
+		navbar_info.innerText = "Plan z dnia "+data._updateDate_max;
 	}else{
-		status_span.innerText = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min;
+		status_span.innerText = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min; //do not show on desktop
+		navbar_info.innerText = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min;
 	}
 	
 	
