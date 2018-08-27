@@ -450,9 +450,11 @@ function fetchData(){
 		timestamp = "localstorage";
 	}
 
+	/* is this needed? TODO
 	try {
 		fetch('data.php?ver=localstorage').then(function(response) {return response.json();}).catch();
 	} catch (e) {}
+	*/
 
 	fetch('data.php?ver='+timestamp).then(function(response) {
 		return response.json();
@@ -630,7 +632,7 @@ function tempTest(){
 	o += ",dw:"+document.width;
 	o += ",sw:"+screen.width;
 	o += ",aw:"+screen.availWidth;
-	//alert(o);
+	alert(o);
 }
 
 function detectIE() {
