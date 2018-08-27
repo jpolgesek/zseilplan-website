@@ -1,0 +1,12 @@
+{
+	"timetable_archives": [
+		{"date": "2018-08-01", "hash": "TESTTEST", "filename": "cmp.json"},
+		{"date": "2018-07-01", "hash": "aabbccdd", "filename": "2018-08-01-aabbccdd.json"},
+		{"date": "2018-06-01", "hash": "eebbccdd", "filename": "2018-06-01-eebbccdd.json"},
+		{"date": "2018-05-01", "hash": "eeffccdd", "filename": "2018-05-01-eeffccdd.json"},
+		{"date": "2018-04-01", "hash": "0011ccdd", "filename": "2018-04-01-0011ccdd.json"},
+		{"date": "2018-03-01", "hash": "aa352cdd", "filename": "2018-03-01-aa352cdd.json"},
+		{"date": "2018-02-01", "hash": "a23625dd", "filename": "2018-02-01-a23625dd.json"},
+		{"date": "2018-01-01", "hash": "afad9cdd", "filename": "2018-01-01-afad9cdd.json"}
+	]
+}
