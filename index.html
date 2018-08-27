@@ -7,14 +7,11 @@
 		<meta name="theme-color" content="#046edd">
 		<meta name="description" content="Ładny i wygodny plan ZSEiL.">
 		<title>Super Clever Plan</title>
-		<!-- <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"> -->
-		<!-- <link rel="stylesheet" href="css/style-new.css?ver=%build%"> -->
 
 		<!-- %compile_css_start%-->
 		<link rel="stylesheet" href="css/style.css?ver=%build%">
 		<!-- %compile_css_end%-->
 
-		<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> -->
 		<link rel="manifest" href="/manifest.json">
 		
 		<!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113628218-1"></script>
@@ -30,64 +27,6 @@
 			<input id='search' type='text' list="suggestions">
 			<datalist id="suggestions"></datalist>
 		</div>
-
-		<!--<div class='modal shadow'>
-			<span class="title">Ustawienia</span>
-			<span class="close"><i class="fas fa-times"></i></span>
-
-			<div class="row">
-				<p class="mdesc">Tutaj możesz dostosować Super Clever Plan do swoich preferencji</p>
-			</div>
-
-			<div class="row">
-				<label class="switch">
-					<input type="checkbox">
-					<span class="slider round"></span>
-				</label>
-				<span class="desc">Checkbox numer jeden</span>
-			</div>
-
-			<div class="row">
-				<label class="switch">
-					<input type="checkbox">
-					<span class="slider round"></span>
-				</label>
-				<span class="desc">Checkbox numer dwa</span>
-			</div>
-
-			<div class="row">
-				<label class="switch">
-					<input type="checkbox">
-					<span class="slider round"></span>
-				</label>
-				<span class="desc">Checkbox numer trzy</span>
-			</div>
-
-			<div class="row">
-				<input type="text" placeholder="Wejście tekstowe, długie">
-				<span class="desc">Coś coś coś</span>
-			</div>
-
-			<div class="row">
-				<select>
-					<option>Opcja pierwsza</option>
-					<option>Opcja druga</option>
-					<option>Opcja trzecia</option>
-				</select>
-				<span class="desc">Checkbox numer trzy</span>
-			</div>
-			
-
-			<div class="row">
-				<button type="button" class="button-red">Przycisk jeden</button>
-				<button type="button" class="button-green">Przycisk dwa</button>
-				<button type="button" class="button-blue">Zapisz zmiany</button>
-				<button type="button" class="button-white">Anuluj</button>
-			</div>
-	
-			
-		</div>
-		-->
 
 		<div class="loader">
 			<svg id="loading" viewbox="0 0 100 80">
@@ -113,36 +52,37 @@
 
 		<div class='container opacity-0'>
 			<!-- TODO: create me dynamically-->
-			<nav class="navbar shadow">
-				<span class="print-only print-logo">✌</span>
-				<span class="navbar-title">Super Clever Plan</span>
-				<span class="copyright navbar-info">Plan z dnia 12.34.2018</span> <!-- TODO: create me! -->
-				<div class="navbar-copyright print-only">
-					<div>dev.polgesek.pl/zseilplan</div>
-					<div>&copy; Jakub Półgęsek 2018</div>
-				</div> <!-- TODO: create me dynamically -->
-				
-				<div class="navbar-buttons">
-					<button class='print-hide desktop-only' onclick="utils.androidDemo()">
-						<div class='icon'><i class="icon-android"></i></div>
-						<div class='text'>Aplikacja Mobilna</div>
-					</button>
+			<div class="navbar-container">
+				<nav class="navbar shadow">
+					<span class="print-only print-logo">✌</span>
+					<span class="navbar-title">Super Clever Plan</span>
+					<span class="copyright navbar-info" id="navbar-info">Plan z dnia 12.34.2018</span> <!-- TODO: create me! -->
+					<div class="navbar-copyright print-only">
+						<div>dev.polgesek.pl/zseilplan</div>
+						<div>&copy; Jakub Półgęsek 2018</div>
+					</div> <!-- TODO: create me dynamically -->
+					
+					<div class="navbar-buttons">
+						<button class='print-hide desktop-only' onclick="utils.androidDemo()">
+							<div class='icon'><i class="icon-android"></i></div>
+							<div class='text'>Aplikacja Mobilna</div>
+						</button>
 
-					<button class='print-hide' onclick="myStorage.generatePreferencesUI();ui.showPreferences(1)">
-						<div class='icon'><i class="icon-cog"></i></div>
-						<div class='text'>Ustawienia</div>
-					</button>
-	
-					<button class='print-hide' onclick="ui.print()">
-						<div class='icon'><i class="icon-print"></i></div>
-						<div class='text'>Drukuj</div>
-					</button>
+						<button class='print-hide' onclick="myStorage.generatePreferencesUI();ui.showPreferences(1)">
+							<div class='icon'><i class="icon-cog"></i></div>
+							<div class='text'>Ustawienia</div>
+						</button>
+		
+						<button class='print-hide' onclick="ui.print()">
+							<div class='icon'><i class="icon-print"></i></div>
+							<div class='text'>Drukuj</div>
+						</button>
+					</div>
+				</nav>
+				<div class="navbar-notification">
+					<span class="navbar-title">INFO O POWIADOMIENIU</span>
 				</div>
-			</nav>
-			
-			<button onclick='diff.loadData("py3.json"); diff.generateDiff();'>diff.loadData("data/py3.json"); diff.generateDiff();</button>
-			<button onclick='diff.loadData("cmp.json"); diff.generateDiff();'>diff.loadData("data/cmp.json"); diff.generateDiff();</button>
-
+			</div>
 			<!-- TODO: create me dynamically -->	
 			<div id='status' class="shadow print-hide">Ładowanie skryptu...</div>
 			
@@ -164,7 +104,7 @@
 
 			
 			<!-- TODO: create me dynamically-->	
-			<div class='bar print-hide'>
+			<div class='bar print-hide mobile-only-flex'>
 				<nav class="tabs">
 					<a href="#" onclick='columns.setActive(-1)' class="active" id='btn_-1'>
 						<span class="mobile-only">All</span>
@@ -195,13 +135,10 @@
 				</nav>
 			</div>
 
-			
-			
-			<div>
-			</div>
+			<button onClick="tempTest();">screen</button>
 			
 			<!-- TODO: create me dynamically-->	
-			<div class='diff-help print-hide'>
+			<div class='diff-help print-hide desktop-only'>
 				<h3>Zmiany w planie</h3>
 
 				<span id="diff-info">
@@ -233,8 +170,7 @@
 				</div>
 			</div>
 
-			<!-- TODO: create me dynamically-->	
-			<!-- <div id='networkStatus' style='display: none;'></div> -->
+			<!-- TODO: create me dynamically-->
 			<div id='networkStatus' style="display: none;"></div>
 			
 			<!-- TODO: create me dynamically-->	
