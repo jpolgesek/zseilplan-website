@@ -30,15 +30,16 @@ function handleGesture(e) {
     if (Math.abs(x) > threshold || Math.abs(y) > threshold) {
         if (yx <= limit) {
             if (x >= 0) {
-				console.log("!left");
+				// console.log("!left");
+				// console.log(columns.activeColumn);
 				if (columns.activeColumn == 9000){
 					return;
-				}else if (columns.activeColumn > -1){
+				}else if (columns.activeColumn >= 2){
 					columns.setActive(columns.activeColumn-1);
 				}
             } else {
-				console.log("!right");
-				console.log(columns.activeColumn);
+				// console.log("!right");
+				// console.log(columns.activeColumn);
 				if (columns.activeColumn == 9000){columns.activeColumn = 0};
 				if (columns.activeColumn == -1){
 					columns.setActive(0);
