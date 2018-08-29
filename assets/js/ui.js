@@ -254,6 +254,24 @@ var ui = {
 			document.getElementById("preferences").style.display = "none";
 			document.getElementsByClassName("container")[0].className = "container";
 		}
+	},
+
+	containerBlur: function(value){
+		if (value){
+			dom.addClass(document.getElementById("container"), "blur");
+		}else{
+			dom.removeClass(document.getElementById("container"), "blur");
+		}
+	},
+
+	clearTable: function(){
+		if (detectIE() && document.super_fucking_old_ie){
+			while (table.hasChildNodes()) {
+				table.removeChild(table.lastChild);
+			}
+		}else{
+			table.innerHTML = "";
+		}
 	}
 }
 

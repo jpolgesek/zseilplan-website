@@ -27,6 +27,114 @@ var overrides_disabled = false;
 var compat = false;
 var isIE = detectIE();
 
+
+
+
+var app = {
+	isCustomDataVersion: false,
+	showDataSourceModal: function(){
+		datasourcepickerDiv = modal.create('datasourcepicker', "Wybór planu", "Tutaj możesz wybrać wersję danych Super Clever Planu", function(){datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false)});
+
+		row = modal.createRow();
+		row.style.margin.bottom = "-10px";
+		row.style.fontSize = "1.5em";
+		section_title = document.createElement('span');
+		section_title.innerHTML = "Data planu";
+		row.appendChild(section_title);
+		datasourcepickerDiv.appendChild(row);
+
+		
+		row = modal.createRow();
+
+		input = document.createElement('select');
+		input.type = "";
+		input.checked = true;
+		for (i in diff.index.timetable_archives){
+			item = diff.index.timetable_archives[i];
+			input.options[input.options.length] = new Option(item.date + ' ('+item.hash+')', "_temp/py3.json");
+		}
+		
+		title = document.createElement("span");
+		title.className = "desc";
+		title.innerText = "Wyświetl dowolny plan z przeszłości";
+
+		row.appendChild(input);
+		row.appendChild(title);
+		datasourcepickerDiv.appendChild(row);
+
+		/*
+		
+		row = modal.createRow();
+		row.style.margin.bottom = "-10px";
+		row.style.fontSize = "1.5em";
+		section_title = document.createElement('span');
+		section_title.innerHTML = "Źródło planu";
+		row.appendChild(section_title);
+		datasourcepickerDiv.appendChild(row);
+
+		row = modal.createRow();
+
+		input = document.createElement('select');
+		input.type = "";
+		input.checked = true;
+
+		input.options[input.options.length] = new Option('2.0, strona szkoły (domyślny)', "-");
+		input.options[input.options.length] = new Option('3.0, strona szkoły', "-");
+		input.options[input.options.length] = new Option('3.0, vulcan', "-");
+		input.options[input.options.length] = new Option('Dane testowe', "-");
+		
+		title = document.createElement("span");
+		title.className = "desc";
+		title.innerText = "Jeśli nie wiesz co tu wybrać, zostaw ustawienie domyślne";
+
+		row.appendChild(input);
+		row.appendChild(title);
+		datasourcepickerDiv.appendChild(row);
+
+		*/
+
+		row = modal.createRow();
+
+		prefsBtnSave = document.createElement('button');
+		prefsBtnSave.innerText = "Wyświetl";
+		prefsBtnSave.onclick = function(){ui.clearTable(); app.isCustomDataVersion=true; fetchData(input.value); datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false);};
+		prefsBtnSave.className = "btn-primary";
+		row.appendChild(prefsBtnSave);
+
+		/*
+		prefsBtnSave = document.createElement('button');
+		prefsBtnSave.innerText = "Zapisz";
+		//prefsBtnSave.onclick = function(){myStorage.save();ui.showPreferences(0);};
+		row.appendChild(prefsBtnSave);
+		*/
+
+		prefsBtnCancel = document.createElement('button');
+		prefsBtnCancel.innerText = "Anuluj";
+		prefsBtnCancel.onclick = function(){datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false)};
+		row.appendChild(prefsBtnCancel);
+		datasourcepickerDiv.appendChild(row);
+
+		ui.containerBlur(true);
+		document.body.appendChild(datasourcepickerDiv);
+		setTimeout(function(){
+			dom.addClass(datasourcepickerDiv, "modal-anim");
+		}, 1)
+	},
+
+	setDataSource: function(dataSource){
+		try {
+			localStorage.setItem("app.dataSource", dataSource);
+		} catch (e) {
+			utils.error("app", "Saving new dataSource failed, reason: " + e);
+			return false;
+		}
+
+		return;
+	}
+}
+
+
+
 function sortAsc (a, b) {
 	return a.localeCompare(b);
 }
@@ -86,6 +194,11 @@ function init2(){
 
 	/* Add units to select_units and quicksearch */
 	status_span.innerText = "Przygotowywanie interfejsu: klasy";
+	
+	while (select_units.firstChild) {
+		select_units.removeChild(select_units.firstChild);
+	}
+
 	select_units.options[0] = new Option("Klasa", "default");
 	for (unit in data.units) {
 		select_units.options[select_units.options.length] = new Option(data.units[unit], data.units[unit]);
@@ -94,6 +207,11 @@ function init2(){
 
 
 	status_span.innerText = "Przygotowywanie interfejsu: nauczyciele";
+	
+	while (select_teachers.firstChild) {
+		select_teachers.removeChild(select_teachers.firstChild);
+	}
+
 	select_teachers.options[0] = new Option("Nauczyciel", "default");
 	for (key in data.teachermap){
 		select_teachers.options[select_teachers.options.length] = new Option(data.teachermap[key]+' ('+key+')', key);
@@ -102,6 +220,11 @@ function init2(){
 	
 	/* Add classrooms to select_rooms and quicksearch */
 	status_span.innerText = "Przygotowywanie interfejsu: sale";
+	
+	while (select_rooms.firstChild) {
+		select_rooms.removeChild(select_rooms.firstChild);
+	}
+
 	select_rooms.options[0] = new Option("Sala", "default");
 	for (i in data.classrooms) {
 		select_rooms.options[select_rooms.options.length] = new Option(data.classrooms[i], data.classrooms[i]);
@@ -126,7 +249,7 @@ function init2(){
 		status_span.innerText = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min; //do not show on desktop
 		navbar_info.innerText = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min;
 	}
-	
+
 	
 	overrideData = data.overrideData;
 	
@@ -148,18 +271,19 @@ function init2(){
 	setInterval(myTime.checkTime,60*1000);
 
 	quicksearch.init();
-	try{loaderstatus.innerHTML="Ładuję interfejs";}catch(e){};
-	dom.addClass(document.getElementsByClassName('loader')[0], "opacity-0");
-	dom.removeClass(document.getElementsByClassName('container')[0], "opacity-0");
-	document.getElementsByClassName('loader')[0].parentElement.removeChild(document.getElementsByClassName('loader')[0]);
+	try{
+		loaderstatus.innerHTML="Ładuję interfejs";
+		dom.addClass(document.getElementsByClassName('loader')[0], "opacity-0");
+		dom.removeClass(document.getElementsByClassName('container')[0], "opacity-0");
+		document.getElementsByClassName('loader')[0].parentElement.removeChild(document.getElementsByClassName('loader')[0]);
+	}catch(e){};
 
-
-	/* If HTML5 storage is available, try to load user saved settings */
 	if (typeof(Storage) !== "undefined") {
+		/* If HTML5 storage is available, try to load user saved settings */
 		myStorage.load();
 		refreshView();
 	}
-
+	
 	if(navigator.userAgent.indexOf('Windows NT 5.1') != -1){
 		if((navigator.userAgent.indexOf('Chrome/49') != -1) || (navigator.userAgent.indexOf('Firefox/52') != -1)){
 			//przegladarka jest dosc swieza, odwolujemy akcje
@@ -224,7 +348,6 @@ function init2(){
 	});
 
 	diff.loadIndex();
-
 }
 
 
@@ -334,6 +457,21 @@ function refreshView(){
 
 	//console.timeEnd('refreshView-3');
 	myTime.checkTime();
+
+	try {
+		data_info = document.getElementById("data_info");
+		data_info_src = data._info;
+		if (data_info_src.text != undefined && 
+			data_info_src.text != "" && 
+			data_info_src.style != undefined && 
+			data_info_src.style != "" && 
+			data_info_src.style != "none" && 
+			data_info_src.style != "hide"){
+				data_info.innerHTML = data_info_src.text;
+				data_info.style.display = "block";
+				//TODO: style
+			}
+	} catch (e) {}
 }
 
 function createHeader(table){
@@ -403,7 +541,7 @@ function jumpTo(type, value){
 
 
 
-function fetchData(){	
+function fetchData(customURL){	
 	try {
 		utils.log("app", "Found fetch" + fetch.toString().substr(0,0));
 	} catch (error) {
@@ -411,6 +549,17 @@ function fetchData(){
 		compat = true
 	}
 	
+	timestamp = Date.now();
+	url = 'data.php?ver='+timestamp;
+	
+	if (customURL != undefined){
+		utils.log("app", "Will load custom timetable version: " + customURL);
+		url = customURL;
+	}
+
+	data = "wait";
+
+
 	if (compat){
 		//Compatibility mode
 		try{loaderstatus.innerHTML="Rozpoczynam pobieranie danych w trybie kompatybilności wstecznej";}catch(e){};
@@ -438,13 +587,12 @@ function fetchData(){
 				init2();
 			}
 		};
-		fetchDataCompatXHR.open("GET", "data.php", true);
+		fetchDataCompatXHR.open("GET", url, true);
 		fetchDataCompatXHR.send();
 		return true;
 	}
 	
 	isOK = true;
-	timestamp = Date.now();
 	
 	/* %old-ie-remove-start% */
 	if (!navigator.onLine) {
@@ -458,7 +606,7 @@ function fetchData(){
 	} catch (e) {}
 	*/
 
-	fetch('data.php?ver='+timestamp).then(function(response) {
+	fetch(url).then(function(response) {
 		return response.json();
 	}).then(function(jdata) {
 		data = jdata;
@@ -683,8 +831,7 @@ if ( window.addEventListener ) {
 		kkeys.push(e.keyCode);
 		if (kkeys.toString().indexOf(asdasd) >= 0 ){
 			scrollTo(0,0);
-			document.body.innerHTML = 
-			'<div style="z-index: 99999999;position: absolute;top: 0;left: 0;width: 100%;height: 100%;"><iframe src="aee/" style="width: 100%;height: 100%;border-style:none"></iframe></div>' + document.body.innerHTML;
+			document.body.innerHTML = '<div style="z-index: 99999999;position: absolute;top: 0;left: 0;width: 100%;height: 100%;"><iframe src="aee/" style="width: 100%;height: 100%;border-style:none"></iframe></div>' + document.body.innerHTML;
 			scrollTo(0,0);
 			kkeys = [];
 		}

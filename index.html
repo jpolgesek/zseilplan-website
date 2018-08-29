@@ -50,7 +50,7 @@
 			<div id='loader-status'>Uruchamianie aplikacji</div>
 		</div>
 
-		<div class='container opacity-0'>
+		<div id='container' class='container opacity-0'>
 			<!-- TODO: create me dynamically-->
 			<div class="navbar-container">
 				<nav class="navbar shadow">
@@ -63,6 +63,11 @@
 					</div> <!-- TODO: create me dynamically -->
 					
 					<div class="navbar-buttons">
+						<button class='print-hide' onclick="app.showDataSourceModal()">
+							<div class='icon'><i class="icon-cog-alt"></i></div>
+							<div class='text'>Wybór planu</div>
+						</button>
+
 						<button class='print-hide desktop-only' onclick="utils.androidDemo()">
 							<div class='icon'><i class="icon-android"></i></div>
 							<div class='text'>Aplikacja Mobilna</div>
@@ -85,6 +90,12 @@
 			</div>
 			<!-- TODO: create me dynamically -->	
 			<div id='status' class="shadow print-hide">Ładowanie skryptu...</div>
+			
+			<!-- TODO: create me dynamically -->	
+			<div id='remote_info' class="shadow print-hide" style="display: none;">remote info here</div>
+			
+			<!-- TODO: create me dynamically -->	
+			<div id='data_info' class="shadow print-hide" style="display: none;">data info here</div>
 			
 			<!-- TODO: create me dynamically -->	
 			<!-- TODO: fix my css! -->
