@@ -99,14 +99,14 @@ var app = {
 		prefsBtnSave.innerText = "Wyświetl";
 		prefsBtnSave.onclick = function(){ui.clearTable(); app.isCustomDataVersion=true; fetchData(input.value); datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false);};
 		prefsBtnSave.className = "btn-primary";
+		prefsBtnSave.title = "Wyświetl wybrany plan";
 		row.appendChild(prefsBtnSave);
 
-		/*
 		prefsBtnSave = document.createElement('button');
-		prefsBtnSave.innerText = "Zapisz";
-		//prefsBtnSave.onclick = function(){myStorage.save();ui.showPreferences(0);};
+		prefsBtnSave.innerText = "Porównaj";
+		prefsBtnSave.onclick = function(){diff.compareSelected(input.value); app.isDiff=true; datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false);};
+		prefsBtnSave.title = "Porównaj aktualny plan z wybranym";
 		row.appendChild(prefsBtnSave);
-		*/
 
 		prefsBtnCancel = document.createElement('button');
 		prefsBtnCancel.innerText = "Anuluj";

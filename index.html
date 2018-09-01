@@ -155,30 +155,14 @@
 				<span id="diff-info">
 					Porównujesz plan [n/p/s] [value]
 				</span>
-				
-				<div class='bar print-hide'>
-					<div>
-						Wybierz stary plan do porównania
-						<label style="width: 25%; margin: 3px;">
-							<select style="width: 100%;" id='select_timetable_old'></select>
-						</label>
-					</div>
-					<span> - </span>
-					<div>
-						Wybierz nowy plan do porównania
-						<label style="width: 25%; margin: 3px;">
-							<select style="width: 100%;" id='select_timetable_new'></select>
-						</label>
-					</div>
-				</div>
-
-				<button onclick="diff.compareSelected()">Porównaj plany</button><br>
 
 				<div class="bar">
 					<span class="diff-demo diff added">Nowa lekcja</span>
 					<span class="diff-demo diff removed">Usunięta lekcja</span>
 					<span class="diff-demo diff modified">Zmodyfikowana lekcja</span>
 				</div>
+
+				<button type="button">Zakończ porównywanie planu</button>
 			</div>
 
 			<!-- TODO: create me dynamically-->
@@ -196,6 +180,7 @@
 			<div id="toast"><div id="toast_img"></div><div id="toast_desc"></div></div>
 			
 			<button class='wideBtn' type='button' id='button_comment'></button>
+			<button type="button"><i class="icon-bug"></i> Zgłoś błąd</button>
 			<div id="footer" class="footer"></div>
 
 		</div>
