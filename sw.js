@@ -12,7 +12,6 @@ var CACHE_NAME = 'dev-zseilplan-'+SW_CHECKSUM;
 var urlsToCache = [
 	'./index.html',
 	'./index.html?launcher=true',
-	'index.html?launcher=true',
 	'./data.php?ver=localstorage',
 	'./assets/js/c_app.js?ver=%build%',
 	'./assets/css/c_style.css?ver=%build%',
@@ -35,8 +34,8 @@ if (ENABLE_CACHE){
 
 	
 	self.addEventListener('fetch', function(event) {
-		console.log("Fetch event");
-		console.log(event);
+		// console.log("Fetch event");
+		// console.log(event);
 		event.respondWith(
 		  fetch(event.request).catch(function() {
 			return caches.match(event.request);
