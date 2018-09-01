@@ -3,6 +3,7 @@ var ui = {
 	darkMode: false,
 	itemDisplayType: 0,
 	isOverride: false,
+	isToastInProgress: false,
 	jumpButtonsFloatRight: false,
 
 	createZMark: function(n){
@@ -152,10 +153,20 @@ var ui = {
 	},
 
 	createToast: function(text){
+		if (ui.isToastInProgress) return;
+
+		ui.isToastInProgress = true;
+		app.element.notification.text.innerText = text;
+		app.element.notification.bar.style.display = "inherit";
+		dom.addClass(app.element.navbar.container, "notification");
+		setTimeout(function(){dom.removeClass(app.element.navbar.container, "notification")}, 5000);
+		setTimeout(function(){app.element.notification.bar.style.display = "none"; ui.isToastInProgress = false;}, 6000);
+		/*
 		document.getElementById("toast_desc").innerText = text;
 		var x = document.getElementById("toast")
 		x.className = "show";
 		setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+		*/
 	},
 
 	setDarkMode: function(state){

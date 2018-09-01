@@ -52,7 +52,7 @@
 
 		<div id='container' class='container opacity-0'>
 			<!-- TODO: create me dynamically-->
-			<div class="navbar-container">
+			<div class="navbar-container" id="navbar-container">
 				<nav class="navbar shadow">
 					<span class="print-only print-logo">✌</span>
 					<span class="navbar-title">Super Clever Plan</span>
@@ -84,18 +84,18 @@
 						</button>
 					</div>
 				</nav>
-				<div class="navbar-notification">
-					<span class="navbar-title">INFO O POWIADOMIENIU</span>
+				<div class="navbar-notification" id="notification-bar">
+					<span class="navbar-title" id="notification-text">Brak tekstu powiadomienia</span>
 				</div>
 			</div>
 			<!-- TODO: create me dynamically -->	
-			<div id='status' class="shadow print-hide">Ładowanie skryptu...</div>
+			<div id='status' class="shadow box-text print-hide">Ładowanie skryptu...</div>
 			
 			<!-- TODO: create me dynamically -->	
-			<div id='remote_info' class="shadow print-hide" style="display: none;">remote info here</div>
+			<div id='remote_info' class="shadow box-text print-hide" style="display: none;">remote info here</div>
 			
 			<!-- TODO: create me dynamically -->	
-			<div id='data_info' class="shadow print-hide" style="display: none;">data info here</div>
+			<div id='data_info' class="shadow box-text print-hide" style="display: none;">data info here</div>
 			
 			<!-- TODO: create me dynamically -->	
 			<!-- TODO: fix my css! -->
@@ -146,10 +146,10 @@
 				</nav>
 			</div>
 
-			<button onClick="tempTest();">screen</button>
+			<!-- <button onClick="tempTest();">screen</button> -->
 			
 			<!-- TODO: create me dynamically-->	
-			<div class='diff-help print-hide desktop-only'>
+			<div id='diff-help' class='diff-help print-hide'>
 				<h3>Zmiany w planie</h3>
 
 				<span id="diff-info">
@@ -162,7 +162,7 @@
 					<span class="diff-demo diff modified">Zmodyfikowana lekcja</span>
 				</div>
 
-				<button type="button">Zakończ porównywanie planu</button>
+				<button type="button" onclick="app.isDiff = false; refreshView();">Zakończ porównywanie planu</button>
 			</div>
 
 			<!-- TODO: create me dynamically-->

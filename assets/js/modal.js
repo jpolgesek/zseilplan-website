@@ -1,8 +1,8 @@
 var modal = {
 	element: undefined,
 	create: function(id ,title, desc, closeAction){
-		if (document.getElementById("preferences") != undefined){
-			modalContainer = document.getElementById("preferences");
+		if (document.getElementById(id) != undefined){
+			modalContainer = document.getElementById(id);
 			modalContainer.innerHTML = "";
 		}else{
 			modalContainer = document.createElement("div");

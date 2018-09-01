@@ -109,6 +109,10 @@ var diff = {
 		this.data = jsondata;
 		utils.log('diff', 'Pomyślnie załadowano do porównania plan z dnia ' + diff.data._updateDate_min);
 		this.generateDiff();
+		if (!app.isMobile){
+			columns.setActive(-1);
+			refreshView();
+		}
 	},
 
 	compareSelected: function(filename){
@@ -131,8 +135,6 @@ var diff = {
 		old_overrides_disabled = overrides_disabled;
 		overrides_disabled = true;
 		oldActiveColumn = columns.activeColumn;
-		columns.setActive(-1); //todo: check if mobile
-		refreshView();
 
 		/* Show info about current diff */
 		this.diffInfoElement.innerHTML = "";

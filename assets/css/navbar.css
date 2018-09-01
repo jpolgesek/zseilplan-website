@@ -1,13 +1,21 @@
 .navbar-container{
 	position: relative;
+	transform-style: preserve-3d;
+	transition: all 1s;
 }
-
+/*
 .navbar-container.notification .navbar{
 	transform: rotateX(90deg) translateZ(26px);
 }
 
 .navbar-container.notification .navbar-notification{
 	transform: rotateX(0deg) translateZ(26px);
+}
+*/
+.navbar-container.notification{
+	transform: translateZ(0) rotateX(180deg);
+	/* transform: translateZ(0) rotateX(90deg); */
+	/* transform-origin: 0 0; */
 }
 
 .navbar{
@@ -50,6 +58,7 @@
 	text-shadow: 2px 1px 2px #00000021;
 }
 
+
 .navbar-logo{
 	display: inline-block;
 	width: 52px;
@@ -64,6 +73,7 @@
 	overflow: hidden;
 	/* background: rgb(16, 128, 245); */
 	background: #0b60ca;
+	border-radius: 3px;
 }
 
 .navbar button .icon {
@@ -156,7 +166,7 @@
 }
 
 .navbar-copyright::before{
-    content: "www.example.com";
+    content: "www.example.com"; /* TODO! */
     position: absolute;
     top: -26px;
     left: 0;
@@ -167,9 +177,10 @@
 }
 
 
-
 .navbar-notification{
-	background: red;
+    background-image: url("../img/icon_square.png"), linear-gradient(180deg, rgba(4,110,221,1) 0%, rgba(23,70,169,1) 100%);
+    background-repeat: no-repeat;
+    background-size: contain;
 	position: sticky;
 	top: 0;
 	width: 100%;
@@ -182,5 +193,11 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	transform: rotateX(-90deg) translateZ(26px);
+	transform: rotateX(-180deg) translateY(0) translateZ(0);
+	display: none;
+	/* transform: rotateX(-90deg) translateY(25px) translateZ(21px); */
+}
+
+.navbar-notification .navbar-title{
+    color: #ececec;
 }

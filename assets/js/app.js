@@ -32,6 +32,21 @@ var isIE = detectIE();
 
 var app = {
 	isCustomDataVersion: false,
+	isMobile: true,
+	isDiff: false,
+	element: {
+		diff: {
+			help: document.getElementById("diff-help"),
+			info: document.getElementById("diff-info")
+		},
+		navbar: {
+			container: document.getElementById("navbar-container")
+		},
+		notification: {
+			bar: document.getElementById("notification-bar"),
+			text: document.getElementById("notification-text")
+		}
+	},
 	showDataSourceModal: function(){
 		datasourcepickerDiv = modal.create('datasourcepicker', "Wybór planu", "Tutaj możesz wybrać wersję danych Super Clever Planu", function(){datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false)});
 
@@ -262,6 +277,7 @@ function init2(){
 
 	if (screen.width >= 768){
 		utils.log("app", "Screen width >= 768, displaying whole week.");
+		app.isMobile = false;
 		columns.setActive(-1);
 	}else if ((d.getDay() == 6) || (d.getDay() == 0)){
 		columns.setActive(1);
@@ -439,6 +455,17 @@ function refreshView(){
 		try { gtag('event', 'show.teacher', {'event_category': 'ui.teacher', 'event_label': 'show.teacher='+select_teachers.value}); } catch (e) {}
 	}else if (select_rooms.value != "default"){
 		try { gtag('event', 'show.room', {'event_category': 'ui.room', 'event_label': 'show.room='+select_rooms.value}); } catch (e) {}
+	}
+
+	if (app.isDiff){
+		//redo diff
+		//show diff info
+		console.log("redo diff");
+		diff.generateDiff();
+		app.element.diff.help.style.display = "inherit";
+	}else{
+		//hide diff info
+		app.element.diff.help.style.display = "none";
 	}
 
 	//console.timeEnd('refreshView-1');

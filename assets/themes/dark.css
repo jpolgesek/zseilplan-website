@@ -169,7 +169,7 @@
     color: #ffffff;
 }
 
-.dark #status {
+.dark .box-text {
     background-color: #1d1d1d;
     color: #fafafa;
 }
