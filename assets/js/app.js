@@ -463,7 +463,7 @@ function refreshView(){
 	}else if (select_teachers.value != "default"){
 		app.ae('timetable', 'show.teacher', 'teacher='+select_teachers.value);
 	}else if (select_rooms.value != "default"){
-		app.ae('timetable', 'show.room', 'romm='+select_rooms.value);
+		app.ae('timetable', 'show.room', 'room='+select_rooms.value);
 	}
 
 	if (app.isDiff){
