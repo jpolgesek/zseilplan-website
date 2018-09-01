@@ -244,7 +244,7 @@ var ui = {
 		
 		if (oldActiveColumn != 9000) columns.setActive(oldActiveColumn);
 
-		try { gtag('event', 'ui.print', {'event_category': 'ui.print', 'event_label': 'Printed'}); } catch (e) {}
+		app.ae('print', 'print', '1');
 	},
 
 	resetSelects: function(without){

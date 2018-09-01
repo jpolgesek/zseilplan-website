@@ -23,7 +23,7 @@ var myStorage = {
 
 		localStorage.setItem("saved", true);
 		ui.createToast("Zapisałem ustawienia");
-		try { gtag('event', 'show', {'event_category': 'prefs.save', 'event_label': 'prefs.save'}); } catch (e) {}
+		app.ae('preferences', 'save', '1');
 	},
 	clear: function(){
 		localStorage.removeItem("saved");
@@ -190,6 +190,6 @@ var myStorage = {
 		setTimeout(function(){
 			dom.addClass(preferencesDiv, "modal-anim");
 		}, 1)
-		try { gtag('event', 'show', {'event_category': 'prefs.generate', 'event_label': 'prefs.generate'}); } catch (e) {}
+		app.ae('preferences', 'open', '1');
 	}
 } 	

@@ -47,6 +47,14 @@ var app = {
 			text: document.getElementById("notification-text")
 		}
 	},
+	as: function(v){
+		//todo: disabler
+		try{gtag('event','screen_view',{'app_name':'zseilplan','screen_name':v});}catch(e){};
+	},
+	ae: function(a,c,l){
+		//todo: disabler
+		try{gtag('event', a,{'event_category':c,'event_label':l});}catch(e){};
+	},	
 	showDataSourceModal: function(){
 		datasourcepickerDiv = modal.create('datasourcepicker', "Wybór planu", "Tutaj możesz wybrać wersję danych Super Clever Planu", function(){datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false)});
 
@@ -343,7 +351,7 @@ function init2(){
 			jumpTo(2,location.hash.substr(2).toUpperCase());
 		}
 	}
-
+	/*
 	try {
 		if (typeof(ZSEILPLAN_BUILD) == "undefined"){
 			document.getElementById("footer").innerText = "Super Clever Build internal build";
@@ -351,6 +359,7 @@ function init2(){
 			document.getElementById("footer").innerText = "Super Clever Plan build " + ZSEILPLAN_BUILD;
 		}
 	} catch (e) {}
+	*/
 
 	window.addEventListener('offline', function(e) { 
 		dom.addClass(document.getElementById("networkStatus"),"bad");
@@ -450,11 +459,11 @@ function refreshView(){
 	}
 	
 	if (select_units.value != "default"){
-		try { gtag('event', 'show.unit', {'event_category': 'ui.unit', 'event_label': 'show.unit='+select_units.value}); } catch (e) {}
+		app.ae('timetable', 'show.unit', 'unit='+select_units.value);
 	}else if (select_teachers.value != "default"){
-		try { gtag('event', 'show.teacher', {'event_category': 'ui.teacher', 'event_label': 'show.teacher='+select_teachers.value}); } catch (e) {}
+		app.ae('timetable', 'show.teacher', 'teacher='+select_teachers.value);
 	}else if (select_rooms.value != "default"){
-		try { gtag('event', 'show.room', {'event_category': 'ui.room', 'event_label': 'show.room='+select_rooms.value}); } catch (e) {}
+		app.ae('timetable', 'show.room', 'romm='+select_rooms.value);
 	}
 
 	if (app.isDiff){

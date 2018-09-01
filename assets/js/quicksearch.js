@@ -6,53 +6,35 @@ var quicksearch = {
 		document.getElementById('suggestions').innerHTML = "";
 	},
 	show: function(){
-		document.getElementsByClassName("container")[0].className = "container blur";
+		ui.containerBlur(true);
 		document.getElementById("quicksearch").style.display = "flex";
 		document.getElementById("search").value = "";
 		document.getElementById("search").focus();
-		try { gtag('event', 'show', {'event_category': 'quicksearch.show', 'value': '1'}); } catch (e) {}
+		app.ae('quicksearch', 'show', "show");
 	},
 	hide: function(){
+		ui.containerBlur(false);
 		document.getElementById("quicksearch").style.display = "none";
-		document.getElementById("preferences").style.display = "none";
 		document.getElementById("search").value = "";
-		document.getElementsByClassName("container")[0].className = "container";
+		// document.getElementById("preferences").style.display = "none";
 	},
 	eventListener: function(e){
 		if (e.ctrlKey && e.keyCode == 32)	quicksearch.show(); //Ctrl+Space
 		if (e.keyCode == 27) 				quicksearch.hide(); //Escape
 	},
 	parse: function(code){
-		try { gtag('event', 'show', {'event_category': 'quicksearch.parsecode', 'value': code}); } catch (e) {}
+		app.ae('quicksearch', 'code', 'code='+term);
 		code = code.toLowerCase();
 		switch(code){
-			case "tests:1":
-				localStorage.setItem("showTests", true);
-				alert("Włączono funkcje testowe");
-				break;
-			
-			case "tests:0":
-				localStorage.removeItem("showTests");
-				alert("Wyłączono funkcje testowe");
-				break;
-			
-			case "autocfo:1":
-				localStorage.setItem("autocfo", true);
-				alert("Włączono auto cfo");
-				break;
-			
-			case "autocfo:0":
-				localStorage.removeItem("autocfo");
-				alert("Wyłączono auto cfo");
+			case "test":
+				alert("Parser quicksearch Ok!");
 				break;
 		}
-			
-		location.reload();
 	},
 	search: function(e){
 		if (e.keyCode == 13) {
 			term = document.getElementById('search').value.toUpperCase();
-			try { gtag('event', 'show', {'event_category': 'quicksearch.search', 'event_label': term}); } catch (e) {}
+			app.ae('quicksearch', 'search', 'search='+term);
 			if 		(term[0] == "N") jumpTo(0, term.substr(1,2))
 			else if (term[0] == "K") jumpTo(2, term.substr(1))
 			else if (term[0] == "S") jumpTo(1, term.substr(1))
