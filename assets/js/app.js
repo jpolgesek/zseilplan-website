@@ -351,15 +351,15 @@ function init2(){
 			jumpTo(2,location.hash.substr(2).toUpperCase());
 		}
 	}
-	/*
+	
 	try {
 		if (typeof(ZSEILPLAN_BUILD) == "undefined"){
-			document.getElementById("footer").innerText = "Super Clever Build internal build";
+			document.getElementById("footer-text").innerText = "Super Clever Build internal build";
 		} else {
-			document.getElementById("footer").innerText = "Super Clever Plan build " + ZSEILPLAN_BUILD;
+			document.getElementById("footer-text").innerText = "Super Clever Plan build " + ZSEILPLAN_BUILD;
 		}
 	} catch (e) {}
-	*/
+	
 
 	window.addEventListener('offline', function(e) { 
 		dom.addClass(document.getElementById("networkStatus"),"bad");
