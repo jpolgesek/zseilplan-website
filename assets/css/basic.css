@@ -75,7 +75,7 @@ body{
 	position: relative;
 }
 
-.footer button{    
+.footer .button{    
 	border: none;
     background: none;
 	color: inherit;
@@ -84,10 +84,10 @@ body{
     position: absolute;
     right: 0;
     top: 0;
-    padding: 6px;
+    padding: 5px;
 }
 
-.footer button:hover{    
+.footer .button:hover{    
 	background: rgba(148, 19, 19, 0.38);
 	cursor: pointer;
 }

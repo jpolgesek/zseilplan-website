@@ -81,4 +81,13 @@
 	.navbar button:hover .text {
 		width: 0;
 	}
+
+	.footer {
+		height: auto;
+	}
+
+	.footer .left{float: unset; margin: 5px;}
+	.footer .center-h{position: inherit;float: unset; margin: 5px;}
+	.footer .right{float: unset; margin: 5px;}
+	.footer .button{position: inherit;float: unset; margin: 5px;}
 }
