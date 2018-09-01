@@ -89,6 +89,12 @@
 	border-radius: 2px;
 }
 
+@supports (-moz-appearance:none) {
+	.navbar button .icon {
+		margin-top: -2px;
+	}
+}
+
 .navbar button .icon .fa {
 	width: 30px;
 	transition: .2s all;
@@ -186,14 +192,14 @@
 	width: 100%;
     padding-top: 5px;
 	padding-bottom: 5px;
-	z-index: 2100;
+	/* z-index: 2100; */
 	margin-bottom: 30px;
 	transition: transform 0.5s;
 	transition-timing-function: ease-in-out;
 	position: absolute;
 	top: 0;
 	left: 0;
-	transform: rotateX(-180deg) translateY(0) translateZ(0);
+	transform: rotateX(-180deg) translateY(0) translateZ(1px);
 	display: none;
 	/* transform: rotateX(-90deg) translateY(25px) translateZ(21px); */
 }
