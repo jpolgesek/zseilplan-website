@@ -68,6 +68,7 @@
 	/* background: rgb(16, 128, 245); */
 	background: #0b60ca;
 	border-radius: 3px;
+	margin-left: 5px;
 }
 
 .navbar button .icon {
