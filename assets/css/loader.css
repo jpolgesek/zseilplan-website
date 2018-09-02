@@ -24,7 +24,6 @@
 	color: #191919;
 }
 
-
 @keyframes slide {
 	0% 		{ transform: translate(0, 0); 			}
 	2% 		{ transform: translate(33px, 0);		}
@@ -52,11 +51,16 @@ svg#loading {
 	height: auto;
 }
 
-svg#loading .rect  {animation: slide 10s ease infinite;}
-svg#loading #rect1 {animation-delay: 0s;}
-svg#loading #rect2 {animation-delay: -1.42857143s;}
-svg#loading #rect3 {animation-delay: -2.85714286s;}
-svg#loading #rect4 {animation-delay: -4.28571429s;}
-svg#loading #rect5 {animation-delay: -5.71428571s;}
-svg#loading #rect6 {animation-delay: -7.14285714s;}
-svg#loading #rect7 {animation-delay: -8.57142857s;}
+svg#loading .rect  {
+	width: 30px;
+	height: 30px;
+	animation: slide 10s ease infinite;
+}
+
+svg#loading #r1 {animation-delay: 0s;}
+svg#loading #r2 {animation-delay: -1.42857143s;}
+svg#loading #r3 {animation-delay: -2.85714286s;}
+svg#loading #r4 {animation-delay: -4.28571429s;}
+svg#loading #r5 {animation-delay: -5.71428571s;}
+svg#loading #r6 {animation-delay: -7.14285714s;}
+svg#loading #r7 {animation-delay: -8.57142857s;}

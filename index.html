@@ -37,13 +37,13 @@
 				  </linearGradient>
 				</defs>
 				<g transform="translate(50 0) scale(0.707 0.707) rotate(45 0 0)">
-					<rect class="rect" id="rect1" x="0" y="0" width="30" height="30" rx="5" ry="5" fill="url(#a)" />
-					<rect class="rect" id="rect2" x="0" y="0" width="30" height="30" rx="5" ry="5" fill="url(#a)" />
-					<rect class="rect" id="rect3" x="0" y="0" width="30" height="30" rx="5" ry="5" fill="url(#a)" />
-					<rect class="rect" id="rect4" x="0" y="0" width="30" height="30" rx="5" ry="5" fill="url(#a)" />
-					<rect class="rect" id="rect5" x="0" y="0" width="30" height="30" rx="5" ry="5" fill="url(#a)" />
-					<rect class="rect" id="rect6" x="0" y="0" width="30" height="30" rx="5" ry="5" fill="url(#a)" />
-					<rect class="rect" id="rect7" x="0" y="0" width="30" height="30" rx="5" ry="5" fill="url(#a)" />
+					<rect class="rect" id="r1" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
+					<rect class="rect" id="r2" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
+					<rect class="rect" id="r3" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
+					<rect class="rect" id="r4" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
+					<rect class="rect" id="r5" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
+					<rect class="rect" id="r6" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
+					<rect class="rect" id="r7" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
 				</g>
 			</svg>
 			<h1>Ładuję Super Clever Plan</h1>
@@ -119,42 +119,38 @@
 				<nav class="tabs">
 					<a href="#" onclick='columns.setActive(-1)' class="active" id='btn_-1'>
 						<span class="mobile-only">All</span>
-						<span class="desktop-only">Cały tydzień</span>
+						<!-- <span class="desktop-only">Cały tydzień</span> -->
 					</a>
 					<a href="#" onclick='columns.setActive(0)' id='btn_0'>Dziś</a>
 					<div class="separator">&nbsp;</div>
 					<a href="#" onclick='columns.setActive(1)' id='btn_1'>
 						<span class="mobile-only">Pn</span>
-						<span class="desktop-only">Poniedziałek</span>
+						<!-- <span class="desktop-only">Poniedziałek</span> -->
 					</a>
 					<a href="#" onclick='columns.setActive(2)' id='btn_2'>
 						<span class="mobile-only">Wt</span>
-						<span class="desktop-only">Wtorek</span>
+						<!-- <span class="desktop-only">Wtorek</span> -->
 					</a>
 					<a href="#" onclick='columns.setActive(3)' id='btn_3'>
 						<span class="mobile-only">Śr</span>
-						<span class="desktop-only">Środa</span>
+						<!-- <span class="desktop-only">Środa</span> -->
 					</a>
 					<a href="#" onclick='columns.setActive(4)' id='btn_4'>
 						<span class="mobile-only">Cz</span>
-						<span class="desktop-only">Czwartek</span>
+						<!-- <span class="desktop-only">Czwartek</span> -->
 					</a>
 					<a href="#" onclick='columns.setActive(5)' id='btn_5'>
 						<span class="mobile-only">Pt</span>
-						<span class="desktop-only">Piątek</span>
+						<!-- <span class="desktop-only">Piątek</span> -->
 					</a>
 				</nav>
 			</div>
-
-			<!-- <button onClick="tempTest();">screen</button> -->
 			
 			<!-- TODO: create me dynamically-->	
 			<div id='diff-help' class='diff-help print-hide'>
 				<h3>Zmiany w planie</h3>
 
-				<span id="diff-info">
-					Porównujesz plan [n/p/s] [value]
-				</span>
+				<span id="diff-info"></span>
 
 				<div class="bar">
 					<span class="diff-demo diff added">Nowa lekcja</span>
@@ -171,13 +167,14 @@
 			<!-- TODO: create me dynamically-->	
 			<table id='maintable' class='maintable shadow'><tr><td>Wybierz opcję z menu.</td></tr></table>
 
-			<!-- TODO: create me dynamically-->	
+			<!-- TODO: create me dynamically
 			<div class='hidden' style="display: none;" id='storageControl'>
 				<button class='wideBtn' type='button' onclick='myStorage.clear()'>Skasuj ustawienia domyślne</button>
-			</div>
+			</div>-->	
 			
-			<!-- TODO: create me dynamically-->	
-			<div id="toast"><div id="toast_img"></div><div id="toast_desc"></div></div>
+			<!-- TODO: Disable this
+				<div id="toast"><div id="toast_img"></div><div id="toast_desc"></div></div>
+			-->	
 			
 			<div id="footer" class="footer">
 				<div class="left" id="button_comment"></div>
