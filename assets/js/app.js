@@ -66,7 +66,6 @@ var app = {
 		row.appendChild(section_title);
 		datasourcepickerDiv.appendChild(row);
 
-		
 		row = modal.createRow();
 
 		input = document.createElement('select');
@@ -74,7 +73,7 @@ var app = {
 		input.checked = true;
 		for (i in diff.index.timetable_archives){
 			item = diff.index.timetable_archives[i];
-			input.options[input.options.length] = new Option(item.date + ' ('+item.hash+')', "_temp/py3.json");
+			input.options[input.options.length] = new Option(item.date + ' ('+item.hash+')', 'data/' + item.filename);
 		}
 		
 		title = document.createElement("span");
@@ -278,7 +277,9 @@ function init2(){
 	
 	/* TODO: fix me */
 	try {
-		status_span.innerHTML += "<br>Zastępstwa na "+Object.keys(overrideData).map(function(s){return s.substr(0,5)}).sort().join();
+		if (Object.keys(overrideData).length > 0){
+			status_span.innerHTML += "<br>Zastępstwa na "+Object.keys(overrideData).map(function(s){return s.substr(0,5)}).sort().join();
+		}
 		status_span.innerHTML += "<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a> | <a href='changelog.html'>Changelog</a>";
 	} catch (e) {}
 
@@ -467,13 +468,10 @@ function refreshView(){
 	}
 
 	if (app.isDiff){
-		//redo diff
-		//show diff info
 		console.log("redo diff");
 		diff.generateDiff();
 		app.element.diff.help.style.display = "inherit";
 	}else{
-		//hide diff info
 		app.element.diff.help.style.display = "none";
 	}
 
@@ -496,7 +494,11 @@ function refreshView(){
 
 	try {
 		data_info = document.getElementById("data_info");
-		data_info_src = data._info;
+		if (data._info == undefined){
+			data_info.parentElement.removeChild(data_info);
+		}else{
+			data_info_src = data._info;
+		}
 		if (data_info_src.text != undefined && 
 			data_info_src.text != "" && 
 			data_info_src.style != undefined && 
