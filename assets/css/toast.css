@@ -1,5 +1,5 @@
 /* Toast */
-
+/*
 #toast {
 	z-index: 300;
     visibility: hidden;
@@ -7,12 +7,10 @@
     height: 50px;
     margin-left: -125px;
     margin: auto;
-    /* background-color: #fff; */
     color: #fafafa;
     text-align: center;
     border-radius: 2px;
     position: fixed;
-    /* z-index: 1; */
 	left: 0;
 	right:0;
     top: 30px;
@@ -96,8 +94,7 @@
     from {top: 30px; opacity: 1;}
     to {top: 60px; opacity: 0;}
 }
-
-
+*/
 
 #networkStatus{
 	text-align: center;
@@ -114,16 +111,6 @@
     color: #ffffff;
 }
 
-/*
-#status{
-	text-align: center;
-    padding: 5px;
-    background-color: #fbfbfb;
-    color: #151515;
-    border-radius: 5px;
-}
-*/
-
 .box-text{
 	text-align: center;
     padding: 5px;
@@ -132,3 +119,8 @@
     border-radius: 5px;
     margin-top: 10px;   
 }
+
+
+.box-text .red  {background-color: #c52e2e; color: #fafafa;}
+.box-text .green{background-color: #1da724; color: #fafafa;}
+.box-text .blue {background-color: #046edd; color: #fafafa;}
