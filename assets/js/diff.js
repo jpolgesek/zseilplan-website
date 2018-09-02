@@ -165,6 +165,7 @@ var diff = {
 			for (hour=1; hour<maxHours; hour++){
 				try {
 					itemsContainer = table.rows[hour].cells[day];
+					cell = itemsContainer;
 
 					items = itemsContainer.children;
 					il = items.length;
@@ -199,14 +200,14 @@ var diff = {
 							} catch (e) {}
 						}
 					}
-					
+
 					for (i = 0; i < il; i++){
 						currentItemElement = items[i];
 						currentItem = currentItemElement.zseilplanitem;
 
 						if (this.selectedType == "teacher"){
 							oldItem = this.data.teachers[select_teachers.value][day][hour];
-							
+
 							if (oldItem == undefined){
 								currentItem.diff = "added";
 								currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
@@ -231,11 +232,11 @@ var diff = {
 							for (unit in this.data.timetable[day][hour]){
 								oldItem = this.data.timetable[day][hour][unit].filter(function(v){return v.s == select_rooms.value;});
 								if (oldItem[0] == undefined) continue;
-								
+
 								wasEmpty = false;
 								oldItem = oldItem[0];
 								oldItem.k = unit;
-								
+
 								if (oldItem.k != currentItem.k){
 									currentItem.diffModified1 = "Był " + oldItem.k + "; Jest " + currentItem.k;
 									currentItem.diff = "modified";
@@ -264,7 +265,7 @@ var diff = {
 								notFound = [];
 
 								newClassesArr = [];
-								
+
 								//remove duplicates
 								for (cls in classesArr){
 									duplicate = false;
@@ -298,7 +299,7 @@ var diff = {
 									}else if ((oldItem.s == currentItem.s) && (oldItem.n == currentItem.n) && (oldItem.p == currentItem.p)){
 										foundSimilar = true;
 									}
-									
+
 									if (currentItem.diff == "modified"){
 										currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
 									}else{
@@ -306,7 +307,7 @@ var diff = {
 										foundSimilar = false;
 									}
 								}
-								
+
 								if (notFound.length > 0){
 									for (i = 0; i < notFound.length; i++){
 										if (il == 1){
@@ -332,7 +333,7 @@ var diff = {
 													itemsContainer.appendChild(ui.createItem(notFound[i]));
 												}
 											}
-											
+
 										}
 									}
 								}
@@ -342,9 +343,7 @@ var diff = {
 							}
 						}
 					}
-				} catch (error) {
-					console.warn(error);
-				}
+				} catch (e) {}
 			}
 		}
 	}
