@@ -125,7 +125,7 @@ body{
 }
 
 .android-img{
-	height: 128px;
+	height: 123px;
 	display: block;
 }
 
@@ -139,6 +139,7 @@ body{
     border-radius: 50%;
 	line-height: 150px;
 	text-shadow: 1px 1px 1px #000;
+	color: #FAFAFA;
 }
 
 .android-step-desc{
@@ -169,4 +170,5 @@ body{
 .android-close-btn:hover{
 	background: #0b60ca;
 	cursor: pointer;
+	color: #FAFAFA;
 }
