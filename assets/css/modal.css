@@ -25,7 +25,7 @@
 	opacity: 1;
 }
 
-.modal  button{
+.modal button{
 	/* width: calc(50% - 6px); */
 	background: none;
 	/* border: solid 1px #FAFAFA; */
@@ -36,7 +36,7 @@
 	margin-right: 20px;
 }
 
-.modal  button:hover{
+.modal button:hover{
 	/*width: calc(50% - 6px);
 	background: #FAFAFA;
 	border: solid 1px #FAFAFA;
@@ -74,7 +74,7 @@
     padding: 15px;
     top: 0;
     left: 0;
-    width: 85%;
+    /* width: 85%; */
 	padding-left: 30px;
     /* background: linear-gradient(-90deg, #046edd00, #0050b3); */
 }
