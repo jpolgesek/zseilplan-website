@@ -83,38 +83,7 @@ var app = {
 		row.appendChild(input);
 		row.appendChild(title);
 		datasourcepickerDiv.appendChild(row);
-
-		/*
 		
-		row = modal.createRow();
-		row.style.margin.bottom = "-10px";
-		row.style.fontSize = "1.5em";
-		section_title = document.createElement('span');
-		section_title.innerHTML = "Źródło planu";
-		row.appendChild(section_title);
-		datasourcepickerDiv.appendChild(row);
-
-		row = modal.createRow();
-
-		input = document.createElement('select');
-		input.type = "";
-		input.checked = true;
-
-		input.options[input.options.length] = new Option('2.0, strona szkoły (domyślny)', "-");
-		input.options[input.options.length] = new Option('3.0, strona szkoły', "-");
-		input.options[input.options.length] = new Option('3.0, vulcan', "-");
-		input.options[input.options.length] = new Option('Dane testowe', "-");
-		
-		title = document.createElement("span");
-		title.className = "desc";
-		title.innerText = "Jeśli nie wiesz co tu wybrać, zostaw ustawienie domyślne";
-
-		row.appendChild(input);
-		row.appendChild(title);
-		datasourcepickerDiv.appendChild(row);
-
-		*/
-
 		row = modal.createRow();
 
 		prefsBtnSave = document.createElement('button');
@@ -152,6 +121,27 @@ var app = {
 		}
 
 		return;
+	},
+
+	changelogModal: function(){
+		changelogHTML = "";
+		changelogHTML += "<b>03.09.2018 - Super Clever Plan 2.0</b>";
+		changelogHTML += "<ul>";
+		changelogHTML += "<li>Zupełnie nowy parser planu</li>";
+		changelogHTML += "<li>Możliwość wyświetlania planu z przeszłości</li>";
+		changelogHTML += "<li>Możliwość wyświetlania zmian w planie</li>";
+		changelogHTML += "<li>Przełączanie między dniami na mobile za pomocą gestów</li>";
+		changelogHTML += "<li>Poprawiony silnik wydruków</li>";
+		changelogHTML += "<li>Możliwość pracy w trybie offline</li>";
+		changelogHTML += "<li>Dodana instrukcja instalacji na androidzie</li>";
+		changelogHTML += "<li>Kompatybilność ze starszymi przeglądarkami (Aż do IE 9)</li>";
+		changelogHTML += "<li>Zmieniony interfejs</li>";
+		changelogHTML += "</ul>";
+		changelogDiv = modal.create('changelog', "Changelog", changelogHTML, function(){changelogDiv.parentElement.removeChild(changelogDiv);ui.containerBlur(false)});
+
+		ui.containerBlur(true);
+		document.body.appendChild(changelogDiv);
+		setTimeout(function(){dom.addClass(changelogDiv, "modal-anim");},1);
 	}
 }
 
@@ -280,7 +270,7 @@ function init2(){
 		if (Object.keys(overrideData).length > 0){
 			status_span.innerHTML += "<br>Zastępstwa na "+Object.keys(overrideData).map(function(s){return s.substr(0,5)}).sort().join();
 		}
-		status_span.innerHTML += "<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a> | <a href='changelog.html'>Changelog</a>";
+		status_span.innerHTML += "<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a> | <a href='#' onclick='app.changelogModal()'>Changelog</a>";
 	} catch (e) {}
 
 
