@@ -156,7 +156,7 @@ var myStorage = {
 					biginfo.className = "preferences_default_big preferences_default_inactive";
 				}
 
-				title.innerHTML = "TODO: fix wrapping";
+				//title.innerHTML = "TODO: fix wrapping";
 				
 				row.appendChild(biginfo);
 				row.appendChild(title);
