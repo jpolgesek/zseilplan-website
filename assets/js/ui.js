@@ -4,7 +4,7 @@ var ui = {
 	itemDisplayType: 0,
 	isOverride: false,
 	isToastInProgress: false,
-	jumpButtonsFloatRight: false,
+	jumpButtonsFloatRight: true,
 
 	createZMark: function(n){
 		if (document.getElementsByClassName("header")[0].children[n].children.length == 0){
@@ -125,9 +125,11 @@ var ui = {
 			}
 
 		}else{
-			if(itemData.g != undefined){
-				// span[0].innerHTML += " (Grupa "+itemData.g+")";
-				span[0].innerHTML += "-"+itemData.g+"";
+			if((itemData.g != undefined) && (itemData.g != "-1")){
+				if (span[0].innerText.indexOf(itemData.g) == -1){
+					// span[0].innerHTML += " (Grupa "+itemData.g+")";
+					span[0].innerHTML += "-"+itemData.g+"";
+				}
 			}
 			jumpButtonsDiv.appendChild(span[1]);
 			jumpButtonsDiv.appendChild(span[2]);
