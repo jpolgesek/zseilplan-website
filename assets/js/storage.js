@@ -1,7 +1,8 @@
-/* Storage */
+/* Storage
 if (typeof(Storage) !== "undefined") {
     document.getElementById("storageControl").className = "";
 }
+ */
 
 var myStorage = {
 	save: function(){

@@ -9,6 +9,13 @@ var diff = {
 	diffInfoElement: document.getElementById("diff-info"),
 
 	loadIndex: function(){
+		try {
+			utils.log("diff", "Found fetch" + fetch.toString().substr(0,0));
+		} catch (error) {
+			utils.warn("diff", "Fetch not found, disabling diff");
+			return;
+		}
+		
 		fetch("data/index.json").then(function(resp) {
 			return resp.json();
 		}).then(function(jsondata) {

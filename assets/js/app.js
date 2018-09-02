@@ -847,19 +847,19 @@ function detectIE() {
 	return false;
   }
 
-  if ((window.chrome) && (navigator.userAgent.indexOf("Windows NT 6") !== -1)){
+ /* if ((window.chrome) && (navigator.userAgent.indexOf("Windows NT 6") !== -1)){
 	document.getElementsByClassName("print_icon")[0].className = "print_icon_compatible";
 	document.getElementsByClassName("print_icon_compatible")[0].innerHTML = "&#xe800;";
 	document.getElementsByClassName("settings_icon")[0].className = "settings_icon_compatible";
 	document.getElementsByClassName("settings_icon_compatible")[0].innerHTML = "&#xe801;";
-}
+	}*/
 
 if (detectIE()){
 	console.log("Uzywasz IE, wspolczuje...");	
-	document.getElementsByClassName("print_icon")[0].className = "print_icon_compatible";
+	/*document.getElementsByClassName("print_icon")[0].className = "print_icon_compatible";
 	document.getElementsByClassName("print_icon_compatible")[0].innerHTML = "&#xe800;";
 	document.getElementsByClassName("settings_icon")[0].className = "settings_icon_compatible";
-	document.getElementsByClassName("settings_icon_compatible")[0].innerHTML = "&#xe801;";
+	document.getElementsByClassName("settings_icon_compatible")[0].innerHTML = "&#xe801;";*/
 }
 
 
