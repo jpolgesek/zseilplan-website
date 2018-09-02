@@ -21,7 +21,6 @@ function IEgetDay(n) {
 	out += String(date.getMonth()+1);
 	out += "."
 	out += String(date.getFullYear());
-	return "28.05.2018"; //TODO: remove me
 	return out;
 }
 
