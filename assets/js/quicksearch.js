@@ -24,10 +24,18 @@ var quicksearch = {
 	},
 	parse: function(code){
 		app.ae('quicksearch', 'code', 'code='+term);
-		code = code.toLowerCase();
-		switch(code){
+		code = code.toLowerCase().split(":");
+		switch(code[0]){
 			case "test":
-				alert("Parser quicksearch Ok!");
+				if (code[1] == "1"){
+					alert("Włączam funkcje testowe");
+					localStorage.setItem("tests_enabled", "true");
+					location.reload();
+				}else{
+					alert("Wyłączam funkcje testowe");
+					localStorage.setItem("tests_enabled", "true");
+					location.reload();
+				}
 				break;
 		}
 	},
