@@ -15,6 +15,7 @@ var status_span = document.getElementById("status");
 var networkstatus = document.getElementById("networkStatus");
 var loaderstatus = document.getElementById("loader-status");
 var navbar_info = document.getElementById("navbar-info");
+var data_googleindex_info = document.getElementById("data-googleindex-info");
 
 /* Global variables */
 var data = "wait";
@@ -34,6 +35,7 @@ var app = {
 	isCustomDataVersion: false,
 	isMobile: true,
 	isDiff: false,
+	ip: "0.0.0.0",
 	element: {
 		diff: {
 			help: document.getElementById("diff-help"),
@@ -125,11 +127,11 @@ var app = {
 
 	changelogModal: function(){
 		changelogHTML = "";
-		changelogHTML += "<b>03.09.2018 - Super Clever Plan 2.0</b>";
+		changelogHTML += "<b>02.09.2018 - Super Clever Plan 2.0</b>";
 		changelogHTML += "<ul>";
 		changelogHTML += "<li>Zupełnie nowy parser planu</li>";
-		changelogHTML += "<li>Możliwość wyświetlania planu z przeszłości</li>";
-		changelogHTML += "<li>Możliwość wyświetlania zmian w planie</li>";
+		// changelogHTML += "<li>Możliwość wyświetlania planu z przeszłości</li>";
+		// changelogHTML += "<li>Możliwość wyświetlania zmian w planie</li>";
 		changelogHTML += "<li>Przełączanie między dniami na mobile za pomocą gestów</li>";
 		changelogHTML += "<li>Poprawiony silnik wydruków</li>";
 		changelogHTML += "<li>Możliwość pracy w trybie offline</li>";
@@ -142,6 +144,94 @@ var app = {
 		ui.containerBlur(true);
 		document.body.appendChild(changelogDiv);
 		setTimeout(function(){dom.addClass(changelogDiv, "modal-anim");},1);
+	},
+
+	bugreportModal: function(){
+		bugreportDiv = modal.create('bugreport', "Zgłoś błąd", "", function(){bugreportDiv.parentElement.removeChild(bugreportDiv);ui.containerBlur(false)});
+		
+		row = modal.createRow();
+		row.style.margin.bottom = "-10px";
+		row.style.fontSize = "1.5em";
+		section_title = document.createElement('span');
+		section_title.innerHTML = "Opisz co się stało";
+		row.appendChild(section_title);
+		bugreportDiv.appendChild(row);
+		
+		row = modal.createRow();
+		input = document.createElement('textarea');
+		input.type = "";
+		input.style.width = "100%";
+		input.style.height = "200px";
+
+		row.appendChild(input);
+		bugreportDiv.appendChild(row);
+
+		row = modal.createRow();
+		row.style.margin.bottom = "-10px";
+		row.style.fontSize = "1.5em";
+		section_title = document.createElement('span');
+		section_title.innerHTML = "Adres email";
+		row.appendChild(section_title);
+		bugreportDiv.appendChild(row);
+		
+		row = modal.createRow();
+		input = document.createElement('input');
+		input.type = "text";
+
+		row.appendChild(input);
+
+		bugreportDiv.appendChild(row);
+		
+		row = modal.createRow();
+		prefsBtnSave = document.createElement('button');
+		prefsBtnSave.innerText = "Wyślij";
+		prefsBtnSave.onclick = function(){
+			bd = app.preparebugdump();
+			alert(app.ip);
+			//bd = JSON.stringify(bd);
+			//console.log(bd);
+		};
+		prefsBtnSave.className = "btn-primary";
+		row.appendChild(prefsBtnSave);
+
+		prefsBtnCancel = document.createElement('button');
+		prefsBtnCancel.innerText = "Anuluj";
+		prefsBtnCancel.onclick = function(){bugreportDiv.parentElement.removeChild(bugreportDiv);ui.containerBlur(false)};
+		row.appendChild(prefsBtnCancel);
+		bugreportDiv.appendChild(row);
+
+		ui.containerBlur(true);
+		document.body.appendChild(bugreportDiv);
+		setTimeout(function(){dom.addClass(bugreportDiv, "modal-anim");},1);
+	},
+
+	preparebugdump: function(){
+		output = {};
+		output.window = {};
+		output.document = {};
+		output.screen = {};
+		output.navigator = {};
+		output.location = {};
+		output.localstorage = {};
+		output.ip = app.ip;
+		output.window.innerWidth = window.innerWidth;
+		output.window.outerWidth = window.outerWidth;
+		output.window.innerHeight = window.innerHeight;
+		output.window.outerHeight = window.outerHeight;
+		output.window.devicePixelRatio = window.devicePixelRatio;
+		output.document.width = document.width;
+		output.screen.width = screen.width;
+		output.navigator.userAgent = navigator.userAgent;
+		output.document.body = document.body.innerHTML;
+		output.location.href = location.href;
+		output.navigator.cookieEnabled = navigator.cookieEnabled;
+		try {
+			for (var i = 0; i < localStorage.length; i++){
+				output.localstorage[localStorage.key(i)] = localStorage.getItem(localStorage.key(i));
+			}
+		}catch (e) {}
+
+		return output;
 	}
 }
 
@@ -184,9 +274,9 @@ function debug(){
 
 function init2(){
 	utils.log("app", "Loading app");
-
+	
 	if (!navigator.onLine){
-		utils.warn("app", "App is offline, be careful");
+		utils.warn("app", "App is offline, be careful!");
 		// document.getElementsByClassName("navbar-info")[0].innerHTML = "<b>TRYB OFFLINE</b>";
 		// document.getElementsByClassName("navbar")[0].style.backgroundColor = "#ff0000";
 		dom.addClass(document.getElementById("networkStatus"),"bad");
@@ -203,6 +293,7 @@ function init2(){
 		document.getElementById("button_comment").innerText = "Nie udało się pobrać wersji planu.";
 	}
 	
+	try {data_googleindex_info.innerHTML = "W indeksie jest: ";} catch (e){}
 
 	/* Add units to select_units and quicksearch */
 	status_span.innerText = "Przygotowywanie interfejsu: klasy";
@@ -214,6 +305,8 @@ function init2(){
 	select_units.options[0] = new Option("Klasa", "default");
 	for (unit in data.units) {
 		select_units.options[select_units.options.length] = new Option(data.units[unit], data.units[unit]);
+		// try {data_googleindex_info.innerHTML += "<a href='index.html#k"+data.units[unit]+"'>plan "+data.units[unit]+"</a>, ";} catch (e){}
+		try {data_googleindex_info.innerHTML += "plan "+data.units[unit]+", ";} catch (e){}
 		//quicksearch.add("Klasa "+data.units[unit], "K"+data.units[unit]);
 	};
 
@@ -229,6 +322,7 @@ function init2(){
 		select_teachers.options[select_teachers.options.length] = new Option(data.teachermap[key]+' ('+key+')', key);
 	}
 
+	try {data_googleindex_info.innerHTML += "plany "+ Object.keys(data.teachermap).length +" nauczycieli";} catch (e){}
 	
 	/* Add classrooms to select_rooms and quicksearch */
 	status_span.innerText = "Przygotowywanie interfejsu: sale";
@@ -243,6 +337,7 @@ function init2(){
 		//quicksearch.add("Sala "+data.classrooms[i], "S"+data.classrooms[i]);
 	}
 
+	try {data_googleindex_info.innerHTML += " i "+ data.classrooms.length +" sal.";} catch (e){}
 	
 	/* Attach change events to select menus */
 	select_units.onchange = refreshView	;
@@ -321,7 +416,7 @@ function init2(){
 		XPinfo.innerHTML += "</ul><br>"
 		XPinfo.innerHTML += "Więc w trosce o zdrowie psychiczne twoje oraz autora tej aplikacji polecam zaprzestać użytkowania <strong>17 LETNIEGO</strong> systemu operacyjnego."
 		XPinfo.innerHTML += "<br><br> <button class='wideBtn' type='button' onclick='document.getElementById(\"XPinfo\").style.display=\"none\"'>Obiecuję zainstalować nowy system, zamknij ten komunikat</button>"
-		XPinfo.style.background = "url('err_xp.png'), rgb(142, 24, 24)";
+		XPinfo.style.background = "url('assets/img/err_xp.png'), rgb(142, 24, 24)";
 		XPinfo.style.backgroundRepeat = " no-repeat";
 		XPinfo.style.backgroundPosition = "91% center";
 		XPinfo.style.textAlign = "left";
@@ -363,6 +458,7 @@ function init2(){
 		document.getElementById("networkStatus").className = "";
 	});
 
+	try {getIPs(function(a){app.ip = a;});}catch(e){};
 	diff.loadIndex();
 }
 
@@ -577,7 +673,17 @@ function fetchData(customURL){
 		compat = true
 	}
 	
+	
+	
 	timestamp = Date.now();
+
+	/* %old-ie-remove-start% */
+	if (!navigator.onLine) {
+		try{loaderstatus.innerHTML="Jesteś offline, próbuję pobrać plan z lokalnego cache";}catch(e){};
+		timestamp = "localstorage";
+	}
+	/* %old-ie-remove-end% */
+
 	url = 'data.php?ver='+timestamp;
 	
 	if (customURL != undefined){
@@ -621,13 +727,8 @@ function fetchData(customURL){
 	}
 	
 	isOK = true;
-	
-	/* %old-ie-remove-start% */
-	if (!navigator.onLine) {
-		try{loaderstatus.innerHTML="Jesteś offline, próbuję pobrać plan z lokalnego cache";}catch(e){};
-		timestamp = "localstorage";
-	}
 
+	/* %old-ie-remove-start% */
 	/* is this needed? TODO
 	try {
 		fetch('data.php?ver=localstorage').then(function(response) {return response.json();}).catch();
@@ -677,6 +778,7 @@ if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.register('sw.js').then(function(registration) {
 			// Registration was successful			
 			utils.log("app", "ServiceWorker registration successful with scope: " + registration.scope);
+			try {fetch('index.html?launcher=true').then(function(response) {console.log("------")}).catch();} catch (e) {}
 			// console.log('ServiceWorker registration successful with scope: ', registration.scope);
 			registration.pushManager.getSubscription().then(function(sub) {
 				if (sub === null) {
