@@ -38,6 +38,13 @@ var myStorage = {
 		ui.createToast("Wyczyściłem ustawienia domyślne");
 	},
 	load: function(){
+		try {
+			if(localStorage.getItem("tests_enabled") == "true"){
+				utils.warn("internal","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
+				document.getElementById("test-1").style.display = null;
+			}
+		} catch (e) {}
+
 		if (localStorage.getItem("saved") != "true"	){
 			return;
 		}
@@ -76,9 +83,6 @@ var myStorage = {
 		}*/
 
 		
-		if(localStorage.getItem("showTests") == "true"){
-			console.log(12);
-		}
 
 
 		//refreshView();
@@ -178,6 +182,11 @@ var myStorage = {
 		prefsBtnCancel = document.createElement('button');
 		prefsBtnCancel.innerText = "Anuluj";
 		prefsBtnCancel.onclick = function(){ui.showPreferences(0)};
+		row.appendChild(prefsBtnCancel);
+
+		prefsBtnCancel = document.createElement('button');
+		prefsBtnCancel.innerText = "QS";
+		prefsBtnCancel.onclick = function(){ui.showPreferences(0); quicksearch.show();};
 		row.appendChild(prefsBtnCancel);
 
 		preferencesDiv.appendChild(row);
