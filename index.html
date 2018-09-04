@@ -6,21 +6,23 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<meta name="theme-color" content="#046edd">
 		<meta name="description" content="Ładny i wygodny plan ZSEiL.">
+		<meta name="apple-mobile-web-app-capable" content="yes">
 		<title>Super Clever Plan</title>
-
+		
 		<!-- %compile_css_start%-->
 		<link rel="stylesheet" href="assets/css/style.css?ver=%build%">
 		<!-- %compile_css_end%-->
-
-		<link rel="manifest" href="/manifest.json">
 		
-		<!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113628218-1"></script>
+		<link rel="manifest" href="/manifest.json">
+		<link rel="apple-touch-icon" href="assets/img/icon_square.png">
+		
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113628218-1"></script>
 		<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
 		gtag('config', 'UA-113628218-1');
-		</script>-->
+		</script>
 	</head>
 	<body>
 		<div id='quicksearch' style='display:none;'> <!-- TODO: create me dynamically-->
@@ -63,7 +65,7 @@
 					</div> <!-- TODO: create me dynamically -->
 					
 					<div class="navbar-buttons">
-						<button class='print-hide' onclick="app.showDataSourceModal()">
+						<button class='print-hide' onclick="app.showDataSourceModal()" style="display: none;" id="test-1">
 							<div class='icon'><i class="icon-history"></i></div>
 							<div class='text'>Wybór planu</div>
 						</button>
@@ -85,17 +87,17 @@
 					</div>
 				</nav>
 				<div class="navbar-notification" id="notification-bar">
-					<span class="navbar-title" id="notification-text">Brak tekstu powiadomienia</span>
+					<span class="navbar-title" id="notification-text"></span>
 				</div>
 			</div>
 			<!-- TODO: create me dynamically -->	
 			<div id='status' class="shadow box-text print-hide">Ładowanie skryptu...</div>
 			
 			<!-- TODO: create me dynamically -->	
-			<div id='remote_info' class="shadow box-text print-hide" style="display: none;">remote info here</div>
+			<div id='remote_info' class="shadow box-text print-hide" style="display: none;"></div>
 			
 			<!-- TODO: create me dynamically -->	
-			<div id='data_info' class="shadow box-text print-hide" style="display: none;">data info here</div>
+			<div id='data_info' class="shadow box-text print-hide" style="display: none;"></div>
 			
 			<!-- TODO: create me dynamically -->	
 			<!-- TODO: fix my css! -->
@@ -165,7 +167,30 @@
 			<div id='networkStatus' style="display: none;"></div>
 			
 			<!-- TODO: create me dynamically-->	
-			<table id='maintable' class='maintable shadow'><tr><td>Wybierz opcję z menu.</td></tr></table>
+			<table id='maintable' class='maintable shadow'><tr><td><div class="info desktop-only print-hide">
+					<h2>Czym jest Super Clever Plan</h2>
+					
+					<p>Super Clever Plan to aplikacja umożliwiająca przeglądanie planu ZSEiL (zseil.edu.pl) w cywilizowany sposób.</p>
+					<p id="data-googleindex-info">W indeksie znajduje się dane takie jak:</p>
+	
+					<h2>Jak Używać Super Clever Planu?</h2>
+	
+					<h3>Przeglądanie aktualnego planu</h3>
+					<p>Wybierz z listy rozwijanej klasę, nauczyciela lub salę.</p>
+	
+					<!--<h3>Przeglądanie poprzedniej wersji planu</h3>
+					<p>Kliknij <i class="icon-history"></i> w prawym górnym rogu, a następnie wybierz z listy rozwijanej klasę, nauczyciela lub salę.</p>-->
+	
+					<h3>Drukowanie planu</h3>
+					<p>Wyświetl plan który chcesz wydrukować a następnie kliknij <i class="icon-print"></i> w prawym górnym rogu.</p>
+	
+					<h3>Instalowanie Super Clever Planu na Androidzie</h3>
+					<p>Kliknij <i class="icon-android"></i> w prawym górnym rogu, a następnie podążaj za wyświetlonymi instrukcjami.</p>
+	
+					<h3>Dostosowywanie Super Clever Planu</h3>
+					<p>Kliknij <i class="icon-cog"></i> w prawym górnym rogu, a następnie ustaw opcje zgodnie ze swoimi preferencjami.</p>
+				</div>
+			</td></tr></table>
 
 			<!-- TODO: create me dynamically
 			<div class='hidden' style="display: none;" id='storageControl'>
@@ -179,8 +204,11 @@
 			<div id="footer" class="footer">
 				<div class="left" id="button_comment"></div>
 				<div class="center-h" id="footer-text">Super Clever Build internal build</div>
-				<div class="right"><span class="button" onclick="alert('todo')"><i class="icon-bug"></i> Zgłoś błąd</span></div>
+				<!-- <div class="right"><span class="button" onclick="app.bugreportModal()"><i class="icon-bug"></i> Zgłoś błąd</span></div> -->
+				<div class="right">&copy; 2018 Jakub Półgęsek</div>
 			</div>
+
+			
 
 		</div>
 
@@ -196,6 +224,7 @@
 		<script src="assets/js/quicksearch.js?ver=%build%"></script>
 		<script src="assets/js/app.js?ver=%build%"></script>
 		<script src="assets/js/temp1.js?ver=%build%"></script>
+		<script src="assets/js/bugreport.js?ver=%build%"></script>
 		<!-- %compile_js_end%-->
 	</body>
 </html>
