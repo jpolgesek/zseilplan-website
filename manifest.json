@@ -6,12 +6,12 @@
 	"background_color": "#042f5f",
 	"icons": [
 		{
-		"src": "/launcher-icon-4x.png",
+		"src": "/assets/img/launcher-icon-4x.png",
 		"type": "image/png",
 		"sizes": "192x192"
 		},
 		{
-		"src": "/launcher-icon-512.png",
+		"src": "/assets/img/launcher-icon-512.png",
 		"type": "image/png",
 		"sizes": "512x512"
 		}
