@@ -16,6 +16,7 @@
 .diff-help{
 	text-align: center;	
     margin-bottom: 10px;
+    display: none;
 }
 
 .diff-help h1{
