@@ -64,7 +64,7 @@ var app = {
 		row.style.margin.bottom = "-10px";
 		row.style.fontSize = "1.5em";
 		section_title = document.createElement('span');
-		section_title.innerHTML = "Data planu";
+		section_title.innerHTML = "Data eksportu planu";
 		row.appendChild(section_title);
 		datasourcepickerDiv.appendChild(row);
 
@@ -75,10 +75,10 @@ var app = {
 		input.checked = true;
 		for (i in diff.index.timetable_archives){
 			item = diff.index.timetable_archives[i];
-			if (item.time == undefined){
-				item.time = "00:00";
+			if (item.export_datetime == undefined){
+				item.export_datetime = item.date;
 			}
-			input.options[input.options.length] = new Option(item.date + " " + item.time +  ' ('+item.hash+')', 'data/' + item.filename);
+			input.options[input.options.length] = new Option(item.export_datetime +  ' ('+item.hash+')', 'data/' + item.filename);
 		}
 		
 		title = document.createElement("span");
