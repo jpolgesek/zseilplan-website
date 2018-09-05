@@ -64,7 +64,7 @@ var app = {
 		row.style.margin.bottom = "-10px";
 		row.style.fontSize = "1.5em";
 		section_title = document.createElement('span');
-		section_title.innerHTML = "Data eksportu planu";
+		section_title.innerHTML = "Data planu";
 		row.appendChild(section_title);
 		datasourcepickerDiv.appendChild(row);
 
@@ -292,6 +292,7 @@ function init2(){
 	/* Show data comment */
 	try {
 		document.getElementById("button_comment").innerText = data.comment;
+		document.getElementById("button_comment").innerText += " (" + data.hash.substr(0,8) + ")";
 	} catch (error) {
 		document.getElementById("button_comment").innerText = "Nie udało się pobrać wersji planu.";
 	}
