@@ -75,7 +75,10 @@ var app = {
 		input.checked = true;
 		for (i in diff.index.timetable_archives){
 			item = diff.index.timetable_archives[i];
-			input.options[input.options.length] = new Option(item.date + ' ('+item.hash+')', 'data/' + item.filename);
+			if (item.time == undefined){
+				item.time = "00:00";
+			}
+			input.options[input.options.length] = new Option(item.date + " " + item.time +  ' ('+item.hash+')', 'data/' + item.filename);
 		}
 		
 		title = document.createElement("span");
