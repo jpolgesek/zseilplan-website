@@ -6,6 +6,32 @@ var ui = {
 	isToastInProgress: false,
 	jumpButtonsFloatRight: true,
 
+	toast: {
+		timerID: undefined,
+		inProgress: false,
+		show: function(text, time){
+			if (ui.toast.inProgress) return false;
+			ui.toast.inProgress = true;
+			if (ui.toast.timerID != undefined) clearTimeout(ui.toast.timerID);
+			if (time == undefined) time = 2400;
+			app.element.notification.text.innerText = text;
+			app.element.notification.bar.style.display = "inherit";
+			dom.addClass(app.element.navbar.container, "notification");
+			// app.element.notification.bar.onclick = ui.toast.hide;
+			setTimeout(ui.toast.hide, time);
+			return true;
+		},
+		hide: function(){
+			dom.removeClass(app.element.navbar.container, "notification");
+			// app.element.notification.bar.onclick = null;
+			ui.toast.timerID = setTimeout(function(){
+				app.element.notification.bar.style.display = "none"; 
+				ui.toast.inProgress = false;
+			}, 800);
+			return true;
+		}
+	},
+
 	createZMark: function(n){
 		if (document.getElementsByClassName("header")[0].children[n].children.length == 0){
 			zMark = document.createElement('span');
@@ -161,8 +187,8 @@ var ui = {
 		app.element.notification.text.innerText = text;
 		app.element.notification.bar.style.display = "inherit";
 		dom.addClass(app.element.navbar.container, "notification");
-		setTimeout(function(){dom.removeClass(app.element.navbar.container, "notification")}, 5000);
-		setTimeout(function(){app.element.notification.bar.style.display = "none"; ui.isToastInProgress = false;}, 6000);
+		setTimeout(function(){dom.removeClass(app.element.navbar.container, "notification")}, 3000);
+		setTimeout(function(){app.element.notification.bar.style.display = "none"; ui.isToastInProgress = false;}, 4000);
 		/*
 		document.getElementById("toast_desc").innerText = text;
 		var x = document.getElementById("toast")

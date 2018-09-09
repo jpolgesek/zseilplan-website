@@ -23,7 +23,8 @@ var myStorage = {
 		localStorage.setItem("ui.jumpButtonsFloatRight", ui.jumpButtonsFloatRight);
 
 		localStorage.setItem("saved", true);
-		ui.createToast("Zapisałem ustawienia");
+		// ui.createToast("Zapisałem ustawienia");
+		ui.toast.show("Zapisałem ustawienia");
 		app.ae('preferences', 'save', '1');
 	},
 	clear: function(){
@@ -35,11 +36,12 @@ var myStorage = {
 		localStorage.removeItem("ui.darkMode");
 		localStorage.removeItem("ui.breakLineInItem");
 		localStorage.removeItem("ui.jumpButtonsFloatRight");
-		ui.createToast("Wyczyściłem ustawienia domyślne");
+		// ui.createToast("Wyczyściłem ustawienia domyślne");
+		ui.toast.show("Wyczyściłem ustawienia domyślne");
 	},
 	load: function(){
 		try {
-			if(localStorage.getItem("tests_enabled") == "true"){
+			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1) || (localStorage.getItem("tests_enabled") == "true")){
 				utils.warn("internal","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
 				document.getElementById("test-1").style.display = null;
 			}

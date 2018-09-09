@@ -821,11 +821,13 @@ if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.ready.then(function(reg) {
 			reg.pushManager.getSubscription().then(function(subscription) {
 			  subscription.unsubscribe().then(function(successful) {
-				ui.createToast("Wyłączyłem powiadomienia");
+				// ui.createToast("Wyłączyłem powiadomienia");
+				ui.toast.show("Wyłączyłem powiadomienia");
 				// document.getElementById("notificationSubscribe").innerText = "Powiadomienia wyłączone";
 				// document.getElementById("notificationSubscribe").onclick = subscribeUser;
 			  }).catch(function(e) {
-				ui.createToast("Wystąpił nieznany błąd :(");
+				// ui.createToast("Wystąpił nieznany błąd :(");
+				ui.toast.show("Wystąpił nieznany błąd :(");
 				// document.getElementById("notificationSubscribe").innerText = "Nie udało sie wyłączyć powiadomień";
 			  })
 			})        
@@ -881,12 +883,14 @@ if ('serviceWorker' in navigator) {
 			if (Notification.permission === 'denied') {
 				//alert("Nie dostałem uprawnień");
 				console.warn('Permission for notifications was denied');
-				ui.createToast("Brak uprawnień :(");
+				// ui.createToast("Brak uprawnień :(");
+				ui.toast.show("Brak uprawnień :(");
 				// document.getElementById("notificationSubscribe").innerText = "Brak uprawnień :/";
 			} else {
 				//alert("Błąd: "+e);
 				console.error('Unable to subscribe to push', e);
-				ui.createToast("Wystąpił nieznany błąd :(");
+				// ui.createToast("Wystąpił nieznany błąd :(");
+				ui.toast.show("Wystąpił nieznany błąd :(");
 				// document.getElementById("notificationSubscribe").innerText = "Błąd :/";
 			}
 		});
