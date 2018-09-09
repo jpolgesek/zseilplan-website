@@ -8,6 +8,12 @@
 /* Mobile support */
 .mobile-only-flex	{ display: none; }
 
+@media screen and (max-width: 360px) {
+	.smallscreen-hide, #btn_0{
+		display: none;
+	}
+}
+
 @media screen and (max-width: 768px) {
 	.container{
 		width: 100%;
