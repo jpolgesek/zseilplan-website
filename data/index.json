@@ -1,12 +1,1 @@
-{
-	"timetable_archives": [
-		{"date": "2018-08-01", "hash": "TESTTEST", "filename": "cmp.json"},
-		{"date": "2018-07-01", "hash": "aabbccdd", "filename": "data_vulcan.json"},
-		{"date": "2018-06-01", "hash": "eebbccdd", "filename": "2018-06-01-eebbccdd.json"},
-		{"date": "2018-05-01", "hash": "eeffccdd", "filename": "2018-05-01-eeffccdd.json"},
-		{"date": "2018-04-01", "hash": "0011ccdd", "filename": "2018-04-01-0011ccdd.json"},
-		{"date": "2018-03-01", "hash": "aa352cdd", "filename": "2018-03-01-aa352cdd.json"},
-		{"date": "2018-02-01", "hash": "a23625dd", "filename": "2018-02-01-a23625dd.json"},
-		{"date": "2018-01-01", "hash": "afad9cdd", "filename": "2018-01-01-afad9cdd.json"}
-	]
-}
+{"timetable_archives": [{"date": "09.09.2018", "export_datetime": "09.09.2018 18:00:13 (aktualny)", "filename": "2018-09-09-590e588bf691a190decb626464076aff7e2f39ceddc6f29c4b083f8442cba1f2.json", "hash": "590e588b", "time": "18:00"}, {"date": "03.09.2018", "export_datetime": "05.09.2018 21:40:55", "filename": "2018-09-05-08eb5df7802a760d4e1062d9014960c4e63551397e64002529de96843217ec3e.json", "hash": "08eb5df7", "time": "23:50"}, {"date": "03.09.2018", "export_datetime": "05.09.2018 21:36:31", "filename": "2018-09-04-887e6ea7de9bcaaf64b05b18b8a03198f6af9aefbf65feeb366d5a89e66e1178.json", "hash": "887e6ea7", "time": "23:50"}, {"date": "03.09.2018", "export_datetime": "04.09.2018 23:30:18", "filename": "2018-09-04-7ff43b0d4e865ba63663fcc93f9372a3162c5532a58fe007d8da5e0b70cfbea2.json", "hash": "7ff43b0d", "time": "23:30"}, {"date": "02.09.2018", "export_datetime": "03.09.2018 18:40:10", "filename": "2018-09-03-9bf20f1b14f2022b09785f4a2cb0a51c94ff1022b1cc443bc2a15ea16be31533.json", "hash": "9bf20f1b", "time": "00:00"}]}
