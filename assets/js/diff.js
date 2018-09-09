@@ -127,6 +127,7 @@ var diff = {
 	},
 
 	generateDiff: function(){
+		console.log("STARTING DIFF");
 		if (this.data == undefined){
 			utils.warn('diff', 'Próbujesz porównać plan, ale nic nie wczytałeś.');
 			return false;
@@ -259,6 +260,7 @@ var diff = {
 							}
 						} else if (this.selectedType == "unit"){
 							//todo: tortury
+
 							classesArr = this.data.timetable[day][hour][select_units.value];
 							if (classesArr != undefined){
 								foundSimilar = false;
@@ -284,10 +286,13 @@ var diff = {
 									}
 								}
 								classesArr = newClassesArr;
-
+								
 								for (cls in classesArr){
 									oldItem = classesArr[cls];
-
+									//console.log(oldItem);
+									//console.log(oldItem.p + " <-> " + currentItem.p);
+									//console.log(oldItem.n + " <-> " + currentItem.n);
+									//console.log(oldItem.s + " <-> " + currentItem.s);
 									if ((oldItem.p == currentItem.p) && (oldItem.n == currentItem.n) && (oldItem.s != currentItem.s)){
 										currentItem.diffModified2 = "Był " + oldItem.s + "; Jest " + currentItem.s;
 										currentItem.diff = "modified";
@@ -307,8 +312,8 @@ var diff = {
 										foundSimilar = false;
 									}
 								}
-
 								if (notFound.length > 0){
+									continue; // TODO: WTF? WHY?
 									for (i = 0; i < notFound.length; i++){
 										if (il == 1){
 											//tu była tylko jedna lekcja
