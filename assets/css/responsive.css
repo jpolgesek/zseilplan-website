@@ -69,6 +69,8 @@
 	.navbar button {
 		background: none;
 		height: 52px;
+		padding: 0;
+	  	margin-left: 1px;
 	}
 	.navbar button .icon {
 		background: rgb(239, 239, 239);
@@ -95,6 +97,6 @@
 
 @media screen and (max-width: 350px) {
 	.smallscreen-hide, #btn_0{
-		display: none 	;
+		display: none !important;
 	}
 }
