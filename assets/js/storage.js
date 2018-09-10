@@ -41,7 +41,7 @@ var myStorage = {
 	},
 	load: function(){
 		try {
-			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1) || (localStorage.getItem("tests_enabled") == "true")){
+			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (localStorage.getItem("tests_enabled") == "true") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
 				utils.warn("internal","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
 				document.getElementById("test-1").style.display = null;
 			}
