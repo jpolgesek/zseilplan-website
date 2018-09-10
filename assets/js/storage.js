@@ -98,7 +98,7 @@ var myStorage = {
 			["timetable", undefined, undefined, undefined, undefined]
 		];
 
-		if (app.testMode){
+		if (!app.testMode){
 			prefsList.splice(3,1);
 		}
 		
