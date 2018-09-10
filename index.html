@@ -65,22 +65,22 @@
 					</div> <!-- TODO: create me dynamically -->
 					
 					<div class="navbar-buttons">
-						<button class='print-hide' onclick="app.showDataSourceModal()" style="display: none;" id="test-1">
+						<button class='print-hide' onclick="app.showDataSourceModal()" style="display: none;" id="navbar-btn-history">
 							<div class='icon'><i class="icon-history"></i></div>
 							<div class='text'>Wybór planu</div>
 						</button>
 
-						<button class='print-hide desktop-only' onclick="utils.androidDemo()">
+						<button class='print-hide desktop-only' onclick="utils.androidDemo()" id="navbar-btn-android">
 							<div class='icon'><i class="icon-android"></i></div>
 							<div class='text'>Aplikacja Mobilna</div>
 						</button>
 
-						<button class='print-hide' onclick="myStorage.generatePreferencesUI();ui.showPreferences(1)">
+						<button class='print-hide' onclick="myStorage.generatePreferencesUI();ui.showPreferences(1)" id="navbar-btn-settings">
 							<div class='icon'><i class="icon-cog"></i></div>
 							<div class='text'>Ustawienia</div>
 						</button>
 		
-						<button class='print-hide smallscreen-hide' onclick="ui.print()">
+						<button class='print-hide smallscreen-hide' onclick="ui.print()" id="navbar-btn-print">
 							<div class='icon'><i class="icon-print"></i></div>
 							<div class='text'>Drukuj</div>
 						</button>

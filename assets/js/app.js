@@ -36,13 +36,20 @@ var app = {
 	isMobile: true,
 	isDiff: false,
 	ip: "0.0.0.0",
+	testMode: false,
 	element: {
 		diff: {
 			help: document.getElementById("diff-help"),
 			info: document.getElementById("diff-info")
 		},
 		navbar: {
-			container: document.getElementById("navbar-container")
+			container: document.getElementById("navbar-container"),
+			buttons: {
+				history: document.getElementById("navbar-btn-history"),
+				android: document.getElementById("navbar-btn-android"),
+				settings: document.getElementById("navbar-btn-settings"),
+				print: document.getElementById("navbar-btn-print")
+			}
 		},
 		notification: {
 			bar: document.getElementById("notification-bar"),
@@ -56,7 +63,16 @@ var app = {
 	ae: function(a,c,l){
 		//todo: disabler
 		try{gtag('event', a,{'event_category':c,'event_label':l});}catch(e){};
-	},	
+	},
+	init: function(){
+		try {
+			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (localStorage.getItem("tests_enabled") == "true") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
+				utils.warn("internal","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
+				app.testMode = true;
+				app.element.navbar.buttons.history.style.display = null;
+			}
+		} catch (e) {}
+	},
 	showDataSourceModal: function(){
 		datasourcepickerDiv = modal.create('datasourcepicker', "Wybór planu", "Tutaj możesz wybrać wersję danych Super Clever Planu", function(){datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false)});
 
@@ -277,6 +293,8 @@ function debug(){
 
 function init2(){
 	utils.log("app", "Loading app");
+
+	try{app.init();}catch(e){}
 	
 	if (!navigator.onLine){
 		utils.warn("app", "App is offline, be careful!");
@@ -351,13 +369,19 @@ function init2(){
 	select_rooms.onchange = refreshView;
 	select_rooms.oninput = refreshView;
 
+	status_span.innerHTML = "";
+
+	if (app.testMode){
+		status_span.innerHTML += "<b>Tryb testowy, uważaj!</b><br>";
+	}
+
 	/* TODO: fix me */
 	/* Show timetable update date */
 	if (data._updateDate_max == data._updateDate_min){
-		status_span.innerText = "Plan z dnia "+data._updateDate_max; //do not show on desktop
+		status_span.innerHTML += "Plan z dnia "+data._updateDate_max; //do not show on desktop
 		navbar_info.innerText = "Plan z dnia "+data._updateDate_max;
 	}else{
-		status_span.innerText = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min; //do not show on desktop
+		status_span.innerHTML += "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min; //do not show on desktop
 		navbar_info.innerText = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min;
 	}
 

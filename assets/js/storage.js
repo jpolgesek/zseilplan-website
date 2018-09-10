@@ -40,13 +40,6 @@ var myStorage = {
 		ui.toast.show("Wyczyściłem ustawienia domyślne");
 	},
 	load: function(){
-		try {
-			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (localStorage.getItem("tests_enabled") == "true") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
-				utils.warn("internal","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
-				document.getElementById("test-1").style.display = null;
-			}
-		} catch (e) {}
-
 		if (localStorage.getItem("saved") != "true"	){
 			return;
 		}
@@ -104,6 +97,10 @@ var myStorage = {
 			["checkbox", overrides_disabled, function(x){return;}, "Tymczasowo ukryj zastępstwa", "toggleOverrides"],
 			["timetable", undefined, undefined, undefined, undefined]
 		];
+
+		if (app.testMode){
+			prefsList.splice(3,1);
+		}
 		
 		// prefsTitle = document.createElement('h1');
 		// prefsTitle.innerText = "Ustawienia";
