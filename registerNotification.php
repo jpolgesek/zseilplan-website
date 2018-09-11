@@ -8,7 +8,7 @@ if (isset($_GET["new"])){
 
 $data = json_decode($data);
 
-$file = file_get_contents("subscriptions.json");
+$file = file_get_contents(".htsubscriptions.json");
 $subscriptions = json_decode($file, true);
 
 /*
@@ -20,6 +20,6 @@ if (!is_array($subscriptions)){
 
 
 $subscriptions[end(explode("/",$data->endpoint))] = $data;
-file_put_contents("subscriptions.json", json_encode($subscriptions));
+file_put_contents(".htsubscriptions.json", json_encode($subscriptions));
 
 ?>
