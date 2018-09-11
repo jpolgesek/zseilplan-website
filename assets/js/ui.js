@@ -14,7 +14,7 @@ var ui = {
 			ui.toast.inProgress = true;
 			if (ui.toast.timerID != undefined) clearTimeout(ui.toast.timerID);
 			if (time == undefined) time = 2400;
-			app.element.notification.text.innerText = text;
+			app.element.notification.text.innerHTML = text;
 			app.element.notification.bar.style.display = "inherit";
 			dom.addClass(app.element.navbar.container, "notification");
 			// app.element.notification.bar.onclick = ui.toast.hide;
@@ -136,7 +136,7 @@ var ui = {
 		//Todo - nice function:
 		span[0].innerHTML = span[0].innerHTML.replace("Wychowanie fizyczne", "WF");
 		span[0].innerHTML = span[0].innerHTML.replace("Język ", "J.");
-		
+
 		if (itemData.n == "Uczniowie przychodzą p&#243;źniej"){
 			span[0].innerHTML = "Uczniowie przychodzą później";
 			if(itemData.g != undefined){
@@ -184,13 +184,13 @@ var ui = {
 		if (ui.isToastInProgress) return;
 
 		ui.isToastInProgress = true;
-		app.element.notification.text.innerText = text;
+		app.element.notification.text.innerHTML = text;
 		app.element.notification.bar.style.display = "inherit";
 		dom.addClass(app.element.navbar.container, "notification");
 		setTimeout(function(){dom.removeClass(app.element.navbar.container, "notification")}, 3000);
 		setTimeout(function(){app.element.notification.bar.style.display = "none"; ui.isToastInProgress = false;}, 4000);
 		/*
-		document.getElementById("toast_desc").innerText = text;
+		document.getElementById("toast_desc").innerHTML = text;
 		var x = document.getElementById("toast")
 		x.className = "show";
 		setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);

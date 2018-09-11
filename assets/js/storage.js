@@ -103,7 +103,7 @@ var myStorage = {
 		}
 		
 		// prefsTitle = document.createElement('h1');
-		// prefsTitle.innerText = "Ustawienia";
+		// prefsTitle.innerHTML = "Ustawienia";
 		// preferencesDiv.appendChild(prefsTitle);
 		for(var p_i=0; p_i<prefsList.length ; p_i++){
 			element = prefsList[p_i];
@@ -132,7 +132,7 @@ var myStorage = {
 	
 				title = document.createElement("span");
 				title.className = "desc";
-				title.innerText = element[3];
+				title.innerHTML = element[3];
 	
 				label.appendChild(input);
 				label.appendChild(span);
@@ -173,25 +173,25 @@ var myStorage = {
 		row.className = "row";
 
 		prefsBtnSave = document.createElement('button');
-		prefsBtnSave.innerText = "Zapisz zmiany";
+		prefsBtnSave.innerHTML = "Zapisz zmiany";
 		prefsBtnSave.onclick = function(){myStorage.save();ui.showPreferences(0);};
 		prefsBtnSave.className = "btn-primary";
 		row.appendChild(prefsBtnSave);
 
 		prefsBtnCancel = document.createElement('button');
-		prefsBtnCancel.innerText = "Anuluj";
+		prefsBtnCancel.innerHTML = "Anuluj";
 		prefsBtnCancel.onclick = function(){ui.showPreferences(0)};
 		row.appendChild(prefsBtnCancel);
 
 		prefsBtnCancel = document.createElement('button');
-		prefsBtnCancel.innerText = "QS";
+		prefsBtnCancel.innerHTML = "QS";
 		prefsBtnCancel.onclick = function(){ui.showPreferences(0); quicksearch.show();};
 		row.appendChild(prefsBtnCancel);
 
 		preferencesDiv.appendChild(row);
 		/*
 		prefsBtnClear = document.createElement('button');
-		prefsBtnClear.innerText = "Usuń ustawienia domyślne";
+		prefsBtnClear.innerHTML = "Usuń ustawienia domyślne";
 		prefsBtnClear.onclick = function(){myStorage.CLEAR();ui.showPreferences(0)};
 		preferencesDiv.appendChild(prefsBtnClear);
 		*/

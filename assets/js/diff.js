@@ -60,7 +60,7 @@ var diff = {
 	
 				title = document.createElement("span");
 				title.className = "desc";
-				title.innerText = element[3];
+				title.innerHTML = element[3];
 	
 				label.appendChild(input);
 				label.appendChild(span);
@@ -75,13 +75,13 @@ var diff = {
 		row.className = "row";
 
 		prefsBtnSave = document.createElement('button');
-		prefsBtnSave.innerText = "Zapisz zmiany";
+		prefsBtnSave.innerHTML = "Zapisz zmiany";
 		prefsBtnSave.onclick = function(){myStorage.save();ui.showPreferences(0);};
 		prefsBtnSave.className = "btn-primary";
 		row.appendChild(prefsBtnSave);
 
 		prefsBtnCancel = document.createElement('button');
-		prefsBtnCancel.innerText = "Anuluj";
+		prefsBtnCancel.innerHTML = "Anuluj";
 		prefsBtnCancel.onclick = function(){ui.showPreferences(0)};
 		row.appendChild(prefsBtnCancel);
 

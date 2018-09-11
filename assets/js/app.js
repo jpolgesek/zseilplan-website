@@ -99,7 +99,7 @@ var app = {
 		
 		title = document.createElement("span");
 		title.className = "desc";
-		title.innerText = "Wyświetl dowolny plan z przeszłości";
+		title.innerHTML = "Wyświetl dowolny plan z przeszłości";
 
 		row.appendChild(input);
 		row.appendChild(title);
@@ -108,20 +108,20 @@ var app = {
 		row = modal.createRow();
 
 		prefsBtnSave = document.createElement('button');
-		prefsBtnSave.innerText = "Wyświetl";
+		prefsBtnSave.innerHTML = "Wyświetl";
 		prefsBtnSave.onclick = function(){ui.clearTable(); app.isCustomDataVersion=true; fetchData(input.value); datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false);};
 		prefsBtnSave.className = "btn-primary";
 		prefsBtnSave.title = "Wyświetl wybrany plan";
 		row.appendChild(prefsBtnSave);
 
 		prefsBtnSave = document.createElement('button');
-		prefsBtnSave.innerText = "Porównaj";
+		prefsBtnSave.innerHTML = "Porównaj";
 		prefsBtnSave.onclick = function(){diff.compareSelected(input.value); app.isDiff=true; datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false);};
 		prefsBtnSave.title = "Porównaj aktualny plan z wybranym";
 		row.appendChild(prefsBtnSave);
 
 		prefsBtnCancel = document.createElement('button');
-		prefsBtnCancel.innerText = "Anuluj";
+		prefsBtnCancel.innerHTML = "Anuluj";
 		prefsBtnCancel.onclick = function(){datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false)};
 		row.appendChild(prefsBtnCancel);
 		datasourcepickerDiv.appendChild(row);
@@ -203,7 +203,7 @@ var app = {
 		
 		row = modal.createRow();
 		prefsBtnSave = document.createElement('button');
-		prefsBtnSave.innerText = "Wyślij";
+		prefsBtnSave.innerHTML = "Wyślij";
 		prefsBtnSave.onclick = function(){
 			bd = app.preparebugdump();
 			alert(app.ip);
@@ -214,7 +214,7 @@ var app = {
 		row.appendChild(prefsBtnSave);
 
 		prefsBtnCancel = document.createElement('button');
-		prefsBtnCancel.innerText = "Anuluj";
+		prefsBtnCancel.innerHTML = "Anuluj";
 		prefsBtnCancel.onclick = function(){bugreportDiv.parentElement.removeChild(bugreportDiv);ui.containerBlur(false)};
 		row.appendChild(prefsBtnCancel);
 		bugreportDiv.appendChild(row);
@@ -264,14 +264,14 @@ function init(){
 	utils.log("app", "Initializing");
 
 	try{loaderstatus.innerHTML="Ładuje preferencje";}catch(e){};	
-	status_span.innerText = "Ładowanie preferencji...";
+	status_span.innerHTML = "Ładowanie preferencji...";
 
 	/* If HTML5 storage is available, try to load user saved settings */
 	if (typeof(Storage) !== "undefined") {
 		myStorage.load();
 	}
 
-	status_span.innerText = "Ładowanie danych planu...";
+	status_span.innerHTML = "Ładowanie danych planu...";
 	try{loaderstatus.innerHTML="Pobieram dane";}catch(e){};	
 	fetchData();
 }
@@ -302,23 +302,23 @@ function init2(){
 		// document.getElementsByClassName("navbar")[0].style.backgroundColor = "#ff0000";
 		dom.addClass(document.getElementById("networkStatus"),"bad");
 		document.getElementById("networkStatus").style.display = "block";
-		document.getElementById("networkStatus").innerText = "Nie masz połączenia z internetem, plan może być nieaktualny.";
+		document.getElementById("networkStatus").innerHTML = "Nie masz połączenia z internetem, plan może być nieaktualny.";
 	}
 
 	try{loaderstatus.innerHTML="Wczytuję dane";}catch(e){};	
 	
 	/* Show data comment */
 	try {
-		document.getElementById("button_comment").innerText = data.comment;
-		document.getElementById("button_comment").innerText += " (" + data.hash.substr(0,8) + ")";
+		document.getElementById("button_comment").innerHTML = data.comment;
+		document.getElementById("button_comment").innerHTML += " (" + data.hash.substr(0,8) + ")";
 	} catch (error) {
-		document.getElementById("button_comment").innerText = "Nie udało się pobrać wersji planu.";
+		document.getElementById("button_comment").innerHTML = "Nie udało się pobrać wersji planu.";
 	}
 	
 	try {data_googleindex_info.innerHTML = "W indeksie jest: ";} catch (e){}
 
 	/* Add units to select_units and quicksearch */
-	status_span.innerText = "Przygotowywanie interfejsu: klasy";
+	status_span.innerHTML = "Przygotowywanie interfejsu: klasy";
 	
 	while (select_units.firstChild) {
 		select_units.removeChild(select_units.firstChild);
@@ -333,7 +333,7 @@ function init2(){
 	};
 
 
-	status_span.innerText = "Przygotowywanie interfejsu: nauczyciele";
+	status_span.innerHTML = "Przygotowywanie interfejsu: nauczyciele";
 	
 	while (select_teachers.firstChild) {
 		select_teachers.removeChild(select_teachers.firstChild);
@@ -347,7 +347,7 @@ function init2(){
 	try {data_googleindex_info.innerHTML += "plany "+ Object.keys(data.teachermap).length +" nauczycieli";} catch (e){}
 	
 	/* Add classrooms to select_rooms and quicksearch */
-	status_span.innerText = "Przygotowywanie interfejsu: sale";
+	status_span.innerHTML = "Przygotowywanie interfejsu: sale";
 	
 	while (select_rooms.firstChild) {
 		select_rooms.removeChild(select_rooms.firstChild);
@@ -379,10 +379,10 @@ function init2(){
 	/* Show timetable update date */
 	if (data._updateDate_max == data._updateDate_min){
 		status_span.innerHTML += "Plan z dnia "+data._updateDate_max; //do not show on desktop
-		navbar_info.innerText = "Plan z dnia "+data._updateDate_max;
+		navbar_info.innerHTML = "Plan z dnia "+data._updateDate_max;
 	}else{
 		status_span.innerHTML += "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min; //do not show on desktop
-		navbar_info.innerText = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min;
+		navbar_info.innerHTML = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min;
 	}
 
 	
@@ -468,9 +468,9 @@ function init2(){
 	
 	try {
 		if (typeof(ZSEILPLAN_BUILD) == "undefined"){
-			document.getElementById("footer-text").innerText = "Super Clever Build internal build";
+			document.getElementById("footer-text").innerHTML = "Super Clever Build internal build";
 		} else {
-			document.getElementById("footer-text").innerText = "Super Clever Plan build " + ZSEILPLAN_BUILD;
+			document.getElementById("footer-text").innerHTML = "Super Clever Plan build " + ZSEILPLAN_BUILD;
 		}
 	} catch (e) {}
 	
@@ -478,11 +478,11 @@ function init2(){
 	window.addEventListener('offline', function(e) { 
 		dom.addClass(document.getElementById("networkStatus"),"bad");
 		document.getElementById("networkStatus").style.display = "block";
-		document.getElementById("networkStatus").innerText = "Nie masz połączenia z internetem, plan może być nieaktualny.";
+		document.getElementById("networkStatus").innerHTML = "Nie masz połączenia z internetem, plan może być nieaktualny.";
 	});
 	window.addEventListener('online', function(e) { 
 		document.getElementById("networkStatus").style.display = "none";
-		document.getElementById("networkStatus").innerText = "";
+		document.getElementById("networkStatus").innerHTML = "";
 		document.getElementById("networkStatus").className = "";
 	});
 
@@ -815,13 +815,13 @@ if ('serviceWorker' in navigator) {
 					// console.log('Not subscribed to push service!');
 					////alert("niepodłączony pod powiadomienia, podłączam");
 					// toggleNotifications(1);
-					// document.getElementById("notificationSubscribe").innerText = "Włącz powiadomienia";
+					// document.getElementById("notificationSubscribe").innerHTML = "Włącz powiadomienia";
 				} else {
 					// We have a subscription, _update the database_???
 					// console.log('Subscription object: ', sub);
 					utils.log("app", "Subscription object: " + sub);
 					subscribeUser();
-					// document.getElementById("notificationSubscribe").innerText = "Powiadomienia włączone";
+					// document.getElementById("notificationSubscribe").innerHTML = "Powiadomienia włączone";
 					// document.getElementById("notificationSubscribe").onclick = unsubscribeUser;
 				}
 				});
@@ -847,12 +847,12 @@ if ('serviceWorker' in navigator) {
 			  subscription.unsubscribe().then(function(successful) {
 				// ui.createToast("Wyłączyłem powiadomienia");
 				ui.toast.show("Wyłączyłem powiadomienia");
-				// document.getElementById("notificationSubscribe").innerText = "Powiadomienia wyłączone";
+				// document.getElementById("notificationSubscribe").innerHTML = "Powiadomienia wyłączone";
 				// document.getElementById("notificationSubscribe").onclick = subscribeUser;
 			  }).catch(function(e) {
 				// ui.createToast("Wystąpił nieznany błąd :(");
 				ui.toast.show("Wystąpił nieznany błąd :(");
-				// document.getElementById("notificationSubscribe").innerText = "Nie udało sie wyłączyć powiadomień";
+				// document.getElementById("notificationSubscribe").innerHTML = "Nie udało sie wyłączyć powiadomień";
 			  })
 			})        
 		  });
@@ -885,7 +885,7 @@ if ('serviceWorker' in navigator) {
 			//alert("start su - 3");
 			console.log('Endpoint URL: ', sub.endpoint);
 			//alert('Endpoint URL: '+ sub.endpoint);
-			// document.getElementById("notificationSubscribe").innerText = "Powiadomienia włączone";
+			// document.getElementById("notificationSubscribe").innerHTML = "Powiadomienia włączone";
 			// document.getElementById("notificationSubscribe").onclick = unsubscribeUser;
 
 			//alert("start su - 4");
@@ -909,13 +909,13 @@ if ('serviceWorker' in navigator) {
 				console.warn('Permission for notifications was denied');
 				// ui.createToast("Brak uprawnień :(");
 				ui.toast.show("Brak uprawnień :(");
-				// document.getElementById("notificationSubscribe").innerText = "Brak uprawnień :/";
+				// document.getElementById("notificationSubscribe").innerHTML = "Brak uprawnień :/";
 			} else {
 				//alert("Błąd: "+e);
 				console.error('Unable to subscribe to push', e);
 				// ui.createToast("Wystąpił nieznany błąd :(");
 				ui.toast.show("Wystąpił nieznany błąd :(");
-				// document.getElementById("notificationSubscribe").innerText = "Błąd :/";
+				// document.getElementById("notificationSubscribe").innerHTML = "Błąd :/";
 			}
 		});
 		})
