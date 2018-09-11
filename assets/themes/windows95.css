@@ -11,6 +11,9 @@ html, body {
 
 *{
 	outline-style: none !important;
+	text-shadow: none !important;
+	border-radius: 0;
+	font-family: 'MS Sans Serif' !important;;
 }
 
 body{
@@ -19,7 +22,7 @@ body{
 }
 
 .container{
-	padding: 3%;
+	padding: 0;
 }
 
 .app{
@@ -27,7 +30,7 @@ body{
 	height: 400px;
 }
 
-.window{
+.window, .modal, .footer{
 	background: #c0c0c0;
     border-top: 1px solid #dfdfdf;
     border-left: 1px solid #dfdfdf;
@@ -35,6 +38,9 @@ body{
     border-bottom: 1px solid #000;
     padding: 2px;
 	margin: 5px;
+	border-radius: 0;
+	color: #000;
+	overflow: hidden;
 }
 
 .window .titlebar{
@@ -53,17 +59,17 @@ body{
 	position: relative;
 }
 
-.icon, .title, .btn{
+.icon, .title, .navtitle, .btn{
 	height: 20px;
     display: inline-block;
 }
 
 .icon2{
     padding: 2px;
-	padding-right: 0;
+	padding-right: 2px;
 }
 
-.title{
+.title, .navtitle{
 	vertical-align: super;
 }
 
@@ -118,32 +124,39 @@ button:hover:active, .clickable:hover:active {
     float: right;
 }
 
-.btn{
+.btn, .modal button.btn{
 	width: 16px;
 	height: 16px;
 	text-align: center;
 	float: right;
 	margin-top: 2px;
 	margin-bottom: 2px;
-	margin-right: 2px;
+	margin-right: 2px !important;
 	padding: 0;
 	background-position: -1px -1px;
+	border-style: solid;
+	/* background: #c0c0c0; */
+}
+
+.modal button.btn{
+	background: #c0c0c0;
 }
 
 .btn_x{
-	background-image: url("95/btn_x.png");
+	background-image: url("95/btn_x.png") !important;
 }
 
 .btn_help{
-	background-image: url("95/btn_help.png");
+	background-image: url("95/btn_help.png") !important;
 }
 
-button,.clickable{
+button, .clickable{
 	padding: 0;
     vertical-align: middle;
     font-family: Arial, sans-serif;
     font-size: 12px;
     background: #c0c0c0;
+    color: #000 !important;
     border-top: 1px solid #fff;
     border-left: 1px solid #fff;
     border-right: 1px solid #000;
@@ -152,12 +165,22 @@ button,.clickable{
 	padding: 3px;
 }
 
-.clickable{
-	cursor: pointer;
+.navbar-buttons > button{
+    background: #c0c0c0 !important;
 }
 
-.active{
+.navbar button .text {
+    color: #000 !important;
+}
 
+.clickable{
+	cursor: pointer;
+    background: #b1b1b1 !important;
+    color: #000 !important;
+}
+
+.navbar{
+	background-color: transparent;
 }
 
 .active:after {
@@ -184,6 +207,8 @@ button,.clickable{
 	border-left: 1px solid #808080;
 	border-right: 1px solid #dfdfdf;
 	border-bottom: 1px solid #dfdfdf;
+	border-radius: 0;
+	background: #EEE;
 }
 
 .outside{
@@ -238,11 +263,13 @@ b{
     padding: 5px;
 }
 
-tr, td{
+.maintable tr, .maintable td{
 	border: 1px solid #848484;
 }
 
-
+.navbar{
+	margin-bottom: 0;
+}
 
 .navbar-button{
 	border-style: none;
@@ -269,13 +296,6 @@ tr, td{
 	font-size: 2em;
 }
 
-.navbar-title{
-    font-size: 1.5em;
-    font-weight: 100;
-	margin-left: 5px;
-    line-height: 178%;
-}
-
 .navbar-buttons{
 	float: right;
 }
@@ -284,8 +304,7 @@ tr, td{
 	display: none;
 }
 
-
-
+/*
 #preferences{
 	display: none;
 	width: 600px;
@@ -301,7 +320,7 @@ tr, td{
 	padding: 5px;
 	margin: 5px;
 }
-
+*/
 
 .loader{
 	background: #000;
@@ -328,6 +347,58 @@ tr, td{
 	width: 70%;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.box-text{
+	background: none;
+	margin-top: 0;
+}
+
+.shadow{
+	box-shadow: none !important;
+}
+
+.left-bar, .right-bar{
+	display: inline-block;
+	width: 48%;
+	vertical-align: top;
+}
+
+.maintable .header {
+    text-align: center;
+    background-color: #757575;
+}
+
+.maintable .currentTimeFull {
+    background-color: rgba(165, 165, 165, 0.33) !important;
+}
+
+.maintable td:hover {
+    background-color: rgba(165, 165, 165, 1) !important;
+    box-shadow: none !important;
+}
+
+.navbar button .icon {
+	color: transparent;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.modal button{
+    border-style: solid;
+}
+
+.modal .preferences_default_big {
+	color: #fff;
+}
+
+.modal .mdesc {
+    margin-top: 0px;
+}
+
+.modal button:hover {
+	box-shadow: none;
+    transform: none;
 }
 
 @media screen and (max-width: 768px) {
