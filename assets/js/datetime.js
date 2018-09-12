@@ -102,7 +102,7 @@ var myTime = {
 		window.d = new Date();
 		this.time =  d.getHours() + ":" + d.getMinutes();
 		columns.currentDay = d.getDay();
-		//this.time = "10:13", //DEBUG ONLY!!!
+		//this.time = "10:13"; //DEBUG ONLY!!!
 	},
 	checkTime: function(){
 		myTime.updateTime();
