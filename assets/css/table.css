@@ -115,3 +115,9 @@
     text-align: left;
     margin-right: 3px;
 }
+
+.maintable .border-top-blue{
+	border-top-style: solid;
+    border-top-color: #609de8;
+    border-top-width: 3px;
+}
