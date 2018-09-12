@@ -405,6 +405,18 @@ b{
 	.container{
 		width: 90%;
 	}
+
+	.left-bar, .right-bar{
+		width: 97%;
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
+	}
+
+	.navbar button .icon {
+		background-color: transparent;
+		color: none;
+	}
 }
 
 
