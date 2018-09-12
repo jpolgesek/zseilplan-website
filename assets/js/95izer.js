@@ -84,6 +84,6 @@ modal.create = function(id ,title, desc, closeAction){
 
 	return modalContainer;
 
-},
+}
 
 themeloader.prepareHTML();
