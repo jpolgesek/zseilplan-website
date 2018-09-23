@@ -121,6 +121,6 @@
 }
 
 
-.box-text .red  {background-color: #c52e2e; color: #fafafa;}
-.box-text .green{background-color: #1da724; color: #fafafa;}
-.box-text .blue {background-color: #046edd; color: #fafafa;}
+.box-text.red  {background-color: #c52e2e !important; color: #fafafa !important;}
+.box-text.green{background-color: #1da724 !important; color: #fafafa !important;}
+.box-text.blue {background-color: #046edd !important; color: #fafafa !important;}
