@@ -37,6 +37,7 @@ var app = {
 	isDiff: false,
 	ip: "0.0.0.0",
 	testMode: false,
+	dummy_enable_dnitechnika: true,
 	element: {
 		diff: {
 			help: document.getElementById("diff-help"),
