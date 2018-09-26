@@ -43,16 +43,49 @@ var ui = {
 	},
 
 	createItem: function(itemData){
-		span = [document.createElement('span'), document.createElement('span'), document.createElement('span')];
+		span = [document.createElement('span'), document.createElement('span'), document.createElement('span'), document.createElement('span')];
 		
 		if (itemData.p.length >= 30){
 			itemData.p = itemData.p.split(" ")[0];
+		}
+
+		if (app.testMode == true){
+			if (itemData.p.indexOf("JM") != -1){
+				//to pewnie modul
+				mod_name = itemData.p.split("JM")[0];
+				if ((mod_name[0] == mod_name[1]) && (mod_name[0] == "I")){
+					mod_name = mod_name.substr(1);
+				}
+			}else{
+				mod_name = itemData.p;
+			}
+			try {
+				newName = mod_name;
+				newName = data.normalizationData[newName];
+				if (newName != undefined){
+					itemData.p = newName;
+				} 
+			} catch (error) {
+				console.log("Normalization not found for '"+mod_name+"'")
+			}
+			// console.log("TODO: normalize name of '"+mod_name+"'");
 		}
 
 		span[0].className = 'pName';
 		span[0].innerHTML = itemData.p;
 		span[1].className = 'clickable';
 		span[2].className = 'clickable';
+		
+		if (app.testMode == true) span[3].className = 'clickable';
+
+		if (app.testMode == true){
+			if (app.prefs["ui.show_only_selected_group"]){
+				grp = itemData.g.split("-")[1];
+				if (app.prefs["ui.selected_groups"].indexOf(grp) == -1){
+					return document.createElement("span");
+				}
+			}
+		}
 
 
 		if (this.itemDisplayType == 0){
@@ -154,9 +187,19 @@ var ui = {
 			if((itemData.g != undefined) && (itemData.g != "-1")){
 				if (span[0].innerText.indexOf(itemData.g) == -1){
 					// span[0].innerHTML += " (Grupa "+itemData.g+")";
-					span[0].innerHTML += "-"+itemData.g+"";
+					if (app.testMode != true) span[0].innerHTML += "-"+itemData.g+"";
+
+					grp = itemData.g.split("-")[1];
+					if (app.testMode == true) span[3].innerHTML = "G" + grp;
 				}
 			}
+			
+			if (app.testMode == true) {
+				if (span[3].innerHTML.length > 0){
+					jumpButtonsDiv.appendChild(span[3]);
+				}
+			}
+
 			jumpButtonsDiv.appendChild(span[1]);
 			jumpButtonsDiv.appendChild(span[2]);
 			element.appendChild(jumpButtonsDiv);	

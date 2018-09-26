@@ -57,6 +57,10 @@ var app = {
 			text: document.getElementById("notification-text")
 		}
 	},
+	prefs: {
+		"ui.selected_groups": ["1", "2"],
+		"ui.show_only_selected_group": false
+	},
 	as: function(v){
 		//todo: disabler
 		try{gtag('event','screen_view',{'app_name':'zseilplan','screen_name':v});}catch(e){};
@@ -71,6 +75,15 @@ var app = {
 				utils.warn("internal","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
 				app.testMode = true;
 				app.element.navbar.buttons.history.style.display = null;
+				data.normalizationData = {
+					"IM9": "Bazy danych",
+					"IM10": "PHP/JS",
+					"zaj. wych.": "Wychowawcza",
+					"j. polski": "Polski",
+					"j. angielski": "Angielski",
+					"j. niemiecki": "Niemiecki",
+					"hist. i społ": "Historia (his)"
+				};
 			}
 		} catch (e) {}
 	},
