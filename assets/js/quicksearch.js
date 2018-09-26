@@ -33,7 +33,7 @@ var quicksearch = {
 					location.reload();
 				}else{
 					alert("Wyłączam funkcje testowe");
-					localStorage.setItem("tests_enabled", "true");
+					localStorage.setItem("tests_enabled", "false");
 					location.reload();
 				}
 				break;
