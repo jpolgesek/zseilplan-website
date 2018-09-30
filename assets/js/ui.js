@@ -49,7 +49,7 @@ var ui = {
 			itemData.p = itemData.p.split(" ")[0];
 		}
 
-		if (app.testMode == true){
+		if (app.testMode == "asdfghjk"){
 			if (itemData.p.indexOf("JM") != -1){
 				//to pewnie modul
 				mod_name = itemData.p.split("JM")[0];
