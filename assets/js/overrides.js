@@ -19,6 +19,49 @@ var overrides = {
 		}
 
 		utils.log("overrides", "Start loading overrides");
+			
+		for (y=1; y<maxHours; y++) {
+			for (x=1; x<(weekDays + 1); x++) {
+				
+				/* Decide to show overrides for this or next week */
+				tempdate2 = new Date();
+				if(tempdate2.getDay() == 6 || tempdate2.getDay() == 0){
+					ind = IEgetDay(x+7);
+				}else{
+					ind = IEgetDay(x);
+				}
+
+				/* is 'ind' really shortcut for index? */
+				/* why did I do this to me */
+
+				/* ind is date in format DD.MM.YYYY */
+				/* then 'x' is day of the week with monday being 1 */
+				/* then 'y' is hour of the day of the week with first lesson being 1 */
+				/* seriously, WTF have I done */
+				/* this is so terrible */
+
+				if (overrideData[ind] == undefined) continue; //There are no overrides for this day, skip this loop
+				if (overrideData[ind][x] == undefined) continue; //There are no overrides for this day, skip this loop
+				
+				ui.createZMark(x);
+
+				override = overrideData[ind][x][y];
+				if (override == undefined) continue; //There are no overrides for this hour, skip this loop
+
+				cell = table.rows[y].cells[x];
+
+				/* A bit ugly, but allows reuse of app.currentView */
+				if (app.currentView.selectedType == "unit") {
+					unitParse(app.currentView.selectedValue, override, cell);
+				} else if (app.currentView.selectedType == "teacher") {
+					teacherParse(app.currentView.selectedValue, override, cell);
+				} else if (app.currentView.selectedType == "room") {
+					roomParse(app.currentView.selectedValue, override, cell);
+				}
+
+			}
+		}
+
 		console.log("TODO!");
 		return false;
 	}
