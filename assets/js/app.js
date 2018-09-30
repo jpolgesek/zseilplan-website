@@ -507,10 +507,9 @@ function init2(){
 
 function refreshView(){
 	//console.time('refreshView-pre');
-	/* TODO: Do not refresh view if there is nothing selected */
-
+	
 	if (select_units.value == "default" && select_teachers.value == "default" && select_rooms.value == "default"){
-		console.log("nic nie jest wybrane, nie odswiezam");
+		utils.log("app", "Nothing is selected, not refreshing view");
 		return;
 	}
 
