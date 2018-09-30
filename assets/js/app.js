@@ -38,6 +38,10 @@ var app = {
 	ip: "0.0.0.0",
 	testMode: false,
 	dummy_enable_dnitechnika: true,
+	currentView: {
+		selectedType: "",
+		selectedValue: ""
+	},
 	element: {
 		diff: {
 			help: document.getElementById("diff-help"),
@@ -507,8 +511,17 @@ function init2(){
 
 function refreshView(){
 	//console.time('refreshView-pre');
-	
-	if (select_units.value == "default" && select_teachers.value == "default" && select_rooms.value == "default"){
+
+	if (select_units.value != "default") {
+		app.currentView.selectedType = "unit";
+		app.currentView.selectedValue = select_units.value;
+	} else if (select_teachers.value != "default") {
+		app.currentView.selectedType = "teacher";
+		app.currentView.selectedValue = select_teachers.value;
+	} else if (select_rooms.value != "default") {
+		app.currentView.selectedType = "room";
+		app.currentView.selectedValue = select_rooms.value;
+	} else {
 		utils.log("app", "Nothing is selected, not refreshing view");
 		return;
 	}
