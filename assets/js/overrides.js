@@ -1,5 +1,29 @@
 /* TODO: fix this */
 
+var overrides = {
+	enabled: true,
+	IEgetDay: function(){
+		//How to rewrite this?
+		//Also: how it is supposed to work
+
+	},
+	getDay: function(){
+		//How to rewrite this?
+		//Also: how it is supposed to work
+	},
+	
+	loadOverrides: function(){
+		if (!this.enabled){
+			utils.log("overrides", "Overrides are disabled");
+			return false;
+		}
+
+		utils.log("overrides", "Start loading overrides");
+		console.log("TODO!");
+		return false;
+	}
+};
+
 function getDay(n) {
 	date = new Date();
     var day = date.getDay() || 7;  
