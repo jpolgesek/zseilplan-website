@@ -279,6 +279,7 @@ function sortAsc (a, b) {
 }
 
 function init(){
+	//try {utils.consoleStartup();} catch (e) {}
 	utils.log("app", "Initializing");
 
 	try{loaderstatus.innerHTML="Ładuje preferencje";}catch(e){};	
