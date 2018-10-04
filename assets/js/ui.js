@@ -33,6 +33,11 @@ var ui = {
 	},
 
 	loader: {
+		/**
+		 * Shows status text in loader
+		 * @param {string} 	text 			Text to be shown in loader
+		 * @returns {boolean} 				True on success, false on failure
+		 */
 		setStatus: function(text){
 			try{
 				app.element.loader.text.innerHTML = text;
@@ -43,6 +48,10 @@ var ui = {
 		}
 	},
 
+	/**
+	 * Shows network status (red div on top of timetable)
+	 * @param {boolean} 	value 			Is network available (true) or not (false)
+	 */
 	setNetworkStatus: function(value){
 		if (value){
 			app.element.networkStatus.style.display = "none";
@@ -55,6 +64,11 @@ var ui = {
 		}
 	},
 
+
+	/**
+	 * Shows (Z) in header
+	 * @param {number} 	n 				Column where ZMark should be shown
+	 */
 	createZMark: function(n){
 		if (document.getElementsByClassName("header")[0].children[n].children.length == 0){
 			zMark = document.createElement('span');
@@ -65,6 +79,10 @@ var ui = {
 		}
 	},
 
+	/**
+	 * Creates a single item (lesson)
+	 * @param {object} 	itemData		Data for new item (TODO: write structure somewhere)
+	 */
 	createItem: function(itemData){
 		span = [document.createElement('span'), document.createElement('span'), document.createElement('span'), document.createElement('span')];
 		
@@ -246,6 +264,12 @@ var ui = {
 		return element;
 	},
 
+
+	/**
+	 * Creates a toast and shows text
+	 * @deprecated Use ui.toast.show()
+	 * @param {string} 	text		String which should be shown
+	 */
 	createToast: function(text){
 		if (ui.isToastInProgress) return;
 
@@ -263,24 +287,40 @@ var ui = {
 		*/
 	},
 
+	/**
+	 * Turns dark mode on or off
+	 * @param {boolean} state		True for dark mode, false for light
+	 */
 	setDarkMode: function(state){
 		this.darkMode = state;
 		this.updateMode();
 		try { ga('send', 'event', 'ui', 'setdarkmode='+state); } catch (e) {}
 	},
 
+	/**
+	 * Enables or disables line break between [subject name] and [classroom + teacher] blocks
+	 * @param {boolean} state		True for line breaks enabled, false for not
+	 */
 	setLineBreak: function(state){
 		this.breakLineInItem = state;
 		refreshView();
 		try { ga('send', 'event', 'ui', 'setlinebreak='+state); } catch (e) {}
 	},
 
+	/**
+	 * Enables or disables floating [classroom + teacher] blocks to the right side
+	 * @param {boolean} state		True for right float enabled, false for not
+	 */
 	setJumpButtonsFloatRight: function(state){
 		this.jumpButtonsFloatRight = state;
 		refreshView();
 		try { ga('send', 'event', 'ui', 'setjumpbuttonsfloatright='+state); } catch (e) {}
 	},
 
+	/**
+	 * [TODO: deprecate me] 
+	 * Activates light/dark theme
+	 */
 	updateMode: function(){
 		if (this.darkMode){
 			document.body.className = "dark";
@@ -289,6 +329,10 @@ var ui = {
 		}
 	},	
 
+	/**
+	 * Returns line breaker (with css appropriate to current setting)
+	 * @returns HTMLElement <div>
+	 */
 	itemLineBreak: function(){
 		lineBreak = document.createElement('div');
 		if (this.breakLineInItem){
@@ -300,6 +344,15 @@ var ui = {
 		return lineBreak;
 	},
 
+	/**
+	 * 1. Prepares current document to be printed:
+	 * 1.1. Disables overrides
+	 * 1.2. Sets view to all days
+	 * 1.3. Changes navbar message to: Plan lekcji dla [nauczyciela/sali/klasy] [xyz] z dnia [xyz]
+	 * 1.4. Hides navbar buttons
+	 * 2. Opens print dialog
+	 * 3. Undo changes made to layout
+	 */
 	print: function(){
 		old_overrides_disabled = overrides_disabled;
 		overrides_disabled = true;
@@ -341,6 +394,11 @@ var ui = {
 		app.ae('print', 'print', '1');
 	},
 
+	/**
+	 * Resets selects which weren't passed as without
+	 * @param {string} without			Which select should *not* be reset [unit/rooms/teachers]
+	 * @returns HTMLElement <div>
+	 */
 	resetSelects: function(without){
 		if (detectIE() && document.super_fucking_old_ie) return;
 		toClear = ["units", "rooms", "teachers"];
@@ -350,6 +408,10 @@ var ui = {
 		}
 	},
 
+	/**
+	 * Show or hide preferences modal (isn't this deprecated?)
+	 * @param {boolean} display			True - display modal, false - hide
+	 */
 	showPreferences: function(display){
 		myStorage.generatePreferencesUI();
 		if (display){
@@ -361,6 +423,10 @@ var ui = {
 		}
 	},
 
+	/**
+	 * Blur main container
+	 * @param {boolean} value			True - blur, false - do not
+	 */
 	containerBlur: function(value){
 		if (value){
 			dom.addClass(document.getElementById("container"), "blur");
@@ -369,6 +435,9 @@ var ui = {
 		}
 	},
 
+	/**
+	 * Clears main table (compatibile with old IE)
+	 */
 	clearTable: function(){
 		if (detectIE() && document.super_fucking_old_ie){
 			while (table.hasChildNodes()) {
