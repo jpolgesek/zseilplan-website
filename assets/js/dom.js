@@ -1,4 +1,10 @@
 var dom = {
+	/**
+	 * Adds class to element (proxy/polyfill for classList)
+	 * @param 	{string} 		elementName		Name of element to be created
+	 * @param 	{string[]} 	classList 		List of classes to be attached to newly created element
+	 * @returns {boolean} 								Success (true) or failure (false)
+	 */
 	addClass: function(elementObject, className){
 		if (typeof(document.body.classList) == "undefined"){
 			classList = elementObject.className.split(" ");
@@ -12,6 +18,13 @@ var dom = {
 			return elementObject.classList.add(className);
 		}
 	},
+
+	/**
+	 * Removes class from element (proxy/polyfill for classList)
+	 * @param 	{string} 		elementName		Name of element to be created
+	 * @param 	{string[]} 	classList 		List of classes to be attached to newly created element
+	 * @returns {boolean} 								Success (true) or failure (false)
+	 */
 	removeClass: function(elementObject, className){
 		if (typeof(document.body.classList) == "undefined"){
 			classList = elementObject.className.split(" ");
@@ -25,6 +38,23 @@ var dom = {
 			return elementObject.classList.remove(className);
 		}
 	},
+
+	/**
+	 * Creates new HTMLElement with given classlist
+	 * @param {string} 		elementName 		Name of element to be created
+	 * @param {string[]} 	classList 			List of classes to be attached to newly created element
+	 */
+	createEWC: function(elementName, classList){
+		element = document.createElement(elementName);
+		for (var i = 0; i < classList.length; i++){
+			this.addClass(element, classList[i]);
+		}
+		return element;
+	},
+	
+	/**
+	 * Initializes polyfills for older browsers
+	 */
 	init: function(){
 		if (!document.getElementsByClassName) {
 			console.log("wow, przeglądarka nie ma nawet getelementsbyclassname. Czyżby IE?");
@@ -58,7 +88,8 @@ var dom = {
 
 dom.init();
 
-
+/* For older browsers, which do not create console object when console is hidden */
+/* IE 6. */
 try {
 	console.log();
 } catch (e) {
