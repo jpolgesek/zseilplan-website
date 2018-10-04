@@ -94,6 +94,20 @@ var app = {
 				};
 			}
 		} catch (e) {}
+
+		window.addEventListener("hashchange", app.parseHash, false);
+	},
+	parseHash: function(){
+		/* Allow to link directly to specific timetable */
+		if (location.hash.length > 2){
+			if(location.hash[1] == "n"){
+				jumpTo(0,location.hash.substr(2).toUpperCase());
+			}else if(location.hash[1] == "s"){
+				jumpTo(1,location.hash.substr(2).toUpperCase());
+			}else if(location.hash[1] == "k"){
+				jumpTo(2,location.hash.substr(2).toUpperCase());
+			}
+		}
 	},
 	showDataSourceModal: function(){
 		datasourcepickerDiv = modal.create('datasourcepicker', "Wybór planu", "Tutaj możesz wybrać wersję danych Super Clever Planu", function(){datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false)});
@@ -474,16 +488,7 @@ function init2(){
 		status_span.parentNode.insertBefore(XPinfo, status_span.nextSibling);
 	}
 
-	/* Allow to link directly to specific timetable */
-	if (location.hash.length > 2){
-		if(location.hash[1] == "n"){
-			jumpTo(0,location.hash.substr(2).toUpperCase());
-		}else if(location.hash[1] == "s"){
-			jumpTo(1,location.hash.substr(2).toUpperCase());
-		}else if(location.hash[1] == "k"){
-			jumpTo(2,location.hash.substr(2).toUpperCase());
-		}
-	}
+	app.parseHash();
 	
 	try {
 		if (typeof(ZSEILPLAN_BUILD) == "undefined"){
@@ -512,19 +517,27 @@ function refreshView(){
 	if (select_units.value != "default") {
 		app.currentView.selectedType = "unit";
 		app.currentView.selectedValue = select_units.value;
+		app.currentView.selectedShort = "k" + select_units.value;
 	} else if (select_teachers.value != "default") {
 		app.currentView.selectedType = "teacher";
 		app.currentView.selectedValue = select_teachers.value;
+		app.currentView.selectedShort = "n" + select_teachers.value;
 	} else if (select_rooms.value != "default") {
 		app.currentView.selectedType = "room";
 		app.currentView.selectedValue = select_rooms.value;
+		app.currentView.selectedShort = "s" + select_rooms.value;
 	} else {
 		utils.log("app", "Nothing is selected, not refreshing view");
 		return;
 	}
 
 	utils.log("app", "Refreshing view");
-	// console.log("Refreshing view");
+
+	try {
+		history.pushState(null, null, "#" + app.currentView.selectedShort);
+	} catch (error) {
+		utils.error(error);
+	}
 
 	if (this.id != undefined){
 		ui.resetSelects(this.id);
