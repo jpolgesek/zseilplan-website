@@ -20,35 +20,35 @@ var overrides = {
 
 		utils.log("overrides", "Start loading overrides");
 			
-		for (y=1; y<maxHours; y++) {
-			for (x=1; x<(weekDays + 1); x++) {
+		for (hour=1; hour<maxHours; hour++) {
+			for (day=1; day<(weekDays + 1); day++) {
 				
 				/* Decide to show overrides for this or next week */
-				tempdate2 = new Date();
-				if(tempdate2.getDay() == 6 || tempdate2.getDay() == 0){
-					ind = IEgetDay(x+7);
-				}else{
-					ind = IEgetDay(x);
+				var day_of_the_week = new Date().getDay();
+				if( day_of_the_week == 6 || day_of_the_week == 0) {
+					//TODO: show info that these overrides are for the next week
+					//TODO: allow for manual selection of this
+					var date = IEgetDay(day+7);
+				} else {
+					var date = IEgetDay(day);
 				}
 
-				/* is 'ind' really shortcut for index? */
-				/* why did I do this to me */
+				//There are no overrides for this day, skip this loop
+				if (overrideData[date] == undefined) continue; 
 
-				/* ind is date in format DD.MM.YYYY */
-				/* then 'x' is day of the week with monday being 1 */
-				/* then 'y' is hour of the day of the week with first lesson being 1 */
-				/* seriously, WTF have I done */
-				/* this is so terrible */
-
-				if (overrideData[ind] == undefined) continue; //There are no overrides for this day, skip this loop
-				if (overrideData[ind][x] == undefined) continue; //There are no overrides for this day, skip this loop
+				//TODO: This should never happen. Send alert if it does!
+				if (overrideData[date][day] == undefined) continue; 
 				
-				ui.createZMark(x);
+				//Show (Z) mark to indicate that overrides for this day are loaded correctly
+				ui.createZMark(day);
 
-				override = overrideData[ind][x][y];
-				if (override == undefined) continue; //There are no overrides for this hour, skip this loop
+				override = overrideData[date][day][hour];
 
-				cell = table.rows[y].cells[x];
+				//There are no overrides for this hour, skip this loop
+				if (override == undefined) continue; 
+
+				//TODO: use cell.zseilplanitem
+				cell = table.rows[hour].cells[day];
 
 				/* A bit ugly, but allows reuse of app.currentView */
 				if (app.currentView.selectedType == "unit") {
