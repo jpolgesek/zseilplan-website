@@ -11,7 +11,7 @@ var table = document.getElementById("maintable");
 var select_units = document.getElementById("units");
 var select_teachers = document.getElementById("teachers");
 var select_rooms = document.getElementById("rooms");
-var status_span = document.getElementById("status");
+var status_span = document.getElementById("status"); //TODO: should be safe to remove this
 var networkstatus = document.getElementById("networkStatus"); //TODO: should be safe to remove this
 var loaderstatus = document.getElementById("loader-status"); //TODO: should be safe to remove this
 var navbar_info = document.getElementById("navbar-info");
@@ -63,7 +63,8 @@ var app = {
 		loader: {
 			text: document.getElementById("loader-status")
 		},
-		networkStatus: document.getElementById("networkStatus")
+		networkStatus: document.getElementById("networkStatus"),
+		status: document.getElementById("status")
 	},
 	prefs: {
 		"ui.selected_groups": ["1", "2"],
@@ -301,14 +302,14 @@ function init(){
 	utils.log("app", "Initializing");
 
 	ui.loader.setStatus("Ładuję preferencje");
-	status_span.innerHTML = "Ładowanie preferencji...";
+	ui.setStatus("Ładowanie preferencji...");
 
 	/* If HTML5 storage is available, try to load user saved settings */
 	if (typeof(Storage) !== "undefined") {
 		myStorage.load();
 	}
 
-	status_span.innerHTML = "Ładowanie danych planu...";
+	ui.setStatus("Ładowanie danych planu...");
 	ui.loader.setStatus("Pobieram dane");
 	fetchData();
 }
@@ -351,7 +352,7 @@ function init2(){
 	try {data_googleindex_info.innerHTML = "W indeksie jest: ";} catch (e){}
 
 	/* Add units to select_units and quicksearch */
-	status_span.innerHTML = "Przygotowywanie interfejsu: klasy";
+	ui.setStatus("Przygotowywanie interfejsu: klasy");
 	
 	while (select_units.firstChild) {
 		select_units.removeChild(select_units.firstChild);
@@ -366,7 +367,7 @@ function init2(){
 	};
 
 
-	status_span.innerHTML = "Przygotowywanie interfejsu: nauczyciele";
+	ui.setStatus("Przygotowywanie interfejsu: nauczyciele");
 	
 	while (select_teachers.firstChild) {
 		select_teachers.removeChild(select_teachers.firstChild);
@@ -380,7 +381,7 @@ function init2(){
 	try {data_googleindex_info.innerHTML += "plany "+ Object.keys(data.teachermap).length +" nauczycieli";} catch (e){}
 	
 	/* Add classrooms to select_rooms and quicksearch */
-	status_span.innerHTML = "Przygotowywanie interfejsu: sale";
+	ui.setStatus("Przygotowywanie interfejsu: sale");
 	
 	while (select_rooms.firstChild) {
 		select_rooms.removeChild(select_rooms.firstChild);
@@ -402,19 +403,19 @@ function init2(){
 	select_rooms.onchange = refreshView;
 	select_rooms.oninput = refreshView;
 
-	status_span.innerHTML = "";
+	ui.setStatus("")
 
 	if (app.testMode){
-		status_span.innerHTML += "<b>Tryb testowy, uważaj!</b><br>";
+		ui.updateStatus("<b>Tryb testowy, uważaj!</b><br>");
 	}
 
 	/* TODO: fix me */
 	/* Show timetable update date */
 	if (data._updateDate_max == data._updateDate_min){
-		status_span.innerHTML += "Plan z dnia "+data._updateDate_max; //do not show on desktop
+		ui.updateStatus("Plan z dnia "+data._updateDate_max); //do not show on desktop
 		navbar_info.innerHTML = "Plan z dnia "+data._updateDate_max;
 	}else{
-		status_span.innerHTML += "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min; //do not show on desktop
+		ui.updateStatus("Plan z dni "+data._updateDate_max+" - "+data._updateDate_min); //do not show on desktop
 		navbar_info.innerHTML = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min;
 	}
 
@@ -424,9 +425,9 @@ function init2(){
 	/* TODO: fix me */
 	try {
 		if (Object.keys(overrideData).length > 0){
-			status_span.innerHTML += "<br>Zastępstwa na "+Object.keys(overrideData).map(function(s){return s.substr(0,5)}).sort().join();
+			ui.updateStatus("<br>Zastępstwa na "+Object.keys(overrideData).map(function(s){return s.substr(0,5)}).sort().join());
 		}
-		status_span.innerHTML += "<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a> | <a href='#' onclick='app.changelogModal()'>Changelog</a>";
+		ui.updateStatus("<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a> | <a href='#' onclick='app.changelogModal()'>Changelog</a>");
 	} catch (e) {}
 
 
@@ -485,7 +486,7 @@ function init2(){
 		XPinfo.style.padding = "1.2%";
 		XPinfo.style.paddingRight = "40%";
 		XPinfo.fontSize = "1.2em";
-		status_span.parentNode.insertBefore(XPinfo, status_span.nextSibling);
+		app.element.status.parentNode.insertBefore(XPinfo, app.element.status.nextSibling);
 	}
 
 	app.parseHash();

@@ -64,6 +64,35 @@ var ui = {
 		}
 	},
 
+	/**
+	 * Shows status text
+	 * @param {string} 	text 			Text to be shown
+	 * @returns {boolean} 				True on success, false on failure
+	 */
+	setStatus: function(text){
+		try{
+			app.element.status.innerHTML = text;
+			return true;
+		}catch(e){
+			return false;
+		};	
+	},
+
+
+	/**
+	 * Updates status text
+	 * @param {string} 	text 			Text to be shown
+	 * @returns {boolean} 				True on success, false on failure
+	 */
+	updateStatus: function(text){
+		try{
+			app.element.status.innerHTML += text;
+			return true;
+		}catch(e){
+			return false;
+		};	
+	},
+
 
 	/**
 	 * Shows (Z) in header
