@@ -2,7 +2,7 @@ var dom = {
 	/**
 	 * Adds class to element (proxy/polyfill for classList)
 	 * @param 	{string} 		elementName		Name of element to be created
-	 * @param 	{string[]} 	classList 		List of classes to be attached to newly created element
+	 * @param 	{string} 	classList 		List of classes to be attached to newly created element
 	 * @returns {boolean} 								Success (true) or failure (false)
 	 */
 	addClass: function(elementObject, className){
@@ -22,7 +22,7 @@ var dom = {
 	/**
 	 * Removes class from element (proxy/polyfill for classList)
 	 * @param 	{string} 		elementName		Name of element to be created
-	 * @param 	{string[]} 	classList 		List of classes to be attached to newly created element
+	 * @param 	{string} 	classList 		List of classes to be attached to newly created element
 	 * @returns {boolean} 								Success (true) or failure (false)
 	 */
 	removeClass: function(elementObject, className){
