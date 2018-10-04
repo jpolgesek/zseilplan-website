@@ -12,7 +12,7 @@ var select_units = document.getElementById("units");
 var select_teachers = document.getElementById("teachers");
 var select_rooms = document.getElementById("rooms");
 var status_span = document.getElementById("status");
-var networkstatus = document.getElementById("networkStatus");
+var networkstatus = document.getElementById("networkStatus"); //TODO: should be safe to remove this
 var loaderstatus = document.getElementById("loader-status"); //TODO: should be safe to remove this
 var navbar_info = document.getElementById("navbar-info");
 var data_googleindex_info = document.getElementById("data-googleindex-info");
@@ -62,7 +62,8 @@ var app = {
 		},
 		loader: {
 			text: document.getElementById("loader-status")
-		}
+		},
+		networkStatus: document.getElementById("networkStatus")
 	},
 	prefs: {
 		"ui.selected_groups": ["1", "2"],
@@ -320,11 +321,7 @@ function init2(){
 	
 	if (!navigator.onLine){
 		utils.warn("app", "App is offline, be careful!");
-		// document.getElementsByClassName("navbar-info")[0].innerHTML = "<b>TRYB OFFLINE</b>";
-		// document.getElementsByClassName("navbar")[0].style.backgroundColor = "#ff0000";
-		dom.addClass(document.getElementById("networkStatus"),"bad");
-		document.getElementById("networkStatus").style.display = "block";
-		document.getElementById("networkStatus").innerHTML = "Nie masz połączenia z internetem, plan może być nieaktualny.";
+		ui.setNetworkStatus(false);
 	}
 	
 	ui.loader.setStatus("Wczytuję dane");
@@ -498,14 +495,10 @@ function init2(){
 	
 
 	window.addEventListener('offline', function(e) { 
-		dom.addClass(document.getElementById("networkStatus"),"bad");
-		document.getElementById("networkStatus").style.display = "block";
-		document.getElementById("networkStatus").innerHTML = "Nie masz połączenia z internetem, plan może być nieaktualny.";
+		ui.setNetworkStatus(false);
 	});
 	window.addEventListener('online', function(e) { 
-		document.getElementById("networkStatus").style.display = "none";
-		document.getElementById("networkStatus").innerHTML = "";
-		document.getElementById("networkStatus").className = "";
+		ui.setNetworkStatus(true);
 	});
 
 	try {getIPs(function(a){app.ip = a;});}catch(e){};

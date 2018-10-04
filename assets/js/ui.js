@@ -32,7 +32,7 @@ var ui = {
 		}
 	},
 
-	loader : {
+	loader: {
 		setStatus: function(text){
 			try{
 				app.element.loader.text.innerHTML = text;
@@ -40,6 +40,18 @@ var ui = {
 			}catch(e){
 				return false;
 			};	
+		}
+	},
+
+	setNetworkStatus: function(value){
+		if (value){
+			app.element.networkStatus.style.display = "none";
+			app.element.networkStatus.innerHTML = "";
+			app.element.networkStatus.className = "";
+		}else{
+			dom.addClass(app.element.networkStatus,"bad");
+			app.element.networkStatus.style.display = "block";
+			app.element.networkStatus.innerHTML = "Nie masz połączenia z internetem, plan może być nieaktualny.";
 		}
 	},
 
