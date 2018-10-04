@@ -32,6 +32,17 @@ var ui = {
 		}
 	},
 
+	loader : {
+		setStatus: function(text){
+			try{
+				app.element.loader.text.innerHTML = text;
+				return true;
+			}catch(e){
+				return false;
+			};	
+		}
+	},
+
 	createZMark: function(n){
 		if (document.getElementsByClassName("header")[0].children[n].children.length == 0){
 			zMark = document.createElement('span');

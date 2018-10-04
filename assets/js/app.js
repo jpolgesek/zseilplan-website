@@ -13,7 +13,7 @@ var select_teachers = document.getElementById("teachers");
 var select_rooms = document.getElementById("rooms");
 var status_span = document.getElementById("status");
 var networkstatus = document.getElementById("networkStatus");
-var loaderstatus = document.getElementById("loader-status");
+var loaderstatus = document.getElementById("loader-status"); //TODO: should be safe to remove this
 var navbar_info = document.getElementById("navbar-info");
 var data_googleindex_info = document.getElementById("data-googleindex-info");
 
@@ -59,6 +59,9 @@ var app = {
 		notification: {
 			bar: document.getElementById("notification-bar"),
 			text: document.getElementById("notification-text")
+		},
+		loader: {
+			text: document.getElementById("loader-status")
 		}
 	},
 	prefs: {
@@ -282,7 +285,7 @@ function init(){
 	//try {utils.consoleStartup();} catch (e) {}
 	utils.log("app", "Initializing");
 
-	try{loaderstatus.innerHTML="Ładuje preferencje";}catch(e){};	
+	ui.loader.setStatus("Ładuję preferencje");
 	status_span.innerHTML = "Ładowanie preferencji...";
 
 	/* If HTML5 storage is available, try to load user saved settings */
@@ -291,7 +294,7 @@ function init(){
 	}
 
 	status_span.innerHTML = "Ładowanie danych planu...";
-	try{loaderstatus.innerHTML="Pobieram dane";}catch(e){};	
+	ui.loader.setStatus("Pobieram dane");
 	fetchData();
 }
 
@@ -323,8 +326,8 @@ function init2(){
 		document.getElementById("networkStatus").style.display = "block";
 		document.getElementById("networkStatus").innerHTML = "Nie masz połączenia z internetem, plan może być nieaktualny.";
 	}
-
-	try{loaderstatus.innerHTML="Wczytuję dane";}catch(e){};	
+	
+	ui.loader.setStatus("Wczytuję dane");
 	
 	/* Show data comment */
 	try {
@@ -429,7 +432,7 @@ function init2(){
 
 	quicksearch.init();
 	try{
-		loaderstatus.innerHTML="Ładuję interfejs";
+		ui.loader.setStatus("Ładuję interfejs");
 		dom.addClass(document.getElementsByClassName('loader')[0], "opacity-0");
 		dom.removeClass(document.getElementsByClassName('container')[0], "opacity-0");
 		document.getElementsByClassName('loader')[0].parentElement.removeChild(document.getElementsByClassName('loader')[0]);
@@ -734,7 +737,7 @@ function fetchData(customURL){
 
 	/* %old-ie-remove-start% */
 	if (!navigator.onLine) {
-		try{loaderstatus.innerHTML="Jesteś offline, próbuję pobrać plan z lokalnego cache";}catch(e){};
+		ui.loader.setStatus("Jesteś offline, próbuję pobrać plan z lokalnego cache");
 		timestamp = "localstorage";
 	}
 	/* %old-ie-remove-end% */
@@ -751,7 +754,7 @@ function fetchData(customURL){
 
 	if (compat){
 		//Compatibility mode
-		try{loaderstatus.innerHTML="Rozpoczynam pobieranie danych w trybie kompatybilności wstecznej";}catch(e){};
+		ui.loader.setStatus("Rozpoczynam pobieranie danych w trybie kompatybilności wstecznej");
 		
 		timestamp = Date.now();
 		var fetchDataCompatXHR = new XMLHttpRequest();
@@ -811,10 +814,10 @@ function fetchData(customURL){
 	/* %old-ie-remove-end% */
 
 	if (!isOK){
-		try{loaderstatus.innerHTML="<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.";}catch(e){};
+		ui.loader.setStatus("<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.");
 		utils.error("app", "Failed to download data.json");
 	}else{
-		try{loaderstatus.innerHTML="Pobrano plan lekcji";}catch(e){};
+		ui.loader.setStatus("Pobrano plan lekcji");
 	}
 	return isOK;
 }
@@ -1014,15 +1017,15 @@ if (detectIE()){
 }
 
 
-if ( window.addEventListener ) {
-	var kkeys = [], asdasd = "38,38,40,40,37,39,37,39,66,65";
-	window.addEventListener("keydown", function(e){
-		kkeys.push(e.keyCode);
-		if (kkeys.toString().indexOf(asdasd) >= 0 ){
+if (window.addEventListener) {
+	var _kk = [], _nk = "38,38,40,40,37,39,37,39,66,65";
+	window.addEventListener("keydown", function(e) {
+		_kk.push(e.keyCode);
+		if (_kk.toString().indexOf(_nk) >= 0 ){
 			scrollTo(0,0);
 			document.body.innerHTML = '<div style="z-index: 99999999;position: absolute;top: 0;left: 0;width: 100%;height: 100%;"><iframe src="aee/" style="width: 100%;height: 100%;border-style:none"></iframe></div>' + document.body.innerHTML;
 			scrollTo(0,0);
-			kkeys = [];
+			_kk = [];
 		}
 	}, true);
 }
