@@ -1,4 +1,4 @@
-
+//TODO: release me on 25.10.2018
 
 var themeloader = {
 	importCSS: function(){
@@ -15,7 +15,7 @@ var themeloader = {
 		// this.prepareWindow("template_empty-3.png", undefined, "Porównanie planów", document.querySelector("#diff-help"));
 		
 		document.querySelector("#remote_info").style.display = null;
-		document.querySelector("#remote_info").innerHTML = "<b>Tryb Windowsa 95 sponsorowany przez salę 116 i nieśmiertelne XP'ki.</b>";
+		document.querySelector("#remote_info").innerHTML = "<b>Tryb retro sponsorowany przez 18 urodziny Windowsa XP (pozdrawiam salę 116).</b>";
 		this.prepareWindow("msg_information-2.png", undefined, "Informacja", document.querySelector("#remote_info"));
 
 		document.querySelectorAll(".navbar")[0].style.backgroundImage = "url(assets/img/icon_square_retro.png)";
@@ -33,14 +33,12 @@ var themeloader = {
 		ewindow.className = "window";
 		dom.addClass(ewindow, classes);
 		
-		etitlebar = document.createElement("div");
-		etitlebar.className = "titlebar";
+		etitlebar = dom.createEWC("div", ["titlebar"]);
 
 		if (icon == undefined) icon = "xml_gear-3.png";
 		etitlebar.innerHTML = '<img class="icon2" src="assets/themes/95/' + icon + '"><span class="title">' + title + '</span><button type="button" class="btn btn_x">&nbsp;</button><button type="button" class="btn btn_help">&nbsp;</button>';
 
-		econtent = document.createElement("div");
-		econtent.className = "wcontent";
+		econtent = dom.createEWC("div", ["wcontent"]);
 		
 		ewindow.appendChild(etitlebar);
 		ewindow.appendChild(econtent);
@@ -64,17 +62,15 @@ modal.create = function(id ,title, desc, closeAction){
 
 	modalContainer.className = "modal center-hv shadow window";
 	
-	etitlebar = document.createElement("div");
-	etitlebar.className = "titlebar";
+	etitlebar = dom.createEWC("div", ["titlebar"]);
 
 	icon = "xml_gear-3.png";
 	etitlebar.innerHTML = '<img class="icon2" src="assets/themes/95/' + icon + '"><span class="navtitle">' + title + '</span><button type="button" class="btn btn_x">&nbsp;</button><button type="button" class="btn btn_help">&nbsp;</button>';
 
 	//modalClose.onclick = function(){closeAction();};
 
-	modalDesc = document.createElement("p");
+	modalDesc = dom.createEWC("p", ["mdesc"]);
 	modalDesc.innerHTML = desc;
-	modalDesc.className = "mdesc";
 
 	modalDescRow = this.createRow();
 	modalDescRow.appendChild(modalDesc)
