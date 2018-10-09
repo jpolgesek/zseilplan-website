@@ -544,6 +544,7 @@ function refreshView(){
 		ui.resetSelects(this.id);
 	}
 
+	//TODO: isn't there a function to do that?
 	if (detectIE() && document.super_fucking_old_ie){
 		while (table.hasChildNodes()) {
 			table.removeChild(table.lastChild);
