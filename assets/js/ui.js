@@ -119,44 +119,55 @@ var ui = {
 			itemData.p = itemData.p.split(" ")[0];
 		}
 
-		if (app.testMode == "asdfghjk"){
-			if (itemData.p.indexOf("JM") != -1){
-				//to pewnie modul
-				mod_name = itemData.p.split("JM")[0];
-				if ((mod_name[0] == mod_name[1]) && (mod_name[0] == "I")){
-					mod_name = mod_name.substr(1);
-				}
-			}else{
-				mod_name = itemData.p;
-			}
-			try {
-				newName = mod_name;
-				newName = data.normalizationData[newName];
-				if (newName != undefined){
-					itemData.p = newName;
-				} 
-			} catch (error) {
-				console.log("Normalization not found for '"+mod_name+"'")
-			}
-			// console.log("TODO: normalize name of '"+mod_name+"'");
-		}
-
 		span[0].className = 'pName';
 		span[0].innerHTML = itemData.p;
 		span[1].className = 'clickable';
 		span[2].className = 'clickable';
-		
-		if (app.testMode == true) span[3].className = 'clickable';
 
-		if (app.testMode == true){
-			if (app.prefs["ui.show_only_selected_group"]){
-				grp = itemData.g.split("-")[1];
-				if (app.prefs["ui.selected_groups"].indexOf(grp) == -1){
-					return document.createElement("span");
+		if (app.testMode == true) {
+			if (app.prefs["ui.normalize_subject"] === true){
+				if (itemData.p.indexOf("JM") != -1){
+					//to pewnie modul
+					mod_name = itemData.p.split("JM")[0];
+					if ((mod_name[0] == mod_name[1]) && (mod_name[0] == "I")){
+						mod_name = mod_name.substr(1);
+					}
+				}else{
+					mod_name = itemData.p;
+				}
+				try {
+					newName = mod_name;
+					newName = data.normalizationData[newName];
+					if (newName != undefined){
+						itemData.p = newName;
+						span[0].innerHTML = newName;
+					} 
+				} catch (error) {
+					console.log("Normalization not found for '"+mod_name+"'")
 				}
 			}
-		}
+			
+			grp = itemData.g;
+			if ((grp != undefined) && (grp != -1)) {
+				if (grp.indexOf("-") != -1) {
+					grp = grp.split("-")[1];
+				}
+			}
+			
+			if ((typeof grp != 'undefined') && (grp != "-1")){
+				if (app.prefs["ui.show_group_info"]){
+					span[3].innerHTML = "G" + grp;
+					span[3].className = 'clickable';
+				}
+		
+				if (app.prefs["ui.show_only_selected_group"]) {
+					if (app.prefs["ui.selected_groups"].indexOf(grp) == -1){
+						return document.createElement("span");
+					}
+				}
+			}
 
+		}
 
 		if (this.itemDisplayType == 0){
 			span[1].innerHTML = itemData.k;
@@ -258,9 +269,6 @@ var ui = {
 				if (span[0].innerText.indexOf(itemData.g) == -1){
 					// span[0].innerHTML += " (Grupa "+itemData.g+")";
 					if (app.testMode != true) span[0].innerHTML += "-"+itemData.g+"";
-
-					grp = itemData.g.split("-")[1];
-					if (app.testMode == true) span[3].innerHTML = "G" + grp;
 				}
 			}
 			

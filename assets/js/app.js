@@ -67,8 +67,10 @@ var app = {
 		status: document.getElementById("status")
 	},
 	prefs: {
-		"ui.selected_groups": ["1", "2"],
-		"ui.show_only_selected_group": false
+		"ui.selected_groups": [],
+		"ui.show_only_selected_group": false,
+		"ui.show_group_info": false,
+		"ui.normalize_subject": false
 	},
 	as: function(v){
 		//todo: disabler
