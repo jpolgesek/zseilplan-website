@@ -37,6 +37,16 @@ var quicksearch = {
 					location.reload();
 				}
 				break;
+			case "sp":
+				if (code.length > 3){
+					app.prefs[code[1]] = [];
+					for (var i = 2; i < code.length; i++){
+						app.prefs[code[1]].push(code[i]);
+					}
+				}else{
+					app.prefs[code[1]] = code[2];
+				}
+				break;
 		}
 	},
 	search: function(e){
