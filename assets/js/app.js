@@ -495,7 +495,7 @@ function init2(){
 	
 	try {
 		if (typeof(ZSEILPLAN_BUILD) == "undefined"){
-			document.getElementById("footer-text").innerHTML = "Super Clever Build internal build";
+			document.getElementById("footer-text").innerHTML = "Super Clever Plan internal build";
 		} else {
 			document.getElementById("footer-text").innerHTML = "Super Clever Plan build " + ZSEILPLAN_BUILD;
 		}
