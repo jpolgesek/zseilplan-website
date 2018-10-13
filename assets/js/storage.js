@@ -4,6 +4,102 @@ if (typeof(Storage) !== "undefined") {
 }
  */
 
+var preferences = {
+	SCP2Data: {
+		"Version": "1.0",
+		"LastModified": "01.01.1970 00:01",
+		preferences: {
+			//Default unit/room/teacher
+			"app.homeType": "unit", 	
+			"app.homeValue": "4G", 	
+			"app.homeGroups": ["2/2"], //TODO 	
+
+			
+			/* UI Elements */
+			"ui.darkMode": true,
+			"ui.breakLineInItem": false,
+			"ui.jumpButtonsFloatRight": true,
+
+
+			/* UI Modifications */
+
+			//Which groups should *NOT* be hidden by grouphider
+			"ui.grouphider_groups": ["2/2"], 		
+
+			//When to activate grouphider
+			//Possible values: false / "only_home" / "always" (why would anyone want this?)
+			"ui.activate_grouphider": "only_home", 	
+
+			//Display quick grouphiden enable/disable switch
+			"ui.show_grouphider_switch": true,
+
+			//Removes group information from subject name and moves it to a .clickable span
+			"ui.show_group_info": true, 
+
+			//Normalize subject using internal dictionary (TODO: external ones)
+			"ui.normalize_subject": true
+		}
+	},
+	storageMethod: undefined, 
+	load: function(){
+
+		if (typeof(Storage) == "undefined") {
+			this.storageMethod = "disabled";
+			utils.log("NewPrefs", "LocalStorage is not available");
+		}else{
+			this.storageMethod = "localstorage";
+		}
+
+
+		if (this.storageMethod != "localstorage") {
+			return;
+		}
+
+		this.SCP2Data = localStorage.getItem("SCP2Data");
+
+		if (this.SCP2Data == null) {
+			utils.log("NewPrefs", "There is no data to load (no SCP2Data)");
+			return;
+		}
+
+		this.SCP2Data = JSON.parse(this.SCP2Data);
+
+		utils.log("NewPrefs", "Dane w formacie " + this.SCP2Data.Version);
+		utils.log("NewPrefs", "Last modified " + this.SCP2Data.LastModified);
+		
+		/*
+		for (key in this.SCP2Data.preferences){
+			utils.log("NewPrefs", "Loading " + key +" to app.prefs");
+			app.prefs[key] = this.SCP2Data.preferences[key];
+		}
+		*/
+
+		app.prefs = this.SCP2Data.preferences;
+		
+		return true;
+
+	},
+
+	save: function(){
+		this.SCP2Data.LastModified = new Date().toLocaleDateString("pl-PL");
+		this.SCP2Data.preferences = app.prefs;
+		
+		localStorage.setItem("SCP2Data", JSON.stringify(this.SCP2Data));
+
+		return true;
+	},
+
+	clear: function(){
+		return localStorage.removeItem("SCP2Data");
+	},
+	
+	import: function(){},
+	export: function(){},
+	convert: function(){
+		//TODO: This is important.
+	}
+}
+
 var myStorage = {
 	save: function(){
 		/*
@@ -83,6 +179,8 @@ var myStorage = {
 		//refreshView();
 		//TODO: updateStyle();
 	},
+
+	/* Czemu w storage są funkcje UI? */
 	generatePreferencesUI: function(){
 		// preferencesDiv = document.getElementById("preferences");
 		// preferencesDiv.innerHTML = "";
