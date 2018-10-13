@@ -24,7 +24,7 @@ var themeloader = {
 		// this.prepareWindow("template_empty-3.png", undefined, "Porównanie planów", document.querySelector("#diff-help"));
 		
 		document.querySelector("#remote_info").style.display = null;
-		document.querySelector("#remote_info").innerHTML = "<b>Tryb retro sponsorowany przez 18 urodziny Windowsa XP. Świętujmy razem z salą 116.</b>";
+		document.querySelector("#remote_info").innerHTML = "<b>Tryb retro sponsorowany przez 18 urodziny Windowsa XP. Świętujmy je razem z salą 116.</b>";
 		document.querySelector("#remote_info").innerHTML += "<br>Nie chcesz tego widzieć? <a href='#' onclick='localStorage.setItem(\"disable_116_birthday_once\", true); document.location.reload();'>Wyłącz teraz tryb retro</a> lub <a href='#' onclick='localStorage.setItem(\"disable_116_birthday\", true); document.location.reload();'>wyłącz go na zawsze</a>";
 		this.prepareWindow("msg_information-2.png", undefined, "Informacja", document.querySelector("#remote_info"));
 
