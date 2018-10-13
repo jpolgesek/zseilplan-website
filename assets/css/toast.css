@@ -117,10 +117,11 @@
     background-color: #fbfbfb;
     color: #151515;
     border-radius: 5px;
-    margin-top: 10px;
+    margin-top: 7px;
+    margin-bottom: 7px;
 }
 
 
 .box-text.red  {background-color: #c52e2e !important; color: #fafafa !important;}
-.box-text.green{background-color: #1da724 !important; color: #fafafa !important;}
+.box-text.green{background-color: #199b1f !important; color: #fafafa !important;}
 .box-text.blue {background-color: #046edd !important; color: #fafafa !important;}
