@@ -15,6 +15,7 @@ var themeloader = {
 			return;
 		}
 
+		app.themeLoaded = true;
 		ui.setDarkMode(false); //sorry :/
 		this.importCSS();
 		this.prepareWindow(undefined, undefined, "Navbar", document.querySelector("#navbar-container"));
@@ -22,6 +23,8 @@ var themeloader = {
 		this.prepareWindow("msg_information-2.png", "left-bar", "Informacje", document.querySelector("#status"));
 		this.prepareWindow("template_empty-3.png", "right-bar", "Wybór planu", document.querySelectorAll(".bar")[0]);
 		// this.prepareWindow("template_empty-3.png", undefined, "Porównanie planów", document.querySelector("#diff-help"));
+
+		document.querySelector("#footer-text").innerHTML = "<i>Microsoft® Windows® XP Professional 5.1 Build 2600</i>";
 		
 		document.querySelector("#remote_info").style.display = null;
 		document.querySelector("#remote_info").innerHTML = "<b>Tryb retro sponsorowany przez 18 urodziny Windowsa XP. Świętujmy je razem z salą 116.</b>";
@@ -46,7 +49,7 @@ var themeloader = {
 		etitlebar = dom.createEWC("div", ["titlebar"]);
 
 		if (icon == undefined) icon = "xml_gear-3.png";
-		etitlebar.innerHTML = '<img class="icon2" src="assets/themes/95/' + icon + '"><span class="title">' + title + '</span><button type="button" class="btn btn_x">&nbsp;</button><button type="button" class="btn btn_help">&nbsp;</button>';
+		etitlebar.innerHTML = '<img class="icon2" src="assets/themes/95/' + icon + '"><span class="title">' + title + '</span><button type="button" class="btn btn_x">&nbsp;</button><button type="button" class="btn btn_help" onclick="themeloader.helpClick(this)">&nbsp;</button>';
 
 		econtent = dom.createEWC("div", ["wcontent"]);
 		
@@ -57,6 +60,11 @@ var themeloader = {
 
 		econtent.appendChild(element);
 		return ewindow;
+	},
+
+	helpClick: function(t){
+		//alert("TODO: help click");
+		return;
 	}
 }
 
@@ -75,7 +83,7 @@ modal.create = function(id ,title, desc, closeAction){
 	etitlebar = dom.createEWC("div", ["titlebar"]);
 
 	icon = "xml_gear-3.png";
-	etitlebar.innerHTML = '<img class="icon2" src="assets/themes/95/' + icon + '"><span class="navtitle">' + title + '</span><button type="button" class="btn btn_x">&nbsp;</button><button type="button" class="btn btn_help">&nbsp;</button>';
+	etitlebar.innerHTML = '<img class="icon2" src="assets/themes/95/' + icon + '"><span class="navtitle">' + title + '</span><button type="button" class="btn btn_x">&nbsp;</button><button type="button" class="btn btn_help" onclick="themeloader.helpClick(this)">&nbsp;</button>';
 
 	//modalClose.onclick = function(){closeAction();};
 

@@ -391,6 +391,13 @@ var ui = {
 	 * 3. Undo changes made to layout
 	 */
 	print: function(){
+		if (app.themeLoaded){
+			alert("Drukowanie z włączonym motywem nie jest wspierane. Tymczasowo wyłączam motyw.")
+			localStorage.setItem("disable_116_birthday_once", true);
+			document.location.reload();
+			return;
+		}
+
 		old_overrides_disabled = overrides_disabled;
 		overrides_disabled = true;
 		oldActiveColumn = columns.activeColumn;
