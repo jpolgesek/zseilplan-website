@@ -6,6 +6,15 @@ var themeloader = {
 	},
 
 	prepareHTML: function(){
+		if (localStorage.getItem("disable_116_birthday") == "true"){
+			return;
+		}
+
+		if (localStorage.getItem("disable_116_birthday_once") == "true"){
+			localStorage.removeItem("disable_116_birthday_once");
+			return;
+		}
+
 		ui.setDarkMode(false); //sorry :/
 		this.importCSS();
 		this.prepareWindow(undefined, undefined, "Navbar", document.querySelector("#navbar-container"));
@@ -15,7 +24,8 @@ var themeloader = {
 		// this.prepareWindow("template_empty-3.png", undefined, "Porównanie planów", document.querySelector("#diff-help"));
 		
 		document.querySelector("#remote_info").style.display = null;
-		document.querySelector("#remote_info").innerHTML = "<b>Tryb retro sponsorowany przez 18 urodziny Windowsa XP (pozdrawiam salę 116).</b>";
+		document.querySelector("#remote_info").innerHTML = "<b>Tryb retro sponsorowany przez 18 urodziny Windowsa XP. Świętujmy razem z salą 116.</b>";
+		document.querySelector("#remote_info").innerHTML += "<br>Nie chcesz tego widzieć? <a href='#' onclick='localStorage.setItem(\"disable_116_birthday_once\", true); document.location.reload();'>Wyłącz teraz tryb retro</a> lub <a href='#' onclick='localStorage.setItem(\"disable_116_birthday\", true); document.location.reload();'>wyłącz go na zawsze</a>";
 		this.prepareWindow("msg_information-2.png", undefined, "Informacja", document.querySelector("#remote_info"));
 
 		document.querySelectorAll(".navbar")[0].style.backgroundImage = "url(assets/img/icon_square_retro.png)";
