@@ -580,8 +580,15 @@ function refreshView(){
 			}else if (select_teachers.value != "default"){
 				ui.itemDisplayType = 0;
 				try {
-					itemData = data.teachers[select_teachers.value][day][hour];
-					cell.appendChild(ui.createItem(itemData));
+					if (app.testMode && typeof data.teachers_new != 'undefined'){
+						itemData = data.teachers_new[select_teachers.value][day][hour];
+						for (var i in itemData){
+							cell.appendChild(ui.createItem(itemData[i]));
+						}
+					}else{
+						itemData = data.teachers[select_teachers.value][day][hour];
+						cell.appendChild(ui.createItem(itemData));
+					}
 				}catch (e){}
 			
 			/* Show room view */
