@@ -139,9 +139,6 @@ function checkForOverrides(){
 
 			cell = table.rows[y].cells[x];
 			if (type == "unit"){
-				console.log("Starting unitParse on value = " + value);
-				console.log(cell);
-				console.log(override);
 				unitParse(value, override, cell);
 			}else if (type == "teacher"){
 				teacherParse(value, override, cell);
