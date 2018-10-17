@@ -139,6 +139,9 @@ function checkForOverrides(){
 
 			cell = table.rows[y].cells[x];
 			if (type == "unit"){
+				console.log("Starting unitParse on value = " + value);
+				console.log(cell);
+				console.log(override);
 				unitParse(value, override, cell);
 			}else if (type == "teacher"){
 				teacherParse(value, override, cell);
@@ -153,40 +156,54 @@ function checkForOverrides(){
 function unitParse(unit, override, cell){
 	override = override[value];
 	if (override == undefined) return;
+	try{
+		for (o=0; o<override.length; o++){
+			for (i=0; i<cell.children.length; i++){
+				a = cell.children[i].children;
 
-	for (o=0; o<override.length; o++){
-		for (i=0; i<cell.children.length; i++){
-			a = cell.children[i].children;
-			teacher = a[2].children[0].innerText;
-			gg = -1;
-			if (a[0].innerText.split("-").length > 1){
-				gg = a[0].innerText.split("-")[1];
-			}
-			//console.log("teacher="+teacher);
-			if (teacher == override[o].oldTeacherShort){
-				utils.log("override", "Found override for unit="+unit+", teacher="+teacher);
-				
-				temp_data = {};
-				try {
-					temp_data.n = override[o].newTeacherShort;
-				} catch (error) {
-					temp_data.n = override[o].newTeacher;
+				//Fix for situations where previous entry in this cell was already overrided, 
+				//and result of override didn't include teacher and room (-1)
+				if (a.length < 3) {
+					continue;
 				}
-				temp_data.k = value;
-				temp_data.p = override[o].subject;
-				if (gg != -1){
-					// temp_data.p += "-" + gg; //TODO: is this needed
-					temp_data.g = gg;
+
+				teacher = a[2].children[0].innerText;
+				gg = -1;
+				if (a[0].innerText.split("-").length > 1){
+					gg = a[0].innerText.split("-")[1];
 				}
-				temp_data.s = override[o].s;
-
-				ui.isOverride = true;
-				cell.replaceChild(ui.createItem(temp_data), cell.children[i]);
-				ui.isOverride = false;
-
+				//console.log("teacher="+teacher);
+				if (teacher == override[o].oldTeacherShort){
+					utils.log("override", "Found override for unit="+unit+", teacher="+teacher);
+					
+					temp_data = {};
+					try {
+						temp_data.n = override[o].newTeacherShort;
+					} catch (error) {
+						temp_data.n = override[o].newTeacher;
+					}
+					temp_data.k = value;
+					temp_data.p = override[o].subject;
+					if (gg != -1){
+						// temp_data.p += "-" + gg; //TODO: is this needed
+						temp_data.g = gg;
+					}
+					temp_data.s = override[o].s;
+	
+					ui.isOverride = true;
+					cell.replaceChild(ui.createItem(temp_data), cell.children[i]);
+					ui.isOverride = false;
+	
+				}
 			}
+	
 		}
-
+	}catch (e){
+		if (app.testMode) {
+			console.error("UNITPARSE ERROR!!!");
+			console.error(e);
+			console.error("UNITPARSE ERROR!!!");
+		}
 	}
 }
 
