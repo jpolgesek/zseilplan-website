@@ -81,7 +81,7 @@ var themeloader = {
 	},
 
 	helpClick: function(t){
-		if (window.width > 700){
+		if (window.innerWidth > 700){
 			window.open("https://www.microsoft.com/en-us/windowsforbusiness/end-of-xp-support");
 		}
 		return;
