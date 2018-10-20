@@ -21,12 +21,25 @@ var themeloader = {
 		this.prepareWindow(undefined, undefined, "Navbar", document.querySelector("#navbar-container"));
 		this.prepareWindow("calendar-5.png", undefined, "Plan lekcji", table);
 		this.prepareWindow("msg_information-2.png", "left-bar", "Informacje", document.querySelector("#status"));
-		this.prepareWindow("template_empty-3.png", "right-bar", "Wybór planu", document.querySelectorAll(".bar")[0]);
+		this.prepareWindow("template_empty-3.png", "right-bar", "Wybór planu", document.querySelectorAll(".bar")[0]);		
+		
+		try {
+			document.querySelector("#navbar-btn-android").onclick = function(){
+				document.body.style.backgroundImage = "url(assets/themes/95/bg_stars.gif)";
+				utils.androidDemo();
+			}
+		} catch (e) {}
+
+		document.querySelector("#dnitechnika_ad").style.backgroundColor = '';
+		document.querySelector("#dnitechnika_ad").style.padding = ''; 
+		document.querySelector("#dnitechnika_ad").style.color = "black"
+
+		this.prepareWindow("msg_information-2.png", undefined, "Dni Technika", document.querySelector("#dnitechnika_ad"));
 		// this.prepareWindow("template_empty-3.png", undefined, "Porównanie planów", document.querySelector("#diff-help"));
 
 		document.querySelector("#footer-text").innerHTML = "<i>Microsoft® Windows® XP Professional 5.1 Build 2600</i>";
 		
-		document.querySelector("#remote_info").style.display = null;
+		document.querySelector("#remote_info").style.display = '';
 		document.querySelector("#remote_info").innerHTML = "<b>Tryb retro sponsorowany przez 18 urodziny Windowsa XP. Świętujmy je razem z salą 116.</b>";
 		document.querySelector("#remote_info").innerHTML += "<br>Nie chcesz tego widzieć? <a href='#' onclick='localStorage.setItem(\"disable_116_birthday_once\", true); document.location.reload();'>Wyłącz teraz tryb retro</a> lub <a href='#' onclick='localStorage.setItem(\"disable_116_birthday\", true); document.location.reload();'>wyłącz go na zawsze</a>";
 		this.prepareWindow("msg_information-2.png", undefined, "Informacja", document.querySelector("#remote_info"));
@@ -38,7 +51,12 @@ var themeloader = {
 		app.element.navbar.buttons.settings.querySelectorAll(".icon")[0].style.backgroundImage = "url(assets/themes/95/directory_control_panel_cool-4.png)";
 		app.element.navbar.buttons.print.querySelectorAll(".icon")[0].style.backgroundImage = "url(assets/themes/95/printer-5.png)";
 
-		window.scrollTo(0,0);
+		if (window.innerWidth < 700){
+			table.parentElement.parentElement.scrollIntoView();
+		}else{
+			window.scrollTo(0,0);
+		}
+
 	},
 
 	prepareWindow: function(icon, classes, title, element){
@@ -63,7 +81,20 @@ var themeloader = {
 	},
 
 	helpClick: function(t){
-		//alert("TODO: help click");
+		if (window.width > 700){
+			window.open("https://www.microsoft.com/en-us/windowsforbusiness/end-of-xp-support");
+		}
+		return;
+	},
+
+	closeClick: function(t){
+		console.log(t);
+
+		try { ui.showPreferences(0); } catch (e) {}
+		try { changelogDiv.parentElement.removeChild(changelogDiv); } catch (e) {}
+		try { datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv); } catch (e) {}
+		try { ui.containerBlur(false); } catch (e) {}
+
 		return;
 	}
 }
@@ -83,7 +114,7 @@ modal.create = function(id ,title, desc, closeAction){
 	etitlebar = dom.createEWC("div", ["titlebar"]);
 
 	icon = "xml_gear-3.png";
-	etitlebar.innerHTML = '<img class="icon2" src="assets/themes/95/' + icon + '"><span class="navtitle">' + title + '</span><button type="button" class="btn btn_x">&nbsp;</button><button type="button" class="btn btn_help" onclick="themeloader.helpClick(this)">&nbsp;</button>';
+	etitlebar.innerHTML = '<img class="icon2" src="assets/themes/95/' + icon + '"><span class="navtitle">' + title + '</span><button type="button" class="btn btn_x" onclick="themeloader.closeClick(this)">&nbsp;</button><button type="button" class="btn btn_help" onclick="themeloader.helpClick(this)">&nbsp;</button>';
 
 	//modalClose.onclick = function(){closeAction();};
 

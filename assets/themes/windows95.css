@@ -427,3 +427,23 @@ b{
 	}
 }
 
+#android_instruction{
+	color: white !important;
+}
+
+.android-step-no {
+    background: #060606;
+    border-style: dashed;
+}
+
+/* dni technika ad */
+.wcontent > #dnitechnika_ad{	
+    background-color: transparent !important;
+    color: black !important;
+}
+
+.wcontent > #dnitechnika_ad > a{	
+	color: rgb(0, 47, 255) !important;
+    font-size: 1.5em;
+}
+
