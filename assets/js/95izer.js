@@ -19,9 +19,19 @@ var themeloader = {
 		ui.setDarkMode(false); //sorry :/
 		this.importCSS();
 		this.prepareWindow(undefined, undefined, "Navbar", document.querySelector("#navbar-container"));
-		this.prepareWindow("calendar-5.png", undefined, "Plan lekcji", table);
+		window_timetable = this.prepareWindow("calendar-5.png", undefined, "Plan lekcji", table);
 		this.prepareWindow("msg_information-2.png", "left-bar", "Informacje", document.querySelector("#status"));
 		this.prepareWindow("template_empty-3.png", "right-bar", "Wybór planu", document.querySelectorAll(".bar")[0]);		
+
+		try{
+			day_selector = document.querySelectorAll(".tabs")[0];
+			day_selector_parent = day_selector.parentElement;
+	
+			dom.addClass(day_selector, "day_selector_container");
+			window.window_timetable.children[1].prepend(day_selector);
+	
+			day_selector_parent.parentElement.removeChild(day_selector_parent);
+		}catch(e){}
 		
 		try {
 			document.querySelector("#navbar-btn-android").onclick = function(){

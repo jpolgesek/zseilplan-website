@@ -447,3 +447,47 @@ b{
     font-size: 1.5em;
 }
 
+
+
+.day_selector_container{
+	display: block;	
+}
+
+.tabs{
+	background: none;
+	border-radius: 0;
+    padding-top: 10px;
+}
+
+.tabs a{
+    border-width: 1px;
+    border-style: outset;
+    border-bottom: none;
+    border-radius: 5px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background: #b2b2b2;
+    color: #eaeaea;
+	border-color: #888888;
+	
+    padding: 5px 13px;
+    margin: -4px;
+}
+
+
+.tabs a.active{
+    color: #fff;
+    background: #757575;
+	font-weight: 900;
+    border-radius: 5px;
+    border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	
+    box-shadow: inset 1px 1px 1px 1px #000;
+    z-index: 3;
+}
+
+
+.mobile-only{
+    line-height: 1;
+}
