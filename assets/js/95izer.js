@@ -14,6 +14,39 @@ var themeloader = {
 			localStorage.removeItem("disable_116_birthday_once");
 			return;
 		}
+			
+
+		modal.create = function(id ,title, desc, closeAction){
+			console.log("OVERRIDE!");
+			if (document.getElementById(id) != undefined){
+				modalContainer = document.getElementById(id);
+				modalContainer.innerHTML = "";
+			}else{
+				modalContainer = document.createElement("div");
+				modalContainer.id = id;
+			}
+
+			modalContainer.className = "modal center-hv shadow window";
+			
+			etitlebar = dom.createEWC("div", ["titlebar"]);
+
+			icon = "xml_gear-3.png";
+			etitlebar.innerHTML = '<img class="icon2" src="assets/themes/95/' + icon + '"><span class="navtitle">' + title + '</span><button type="button" class="btn btn_x" onclick="themeloader.closeClick(this)">&nbsp;</button><button type="button" class="btn btn_help" onclick="themeloader.helpClick(this)">&nbsp;</button>';
+
+			//modalClose.onclick = function(){closeAction();};
+
+			modalDesc = dom.createEWC("p", ["mdesc"]);
+			modalDesc.innerHTML = desc;
+
+			modalDescRow = this.createRow();
+			modalDescRow.appendChild(modalDesc)
+			
+			modalContainer.appendChild(etitlebar);
+			modalContainer.appendChild(modalDescRow);
+
+			return modalContainer;
+
+		}
 
 		app.themeLoaded = true;
 		ui.setDarkMode(false); //sorry :/
@@ -107,36 +140,4 @@ var themeloader = {
 
 		return;
 	}
-}
-
-modal.create = function(id ,title, desc, closeAction){
-	console.log("OVERRIDE!");
-	if (document.getElementById(id) != undefined){
-		modalContainer = document.getElementById(id);
-		modalContainer.innerHTML = "";
-	}else{
-		modalContainer = document.createElement("div");
-		modalContainer.id = id;
-	}
-
-	modalContainer.className = "modal center-hv shadow window";
-	
-	etitlebar = dom.createEWC("div", ["titlebar"]);
-
-	icon = "xml_gear-3.png";
-	etitlebar.innerHTML = '<img class="icon2" src="assets/themes/95/' + icon + '"><span class="navtitle">' + title + '</span><button type="button" class="btn btn_x" onclick="themeloader.closeClick(this)">&nbsp;</button><button type="button" class="btn btn_help" onclick="themeloader.helpClick(this)">&nbsp;</button>';
-
-	//modalClose.onclick = function(){closeAction();};
-
-	modalDesc = dom.createEWC("p", ["mdesc"]);
-	modalDesc.innerHTML = desc;
-
-	modalDescRow = this.createRow();
-	modalDescRow.appendChild(modalDesc)
-	
-	modalContainer.appendChild(etitlebar);
-	modalContainer.appendChild(modalDescRow);
-
-	return modalContainer;
-
 }
