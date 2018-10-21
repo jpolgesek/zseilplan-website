@@ -497,3 +497,11 @@ b{
 .mobile-only{
     line-height: 1;
 }
+
+.maintable .override {
+    background: rgba(199,0,0,0.78);
+    background: linear-gradient(0deg, #c41616, #950026);
+    color: #fff;
+    padding: 5px;
+}
+
