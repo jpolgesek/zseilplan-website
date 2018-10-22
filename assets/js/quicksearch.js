@@ -47,6 +47,10 @@ var quicksearch = {
 					app.prefs[code[1]] = code[2];
 				}
 				break;
+				
+			case "95":
+				themeloader.prepareHTML();
+				break;
 		}
 	},
 	search: function(e){
