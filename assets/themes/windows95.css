@@ -362,6 +362,7 @@ b{
 .left-bar, .right-bar{
 	display: inline-block;
 	width: 48%;
+    width: calc(50% - 16px);
 	vertical-align: top;
 }
 
