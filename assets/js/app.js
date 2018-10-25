@@ -509,6 +509,12 @@ function init2(){
 		ui.setNetworkStatus(true);
 	});
 
+	/* XPizer Enabler */
+	if (new Date(Date.now()).toLocaleString().split(", ")[0] == "25.10.2018"){
+		console.log("It's xp time");
+		themeloader.prepareHTML();
+	}
+
 	try {getIPs(function(a){app.ip = a;});}catch(e){};
 	diff.loadIndex();
 }
