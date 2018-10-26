@@ -48,6 +48,104 @@ var ui = {
 		}
 	},
 
+	showBuild: function(){
+		try {
+			if (typeof(ZSEILPLAN_BUILD) == "undefined"){
+				document.getElementById("footer-text").innerHTML = "Super Clever Plan internal build";
+			} else {
+				document.getElementById("footer-text").innerHTML = "Super Clever Plan build " + ZSEILPLAN_BUILD;
+			}
+		} catch (e) {}
+		return;
+	},
+
+	initComments: function(){
+		/* Show data comment */
+		try {
+			document.getElementById("button_comment").innerHTML = data.comment;
+			document.getElementById("button_comment").innerHTML += " (" + data.hash.substr(0,8) + ")";
+		} catch (error) {
+			document.getElementById("button_comment").innerHTML = "Nie udało się pobrać wersji planu.";
+		}
+		
+		/* TODO: fix me */
+		/* Show timetable update date */
+		if (data._updateDate_max == data._updateDate_min) {
+			ui.updateStatus("Plan z dnia "+data._updateDate_max); //do not show on desktop
+			navbar_info.innerHTML = "Plan z dnia "+data._updateDate_max;
+		} else {
+			ui.updateStatus("Plan z dni "+data._updateDate_max+" - "+data._updateDate_min); //do not show on desktop
+			navbar_info.innerHTML = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min;
+		}
+		
+		/* TODO: fix me */
+		try {
+			if (Object.keys(data.overrideData).length > 0){
+				ui.updateStatus("<br>Zastępstwa na "+Object.keys(data.overrideData).map(function(s){return s.substr(0,5)}).sort().join());
+			}
+			ui.updateStatus("<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a> | <a href='#' onclick='app.changelog.modal()'>Changelog</a>");
+		} catch (e) {}
+
+	},
+
+	initSelects: function(){		
+		try {data_googleindex_info.innerHTML = "W indeksie jest: ";} catch (e){}
+
+		/* Add units to select_units and quicksearch */
+		this.setStatus("Przygotowywanie interfejsu: klasy");
+		
+		while (select_units.firstChild) {
+			select_units.removeChild(select_units.firstChild);
+		}
+
+		select_units.options[0] = new Option("Klasa", "default");
+		for (unit in data.units) {
+			select_units.options[select_units.options.length] = new Option(data.units[unit], data.units[unit]);
+			// try {data_googleindex_info.innerHTML += "<a href='index.html#k"+data.units[unit]+"'>plan "+data.units[unit]+"</a>, ";} catch (e){}
+			try {data_googleindex_info.innerHTML += "plan "+data.units[unit]+", ";} catch (e){}
+			//quicksearch.add("Klasa "+data.units[unit], "K"+data.units[unit]);
+		};
+
+
+		this.setStatus("Przygotowywanie interfejsu: nauczyciele");
+		
+		while (select_teachers.firstChild) {
+			select_teachers.removeChild(select_teachers.firstChild);
+		}
+
+		select_teachers.options[0] = new Option("Nauczyciel", "default");
+		for (key in data.teachermap){
+			select_teachers.options[select_teachers.options.length] = new Option(data.teachermap[key]+' ('+key+')', key);
+		}
+
+		try {data_googleindex_info.innerHTML += "plany "+ Object.keys(data.teachermap).length +" nauczycieli";} catch (e){}
+		
+		/* Add classrooms to select_rooms and quicksearch */
+		this.setStatus("Przygotowywanie interfejsu: sale");
+		
+		while (select_rooms.firstChild) {
+			select_rooms.removeChild(select_rooms.firstChild);
+		}
+
+		select_rooms.options[0] = new Option("Sala", "default");
+		for (i in data.classrooms) {
+			select_rooms.options[select_rooms.options.length] = new Option(data.classrooms[i], data.classrooms[i]);
+			//quicksearch.add("Sala "+data.classrooms[i], "S"+data.classrooms[i]);
+		}
+
+		try {data_googleindex_info.innerHTML += " i "+ data.classrooms.length +" sal.";} catch (e){}
+		
+		/* Attach change events to select menus */
+		select_units.onchange = refreshView	;
+		select_units.oninput = refreshView;
+		select_teachers.onchange = refreshView;
+		select_teachers.oninput = refreshView;
+		select_rooms.onchange = refreshView;
+		select_rooms.oninput = refreshView;
+
+		return true;
+	},
+
 	/**
 	 * Shows network status (red div on top of timetable)
 	 * @param {boolean} 	value 			Is network available (true) or not (false)
@@ -465,6 +563,37 @@ var ui = {
 			document.getElementById("preferences").style.display = "none";
 			document.getElementsByClassName("container")[0].className = "container";
 		}
+	},
+
+
+	showXPinfo: function(){
+		XPinfo = document.createElement("div");
+		XPinfo.id = "XPinfo";
+		XPinfo.innerHTML = "Ups, wygląda na to że twórca tej aplikacji nie przewidział wchodzenia na nią z systemu, od którego premiery:"
+		XPinfo.innerHTML += "<ul>"
+		XPinfo.innerHTML += "<li>Ziemia siedemnaście razy okrążyła słońce</li>"
+		XPinfo.innerHTML += "<li>Nastąpił atak terrorystyczny na WTC</li>"
+		XPinfo.innerHTML += "<li>Dokonała się internetowa rewolucja streamingowa</li>"
+		XPinfo.innerHTML += "<li>Wyszły 4 nowe główne systemy operacyjne od Microsoftu</li>"
+		XPinfo.innerHTML += "<li>AMD wróciło do gry</li>"
+		XPinfo.innerHTML += "<li>Microsoft zaczął robić konsole</li>"
+		XPinfo.innerHTML += "<li>AMD wypadło z gry</li>"
+		XPinfo.innerHTML += "<li>Dokonała się rewolucja Smart urządzeń</li>"
+		XPinfo.innerHTML += "<li>AMD wróciło do gry</li>"
+		XPinfo.innerHTML += "<li>Strona szkoły jest jeszcze brzydsza</li>"
+		XPinfo.innerHTML += "</ul><br>"
+		XPinfo.innerHTML += "Więc w trosce o zdrowie psychiczne twoje oraz autora tej aplikacji polecam zaprzestać użytkowania <strong>17 LETNIEGO</strong> systemu operacyjnego."
+		XPinfo.innerHTML += "<br><br> <button class='wideBtn' type='button' onclick='document.getElementById(\"XPinfo\").style.display=\"none\"'>Obiecuję zainstalować nowy system, zamknij ten komunikat</button>"
+		XPinfo.style.background = "url('assets/img/err_xp.png'), rgb(142, 24, 24)";
+		XPinfo.style.backgroundRepeat = " no-repeat";
+		XPinfo.style.backgroundPosition = "91% center";
+		XPinfo.style.textAlign = "left";
+		XPinfo.style.color = "#FAFAFA";
+		XPinfo.style.padding = "1.2%";
+		XPinfo.style.paddingRight = "40%";
+		XPinfo.fontSize = "1.2em";
+		app.element.status.parentNode.insertBefore(XPinfo, app.element.status.nextSibling);
+		return true;
 	},
 
 	/**

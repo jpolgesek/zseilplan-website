@@ -81,6 +81,11 @@ var app = {
 		try{gtag('event', a,{'event_category':c,'event_label':l});}catch(e){};
 	},
 	init: function(){
+		app.ui = ui;
+		app.modal = modal;
+		app.storage = myStorage;
+		app.refreshView = refreshView;
+
 		try {
 			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (localStorage.getItem("tests_enabled") == "true") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
 				utils.warn("internal","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
@@ -181,115 +186,6 @@ var app = {
 		}
 
 		return;
-	},
-
-	changelogModal: function(){
-		changelogHTML = "";
-		changelogHTML += "<b>02.09.2018 - Super Clever Plan 2.0</b>";
-		changelogHTML += "<ul>";
-		changelogHTML += "<li>Zupełnie nowy parser planu</li>";
-		// changelogHTML += "<li>Możliwość wyświetlania planu z przeszłości</li>";
-		// changelogHTML += "<li>Możliwość wyświetlania zmian w planie</li>";
-		changelogHTML += "<li>Przełączanie między dniami na mobile za pomocą gestów</li>";
-		changelogHTML += "<li>Poprawiony silnik wydruków</li>";
-		changelogHTML += "<li>Możliwość pracy w trybie offline</li>";
-		changelogHTML += "<li>Dodana instrukcja instalacji na androidzie</li>";
-		changelogHTML += "<li>Kompatybilność ze starszymi przeglądarkami (Aż do IE 9)</li>";
-		changelogHTML += "<li>Zmieniony interfejs</li>";
-		changelogHTML += "</ul>";
-		changelogDiv = modal.create('changelog', "Changelog", changelogHTML, function(){changelogDiv.parentElement.removeChild(changelogDiv);ui.containerBlur(false)});
-
-		ui.containerBlur(true);
-		document.body.appendChild(changelogDiv);
-		setTimeout(function(){dom.addClass(changelogDiv, "modal-anim");},1);
-	},
-
-	bugreportModal: function(){
-		bugreportDiv = modal.create('bugreport', "Zgłoś błąd", "", function(){bugreportDiv.parentElement.removeChild(bugreportDiv);ui.containerBlur(false)});
-		
-		row = modal.createRow();
-		row.style.margin.bottom = "-10px";
-		row.style.fontSize = "1.5em";
-		section_title = document.createElement('span');
-		section_title.innerHTML = "Opisz co się stało";
-		row.appendChild(section_title);
-		bugreportDiv.appendChild(row);
-		
-		row = modal.createRow();
-		input = document.createElement('textarea');
-		input.type = "";
-		input.style.width = "100%";
-		input.style.height = "200px";
-
-		row.appendChild(input);
-		bugreportDiv.appendChild(row);
-
-		row = modal.createRow();
-		row.style.margin.bottom = "-10px";
-		row.style.fontSize = "1.5em";
-		section_title = document.createElement('span');
-		section_title.innerHTML = "Adres email";
-		row.appendChild(section_title);
-		bugreportDiv.appendChild(row);
-		
-		row = modal.createRow();
-		input = document.createElement('input');
-		input.type = "text";
-
-		row.appendChild(input);
-
-		bugreportDiv.appendChild(row);
-		
-		row = modal.createRow();
-		prefsBtnSave = document.createElement('button');
-		prefsBtnSave.innerHTML = "Wyślij";
-		prefsBtnSave.onclick = function(){
-			bd = app.preparebugdump();
-			alert(app.ip);
-			//bd = JSON.stringify(bd);
-			//console.log(bd);
-		};
-		prefsBtnSave.className = "btn-primary";
-		row.appendChild(prefsBtnSave);
-
-		prefsBtnCancel = document.createElement('button');
-		prefsBtnCancel.innerHTML = "Anuluj";
-		prefsBtnCancel.onclick = function(){bugreportDiv.parentElement.removeChild(bugreportDiv);ui.containerBlur(false)};
-		row.appendChild(prefsBtnCancel);
-		bugreportDiv.appendChild(row);
-
-		ui.containerBlur(true);
-		document.body.appendChild(bugreportDiv);
-		setTimeout(function(){dom.addClass(bugreportDiv, "modal-anim");},1);
-	},
-
-	preparebugdump: function(){
-		output = {};
-		output.window = {};
-		output.document = {};
-		output.screen = {};
-		output.navigator = {};
-		output.location = {};
-		output.localstorage = {};
-		output.ip = app.ip;
-		output.window.innerWidth = window.innerWidth;
-		output.window.outerWidth = window.outerWidth;
-		output.window.innerHeight = window.innerHeight;
-		output.window.outerHeight = window.outerHeight;
-		output.window.devicePixelRatio = window.devicePixelRatio;
-		output.document.width = document.width;
-		output.screen.width = screen.width;
-		output.navigator.userAgent = navigator.userAgent;
-		output.document.body = document.body.innerHTML;
-		output.location.href = location.href;
-		output.navigator.cookieEnabled = navigator.cookieEnabled;
-		try {
-			for (var i = 0; i < localStorage.length; i++){
-				output.localstorage[localStorage.key(i)] = localStorage.getItem(localStorage.key(i));
-			}
-		}catch (e) {}
-
-		return output;
 	}
 }
 
@@ -334,110 +230,31 @@ function debug(){
 function init2(){
 	utils.log("app", "Loading app");
 
-	try{app.init();}catch(e){}
+	try{
+		app.init();
+	}catch(e){}
 	
 	if (!navigator.onLine){
 		utils.warn("app", "App is offline, be careful!");
 		ui.setNetworkStatus(false);
 	}
 	
-	ui.loader.setStatus("Wczytuję dane");
-	
-	/* Show data comment */
-	try {
-		document.getElementById("button_comment").innerHTML = data.comment;
-		document.getElementById("button_comment").innerHTML += " (" + data.hash.substr(0,8) + ")";
-	} catch (error) {
-		document.getElementById("button_comment").innerHTML = "Nie udało się pobrać wersji planu.";
-	}
-	
-	try {data_googleindex_info.innerHTML = "W indeksie jest: ";} catch (e){}
+	app.ui.loader.setStatus("Wczytuję dane");
+	app.ui.initSelects();
+	app.ui.setStatus("");
+	app.ui.showBuild();
 
-	/* Add units to select_units and quicksearch */
-	ui.setStatus("Przygotowywanie interfejsu: klasy");
-	
-	while (select_units.firstChild) {
-		select_units.removeChild(select_units.firstChild);
-	}
-
-	select_units.options[0] = new Option("Klasa", "default");
-	for (unit in data.units) {
-		select_units.options[select_units.options.length] = new Option(data.units[unit], data.units[unit]);
-		// try {data_googleindex_info.innerHTML += "<a href='index.html#k"+data.units[unit]+"'>plan "+data.units[unit]+"</a>, ";} catch (e){}
-		try {data_googleindex_info.innerHTML += "plan "+data.units[unit]+", ";} catch (e){}
-		//quicksearch.add("Klasa "+data.units[unit], "K"+data.units[unit]);
-	};
-
-
-	ui.setStatus("Przygotowywanie interfejsu: nauczyciele");
-	
-	while (select_teachers.firstChild) {
-		select_teachers.removeChild(select_teachers.firstChild);
-	}
-
-	select_teachers.options[0] = new Option("Nauczyciel", "default");
-	for (key in data.teachermap){
-		select_teachers.options[select_teachers.options.length] = new Option(data.teachermap[key]+' ('+key+')', key);
-	}
-
-	try {data_googleindex_info.innerHTML += "plany "+ Object.keys(data.teachermap).length +" nauczycieli";} catch (e){}
-	
-	/* Add classrooms to select_rooms and quicksearch */
-	ui.setStatus("Przygotowywanie interfejsu: sale");
-	
-	while (select_rooms.firstChild) {
-		select_rooms.removeChild(select_rooms.firstChild);
-	}
-
-	select_rooms.options[0] = new Option("Sala", "default");
-	for (i in data.classrooms) {
-		select_rooms.options[select_rooms.options.length] = new Option(data.classrooms[i], data.classrooms[i]);
-		//quicksearch.add("Sala "+data.classrooms[i], "S"+data.classrooms[i]);
-	}
-
-	try {data_googleindex_info.innerHTML += " i "+ data.classrooms.length +" sal.";} catch (e){}
-	
-	/* Attach change events to select menus */
-	select_units.onchange = refreshView	;
-	select_units.oninput = refreshView;
-	select_teachers.onchange = refreshView;
-	select_teachers.oninput = refreshView;
-	select_rooms.onchange = refreshView;
-	select_rooms.oninput = refreshView;
-
-	ui.setStatus("")
-
-	if (app.testMode){
+	if (app.testMode) {
 		ui.updateStatus("<b>Tryb testowy, uważaj!</b><br>");
 	}
 
-	/* TODO: fix me */
-	/* Show timetable update date */
-	if (data._updateDate_max == data._updateDate_min){
-		ui.updateStatus("Plan z dnia "+data._updateDate_max); //do not show on desktop
-		navbar_info.innerHTML = "Plan z dnia "+data._updateDate_max;
-	}else{
-		ui.updateStatus("Plan z dni "+data._updateDate_max+" - "+data._updateDate_min); //do not show on desktop
-		navbar_info.innerHTML = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min;
-	}
+	app.ui.initComments();
 
-	
-	overrideData = data.overrideData;
-	
-	/* TODO: fix me */
-	try {
-		if (Object.keys(overrideData).length > 0){
-			ui.updateStatus("<br>Zastępstwa na "+Object.keys(overrideData).map(function(s){return s.substr(0,5)}).sort().join());
-		}
-		ui.updateStatus("<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a> | <a href='#' onclick='app.changelogModal()'>Changelog</a>");
-	} catch (e) {}
-
-
-	if (screen.width >= 768){
+	if (screen.width >= 768) {
 		utils.log("app", "Screen width >= 768, displaying whole week.");
 		app.isMobile = false;
 		columns.setActive(-1);
-	}else if ((d.getDay() == 6) || (d.getDay() == 0)){
+	} else if ((d.getDay() == 6) || (d.getDay() == 0)) {
 		columns.setActive(1);
 	}
 
@@ -445,16 +262,15 @@ function init2(){
 	setInterval(myTime.checkTime,60*1000);
 
 	quicksearch.init();
-	try{
+	try {
 		ui.loader.setStatus("Ładuję interfejs");
 		dom.addClass(document.getElementsByClassName('loader')[0], "opacity-0");
 		dom.removeClass(document.getElementsByClassName('container')[0], "opacity-0");
 		document.getElementsByClassName('loader')[0].parentElement.removeChild(document.getElementsByClassName('loader')[0]);
-	}catch(e){};
+	} catch(e){};
 
 	if (typeof(Storage) !== "undefined") {
-		/* If HTML5 storage is available, try to load user saved settings */
-		myStorage.load();
+		app.storage.load();
 		refreshView();
 	}
 	
@@ -463,43 +279,10 @@ function init2(){
 			//przegladarka jest dosc swieza, odwolujemy akcje
 			return;
 		}
-		XPinfo = document.createElement("div");
-		XPinfo.id = "XPinfo";
-		XPinfo.innerHTML = "Ups, wygląda na to że twórca tej aplikacji nie przewidział wchodzenia na nią z systemu, od którego premiery:"
-		XPinfo.innerHTML += "<ul>"
-		XPinfo.innerHTML += "<li>Ziemia siedemnaście razy okrążyła słońce</li>"
-		XPinfo.innerHTML += "<li>Nastąpił atak terrorystyczny na WTC</li>"
-		XPinfo.innerHTML += "<li>Dokonała się internetowa rewolucja streamingowa</li>"
-		XPinfo.innerHTML += "<li>Wyszły 4 nowe główne systemy operacyjne od Microsoftu</li>"
-		XPinfo.innerHTML += "<li>AMD wróciło do gry</li>"
-		XPinfo.innerHTML += "<li>Microsoft zaczął robić konsole</li>"
-		XPinfo.innerHTML += "<li>AMD wypadło z gry</li>"
-		XPinfo.innerHTML += "<li>Dokonała się rewolucja Smart urządzeń</li>"
-		XPinfo.innerHTML += "<li>AMD wróciło do gry</li>"
-		XPinfo.innerHTML += "<li>Strona szkoły jest jeszcze brzydsza</li>"
-		XPinfo.innerHTML += "</ul><br>"
-		XPinfo.innerHTML += "Więc w trosce o zdrowie psychiczne twoje oraz autora tej aplikacji polecam zaprzestać użytkowania <strong>17 LETNIEGO</strong> systemu operacyjnego."
-		XPinfo.innerHTML += "<br><br> <button class='wideBtn' type='button' onclick='document.getElementById(\"XPinfo\").style.display=\"none\"'>Obiecuję zainstalować nowy system, zamknij ten komunikat</button>"
-		XPinfo.style.background = "url('assets/img/err_xp.png'), rgb(142, 24, 24)";
-		XPinfo.style.backgroundRepeat = " no-repeat";
-		XPinfo.style.backgroundPosition = "91% center";
-		XPinfo.style.textAlign = "left";
-		XPinfo.style.color = "#FAFAFA";
-		XPinfo.style.padding = "1.2%";
-		XPinfo.style.paddingRight = "40%";
-		XPinfo.fontSize = "1.2em";
-		app.element.status.parentNode.insertBefore(XPinfo, app.element.status.nextSibling);
+		app.ui.showXPinfo();
 	}
 
 	app.parseHash();
-	
-	try {
-		if (typeof(ZSEILPLAN_BUILD) == "undefined"){
-			document.getElementById("footer-text").innerHTML = "Super Clever Plan internal build";
-		} else {
-			document.getElementById("footer-text").innerHTML = "Super Clever Plan build " + ZSEILPLAN_BUILD;
-		}
-	} catch (e) {}
 	
 
 	window.addEventListener('offline', function(e) { 
@@ -508,12 +291,6 @@ function init2(){
 	window.addEventListener('online', function(e) { 
 		ui.setNetworkStatus(true);
 	});
-
-	/* XPizer Enabler
-	if (new Date(Date.now()).toLocaleString().split(", ")[0] == "25.10.2018"){
-		console.log("It's xp time");
-		themeloader.prepareHTML();
-	} */
 
 	try {getIPs(function(a){app.ip = a;});}catch(e){};
 	diff.loadIndex();
@@ -1040,15 +817,3 @@ if (detectIE()){
 }
 
 
-if (window.addEventListener) {
-	var _kk = [], _nk = "38,38,40,40,37,39,37,39,66,65";
-	window.addEventListener("keydown", function(e) {
-		_kk.push(e.keyCode);
-		if (_kk.toString().indexOf(_nk) >= 0 ){
-			scrollTo(0,0);
-			document.body.innerHTML = '<div style="z-index: 99999999;position: absolute;top: 0;left: 0;width: 100%;height: 100%;"><iframe src="aee/" style="width: 100%;height: 100%;border-style:none"></iframe></div>' + document.body.innerHTML;
-			scrollTo(0,0);
-			_kk = [];
-		}
-	}, true);
-}
