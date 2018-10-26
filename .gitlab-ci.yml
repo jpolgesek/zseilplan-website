@@ -1,6 +1,5 @@
 deploy-test:
   script:
-  - apt-get install -y python-pip
-  - pip3 install requests htmlmin jsmin csscompressor #TODO: read this from req.txt
+  - pip install requests htmlmin jsmin csscompressor #TODO: read this from req.txt
   - cd _do_not_upload
   - python python_compile.py testplan.polgesek.pl
