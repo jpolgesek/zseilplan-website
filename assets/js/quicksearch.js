@@ -49,6 +49,8 @@ var quicksearch = {
 				break;
 				
 			case "95":
+				localStorage.removeItem("disable_116_birthday");
+				localStorage.removeItem("disable_116_birthday_once");
 				themeloader.prepareHTML();
 				break;
 		}
