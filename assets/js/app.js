@@ -232,9 +232,9 @@ function init2(){
 
 	try{
 		app.init();
-	}catch(e){}
+	} catch(e) {}
 	
-	if (!navigator.onLine){
+	if (!navigator.onLine) {
 		utils.warn("app", "App is offline, be careful!");
 		ui.setNetworkStatus(false);
 	}
@@ -259,7 +259,7 @@ function init2(){
 	}
 
 	myTime.checkTime();
-	setInterval(myTime.checkTime,60*1000);
+	setInterval(myTime.checkTime,60*1000); //TODO: it's not working on mobile
 
 	quicksearch.init();
 	try {
