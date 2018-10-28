@@ -263,6 +263,7 @@ var diff = {
 
 							classesArr = this.data.timetable[day][hour][select_units.value];
 							if (classesArr != undefined){
+								originalCLA = classesArr.length;
 								foundSimilar = false;
 								notFound = [];
 
@@ -287,6 +288,7 @@ var diff = {
 								}
 								classesArr = newClassesArr;
 								
+								//cls - NOT CLASS, it's specific lesson in day x hour matrix
 								for (cls in classesArr){
 									oldItem = classesArr[cls];
 									//console.log(oldItem);
@@ -308,22 +310,27 @@ var diff = {
 									if (currentItem.diff == "modified"){
 										currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
 									}else{
+										classesArr[cls].originalCLA = originalCLA;
 										notFound.push(classesArr[cls]);
 										foundSimilar = false;
 									}
 								}
+								
 								if (notFound.length > 0){
-									continue; // TODO: WTF? WHY?
-									for (i = 0; i < notFound.length; i++){
+									//Fixed - it was reusing `i` variable from parent loop
+									for (nf_i = 0; nf_i < notFound.length; nf_i++){
 										if (il == 1){
 											//tu była tylko jedna lekcja
 											currentItem.diffModifiedP = "Był " + oldItem.p + "; Jest " + currentItem.p;
 											currentItem.diffModified1 = "Był " + oldItem.n + "; Jest " + currentItem.n;
 											currentItem.diffModified2 = "Był " + oldItem.s + "; Jest " + currentItem.s;
-											currentItem.diff = "modified";	
 											try {
+												/* TODO: create pref item to control whether to display this as two separate entries or one */
+												currentItem.diff = "added";	
 												currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
-											} catch (e) {}
+												oldItem.diff = "removed";
+												itemsContainer.appendChild(ui.createItem(oldItem));
+											} catch (e) {console.error(e);}
 										}else{
 											for(q = 0; q < il; q++ ){
 												i_currentItemElement = items[q];
@@ -334,8 +341,8 @@ var diff = {
 												}else if ((oldItem.s == i_currentItem.s) && (oldItem.n == i_currentItem.n) && (oldItem.p != i_currentItem.p)){
 												}else if ((oldItem.s == i_currentItem.s) && (oldItem.n == i_currentItem.n) && (oldItem.p == i_currentItem.p)){
 												}else{
-													notFound[i].diff = "removed";
-													itemsContainer.appendChild(ui.createItem(notFound[i]));
+													notFound[nf_i].diff = "removed";
+													itemsContainer.appendChild(ui.createItem(notFound[nf_i]));
 												}
 											}
 
