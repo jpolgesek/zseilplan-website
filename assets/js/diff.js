@@ -127,7 +127,7 @@ var diff = {
 	},
 
 	generateDiff: function(){
-		console.log("STARTING DIFF");
+		utils.log('diff', "Starting");
 		if (this.data == undefined){
 			utils.warn('diff', 'Próbujesz porównać plan, ale nic nie wczytałeś.');
 			return false;
