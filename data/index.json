@@ -57,20 +57,6 @@
       "time": "19:30"
     },
     {
-      "date": "09.09.2018 - [objectified branch]",
-      "export_datetime": "15.09.2018 08:22:54",
-      "filename": "2018-09-15-931e1ea55fe3327b6ff1f790cbbe46b43a028dc14f38c2cd1a21a2ef9f280510.json",
-      "hash": "931e1ea5",
-      "time": "11:54"
-    },
-    {
-      "date": "<b><u style='color:white; background: red;'>VULCAN TEST DO NOT USE IN PROD</u></b> - [objectified branch]",
-      "export_datetime": "14.09.2018 22:30:07",
-      "filename": "2018-09-16-d7abf863ff6434e119c4ccd84fa0bccf3bb6bbfa86f82c1336f974e8b846d10b.json",
-      "hash": "d7abf863",
-      "time": "16:58"
-    },
-    {
       "date": "09.09.2018",
       "export_datetime": "11.09.2018 20:02:37",
       "filename": "2018-09-11-eeab9684feb0b0385adbadacadc31d85319ff297086ea82a9fe5ffa1c219b222.json",
