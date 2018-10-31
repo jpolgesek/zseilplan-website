@@ -2,4 +2,5 @@ deploy-test:
   script:
   - pip install requests htmlmin jsmin csscompressor #TODO: read this from req.txt
   - cd _do_not_upload
-  - python python_compile.py testplan.polgesek.pl
+  - cd deployment_tool
+  - python deploy.py testplan.polgesek.pl
