@@ -1,14 +1,22 @@
 Deploy to development:
   script:
-  - pip install requests htmlmin jsmin csscompressor #TODO: read this from req.txt
   - cd _do_not_upload
   - cd deployment_tool
+  - pip install -r req.txt
   - python deploy.py testplan.polgesek.pl
 
 Deploy to production:
   when: manual
   script:
-  - pip install requests htmlmin jsmin csscompressor #TODO: read this from req.txt
   - cd _do_not_upload
   - cd deployment_tool
+  - pip install -r req.txt
   - python deploy.py dev.polgesek.pl
+
+Deploy to plan.zseil.pl:
+  when: manual
+  script:
+  - cd _do_not_upload
+  - cd deployment_tool
+  - pip install -r req.txt
+  - python deploy.py plan.zseil.pl
