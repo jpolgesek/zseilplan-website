@@ -64,6 +64,107 @@ var overrides = {
 
 		console.log("TODO!");
 		return false;
+	},
+
+	summaryModal: function(sort_by){
+		var overrideSummary = [];
+		//TODO: day as param
+		var day = "25.10.2018";
+		//TODO: auto day_of_the_week
+		var day_of_the_week = 4;
+
+		//TODO: allow selection: teacher / unit
+		//var sort_by = "unit";
+
+		for (var hour = 1; hour < 10; hour++){
+			var x = data.overrideData[day][day_of_the_week][hour];
+			for (unit in x){
+				var y = x[unit];
+				for (o in y){
+					override = y[o];
+					override.x = hour;
+					override.y = day_of_the_week;
+					override.unit = unit;
+
+					if (sort_by == "teacher"){
+						if (typeof overrideSummary[override.oldTeacherShort] == "undefined"){
+							overrideSummary[override.oldTeacherShort] = [];
+						}
+						overrideSummary[override.oldTeacherShort].push(override);
+					}else if (sort_by == "unit"){
+						if (typeof overrideSummary[override.unit] == "undefined"){
+							overrideSummary[override.unit] = [];
+						}
+						overrideSummary[override.unit].push(override);
+					}else{
+						console.error("Nieznane sortowanie by " + sort_by);
+						return;
+					}
+				}
+			}
+		}
+
+		overridesModal = modal.create('overridesmodal', "Podsumowanie zastępstw", "", function(){overridesModal.parentElement.removeChild(overridesModal);ui.containerBlur(false)});
+		row = modal.createRow();
+		row.style.margin.bottom = "-10px";
+		row.style.fontSize = "1.5em";
+
+		outHTML = "";
+		
+		for (t in overrideSummary){
+			if (sort_by == "teacher"){
+				outHTML += "<h2>" + data.teachermap[t] +" ("+t+")</h2>";
+			}else if (sort_by == "unit"){
+				outHTML += "<h2> Klasa " + t +"</h2>";
+			}
+			outHTML += "<table><tbody>";
+			outHTML += "<tr>";
+			outHTML += "<th>Godzina</th>";
+			if (sort_by != "unit") outHTML += "<th>Klasa</th>";
+			outHTML += "<th>Sala</th>";
+			outHTML += "<th>Przedmiot</th>";
+			if (sort_by != "teacher") outHTML += "<th>Za</th>";
+			outHTML += "<th>Jest</th>";
+			outHTML += "</tr>";
+			for (i in  overrideSummary[t]){
+				outHTML += "<tr>";
+				outHTML += "<td>" + overrideSummary[t][i].x + "</td>";
+				if (sort_by != "unit") outHTML += "<td>" + overrideSummary[t][i].unit + "</td>";
+				outHTML += "<td>" + overrideSummary[t][i].s + "</td>";
+
+				if (overrideSummary[t][i].subject.length > 32){
+					overrideSummary[t][i].subjectShort = overrideSummary[t][i].subject.substring(0, 32) + "...";
+				}else{
+					overrideSummary[t][i].subjectShort = overrideSummary[t][i].subject;
+				}
+
+				outHTML += "<td>" + overrideSummary[t][i].subjectShort + "</td>";
+				if (sort_by != "teacher"){
+					outHTML += "<td>" + overrideSummary[t][i].oldTeacherLong + "</td>";
+				}
+
+				if (overrideSummary[t][i].newTeacherLong != "-1"){
+					outHTML += "<td>" + overrideSummary[t][i].newTeacherLong + "</td>";
+				}else{
+					outHTML += "<td>Okienko</td>";
+				}
+
+				outHTML += "</tr>";
+			}
+			outHTML += "</tbody></table>";
+		}
+		outHTML2 = document.createElement("div");
+		outHTML2.innerHTML = outHTML;
+		outHTML2.style.overflow = "scroll";
+		outHTML2.style.height = "100%";
+		
+		overridesModal.appendChild(outHTML2);
+
+		ui.containerBlur(true);
+		document.body.appendChild(overridesModal);
+		setTimeout(function(){dom.addClass(overridesModal, "modal-anim");},1);
+
+		return overrideSummary;
 	}
 };
 
