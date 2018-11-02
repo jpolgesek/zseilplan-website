@@ -528,7 +528,7 @@ function fetchData(customURL){
 		utils.log("app", "Found fetch" + fetch.toString().substr(0,0));
 	} catch (error) {
 		utils.warn("app", "Fetch not found, enabling compatibility layer");
-		compat = true
+		compat = true;
 	}
 	
 	
@@ -592,7 +592,7 @@ function fetchData(customURL){
 		fetch('data.php?ver=localstorage').then(function(response) {return response.json();}).catch();
 	} catch (e) {}
 	*/
-
+	
 	fetch(url).then(function(response) {
 		return response.json();
 	}).then(function(jdata) {
@@ -610,7 +610,11 @@ function fetchData(customURL){
 
 		utils.log("app", "Downloaded data.json using fetch");
 		init2();
-	}).catch(function(error){isOK=false});
+	}).catch(function(error){
+		isOK = false;
+		ui.loader.setStatus("<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.");
+		utils.error("app", "Fetch - failed to download data.json. Reason: " + error);
+	});
 	/* %old-ie-remove-end% */
 
 	if (!isOK){
