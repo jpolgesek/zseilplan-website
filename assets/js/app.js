@@ -61,6 +61,8 @@ var app = {
 			text: document.getElementById("notification-text")
 		},
 		loader: {
+			animation: document.getElementById("loading"),
+			title: document.getElementById("loader-title"),
 			text: document.getElementById("loader-status")
 		},
 		networkStatus: document.getElementById("networkStatus"),
@@ -612,7 +614,7 @@ function fetchData(customURL){
 		init2();
 	}).catch(function(error){
 		isOK = false;
-		ui.loader.setStatus("<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.");
+		ui.loader.setError("<b>Nie udało się pobrać planu lekcji</b>", "Upewnij się że masz połączenie z internetem i spróbuj ponownie.");
 		utils.error("app", "Fetch - failed to download data.json. Reason: " + error);
 	});
 	/* %old-ie-remove-end% */

@@ -45,6 +45,26 @@ var ui = {
 			}catch(e){
 				return false;
 			};	
+		},
+
+		/**
+		 * Shows error text in loader
+		 * @param {string} 	header 			Header text to be shown in loader
+		 * @param {string} 	text 			Text to be shown in loader
+		 * @returns {boolean} 				True on success, false on failure
+		 */
+		setError: function(header, text){
+			try{
+				app.element.loader.animation.parentElement.removeChild(app.element.loader.animation);
+				document.body.style.background = "#520505";
+				app.element.loader.title.style.color = "#FFF";
+				app.element.loader.text.style.color = "#FFF";
+				app.element.loader.title.innerHTML = header;
+				app.element.loader.text.innerHTML = text;
+				return true;
+			}catch(e){
+				return false;
+			};	
 		}
 	},
 
