@@ -147,10 +147,18 @@ var myStorage = {
 			localStorage.removeItem("activeColumn");
 			localStorage.removeItem("columns.activeColumn");
 		}
-	
-		document.getElementById("units").value = localStorage.getItem("select_units");
-		document.getElementById("teachers").value = localStorage.getItem("select_teachers");
-		document.getElementById("rooms").value = localStorage.getItem("select_rooms");
+		
+		var skip = false;
+
+		try{
+			skip = document.location.hash.startsWith("#n") || document.location.hash.startsWith("#s") || document.location.hash.startsWith("#k");
+		}catch{}
+
+		if (!skip){
+			document.getElementById("units").value = localStorage.getItem("select_units");
+			document.getElementById("teachers").value = localStorage.getItem("select_teachers");
+			document.getElementById("rooms").value = localStorage.getItem("select_rooms");
+		}
 	
 		
 		if(localStorage.getItem("ui.darkMode") == "true"){
