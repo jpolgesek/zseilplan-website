@@ -73,11 +73,11 @@ var themeloader = {
 			}
 		} catch (e) {}
 
-		document.querySelector("#dnitechnika_ad").style.backgroundColor = '';
-		document.querySelector("#dnitechnika_ad").style.padding = ''; 
-		document.querySelector("#dnitechnika_ad").style.color = "black"
+		//document.querySelector("#dnitechnika_ad").style.backgroundColor = '';
+		//document.querySelector("#dnitechnika_ad").style.padding = ''; 
+		//document.querySelector("#dnitechnika_ad").style.color = "black"
 
-		this.prepareWindow("msg_information-2.png", undefined, "Dni Technika", document.querySelector("#dnitechnika_ad"));
+		//this.prepareWindow("msg_information-2.png", undefined, "Dni Technika", document.querySelector("#dnitechnika_ad"));
 		// this.prepareWindow("template_empty-3.png", undefined, "Porównanie planów", document.querySelector("#diff-help"));
 
 		document.querySelector("#footer-text").innerHTML = "<i>Microsoft® Windows® XP Professional 5.1 Build 2600</i>";
