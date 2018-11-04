@@ -167,7 +167,7 @@
 }
 
 .navbar-copyright::before{
-    content: "www.example.com"; /* TODO! */
+    content: "dev.polgesek.pl/zseilplan"; /* TODO! */
     position: absolute;
     top: -26px;
     left: 0;
