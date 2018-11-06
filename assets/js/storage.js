@@ -150,9 +150,12 @@ var myStorage = {
 		
 		var skip = false;
 
-		try{
-			skip = document.location.hash.startsWith("#n") || document.location.hash.startsWith("#s") || document.location.hash.startsWith("#k");
-		}catch{}
+		if (typeof document.location.hash.startsWith != "undefined" && !detectIE()){
+			try{
+				skip = document.location.hash.startsWith("#n") || document.location.hash.startsWith("#s") || document.location.hash.startsWith("#k");
+			}catch(e){}
+		}
+
 
 		if (!skip){
 			document.getElementById("units").value = localStorage.getItem("select_units");
