@@ -245,6 +245,8 @@ function init2(){
 	app.ui.initSelects();
 	app.ui.setStatus("");
 	app.ui.showBuild();
+	
+	overrideData = data.overrideData; //Quick fix, overrides were not loading on 08.11.2018
 
 	if (app.testMode) {
 		ui.updateStatus("<b>Tryb testowy, uważaj!</b><br>");
