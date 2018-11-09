@@ -31,6 +31,7 @@
 }
 
 .navbar-title{
+    display: inline;
     font-size: 1.5em;
     font-weight: 300;
 	margin-left: 60px;
