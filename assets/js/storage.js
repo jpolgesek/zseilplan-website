@@ -150,10 +150,14 @@ var myStorage = {
 		
 		var skip = false;
 
-		if (typeof document.location.hash.startsWith != "undefined" && !detectIE()){
-			try{
-				skip = document.location.hash.startsWith("#n") || document.location.hash.startsWith("#s") || document.location.hash.startsWith("#k");
-			}catch(e){}
+		if (app.testMode){
+			skip = (app.getUrlRouter() != false);
+		}else{
+			if (typeof document.location.hash.startsWith != "undefined" && !detectIE()){
+				try{
+					skip = document.location.hash.startsWith("#n") || document.location.hash.startsWith("#s") || document.location.hash.startsWith("#k");
+				}catch(e){}
+			}
 		}
 
 

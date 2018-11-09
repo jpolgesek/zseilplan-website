@@ -107,15 +107,47 @@ var app = {
 
 		window.addEventListener("hashchange", app.parseHash, false);
 	},
+	getUrlRouter: function(){
+		var path = document.location.pathname;
+		if (path.indexOf("/klasa/") != -1){
+			return "klasa";
+		}else if (path.indexOf("/nauczyciel/") != -1){
+			return "nauczyciel";
+		}else if (path.indexOf("/sala/") != -1){
+			return "sala";
+		}
+		return false;
+	},
 	parseHash: function(){
-		/* Allow to link directly to specific timetable */
-		if (location.hash.length > 2){
-			if(location.hash[1] == "n"){
-				jumpTo(0,location.hash.substr(2).toUpperCase());
-			}else if(location.hash[1] == "s"){
-				jumpTo(1,location.hash.substr(2).toUpperCase());
-			}else if(location.hash[1] == "k"){
-				jumpTo(2,location.hash.substr(2).toUpperCase());
+		if (app.testMode){
+			var path = document.location.pathname;
+			if (path.indexOf("/klasa/") != -1){
+				value = document.location.pathname.substring(document.location.pathname.indexOf("/klasa/")).split("/")[2];
+				jumpTo(2,value.toUpperCase());
+			}else if (path.indexOf("/nauczyciel/") != -1){
+				value = document.location.pathname.substring(document.location.pathname.indexOf("/nauczyciel/")).split("/")[2];
+				if (typeof data.teachermap[value] == "undefined"){
+					for (key in data.teachermap){
+						if (data.teachermap[key].split('-').join(" ").toLowerCase().split(' ').join("-") == value){
+							value = key;
+						}
+					}
+				}
+				jumpTo(0,value.toUpperCase());
+			}else if (path.indexOf("/sala/") != -1){
+				value = document.location.pathname.substring(document.location.pathname.indexOf("/sala/")).split("/")[2];
+				jumpTo(1,value.toUpperCase());
+			}
+		}else{
+			/* Allow to link directly to specific timetable */
+			if (location.hash.length > 2){
+				if(location.hash[1] == "n"){
+					jumpTo(0,location.hash.substr(2).toUpperCase());
+				}else if(location.hash[1] == "s"){
+					jumpTo(1,location.hash.substr(2).toUpperCase());
+				}else if(location.hash[1] == "k"){
+					jumpTo(2,location.hash.substr(2).toUpperCase());
+				}
 			}
 		}
 	},
@@ -322,9 +354,41 @@ function refreshView(){
 	}
 
 	utils.log("app", "Refreshing view");
-
+	
 	try {
-		history.pushState(null, null, "#" + app.currentView.selectedShort);
+		if (app.testMode){
+			var urlRouter = app.getUrlRouter();
+			if (urlRouter){
+				baseURL = document.location.pathname.substring(0,document.location.pathname.indexOf("/" + urlRouter +"/")) + "/";
+			}else{
+				baseURL = document.location.pathname;
+			}
+
+			var newURL = baseURL;
+			switch (app.currentView.selectedType){
+				case 'unit':
+					newURL += "klasa/";
+					newValue = app.currentView.selectedValue;
+					break;
+				
+				case 'teacher':
+					newURL += "nauczyciel/";
+					newValue = data.teachermap[app.currentView.selectedValue].split('-').join(" ").toLowerCase().split(' ').join("-");
+					break;
+				
+				case 'room':
+					newURL += "sala/";
+					newValue = app.currentView.selectedValue;
+					break;
+				
+				default:
+					break;
+			}
+			history.pushState(null, null, newURL + newValue);
+			
+		}else{
+			history.pushState(null, null, "#" + app.currentView.selectedShort);
+		}
 	} catch (error) {
 		utils.error(error);
 	}

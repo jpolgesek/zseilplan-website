@@ -1,0 +1,17 @@
+RewriteEngine on
+#RewriteBase /
+#RewriteCond %{HTTPS} !on
+#RewriteCond %{SERVER_PORT} 80 
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+#ErrorDocument 404 /404.php
+
+# It's nice urls time
+RewriteRule			^klasa/([A-Za-z0-9\-]+)$			index.html		[NC,L]
+RewriteRule			^sala/([A-Za-z0-9\-]+)$				index.html		[NC,L]
+RewriteRule			^nauczyciel/([A-Za-z0-9\-]+)$		index.html		[NC,L]
+
+# Fixes: assets not loading when using nice urls.
+# MUST be used *AFTER* nice urls are prepared
+RewriteRule			^klasa/(.*)$ 						$1 				[NC,L]
+RewriteRule			^sala/(.*)$ 						$1 				[NC,L]
+RewriteRule			^nauczyciel/(.*)$ 					$1 				[NC,L]
