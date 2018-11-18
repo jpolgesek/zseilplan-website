@@ -356,7 +356,7 @@ function refreshView(){
 	utils.log("app", "Refreshing view");
 	
 	try {
-		if (app.testMode){
+		if (app.testMode == "asdasdasd"){
 			var urlRouter = app.getUrlRouter();
 			if (urlRouter){
 				baseURL = document.location.pathname.substring(0,document.location.pathname.indexOf("/" + urlRouter +"/")) + "/";
