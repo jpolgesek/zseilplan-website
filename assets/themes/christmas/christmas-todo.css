@@ -1,0 +1,105 @@
+body{
+	/* background: radial-gradient(circle, rgba(13,15,39,1) 0%, rgba(25,29,78,1) 100%); */
+	background: #234;
+}
+
+.shadow{
+    box-shadow: 0 10px 30px rgba(6, 13, 35, 0.03), 0 1px 8px rgba(5, 26, 45, 0.24);
+}
+
+.navbar {
+    background: #eee;
+    margin-bottom: 0px;
+}
+
+.navbar-title{
+    color: #333;
+}
+
+.navbar-info {
+    color: #333;
+    /* border-left: 1px solid #f333f333f; */
+}
+
+.navbar button {
+    background: #34A65F;
+}
+
+.box-text {
+    color: #333;
+    background: #eee;
+	border-radius: 1px;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.box-text a {
+    color: #333;
+}
+
+.bar {
+    margin-top: 0;
+    background: #eee;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+}
+
+.maintable{
+	/* display: none; */
+    background: #ebebeb;
+}
+
+.maintable td, .maintable th {
+    border: none;
+}
+
+.maintable tr{
+    border: 1px solid #b4b4b4;
+}
+
+.maintable .header {
+    background-color: #4f4f4f;
+    color: #fafafa;
+}
+
+.maintable .currentTimeFull {
+    background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.maintable td:hover {
+    background-color: rgb(186, 76, 76) !important;
+    color: #fafafa;
+}
+
+.maintable tr:nth-child(even) {
+    background-color: #d7d7d7;
+}
+
+.maintable .clickable {
+    background-color: #b23033;
+    padding: 6px !important;
+    margin: 0;
+}
+
+.clickable:nth-child(1){
+    background: #fefefea8;
+    border-top-left-radius: 25px !important;
+    border-bottom-left-radius: 25px !important;
+    color: #363636;
+}
+
+.clickable:nth-child(2){
+    background: #fefefea8;
+    border-top-right-radius: 25px !important;
+    border-bottom-right-radius: 25px !important;
+    border-left: 1px solid white;
+    color: #363636;
+}
+
+.maintable .clickable:hover {
+    color: #ba4c4c;
+}
+
+.footer {
+    background: #34a65f;
+}
