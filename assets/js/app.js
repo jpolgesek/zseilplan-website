@@ -104,6 +104,11 @@ var app = {
 				};
 			}
 		} catch (e) {}
+		
+		if (app.themeManager != undefined){
+			utils.log("app", "Found theme manager, init");
+			app.themeManager.init();
+		}
 
 		window.addEventListener("hashchange", app.parseHash, false);
 	},
