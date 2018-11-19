@@ -1,18 +1,21 @@
 var utils = {
 	log: function(caller, text){
-		caller = "[" + caller + "]";
 		caller = caller.rpad(" ",10);
-		console.log(caller + "\t" + text);
+		text = caller + "\t" + text;
+		// console.log(text, 'color: #EEE; text-shadow: 1px 1px 1px #333; font-weight: 900;', 'color: #EEE; text-shadow: 1px 1px 1px #333;');
+		console.log(text);
 	},
 	warn: function(caller, text){
-		caller = "[" + caller + "]";
 		caller = caller.rpad(" ",10);
-		console.warn(caller + "\t" + text);
+		text = caller + "\t" + text;
+		// console.log(text, 'color: #dca920; text-shadow: 1px 1px 1px #333; font-weight: 900;', 'color: #dca920; text-shadow: 1px 1px 1px #333;');
+		console.log(text);
 	},
 	error: function(caller, text){
-		caller = "[" + caller + "]";
 		caller = caller.rpad(" ",10);
-		console.error(caller + "\t" + text);
+		text = caller + "\t" + text;
+		// console.log(text, 'color: #dd4433; text-shadow: 1px 1px 1px #333; font-weight: 900;', 'color: #dd4433; text-shadow: 1px 1px 1px #333;');
+		console.log(text);
 	},
 	consoleStartup: function(){
 		var art = "" + 
@@ -98,8 +101,8 @@ var utils = {
 String.prototype.rpad = function(padString, length) {
 	var str = this;
     while (str.length < length){
-        // str = str + padString;
-        str = padString + str;
+        str = str + padString;
+        //str = padString + str;
 	}
     return str;
 }
