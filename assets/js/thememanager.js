@@ -26,7 +26,7 @@ app.themeManager = {
 	init: function(){
 		utils.log("themeMgr", "Init");
 		utils.log("themeMgr", "Themes available: " + this.themes.length);
-		var currentlySelected = 0;
+		// var currentlySelected = 0;
 		utils.log("themeMgr", "Currently selected theme: " + currentlySelected +" [TODO]");
 		if (typeof currentlySelected != "undefined"){
 			this.activate(currentlySelected);
