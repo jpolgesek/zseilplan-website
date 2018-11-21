@@ -15,7 +15,7 @@ app.themeManager = {
 		{
 			"name": "Retro (buggy)",
 			"darkCompatible": false,
-			"js": "assets/themes/95/95.css",
+			"css": null,
 			"js": "assets/js/95izer.js",
 			"versions": [
 				{"name": "Domyślny", "className": "c_default"}
