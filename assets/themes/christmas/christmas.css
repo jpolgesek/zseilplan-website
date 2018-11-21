@@ -1,0 +1,475 @@
+/*!PYTHON-COMPILE!:root!var!*/
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,500,700'); /* this should fix sharp text */
+
+
+/* Please, don't crash IE */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body{
+    --text-color: #222;
+    --bg-text-color: #fafafa;
+    --bg-text-glow: rgba(255, 244, 146, 0.4);
+    --bg-trees: url("../christmas/trees-light.png");
+    
+    --navbar-text-color: #910a0d;
+    --navbar-goose: url("../christmas/goose-light.png");
+
+    --bg-gradient-start: #a61f21;
+    --bg-gradient-stop: #ac393b;
+
+    --accent-color-light: #eee7e7;
+    --accent-color-dark: #910a0d;
+    --accent-background-dark: #a61f21;
+    --accent-background-middle: rgb(186, 76, 76);
+    --accent-background-middle2: #83181a;
+    --accent-background-light: #eee7e7;
+
+    --table-bg-odd: #d7d7d7;
+    --table-bg-even: #ebebeb;
+    --table-bg-header: rgba(0, 0, 0, 0.21);
+    --table-hover-color: #e2e2e2;/**/
+    --table-break-border: #ba4c4c;
+    --table-clickable-bg: #ffffffa3;
+    --table-clickable-color: #484848;
+    --table-currentTime: rgba(255, 255, 255, 0.23);
+
+    --modal-bg: rgba(139, 49, 51, 0.83);
+    --modal-slider-checked-bg: rgb(186, 76, 76);/**/
+
+    --darker: rgba(0, 0, 0, 0.21);
+}
+
+body.c_dark{
+    --text-color: #c0c0c0;
+    --bg-text-color: #c0c0c0;
+    --bg-text-glow: rgba(185, 185, 185, 0.4);
+    --bg-trees: url("../christmas/trees-dark.png");
+
+    --navbar-text-color: #c0c0c0;
+    --navbar-goose: url("../christmas/goose-dark.png");
+
+    --bg-gradient-start: #313131;
+    --bg-gradient-stop: #212121;
+
+    --accent-color-light: #c0c0c0;
+    --accent-color-dark: #a9a9a9;
+    --accent-background-dark: #131111;
+    --accent-background-middle: rgb(186, 76, 76);
+    --accent-background-middle2: #0c0c0c;
+    --accent-background-light: #212121;
+
+    --table-bg-odd: #202020;
+    --table-bg-even: #323232;
+    --table-bg-header: #4f4f4f;
+    --table-hover-color: #e2e2e2;
+    --table-break-border: #ba4c4c;
+    --table-clickable-bg: rgba(0, 0, 0, 0.48);;
+    --table-clickable-color: #b0b0b0;
+    --table-currentTime: rgba(0, 0, 0, 0.2);
+
+    --modal-bg: rgba(0, 0, 0, 0.78);
+    --modal-slider-checked-bg: rgb(186, 76, 76);
+
+    --darker: rgba(0, 0, 0, 0);
+}
+
+body.c_blue{    
+    --navbar-text-color: #0a5091;
+    --navbar-goose: url("../christmas/goose-light.png");
+
+    --bg-gradient-start: #1f5ea6;
+    --bg-gradient-stop: #395dac;
+
+    --accent-color-light: #e7ebee;
+    --accent-color-dark: #0a4991;
+    --accent-background-dark: #1f55a6;
+    --accent-background-middle: rgb(76, 111, 186);
+    --accent-background-middle2: #185383;
+    --accent-background-light: #e7eaee;
+
+    --table-break-border: #4c6fba;
+
+    --modal-bg: rgba(49, 63, 139, 0.83);
+    --modal-slider-checked-bg: rgb(76, 111, 186);
+}
+
+body.c_green{    
+    --navbar-text-color: #0a9127;
+    --navbar-goose: url("../christmas/goose-light.png");
+
+    --bg-gradient-start: #1fa641;
+    --bg-gradient-stop: #3dac39;
+
+    --accent-color-light: #e7ebee;
+    --accent-color-dark: #0f910a;
+    --accent-background-dark: #3fa61f;
+    --accent-background-middle: rgb(38, 136, 55);
+    --accent-background-middle2: #188318;
+    --accent-background-light: #e7eaee;
+
+    --table-break-border: #4cba52;
+
+    --modal-bg: rgba(49, 139, 69, 0.83);
+    --modal-slider-checked-bg: rgb(76, 186, 82);
+}
+
+body{
+    color: var(--text-color);
+    background: var(--accent-background-dark); /* Fallback if image and gradient not supported */
+    background-repeat: repeat-x;
+    background-position: bottom;
+    background-attachment: fixed;
+    background-image: var(--bg-trees), radial-gradient(circle, var(--bg-gradient-start), var(--bg-gradient-stop));
+}
+
+body::before{
+    content: "Wesołych Świąt!";
+    font-size: 6vw;
+    font-weight: 900;
+    text-shadow: 1px 1px 10px var(--bg-text-glow);
+    color: var(--bg-text-color);
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+.shadow{
+    box-shadow: 0 10px 30px rgba(6, 13, 35, 0.03), 0 1px 8px rgba(5, 26, 45, 0.24);
+}
+
+.maintable{
+    background: transparent;
+    box-shadow: none;
+    width: calc(100% + 1px);
+}
+
+.maintable td, .maintable th {
+    border: none;
+}
+
+.maintable tr{
+    border: 1px solid var(--darker);
+    border-right: none;
+    border-left: none;
+}
+
+.maintable tr:nth-child(odd) {
+    background: var(--table-bg-odd);
+}
+
+.maintable tr:nth-child(even) {
+    background: var(--table-bg-even);
+}
+
+.maintable .header {
+    background: var(--table-bg-header) !important;
+    color: var(--accent-color-light);
+    border: none;
+}
+
+.maintable .currentTimeFull {    
+    background-color: var(--table-currentTime) !important;   
+}
+
+.maintable td:hover {
+    background-color: var(--accent-background-middle) !important;
+    color: var(--table-hover-color);
+}
+
+.maintable .clickable {
+    background-color: var(--accent-background-dark);
+    padding: 6px !important;
+    margin: 0;
+}
+
+.maintable.forceTDWidth td{
+    width: 18% !important;
+}
+
+.clickable:nth-child(1){
+    background: var(--table-clickable-bg);
+    border-top-left-radius: 25px !important;
+    border-bottom-left-radius: 25px !important;
+    color: var(--table-clickable-color);
+}
+
+.clickable:nth-child(2){
+    background: var(--table-clickable-bg);
+    border-top-right-radius: 25px !important;
+    border-bottom-right-radius: 25px !important;
+    border-left: 1px solid #414141;
+    color: var(--table-clickable-color);
+}
+
+.maintable .clickable:hover {
+    color: var(--accent-color-light);
+    background-color: var(--accent-background-dark);
+}
+
+.maintable .border-top-blue {
+    border-top-color: var(--table-break-border);
+}
+
+
+/* Universal tweaks */
+.footer{
+    background-color: var(--accent-color-dark);
+}
+
+.navbar-container{  
+    background-color: var(--accent-background-light);
+    transition: none;
+}
+
+.navbar {
+    background-image: var(--navbar-goose);
+    background-color: var(--accent-background-light);
+    margin-bottom: 0;
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar.shadow{
+    box-shadow: none;
+}
+
+.navbar-title{
+    color: var(--navbar-text-color);
+    font-weight: 600;
+    text-shadow: none;
+}
+
+.navbar-info {
+    color: var(--navbar-text-color);
+    text-shadow: none;
+}
+
+.navbar button .icon{
+    color: var(--navbar-text-color);
+    background: transparent !important;
+}
+
+.navbar button .text{
+    color: var(--navbar-text-color);
+}
+    
+.navbar button {
+    background: transparent;
+}
+
+.navbar-title {
+    margin-left: 55px;
+}
+
+.navbar-buttons{
+    margin-right: 16px;
+}
+
+.tableTopInfo{
+    background: var(--darker);
+    padding-top: 55px;
+}
+
+.bar{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* Only on mobile */
+@media screen and (max-width: 768px) {
+    .container{
+        padding-bottom: 55vh;
+    }
+
+    select{
+        color: var(--accent-background-light);
+        background: var(--accent-color-dark);
+        border: 1px solid var(--accent-background-light);
+    }
+
+    .box-text{
+        background-color: var(--accent-background-light);
+        color: var(--accent-color-dark);
+    }
+
+    .box-text a{
+        color: var(--accent-color-dark);
+    }
+
+    .tabs{
+        background: var(--accent-background-light);
+    }
+
+    .tabs a{
+        color: var(--accent-color-dark);
+    }
+
+    .tabs a.active{
+        background: var(--accent-color-dark);
+        color: var(--accent-background-light);
+        height: 50%; /* Temp fix, merge me to master after testing */
+    }
+
+    .footer{
+        background: transparent;
+        position: fixed;
+        z-index: -1;
+        bottom: 0;
+        color: var(--accent-color-dark);
+        font-weight: 600;
+        width: 100%;
+        text-align: center;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .footer div{
+        margin: 0 !important;
+        left: unset !important;
+        transform: none !important;
+        float: initial !important;
+        position: unset !important;
+    }
+
+    .bar.print-hide.mobile-only-flex{
+        background: var(--darker);
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .tableTopInfo{
+        padding-top: 0;
+    }
+}
+
+
+/* Only on desktop */
+@media screen and (min-width: 768px) {
+    .container{
+        min-height: 100vh;
+        padding: 0;
+        padding-bottom: 60vh;
+    }
+    
+    /* Navbar */
+    .navbar-container{  
+        width: 100vw;
+        position: absolute;
+        left: 0;
+        position: fixed;
+    }
+
+    .navbar button {
+        background: transparent;
+    }
+    /* Navbar End */
+
+
+    .box-text {
+        color: var(--accent-color-light);
+        background: transparent;
+        border-radius: 1px;
+        margin-top: 0;
+        margin-bottom: 0;
+        width: 26%;
+        float: right;
+        padding: 30px;
+        padding-bottom: 0;
+        box-shadow: none;
+    }
+
+    .box-text a {
+        color: var(--accent-color-light);
+    }
+
+    .bar {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding: 30px;
+    }
+
+    .footer {    
+        background: transparent;
+        position: fixed;
+        width: calc(100% - 80px);
+        padding: 40px;
+        z-index: -1;
+        color: var(--accent-color-dark);
+        font-weight: 900;
+    }
+    
+    /* Select */
+    select{
+        color: var(--accent-color-light);
+        background-color: var(--accent-background-middle2);
+        border: 2px solid var(--accent-color-light);
+    }
+    
+    .unitsContainer{
+        margin: 10px !important;
+        width: 33% !important;
+    }
+    
+    .teachersContainer{
+        margin: 10px !important;
+        width: 66% !important;
+    }
+    
+    .roomsContainer{
+        margin: 10px !important;
+        width: 33% !important;
+    }
+    
+    .unitsContainer::before{
+        content: "Klasa";
+        font-size: 1.5em;
+        font-weight: 600;
+        color: var(--accent-color-light);
+    }
+    
+    .teachersContainer::before{
+        content: "Nauczyciel";
+        font-size: 1.5em;
+        font-weight: 600;
+        color: var(--accent-color-light);
+    }
+    
+    .roomsContainer::before{
+        content: "Sala";
+        font-size: 1.5em;
+        font-weight: 600;
+        color: var(--accent-color-light);
+    }
+    /* Select end */
+}
+
+/* Only on widescreen */
+@media screen and (min-width: 1600px) {
+
+    .navbar {
+        margin-bottom: 0px;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.android-step-no {
+    background: linear-gradient(180deg, var(--accent-background-dark), var(--accent-background-dark));
+}
+
+.modal{
+    background: var(--modal-bg);
+}
+
+input:checked + .slider {
+    background-color: var(--modal-slider-checked-bg);
+}
