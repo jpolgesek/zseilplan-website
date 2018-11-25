@@ -141,11 +141,12 @@ var app = {
 				};
 			}
 		} catch (e) {}
-		
+
 		if (this.isEnabled("theme_manager")){
 			if (app.themeManager != undefined){
 				utils.log("app", "Found theme manager");
 				app.themeManager.init();
+				ui.createNavbarButton("◪", "Motywy", function(){app.themeManager.createModal()});
 			}
 		}
 
