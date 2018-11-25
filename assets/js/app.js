@@ -32,6 +32,29 @@ var isIE = detectIE();
 
 
 var app = {
+	_features: {
+		prod: {
+			diff_diff: false,
+			diff_select_version: false,
+			theme_manager: false,
+			new_hashparser: false
+		},
+	
+		dev: {
+			diff_diff: true,
+			diff_select_version: true,
+			theme_manager: false,
+			new_hashparser: false
+		},
+	
+		internal: {
+			diff_diff: true,
+			diff_select_version: true,
+			theme_manager: true,
+			new_hashparser: true
+		},
+	},
+	
 	isCustomDataVersion: false,
 	isMobile: true,
 	isDiff: false,
@@ -74,6 +97,21 @@ var app = {
 		"ui.show_group_info": false,
 		"ui.normalize_subject": false
 	},
+	isEnabled: function(feature_name){
+		if (typeof(ZSEILPLAN_BUILD) == "undefined"){
+			var featureSet = this._features.internal;
+		}else if ((ZSEILPLAN_BUILD.indexOf("DEV") != -1) || (localStorage.getItem("tests_enabled") == "true")){
+			var featureSet = this._features.dev;
+		}else{
+			var featureSet = this._features.prod;
+		}
+		if (typeof featureSet[feature_name] == "undefined"){
+			utils.warn("app", "isEnabled(" + feature_name + ") = undefined");
+			return false;
+		}else{
+			return featureSet[feature_name];
+		}
+	},
 	as: function(v){
 		//todo: disabler
 		try{gtag('event','screen_view',{'app_name':'zseilplan','screen_name':v});}catch(e){};
@@ -92,7 +130,6 @@ var app = {
 			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (localStorage.getItem("tests_enabled") == "true") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
 				utils.warn("internal","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
 				app.testMode = true;
-				app.element.navbar.buttons.history.style.display = null;
 				data.normalizationData = {
 					"IM9": "Bazy danych",
 					"IM10": "PHP/JS",
@@ -105,9 +142,15 @@ var app = {
 			}
 		} catch (e) {}
 		
-		if (app.themeManager != undefined){
-			utils.log("app", "Found theme manager, init");
-			app.themeManager.init();
+		if (this.isEnabled("theme_manager")){
+			if (app.themeManager != undefined){
+				utils.log("app", "Found theme manager");
+				app.themeManager.init();
+			}
+		}
+
+		if (this.isEnabled("diff_diff")){
+			app.element.navbar.buttons.history.style.display = null;
 		}
 
 		window.addEventListener("hashchange", app.parseHash, false);
@@ -124,7 +167,7 @@ var app = {
 		return false;
 	},
 	parseHash: function(){
-		if (app.testMode){
+		if (this.isEnabled("new_hashparser")){
 			var path = document.location.pathname;
 			if (path.indexOf("/klasa/") != -1){
 				value = document.location.pathname.substring(document.location.pathname.indexOf("/klasa/")).split("/")[2];
@@ -361,12 +404,15 @@ function refreshView(){
 	utils.log("app", "Refreshing view");
 	
 	try {
-		if (app.testMode == "asdasdasd"){
+		if (app.isEnabled("new_hashparser")){
 			var urlRouter = app.getUrlRouter();
 			if (urlRouter){
 				baseURL = document.location.pathname.substring(0,document.location.pathname.indexOf("/" + urlRouter +"/")) + "/";
 			}else{
 				baseURL = document.location.pathname;
+				if (baseURL.indexOf("index.html") != -1){
+					baseURL = baseURL.split("index.html")[0];
+				}
 			}
 
 			var newURL = baseURL;
@@ -390,7 +436,6 @@ function refreshView(){
 					break;
 			}
 			history.pushState(null, null, newURL + newValue);
-			
 		}else{
 			history.pushState(null, null, "#" + app.currentView.selectedShort);
 		}
