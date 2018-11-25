@@ -211,6 +211,33 @@ var ui = {
 		};	
 	},
 
+	/**
+	 * Creates navbar button
+	 * @param {string} icon				HTML string to be used as an icon
+	 * @param {string} text				Text that will be shown on hover
+	 * @param {function} onclick		Function for onclick
+	 * @param {object} options			TODO: Options {desktop_only: true, mobile_only: false}
+	 */
+	createNavbarButton: function(src_icon, src_text, onclick){
+		var buttonsContainer = app.element.navbar.buttons.settings.parentElement;
+		var thisButton = document.createElement("button");
+		var icon = document.createElement("div");
+		var text = document.createElement("div");
+
+		dom.addClass(thisButton, "print-hide");
+		dom.addClass(icon, "icon");
+		dom.addClass(text, "text");
+
+		thisButton.onclick = onclick;
+		icon.innerHTML = src_icon;
+		text.innerHTML = src_text;
+		
+		thisButton.appendChild(icon);
+		thisButton.appendChild(text);
+		buttonsContainer.appendChild(thisButton);
+		return thisButton;
+	},
+
 
 	/**
 	 * Shows (Z) in header
