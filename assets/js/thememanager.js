@@ -27,8 +27,8 @@ app.themeManager = {
 		utils.log("themeMgr", "Init");
 		utils.log("themeMgr", "Themes available: " + this.themes.length);
 		// var currentlySelected = 0;
-		utils.log("themeMgr", "Currently selected theme: " + currentlySelected +" [TODO]");
 		if (typeof currentlySelected != "undefined"){
+			utils.log("themeMgr", "Currently selected theme: " + currentlySelected +" [TODO]");
 			this.activate(currentlySelected);
 		}
 	},
