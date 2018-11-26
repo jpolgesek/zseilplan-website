@@ -37,21 +37,24 @@ var app = {
 			diff_diff: false,
 			diff_select_version: false,
 			theme_manager: false,
-			new_hashparser: false
+			new_hashparser: false,
+			prefs_enable: false
 		},
 	
 		dev: {
 			diff_diff: true,
 			diff_select_version: true,
 			theme_manager: false,
-			new_hashparser: false
+			new_hashparser: false,
+			prefs_enable: false
 		},
 	
 		internal: {
 			diff_diff: true,
 			diff_select_version: true,
 			theme_manager: true,
-			new_hashparser: true
+			new_hashparser: true,
+			prefs_enable: true
 		},
 	},
 	
@@ -100,7 +103,7 @@ var app = {
 	isEnabled: function(feature_name){
 		if (typeof(ZSEILPLAN_BUILD) == "undefined"){
 			var featureSet = this._features.internal;
-		}else if ((ZSEILPLAN_BUILD.indexOf("DEV") != -1) || (localStorage.getItem("tests_enabled") == "true")){
+		}else if ((ZSEILPLAN_BUILD.indexOf("DEV") != -1) || (preferences.get("tests_enabled") == "true")){
 			var featureSet = this._features.dev;
 		}else{
 			var featureSet = this._features.prod;
@@ -127,7 +130,7 @@ var app = {
 		app.refreshView = refreshView;
 
 		try {
-			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (localStorage.getItem("tests_enabled") == "true") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
+			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (preferences.get("tests_enabled") == "true") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
 				utils.warn("internal","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
 				app.testMode = true;
 				data.normalizationData = {
@@ -285,9 +288,13 @@ function init(){
 	ui.loader.setStatus("Ładuję preferencje");
 	ui.setStatus("Ładowanie preferencji...");
 
-	/* If HTML5 storage is available, try to load user saved settings */
-	if (typeof(Storage) !== "undefined") {
-		myStorage.load();
+	if (app.isEnabled("prefs_enable")){
+		preferences.load();
+	}else{
+		/* If HTML5 storage is available, try to load user saved settings */
+		if (typeof(Storage) !== "undefined") {
+			myStorage.load();
+		}
 	}
 
 	ui.setStatus("Ładowanie danych planu...");
@@ -354,9 +361,14 @@ function init2(){
 		document.getElementsByClassName('loader')[0].parentElement.removeChild(document.getElementsByClassName('loader')[0]);
 	} catch(e){};
 
-	if (typeof(Storage) !== "undefined") {
-		app.storage.load();
-		refreshView();
+	
+	if (app.isEnabled("prefs_enable")){
+		preferences.parse();
+	}else{
+		if (typeof(Storage) !== "undefined") {
+			app.storage.load();
+			refreshView();
+		}
 	}
 	
 	if(navigator.userAgent.indexOf('Windows NT 5.1') != -1){

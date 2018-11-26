@@ -20,6 +20,10 @@ var preferences = {
 			"ui.breakLineInItem": false,
 			"ui.jumpButtonsFloatRight": true,
 
+			"thememanager.enabled": false,
+			"thememanager.theme": false,
+			"thememanager.version": false,
+
 
 			/* UI Modifications */
 
@@ -42,7 +46,6 @@ var preferences = {
 	},
 	storageMethod: undefined, 
 	load: function(){
-
 		if (typeof(Storage) == "undefined") {
 			this.storageMethod = "disabled";
 			utils.log("NewPrefs", "LocalStorage is not available");
@@ -55,14 +58,19 @@ var preferences = {
 			return;
 		}
 
-		this.SCP2Data = localStorage.getItem("SCP2Data");
-
-		if (this.SCP2Data == null) {
+		if (localStorage.getItem("SCP2Data") == null) {
 			utils.log("NewPrefs", "There is no data to load (no SCP2Data)");
-			return;
+			if (app.isEnabled("prefs_autoconvert")){
+				this.convert();
+				this.save();
+			}else{
+				return;
+			}
 		}
-
+		
+		this.SCP2Data = localStorage.getItem("SCP2Data");
 		this.SCP2Data = JSON.parse(this.SCP2Data);
+		
 
 		utils.log("NewPrefs", "Dane w formacie " + this.SCP2Data.Version);
 		utils.log("NewPrefs", "Last modified " + this.SCP2Data.LastModified);
@@ -74,15 +82,27 @@ var preferences = {
 		}
 		*/
 
-		app.prefs = this.SCP2Data.preferences;
+		// app.prefs = this.SCP2Data.preferences;
 		
 		return true;
 
 	},
 
+	get: function(prefName){
+		if (!app.isEnabled("prefs_enable")){
+			return localStorage.getItem(prefName);
+		}
+
+		if (typeof this.SCP2Data.preferences[prefName] == "undefined"){
+			return false;
+		}else{
+			return this.SCP2Data.preferences[prefName];
+		}
+	},
+
 	save: function(){
 		this.SCP2Data.LastModified = new Date().toLocaleDateString("pl-PL");
-		this.SCP2Data.preferences = app.prefs;
+		// this.SCP2Data.preferences = app.prefs;
 		
 		localStorage.setItem("SCP2Data", JSON.stringify(this.SCP2Data));
 
@@ -93,10 +113,84 @@ var preferences = {
 		return localStorage.removeItem("SCP2Data");
 	},
 	
-	import: function(){},
-	export: function(){},
+	//TODO: import: function(){},
+	//TODO: export: function(){},
+
 	convert: function(){
-		//TODO: This is important.
+		if (localStorage.getItem("saved") != "true") {
+			return false; //there are no saved settings
+		}
+		
+		if (typeof localStorage.getItem("select_units") != "undefined" && localStorage.getItem("select_units") != "default") {
+			this.SCP2Data.preferences["app.homeType"] = "unit";
+			this.SCP2Data.preferences["app.homeValue"] = localStorage.getItem("select_units");
+		} else if (typeof localStorage.getItem("select_teachers") != "undefined" && localStorage.getItem("select_teachers") != "default") {
+			this.SCP2Data.preferences["app.homeType"] = "teacher";
+			this.SCP2Data.preferences["app.homeValue"] = localStorage.getItem("select_teachers");
+		} else if (typeof localStorage.getItem("select_rooms") != "undefined" && localStorage.getItem("select_rooms") != "default") {
+			this.SCP2Data.preferences["app.homeType"] = "room";
+			this.SCP2Data.preferences["app.homeValue"] = localStorage.getItem("select_rooms");
+		}
+		
+		if (localStorage.getItem("ui.darkMode") == "true") {
+			this.SCP2Data.preferences["ui.darkMode"] = true;
+		} else {
+			this.SCP2Data.preferences["ui.darkMode"] = false;
+		}
+		
+		if (localStorage.getItem("ui.breakLineInItem") == "true") {
+			this.SCP2Data.preferences["ui.breakLineInItem"] = true;
+		} else {
+			this.SCP2Data.preferences["ui.breakLineInItem"] = false;
+		}
+
+		if (localStorage.getItem("ui.jumpButtonsFloatRight") == "true") {
+			this.SCP2Data.preferences["ui.jumpButtonsFloatRight"] = true;
+		} else {
+			this.SCP2Data.preferences["ui.jumpButtonsFloatRight"] = false;
+		}
+		
+		return true;
+	},
+	
+	parse: function(){
+		var skip = false;
+		
+		if (app.isEnabled("new_hashparser")){
+			skip = (app.getUrlRouter() != false);
+		}else{
+			if (typeof document.location.hash.startsWith != "undefined" && !detectIE()){
+				try{
+					skip = document.location.hash.startsWith("#n") || document.location.hash.startsWith("#s") || document.location.hash.startsWith("#k");
+				}catch(e){}
+			}
+		}
+
+		if (!skip){
+			document.getElementById("units").value = "default";
+			document.getElementById("teachers").value = "default";
+			document.getElementById("rooms").value = "default";
+		
+			if (this.SCP2Data.preferences["app.homeType"] == "unit"){
+				var target = document.getElementById("units");
+			}else if (this.SCP2Data.preferences["app.homeType"] == "teacher"){
+				var target = document.getElementById("teachers");
+			}else if (this.SCP2Data.preferences["app.homeType"] == "room"){
+				var target = document.getElementById("rooms");
+			}
+
+			target.value = this.SCP2Data.preferences["app.homeValue"];
+			refreshView();
+		}
+		
+		if (this.SCP2Data.preferences["ui.darkMode"]) {
+			ui.setDarkMode(true);
+		}
+		
+		ui.breakLineInItem = this.SCP2Data.preferences["ui.breakLineInItem"];
+		ui.jumpButtonsFloatRight = this.SCP2Data.preferences["ui.jumpButtonsFloatRight"];
+
+		return true;
 	}
 }
 
