@@ -47,5 +47,11 @@ var modal = {
 		}
 		
 		return workBtn;
+	},
+	createSectionHeader: function(text){
+		var workHeader = document.createElement("h2");
+		workHeader.innerHTML = text;
+		
+		return workHeader;
 	}
 }
