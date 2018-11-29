@@ -37,5 +37,15 @@ var modal = {
 		row = document.createElement("div");
 		row.className = "row";
 		return row;
+	},
+	createButton: function(options){
+		var workBtn = document.createElement('button');
+		workBtn.innerHTML = options.innerHTML;
+		workBtn.onclick = options.onClick;
+		if (options.primary){
+			workBtn.className = "btn-primary";
+		}
+		
+		return workBtn;
 	}
 }
