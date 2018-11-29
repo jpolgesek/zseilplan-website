@@ -453,7 +453,7 @@ function refreshView(){
 			history.pushState(null, null, "#" + app.currentView.selectedShort);
 		}
 	} catch (error) {
-		utils.error(error);
+		utils.error("app", error);
 	}
 
 	if (this.id != undefined){
