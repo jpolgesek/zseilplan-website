@@ -484,6 +484,10 @@ body::before{
     background: var(--modal-bg);
 }
 
+.modal .close:hover {
+    background: var(--accent-color-dark);
+}
+
 input:checked + .slider {
     background-color: var(--modal-slider-checked-bg);
 }
