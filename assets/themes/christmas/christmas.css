@@ -491,3 +491,10 @@ body::before{
 input:checked + .slider {
     background-color: var(--modal-slider-checked-bg);
 }
+
+#remote_info{
+    float: none;
+    width: auto;
+    padding-top: 0;
+    padding-bottom: 20px;
+}
