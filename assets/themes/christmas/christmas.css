@@ -198,7 +198,7 @@ body::before{
     border-radius: 3px;
 }
 
-.maintable .override .jumpButtons .clickable{
+.maintable .override .clickable{
     color: #d8d8d8;
 }
 
