@@ -193,6 +193,11 @@ body::before{
     width: 18% !important;
 }
 
+.maintable .override {
+    background: rgba(159, 15, 15, 0.67);
+    border-radius: 3px;
+}
+
 .clickable:nth-child(1){
     background: var(--table-clickable-bg);
     border-top-left-radius: 25px !important;
