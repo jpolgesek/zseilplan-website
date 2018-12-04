@@ -4,7 +4,7 @@ app.themeManager = {
 			"name": "Świąteczny",
 			"darkCompatible": false,
 			"css": "assets/themes/christmas/christmas.css",
-			"js": null,
+			"js": "assets/themes/christmas/christmas.js",
 			"versions": [
 				{"name": "Czerwony (domyślny)", "className": "c_default"},
 				{"name": "Ciemny", "className": "c_dark"},

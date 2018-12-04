@@ -37,6 +37,8 @@ var app = {
 			diff_diff: false,
 			diff_select_version: false,
 			theme_manager: false,
+			theme_manager_ui: false,
+			theme_christmas_by_default: false,
 			new_hashparser: false,
 			prefs_enable: false
 		},
@@ -45,6 +47,8 @@ var app = {
 			diff_diff: true,
 			diff_select_version: true,
 			theme_manager: true,
+			theme_manager_ui: false,
+			theme_christmas_by_default: true,
 			new_hashparser: false,
 			prefs_enable: false
 		},
@@ -53,6 +57,8 @@ var app = {
 			diff_diff: true,
 			diff_select_version: true,
 			theme_manager: true,
+			theme_manager_ui: true,
+			theme_christmas_by_default: true,
 			new_hashparser: true,
 			prefs_enable: true
 		},
@@ -149,7 +155,20 @@ var app = {
 			if (app.themeManager != undefined){
 				utils.log("app", "Found theme manager");
 				app.themeManager.init();
-				ui.createNavbarButton("◪", "Motywy", function(){app.themeManager.createModal()});
+				if (this.isEnabled("theme_manager_ui")){
+					ui.createNavbarButton("◪", "Motywy", function(){app.themeManager.createModal()});
+				}
+			}
+			if (this.isEnabled("theme_christmas_by_default") && !preferences.get("disable_auto_themes")){
+				if (preferences.get("disable_auto_themes_once")){
+					preferences.set("disable_auto_themes_once", false, true);
+				}else{
+					if (!preferences.get("ui.darkMode")){
+						app.themeManager.activate(0,1);
+					}else{	
+						app.themeManager.activate(0,0);
+					}
+				}
 			}
 		}
 
@@ -171,7 +190,7 @@ var app = {
 		return false;
 	},
 	parseHash: function(){
-		if (this.isEnabled("new_hashparser")){
+		if (app.isEnabled("new_hashparser")){
 			var path = document.location.pathname;
 			if (path.indexOf("/klasa/") != -1){
 				value = document.location.pathname.substring(document.location.pathname.indexOf("/klasa/")).split("/")[2];
