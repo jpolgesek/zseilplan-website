@@ -100,6 +100,14 @@ var preferences = {
 		}
 	},
 
+	set: function(prefName, value){
+		if (!app.isEnabled("prefs_enable")){
+			return localStorage.setItem(prefName, value);
+		}
+
+		this.SCP2Data.preferences[prefName] = value;
+	},
+
 	save: function(){
 		this.SCP2Data.LastModified = new Date().toLocaleDateString("pl-PL");
 		// this.SCP2Data.preferences = app.prefs;
