@@ -198,6 +198,10 @@ body::before{
     border-radius: 3px;
 }
 
+.maintable .override .jumpButtons .clickable{
+    color: #d8d8d8;
+}
+
 .clickable:nth-child(1){
     background: var(--table-clickable-bg);
     border-top-left-radius: 25px !important;
