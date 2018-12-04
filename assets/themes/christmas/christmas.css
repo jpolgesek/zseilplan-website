@@ -203,6 +203,7 @@ body::before{
 }
 
 .maintable .zMark {
+    background: transparent;
     color: #eee7e7;
 }
 
