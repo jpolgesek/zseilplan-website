@@ -1,20 +1,22 @@
 var settings = {
 	createModal: function(){
 
-		preferencesDiv = app.modal.create(
-			"preferences", 
+		preferencesDiv = app.modal.createTabbed(
+			/*"preferences", 
 			"Settings - title",
 			"Settings - desc", 
-			function(){ui.showPreferences(0)},
-			{
+			function(){ui.showPreferences(0)},*/
+			{	
+				title: "Ustawienia",
+				closeAction: function(){alert("TODO")},
 				tabbed: true
 			}
 		);
 
 		var sections = [
 			{
-				name: "testowa sekcja",
-				id: "testsection",
+				name: "Ustawienia główne",
+				id: "modal_settings_s_main",
 				items: [
 					{
 						devOnly: false,
@@ -65,6 +67,56 @@ var settings = {
 						check: undefined
 					}
 				]
+			},
+			{
+				name: "Wygląd",
+				id: "modal_settings_s_look",
+				items: [
+					{
+						devOnly: false,
+						type: "checkbox",
+						dataSource: ui.darkMode,
+						onClick: function(x){ui.setDarkMode(this.checked)},
+						desc: "Tryb nocny",
+						check: ui.setDarkMode
+					},
+					{
+						devOnly: false,
+						type: "checkbox",
+						dataSource: ui.darkMode,
+						onClick: function(x){ui.setDarkMode(this.checked)},
+						desc: "Tryb nocny",
+						check: ui.setDarkMode
+					},
+				]
+			},
+			{
+				name: "Źródło danych",
+				id: "modal_settings_s_dataSource",
+				items: [
+					{
+						devOnly: false,
+						type: "checkbox",
+						dataSource: false,
+						onClick: function(x){return;},
+						desc: "Tu przyda się kontrolka option",
+						check: ui.setDarkMode
+					},
+				]
+			},
+			{
+				name: "Strona startowa",
+				id: "modal_settings_s_defaults",
+				items: [
+					{
+						devOnly: false,
+						type: "checkbox",
+						dataSource: false,
+						onClick: function(x){return;},
+						desc: "Tu przyda się ta dziwna kontrolka którą kiedyś pisałem",
+						check: ui.setDarkMode
+					},
+				]
 			}
 			
 		];
@@ -83,8 +135,16 @@ var settings = {
 				));
 			}
 
+			if (i != 0){
+				sectionContainer.style.display = "none"; 
+			}
 
-			preferencesDiv.appendChild(sectionContainer);
+			preferencesDiv.sectionContent.appendChild(sectionContainer);
+			preferencesDiv.sectionList.appendChild(modal.createTab(
+				section.name,
+				section.id,
+				(i == 0)
+			));
 		}
 
 		/*if (!app.testMode){
@@ -155,7 +215,7 @@ var settings = {
 		*/
 
 		row = document.createElement('div');
-		row.className = "row";
+		row.className = "row padding-15";
 
 		row.appendChild(app.modal.createButton({
 			innerHTML: "Zapisz zmiany",
