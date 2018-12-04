@@ -44,7 +44,7 @@ var app = {
 		dev: {
 			diff_diff: true,
 			diff_select_version: true,
-			theme_manager: false,
+			theme_manager: true,
 			new_hashparser: false,
 			prefs_enable: false
 		},
