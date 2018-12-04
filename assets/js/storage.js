@@ -100,12 +100,15 @@ var preferences = {
 		}
 	},
 
-	set: function(prefName, value){
+	set: function(prefName, value, autosave){
 		if (!app.isEnabled("prefs_enable")){
 			return localStorage.setItem(prefName, value);
 		}
 
 		this.SCP2Data.preferences[prefName] = value;
+		if (typeof autosave != "undefined" && autosave){
+			this.save();
+		}
 	},
 
 	save: function(){
