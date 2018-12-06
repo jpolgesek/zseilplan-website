@@ -90,7 +90,14 @@ var preferences = {
 
 	get: function(prefName){
 		if (!app.isEnabled("prefs_enable")){
-			return localStorage.getItem(prefName);
+			var val = localStorage.getItem(prefName);
+			if (val == "true"){
+				return true;
+			}else if (val == "false"){
+				return false;
+			}else{
+				return val;
+			}
 		}
 
 		if (typeof this.SCP2Data.preferences[prefName] == "undefined"){
