@@ -1,4 +1,5 @@
 app.themeManager = {
+	darkModeOverrided: false,
 	themes: [
 		{
 			"name": "Świąteczny",
@@ -46,10 +47,17 @@ app.themeManager = {
 
 		if (!selectedTheme.darkCompatible){
 			utils.log("themeMgr", "Theme not compatible with dark mode, disabling it.");
-			app.ui.setDarkMode(false);
-			app.ui.setDarkMode = function(x){
-				utils.warn("themeMgr", "Tried to set dark mode to " + x + ", ignoring.");
-				return;
+			if (!this.darkModeOverrided){
+				app.ui.setDarkMode(false);
+				app.ui.setDarkMode = function(x){
+					try {
+						return darkModeOverride(x);
+					} catch (error) {
+						utils.warn("themeMgr", "Tried to set dark mode to " + x + ", and override handler was not created. Ignoring.");
+					}
+					return;
+				}
+				this.darkModeOverrided = true;
 			}
 		}
 
