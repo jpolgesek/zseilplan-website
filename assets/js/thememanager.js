@@ -58,7 +58,7 @@ app.themeManager = {
 			if (document.getElementById('thememanager_css') != undefined){
 				document.getElementById('thememanager_css').parentElement.removeChild(document.getElementById('thememanager_css'));
 			}
-			document.head.insertAdjacentHTML( "beforeend", "<link id='thememanager_css' rel='stylesheet' href='" + selectedTheme.css + "'>");
+			document.head.insertAdjacentHTML( "beforeend", "<link id='thememanager_css' rel='stylesheet' href='" + selectedTheme.css + "?rand=" + Date.now() + "'>");
 		}
 
 		if (selectedTheme.js != null) {
@@ -68,7 +68,7 @@ app.themeManager = {
 			}
 			var newScript = document.createElement("script");
 			newScript.id = 'thememanager_js';
-			newScript.src = selectedTheme.js;
+			newScript.src = selectedTheme.js  + "?rand=" + Date.now();
 			newScript.onload = function (){
 				try{themeloader.prepareHTML();}catch(e){utils.error("themeMgr", "Failed executing js: " + e);}
 			}
