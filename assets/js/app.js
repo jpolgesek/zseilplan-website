@@ -163,7 +163,7 @@ var app = {
 				if (preferences.get("disable_auto_themes_once")){
 					preferences.set("disable_auto_themes_once", false, true);
 				}else{
-					if (!preferences.get("ui.darkMode")){
+					if (preferences.get("ui.darkMode")){
 						app.themeManager.activate(0,1);
 					}else{	
 						app.themeManager.activate(0,0);
