@@ -35,7 +35,7 @@ body{
     --table-break-border: #ba4c4c;
     --table-clickable-bg: #ffffffa3;
     --table-clickable-color: #484848;
-    --table-currentTime: rgba(255, 255, 255, 0.23);
+    --table-currentTime:  rgba(255, 193, 193, 0.23);
 
     --modal-bg: rgba(139, 49, 51, 0.83);
     --modal-slider-checked-bg: rgb(186, 76, 76);/**/
@@ -67,9 +67,9 @@ body.c_dark{
     --table-bg-header: #4f4f4f;
     --table-hover-color: #e2e2e2;
     --table-break-border: #ba4c4c;
-    --table-clickable-bg: rgba(0, 0, 0, 0.48);;
+    --table-clickable-bg: rgba(0, 0, 0, 0.48);
     --table-clickable-color: #b0b0b0;
-    --table-currentTime: rgba(0, 0, 0, 0.2);
+    --table-currentTime: rgba(89, 34, 34, 0.33);
 
     --modal-bg: rgba(0, 0, 0, 0.78);
     --modal-slider-checked-bg: rgb(186, 76, 76);
@@ -92,6 +92,7 @@ body.c_blue{
     --accent-background-light: #e7eaee;
 
     --table-break-border: #4c6fba;
+    --table-currentTime: rgba(127, 164, 225, 0.25);
 
     --modal-bg: rgba(49, 63, 139, 0.83);
     --modal-slider-checked-bg: rgb(76, 111, 186);
@@ -112,6 +113,7 @@ body.c_green{
     --accent-background-light: #e7eaee;
 
     --table-break-border: #4cba52;
+    --table-currentTime: rgba(47, 129, 58, 0.25);
 
     --modal-bg: rgba(49, 139, 69, 0.83);
     --modal-slider-checked-bg: rgb(76, 186, 82);
@@ -161,14 +163,14 @@ body::before{
 }
 
 .maintable tr:nth-child(odd) {
-    background: var(--table-bg-odd);
+    background: var(--table-bg-odd) !important;
 }
 
 .maintable tr:nth-child(even) {
-    background: var(--table-bg-even);
+    background: var(--table-bg-even) !important;
 }
 
-.maintable .header {
+.maintable tr.header {
     background: var(--table-bg-header) !important;
     color: var(--accent-color-light);
     border: none;
@@ -176,6 +178,14 @@ body::before{
 
 .maintable .currentTimeFull {    
     background-color: var(--table-currentTime) !important;   
+}
+
+.maintable .currentTimeFull > td {    
+    background-color: var(--table-currentTime) !important;   
+}
+
+.maintable .currentTimeFull > td.currentTimeFull {
+    border: 2px solid var(--table-break-border);
 }
 
 .maintable td:hover {
@@ -357,10 +367,21 @@ body::before{
         background: var(--darker);
         padding-top: 10px;
         padding-bottom: 10px;
+        background: var(--accent-background-dark);
     }
 
     .tableTopInfo{
         padding-top: 0;
+        /* background: var(--accent-background-dark); */
+    }
+
+    .maintable tr.header{
+        background: var(--accent-background-dark) !important;
+    }
+
+    #remote_info{
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
     }
 }
 
@@ -497,4 +518,8 @@ input:checked + .slider {
     width: auto;
     padding-top: 0;
     padding-bottom: 20px;
+}
+
+.modal .preferences_default_big{
+    background: var(--modal-slider-checked-bg);
 }
