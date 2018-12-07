@@ -310,7 +310,8 @@ body::before{
 /* Only on mobile */
 @media screen and (max-width: 768px) {
     .container{
-        padding-bottom: 55vh;
+        margin-bottom: 55vh;
+        background: #212121;
     }
 
     select{
@@ -367,7 +368,7 @@ body::before{
         background: var(--darker);
         padding-top: 10px;
         padding-bottom: 10px;
-        background: var(--accent-background-dark);
+        /* background: var(--accent-background-dark); */
     }
 
     .tableTopInfo{
@@ -382,6 +383,10 @@ body::before{
     #remote_info{
         padding-top: 8px !important;
         padding-bottom: 8px !important;
+    }
+
+    body::before{
+        content: " " !important;
     }
 }
 
