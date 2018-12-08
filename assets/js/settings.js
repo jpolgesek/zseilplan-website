@@ -15,7 +15,7 @@ var settings = {
 
 		var sections = [
 			{
-				name: "Ustawienia główne",
+				name: "Ogólne",
 				id: "modal_settings_s_main",
 				items: [
 					{
@@ -39,7 +39,7 @@ var settings = {
 						type: "checkbox",
 						dataSource: ui.darkMode,
 						onClick: function(x){ui.setDarkMode(this.checked)},
-						desc: "Tryb nocny",
+						desc: "Tryb nocny (deprecated)",
 						check: ui.setDarkMode
 					},
 					{
@@ -74,20 +74,18 @@ var settings = {
 				items: [
 					{
 						devOnly: false,
-						type: "checkbox",
-						dataSource: ui.darkMode,
+						type: "select",
+						dataSource: [
+							{name: "Domyślny",  value: "0"},
+							{name: "Ciemny", value: "1"},
+							{name: "Świąteczny", value: "2"},
+							{name: "Świąteczny ciemny", value: "3"},
+							{name: "Windows 95", value: "3"},
+						],
 						onClick: function(x){ui.setDarkMode(this.checked)},
-						desc: "Tryb nocny",
-						check: ui.setDarkMode
-					},
-					{
-						devOnly: false,
-						type: "checkbox",
-						dataSource: ui.darkMode,
-						onClick: function(x){ui.setDarkMode(this.checked)},
-						desc: "Tryb nocny",
-						check: ui.setDarkMode
-					},
+						desc: "Motyw aplikacji",
+						check: false
+					}
 				]
 			},
 			{
@@ -96,10 +94,41 @@ var settings = {
 				items: [
 					{
 						devOnly: false,
-						type: "checkbox",
-						dataSource: false,
+						type: "select",
+						dataSource: [
+							{name: "WWW (zseil.edu.pl)",  value: "www"},
+							{name: "Vulcan",  value: "vulcan"},
+						],
+						onClick: function(x){ui.setDarkMode(this.checked)},
+						desc: "Źródło zastępstw",
+						check: false
+					},
+					{
+						devOnly: false,
+						type: "select",
+						dataSource: [
+							{name: "WWW (zseil.edu.pl)",  value: "www"},
+							{name: "Vulcan",  value: "vulcan"},
+						],
+						onClick: function(x){ui.setDarkMode(this.checked)},
+						desc: "Źródło planu",
+						check: false
+					}
+				]
+			},
+			{
+				name: "Wersja danych",
+				id: "modal_settings_s_diff",
+				items: [
+					{
+						devOnly: false,
+						type: "select",
+						dataSource: [
+							{name: "WWW (zseil.edu.pl)",  value: "www"},
+							{name: "Vulcan",  value: "vulcan"},
+						],
 						onClick: function(x){return;},
-						desc: "Tu przyda się kontrolka option",
+						desc: "Tu możesz wybrać wersję danych planu, oraz porównać ją z obecną",
 						check: ui.setDarkMode
 					},
 				]
@@ -110,10 +139,40 @@ var settings = {
 				items: [
 					{
 						devOnly: false,
-						type: "checkbox",
+						type: "special_default",
 						dataSource: false,
 						onClick: function(x){return;},
 						desc: "Tu przyda się ta dziwna kontrolka którą kiedyś pisałem",
+						check: ui.setDarkMode
+					},
+				]
+			},
+			{
+				name: "Funkcje testowe",
+				id: "modal_settings_s_tests",
+				items: [
+					{
+						devOnly: false,
+						type: "checkbox",
+						dataSource: ui.darkMode,
+						onClick: function(x){return;},
+						desc: "Włącz test xyz.",
+						check: ui.setDarkMode
+					},
+					{
+						devOnly: false,
+						type: "checkbox",
+						dataSource: ui.darkMode,
+						onClick: function(x){return;},
+						desc: "Włącz test xyz.",
+						check: ui.setDarkMode
+					},
+					{
+						devOnly: false,
+						type: "checkbox",
+						dataSource: ui.darkMode,
+						onClick: function(x){return;},
+						desc: "Włącz test xyz.",
 						check: ui.setDarkMode
 					},
 				]
@@ -276,6 +335,55 @@ var settings = {
 			label.appendChild(input);
 			label.appendChild(span);
 			row.appendChild(label);
+			row.appendChild(title);
+		}else if (itemData.type == "select"){
+			label = document.createElement('label');
+			label.className = ""
+
+			input = document.createElement('select');
+			input.type = "";
+
+			for (var i = 0; i < itemData.dataSource.length; i++){
+				input.options[input.options.length] = new Option(itemData.dataSource[i].name, itemData.dataSource[i].value);
+			}
+
+			title = document.createElement("span");
+			title.className = "desc";
+			title.innerHTML = itemData.desc;
+
+			label.appendChild(input);
+			row.appendChild(label);
+			row.appendChild(title);
+		}else if(itemData.type == "special_default"){
+			// biginfo = document.createElement("span");
+			// biginfo.className = "preferences_default_big";
+
+			title = document.createElement("span");
+			title.className = "desc";
+
+			if (preferences.get("app.homeValue") == false){
+				title.innerHTML = "Przy uruchamianiu nie ładuję automatycznie żadnego planu.<br>Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i zapisz zmiany.";
+				// biginfo.innerHTML = "??";
+				// biginfo.className = "preferences_default_big preferences_default_inactive";
+			}else{
+				biginfo = {};
+				biginfo.innerHTML = preferences.get("app.homeValue");
+				switch (preferences.get("app.homeType")){
+					case "unit":
+						title.innerHTML = "Przy uruchamianiu ładuję automatycznie plan klasy <b>"+biginfo.innerHTML+"</b>.<br>Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i zapisz zmiany.";
+					break;
+
+					case "teacher":
+						title.innerHTML = "Przy uruchamianiu ładuję automatycznie plan nauczyciela <b>"+biginfo.innerHTML+"</b>.<br>Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i zapisz zmiany.";
+					break;
+
+					case "room":
+						title.innerHTML = "Przy uruchamianiu ładuję automatycznie plan sali <b>"+biginfo.innerHTML+"</b>.<br>Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i zapisz zmiany.";
+					break;
+				}
+			}
+			
+			// row.appendChild(biginfo);
 			row.appendChild(title);
 		}
 
