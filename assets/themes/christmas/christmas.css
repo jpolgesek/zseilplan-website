@@ -298,8 +298,11 @@ body::before{
 }
 
 .tableTopInfo{
-    background: var(--darker);
     padding-top: 55px;
+}
+
+.c_dark .tableTopInfo{
+    background: var(--darker);
 }
 
 .bar{
@@ -311,6 +314,9 @@ body::before{
 @media screen and (max-width: 768px) {
     .container{
         margin-bottom: 55vh;
+    }
+
+    .c_dark .container{
         background: #212121;
     }
 
@@ -365,10 +371,13 @@ body::before{
     }
 
     .bar.print-hide.mobile-only-flex{
-        background: var(--darker);
         padding-top: 10px;
         padding-bottom: 10px;
         /* background: var(--accent-background-dark); */
+    }
+
+    .dark .bar.print-hide.mobile-only-flex{
+        background: var(--darker);
     }
 
     .tableTopInfo{
@@ -387,6 +396,10 @@ body::before{
 
     body::before{
         content: " " !important;
+    }
+    
+    .navbar{
+        width: 100%;
     }
 }
 
