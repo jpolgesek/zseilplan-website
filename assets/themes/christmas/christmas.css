@@ -142,6 +142,10 @@ body::before{
     z-index: -1;
 }
 
+.navbar-notification {
+    background-image: var(--navbar-goose),linear-gradient(180deg,var(--accent-background-middle) 0,var(--accent-background-middle) 100%);
+}
+
 .shadow{
     box-shadow: 0 10px 30px rgba(6, 13, 35, 0.03), 0 1px 8px rgba(5, 26, 45, 0.24);
 }
@@ -397,7 +401,7 @@ body::before{
     body::before{
         content: " " !important;
     }
-    
+
     .navbar{
         width: 100%;
     }
