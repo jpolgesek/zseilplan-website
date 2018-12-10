@@ -40,7 +40,8 @@ var app = {
 			theme_manager_ui: false,
 			theme_christmas_by_default: false,
 			new_hashparser: false,
-			prefs_enable: false
+			prefs_enable: false,
+			overrides_summaryModal: false
 		},
 	
 		dev: {
@@ -50,7 +51,8 @@ var app = {
 			theme_manager_ui: false,
 			theme_christmas_by_default: true,
 			new_hashparser: false,
-			prefs_enable: false
+			prefs_enable: false,
+			overrides_summaryModal: true
 		},
 	
 		internal: {
@@ -60,7 +62,8 @@ var app = {
 			theme_manager_ui: true,
 			theme_christmas_by_default: true,
 			new_hashparser: true,
-			prefs_enable: true
+			prefs_enable: true,
+			overrides_summaryModal: true
 		},
 	},
 	

@@ -249,6 +249,11 @@ var ui = {
 			zMark.className = "zMark";
 			zMark.innerHTML = "Z";
 			zMark.title = "Załadowano zastępstwa na ten dzień";
+			if (app.isEnabled("overrides_summaryModal")){
+				zMark.onclick = function(){
+					overrides.summaryModal(n, "old_teacher");
+				}
+			}
 			document.getElementsByClassName("header")[0].children[n].appendChild(zMark);
 		}
 	},

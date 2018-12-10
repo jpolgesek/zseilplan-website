@@ -66,12 +66,13 @@ var overrides = {
 		return false;
 	},
 
-	summaryModal: function(sort_by){
+	summaryModal: function(day_index, sort_by){
 		var overrideSummary = [];
 		//TODO: day as param
-		var day = "25.10.2018";
+		// var day = "10.12.2018";
+		day = IEgetDay(day_index);
 		//TODO: auto day_of_the_week
-		var day_of_the_week = 4;
+		var day_of_the_week = day_index;
 
 		//TODO: allow selection: teacher / unit
 		//var sort_by = "unit";
@@ -86,11 +87,16 @@ var overrides = {
 					override.y = day_of_the_week;
 					override.unit = unit;
 
-					if (sort_by == "teacher"){
+					if (sort_by == "old_teacher"){
 						if (typeof overrideSummary[override.oldTeacherShort] == "undefined"){
 							overrideSummary[override.oldTeacherShort] = [];
 						}
 						overrideSummary[override.oldTeacherShort].push(override);
+					}else if (sort_by == "new_teacher"){
+						if (typeof overrideSummary[override.oldTeacherShort] == "undefined"){
+							overrideSummary[override.newTeacherShort] = [];
+						}
+						overrideSummary[override.newTeacherShort].push(override);
 					}else if (sort_by == "unit"){
 						if (typeof overrideSummary[override.unit] == "undefined"){
 							overrideSummary[override.unit] = [];
@@ -105,6 +111,7 @@ var overrides = {
 		}
 
 		overridesModal = modal.create('overridesmodal', "Podsumowanie zastępstw", "", function(){overridesModal.parentElement.removeChild(overridesModal);ui.containerBlur(false)});
+		overridesModal.style.height = "80%";
 		row = modal.createRow();
 		row.style.margin.bottom = "-10px";
 		row.style.fontSize = "1.5em";
@@ -112,19 +119,19 @@ var overrides = {
 		outHTML = "";
 		
 		for (t in overrideSummary){
-			if (sort_by == "teacher"){
+			if (sort_by == "new_teacher" || sort_by == "old_teacher"){
 				outHTML += "<h2>" + data.teachermap[t] +" ("+t+")</h2>";
 			}else if (sort_by == "unit"){
 				outHTML += "<h2> Klasa " + t +"</h2>";
 			}
 			outHTML += "<table><tbody>";
 			outHTML += "<tr>";
-			outHTML += "<th>Godzina</th>";
+			outHTML += "<th>Godz.</th>";
 			if (sort_by != "unit") outHTML += "<th>Klasa</th>";
 			outHTML += "<th>Sala</th>";
 			outHTML += "<th>Przedmiot</th>";
-			if (sort_by != "teacher") outHTML += "<th>Za</th>";
-			outHTML += "<th>Jest</th>";
+			if (sort_by != "old_teacher") outHTML += "<th>Za</th>";
+			if (sort_by != "new_teacher") outHTML += "<th>Jest</th>";
 			outHTML += "</tr>";
 			for (i in  overrideSummary[t]){
 				outHTML += "<tr>";
@@ -139,14 +146,16 @@ var overrides = {
 				}
 
 				outHTML += "<td>" + overrideSummary[t][i].subjectShort + "</td>";
-				if (sort_by != "teacher"){
+				if (sort_by != "old_teacher"){
 					outHTML += "<td>" + overrideSummary[t][i].oldTeacherLong + "</td>";
 				}
 
-				if (overrideSummary[t][i].newTeacherLong != "-1"){
-					outHTML += "<td>" + overrideSummary[t][i].newTeacherLong + "</td>";
-				}else{
-					outHTML += "<td>Okienko</td>";
+				if (sort_by != "new_teacher"){
+					if (overrideSummary[t][i].newTeacherLong != "-1"){
+						outHTML += "<td>" + overrideSummary[t][i].newTeacherLong + "</td>";
+					}else{
+						outHTML += "<td>Okienko</td>";
+					}
 				}
 
 				outHTML += "</tr>";
@@ -155,8 +164,8 @@ var overrides = {
 		}
 		outHTML2 = document.createElement("div");
 		outHTML2.innerHTML = outHTML;
-		outHTML2.style.overflow = "scroll";
-		outHTML2.style.height = "100%";
+		outHTML2.style.overflowY = "scroll";
+		outHTML2.style.height = "89%";
 		
 		overridesModal.appendChild(outHTML2);
 
