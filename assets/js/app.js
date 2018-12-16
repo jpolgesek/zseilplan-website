@@ -112,7 +112,7 @@ var app = {
 	isEnabled: function(feature_name){
 		if (typeof(ZSEILPLAN_BUILD) == "undefined"){
 			var featureSet = this._features.internal;
-		}else if ((ZSEILPLAN_BUILD.indexOf("DEV") != -1) || (preferences.get("tests_enabled") == "true")){
+		}else if ((ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
 			var featureSet = this._features.dev;
 		}else{
 			var featureSet = this._features.prod;
@@ -309,6 +309,10 @@ function init(){
 
 	ui.loader.setStatus("Ładuję preferencje");
 	ui.setStatus("Ładowanie preferencji...");
+
+	if (preferences.get("tests_enabled") == "true"){
+		this._features.prod = this._features.dev;
+	}
 
 	if (app.isEnabled("prefs_enable")){
 		preferences.load();
