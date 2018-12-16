@@ -316,6 +316,10 @@ body::before{
 
 /* Only on mobile */
 @media screen and (max-width: 768px) {
+    body{
+        background-position: 0% 45%;
+    }
+
     .container{
         margin-bottom: 55vh;
     }
