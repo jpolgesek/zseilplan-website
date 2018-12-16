@@ -317,7 +317,17 @@ body::before{
 /* Only on mobile */
 @media screen and (max-width: 768px) {
     body{
-        background-position: 0% 45%;
+        background-image: radial-gradient(circle, var(--bg-gradient-start), var(--bg-gradient-stop));
+    }
+
+    body::after {
+        content: '';
+        background: var(--bg-trees) center bottom repeat-x;
+        position: fixed;
+        bottom: 0;
+        z-index: -10;
+        height: 100%;
+        width: 100%;
     }
 
     .container{
