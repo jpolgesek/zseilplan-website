@@ -36,9 +36,9 @@ var app = {
 		prod: {
 			diff_diff: false,
 			diff_select_version: false,
-			theme_manager: false,
+			theme_manager: true,
 			theme_manager_ui: false,
-			theme_christmas_by_default: false,
+			theme_christmas_by_default: true,
 			new_hashparser: false,
 			prefs_enable: false,
 			overrides_summaryModal: false
