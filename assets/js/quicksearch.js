@@ -24,6 +24,7 @@ var quicksearch = {
 	},
 	parse: function(code){
 		app.ae('quicksearch', 'code', 'code='+term);
+		raw_code = code;
 		code = code.toLowerCase().split(":");
 		switch(code[0]){
 			case "test":
@@ -53,16 +54,21 @@ var quicksearch = {
 				localStorage.removeItem("disable_116_birthday_once");
 				themeloader.prepareHTML();
 				break;
+				
+			case "@":
+				eval(raw_code.split(":")[1]);
+				break;
 		}
 	},
 	search: function(e){
 		if (e.keyCode == 13) {
-			term = document.getElementById('search').value.toUpperCase();
+			var raw_term = document.getElementById('search').value;
+			term = raw_term.toUpperCase();
 			app.ae('quicksearch', 'search', 'search='+term);
 			if 		(term[0] == "N") jumpTo(0, term.substr(1,2))
 			else if (term[0] == "K") jumpTo(2, term.substr(1))
 			else if (term[0] == "S") jumpTo(1, term.substr(1))
-			else if (term[0] == "!") quicksearch.parse(term.substr(1))
+			else if (term[0] == "!") quicksearch.parse(raw_term.substr(1))
 			quicksearch.hide();
 		}
 	},
