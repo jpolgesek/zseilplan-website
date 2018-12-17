@@ -2,7 +2,7 @@
 
 var themeloader = {
 	importCSS: function(){
-		document.head.insertAdjacentHTML( 'beforeend', '<link rel=stylesheet href=assets/themes/windows95.css>' );
+		//document.head.insertAdjacentHTML( 'beforeend', '<link rel=stylesheet href=assets/themes/windows95.css>' );
 	},
 
 	prepareHTML: function(){
@@ -46,11 +46,13 @@ var themeloader = {
 
 			return modalContainer;
 
-		}
+		}	
 
-		app.themeLoaded = true;
+		app.modal.create = modal.create;
+
+		//app.themeLoaded = true;
 		ui.setDarkMode(false); //sorry :/
-		this.importCSS();
+		//this.importCSS();
 		this.prepareWindow(undefined, undefined, "Navbar", document.querySelector("#navbar-container"));
 		window_timetable = this.prepareWindow("calendar-5.png", undefined, "Plan lekcji", table);
 		this.prepareWindow("msg_information-2.png", "left-bar", "Informacje", document.querySelector("#status"));
@@ -140,4 +142,8 @@ var themeloader = {
 
 		return;
 	}
+}
+
+function darkModeOverride(value){
+	return true;
 }

@@ -16,8 +16,8 @@ app.themeManager = {
 		{
 			"name": "Retro (buggy)",
 			"darkCompatible": false,
-			"css": null,
-			"js": "assets/js/95izer.js",
+			"css": "assets/themes/windows95.css",
+			"js": "assets/themes/95/95.js",
 			"versions": [
 				{"name": "Domyślny", "className": "c_default"}
 			]
@@ -61,11 +61,14 @@ app.themeManager = {
 			}
 		}
 
+		
+		if (document.getElementById('thememanager_css') != undefined){
+			utils.log("themeMgr", "Removed old theme CSS");
+			document.getElementById('thememanager_css').parentElement.removeChild(document.getElementById('thememanager_css'));
+		}
+
 		if (selectedTheme.css != null) {
 			utils.log("themeMgr", "Loading CSS: " + selectedTheme.css);
-			if (document.getElementById('thememanager_css') != undefined){
-				document.getElementById('thememanager_css').parentElement.removeChild(document.getElementById('thememanager_css'));
-			}
 			document.head.insertAdjacentHTML( "beforeend", "<link id='thememanager_css' rel='stylesheet' media='screen' href='" + selectedTheme.css + "?rand=" + Date.now() + "'>");
 		}
 
