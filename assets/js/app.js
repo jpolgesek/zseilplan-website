@@ -1,5 +1,5 @@
 /*    SUPER CLEVER PLAN    */
-/* (C) 2018 Jakub Półgęsek */
+/* (C) 2019 Jakub Półgęsek */
 
 /* Config */
 maxHours = 11;
