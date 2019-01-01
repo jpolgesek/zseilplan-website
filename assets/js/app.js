@@ -38,7 +38,7 @@ var app = {
 			diff_select_version: false,
 			theme_manager: true,
 			theme_manager_ui: false,
-			theme_christmas_by_default: true,
+			theme_christmas_by_default: false,
 			new_hashparser: false,
 			prefs_enable: false,
 			overrides_summaryModal: false
@@ -49,7 +49,7 @@ var app = {
 			diff_select_version: true,
 			theme_manager: true,
 			theme_manager_ui: false,
-			theme_christmas_by_default: true,
+			theme_christmas_by_default: false,
 			new_hashparser: false,
 			prefs_enable: false,
 			overrides_summaryModal: true
@@ -60,7 +60,7 @@ var app = {
 			diff_select_version: true,
 			theme_manager: true,
 			theme_manager_ui: true,
-			theme_christmas_by_default: true,
+			theme_christmas_by_default: false,
 			new_hashparser: true,
 			prefs_enable: true,
 			overrides_summaryModal: true
