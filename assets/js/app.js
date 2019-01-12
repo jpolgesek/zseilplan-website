@@ -64,7 +64,7 @@ var app = {
 			new_hashparser: true,
 			prefs_enable: true,
 			overrides_summaryModal: true
-		},
+		}
 	},
 	
 	isCustomDataVersion: false,
@@ -746,7 +746,7 @@ function fetchData(customURL){
 	/* %old-ie-remove-start% */
 	/* is this needed? TODO
 	try {
-		fetch('data.php?ver=localstorage').then(function(response) {return response.json();}).catch();
+		fetch('data.php?ver=localstorage').then(function(response) {return response.json();})["catch"]();
 	} catch (e) {}
 	*/
 	
@@ -767,7 +767,7 @@ function fetchData(customURL){
 
 		utils.log("app", "Downloaded data.json using fetch");
 		init2();
-	}).catch(function(error){
+	})["catch"](function(error){
 		isOK = false;
 		ui.loader.setError("<b>Nie udało się pobrać planu lekcji</b>", "Upewnij się że masz połączenie z internetem i spróbuj ponownie.");
 		utils.error("app", "Fetch - failed to download data.json. Reason: " + error);
@@ -797,7 +797,7 @@ if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.register('sw.js').then(function(registration) {
 			// Registration was successful			
 			utils.log("app", "ServiceWorker registration successful with scope: " + registration.scope);
-			try {fetch('index.html?launcher=true').then(function(response) {console.log("------")}).catch();} catch (e) {}
+			try {fetch('index.html?launcher=true').then(function(response) {console.log("------")})["catch"]();} catch (e) {}
 			// console.log('ServiceWorker registration successful with scope: ', registration.scope);
 			registration.pushManager.getSubscription().then(function(sub) {
 				if (sub === null) {
@@ -840,7 +840,7 @@ if ('serviceWorker' in navigator) {
 				ui.toast.show("Wyłączyłem powiadomienia");
 				// document.getElementById("notificationSubscribe").innerHTML = "Powiadomienia wyłączone";
 				// document.getElementById("notificationSubscribe").onclick = subscribeUser;
-			  }).catch(function(e) {
+			  })["catch"](function(e) {
 				// ui.createToast("Wystąpił nieznany błąd :(");
 				ui.toast.show("Wystąpił nieznany błąd :(");
 				// document.getElementById("notificationSubscribe").innerHTML = "Nie udało sie wyłączyć powiadomień";
@@ -891,10 +891,10 @@ if ('serviceWorker' in navigator) {
 				  console.log("Wyslano");
 					//alert("zarejestrowano")
 			  })
-			  .catch(function(error){console.error('Error:', error)})
+			  ["catch"](function(error){console.error('Error:', error)})
 			  .then(function(response){console.log('Success:', response)});
 			
-		}).catch(function(e) {
+		})["catch"](function(e) {
 			if (Notification.permission === 'denied') {
 				//alert("Nie dostałem uprawnień");
 				console.warn('Permission for notifications was denied');
