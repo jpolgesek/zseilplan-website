@@ -158,8 +158,8 @@ var diff = {
 			this.diffInfoElement.innerHTML += "Porównujesz plan sali "+select_rooms.value + "<br>";
 		}
 
-		this.diffInfoElement.innerHTML += "Stary plan z dnia: " + this.data._updateDate_max + " <br>";
-		this.diffInfoElement.innerHTML += "Nowy plan z dnia: " + data._updateDate_max + " (aktualny) <br>";
+		this.diffInfoElement.innerHTML += "Stary plan z dnia: " + this.data.comment.split("Wyeksportowano ")[1] + " <br>";
+		this.diffInfoElement.innerHTML += "Nowy plan z dnia: " + data.comment.split("Wyeksportowano ")[1] + " (aktualny) <br>";
 
 
 		for (day=1; day<6; day++){
