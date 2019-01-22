@@ -41,6 +41,7 @@ var app = {
 			theme_christmas_by_default: false,
 			new_hashparser: false,
 			prefs_enable: false,
+			prefs_transition: false,
 			overrides_summaryModal: false
 		},
 	
@@ -52,6 +53,7 @@ var app = {
 			theme_christmas_by_default: false,
 			new_hashparser: false,
 			prefs_enable: false,
+			prefs_transition: false,
 			overrides_summaryModal: true
 		},
 	
@@ -62,6 +64,7 @@ var app = {
 			theme_manager_ui: true,
 			theme_christmas_by_default: false,
 			new_hashparser: true,
+			prefs_transition: true,
 			prefs_enable: true,
 			overrides_summaryModal: true
 		}
@@ -520,7 +523,8 @@ function refreshView(){
 			}else if (select_teachers.value != "default"){
 				ui.itemDisplayType = 0;
 				try {
-					if (app.testMode && typeof data.teachers_new != 'undefined'){
+					if (typeof data.teachers_new != 'undefined'){
+						//New - fixed view of teachers timetable
 						itemData = data.teachers_new[select_teachers.value][day][hour];
 						for (var i in itemData){
 							cell.appendChild(ui.createItem(itemData[i]));
