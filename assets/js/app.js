@@ -761,7 +761,7 @@ function fetchData(customURL){
 		teachermap = data.teachermap;
 		teacherMapping = data.teachermap;
 		
-		if (getTextDate() in data.timesteps){
+		if ((getTextDate() in data.timesteps) && myTime.time < "17:00"){
 			console.log("Specjalny rozklad godzin dla dnia "+getTextDate()+" - laduje");
 			timeSteps = data.timesteps[getTextDate()];
 		}else{
