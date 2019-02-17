@@ -205,7 +205,6 @@ var settings = {
 				(i == 0)
 			));
 		}
-
 		/*if (!app.testMode){
 			prefsList.splice(3,1);
 		}*/

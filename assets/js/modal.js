@@ -17,6 +17,7 @@ var modal = {
 		modalClose = document.createElement("span");
 		modalClose.innerHTML = '<i class="icon-cancel"></i>';
 		modalClose.className = "close";
+
 		modalClose.onclick = function(){closeAction();};
 
 		modalDesc = document.createElement("p");
@@ -38,6 +39,16 @@ var modal = {
 		// modalContainer.id = id;
 		modalContainer.className = "tabbedModal center-hv shadow";
 
+		var modalMenu = dom.createEWC("input", ["menuCheck"]);
+		modalMenu.type = "checkbox";
+		modalMenu.onClick = function(){
+			if (this.parentElement.parentElement.className.indexOf("hideMenu") != -1){
+
+			}else{
+				dom.addClass(this.parentElement.parentElement, "hideMenu")
+			}
+		}
+
 		var modalTitle = dom.createEWC("span", ["title"]);
 		modalTitle.innerHTML = options.title;
 		
@@ -49,6 +60,7 @@ var modal = {
 		var sectionContent = dom.createEWC("span", ["sectionContent"]);
 
 		modalDescRow = this.createRow();
+		modalDescRow.appendChild(modalMenu);
 		modalDescRow.appendChild(modalTitle);
 		modalDescRow.appendChild(modalClose);
 		modalContainer.appendChild(modalDescRow);
@@ -114,5 +126,17 @@ var modal = {
 		workHeader.innerHTML = text;
 		
 		return workHeader;
+	},
+	alert: function(text, className){
+		var remoteInfo = document.getElementById("remote_info");
+		if (typeof className != "undefined"){
+			dom.addClass(remoteInfo, className);
+		}
+		remoteInfo.innerHTML = text;
+		remoteInfo.style.display = "";
+	},
+	hideAlert: function(){
+		var remoteInfo = document.getElementById("remote_info");
+		remoteInfo.style.display = "none";
 	}
 }

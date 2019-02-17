@@ -58,6 +58,8 @@
 
 .tabbedModal .row .sectionContent .row{
     margin: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .tabbedModal .row .sectionList .listItem{
@@ -75,6 +77,13 @@
     /* background: #041735; */
 	background: #104496;
 	font-weight: 900;
+}
+
+.dark .tabbedModal .row select {
+    color: #EEE;
+    background: #002c71;
+    border-color: #001638;
+    border: 1px solid rgba(191, 191, 191, 0);
 }
 
 .tabbedModal .close{
@@ -131,3 +140,21 @@
 .padding-15{
 	padding: 15px;
 }
+
+
+/* mobile */
+.tabbedModal {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+}
+
+.tabbedModal .row{
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.sectionContent h2{
+    display: none;
+}
+
