@@ -1,0 +1,37 @@
+{
+	"remove_output_after_build": true,
+	"output_dir": "output",
+
+	"source_basedir": ".",
+	"source_css": ["assets","css","style.css"],
+	"source_html": "index.html",
+	"source_update_html": "update.html",
+
+	"always_upload_static": true,
+	"static_dirs": [
+		["assets","img"],
+		["assets","font"],
+		["assets","themes"]
+	],
+	"static_files": [
+		"manifest.json", 
+		"sw.js", 
+		"index.html", 
+		"update.html", 
+		"data.php", 
+		"registerNotification.php"
+	],
+
+	"hash_this": [ 
+		"manifest.json",
+		"sw.js",
+		"index.html",
+		["assets","js", "c_app.js"],
+		["assets","css", "c_style.css"]
+	],
+
+	"variables": {
+		"%var%": "safe_TEST",
+		"%dev%": true
+	}
+}
