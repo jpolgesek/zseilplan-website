@@ -94,6 +94,45 @@ var utils = {
 		setTimeout(function(){
 			dom.addClass(document.getElementById("android_instruction"), "anim");
 		}, 1)
+	},
+	getFreeRooms: function(day, hour){
+		this.log("getFreeRooms", "Start: wolne sale");
+		var available_rooms = []
+		var dtt = data.timetable;
+		for (r in data.classrooms){
+			var classroom = data.classrooms[r];
+			try {
+				var found = false;
+				for (unit in dtt[day][hour]){
+					var itemsData = dtt[day][hour][unit];
+					itemsData = itemsData.filter(function(v){return v.s == classroom;});
+					if (itemsData.length != 0){
+						found = true;
+					}
+				}
+				if (!found){
+					available_rooms.push(classroom);
+				}
+			}catch (e){utils.err("utils.getFreeRooms", "Error: " + e);}
+		}
+		this.log("getFreeRooms", "Znaleziono " + available_rooms.length + " sal.");
+		return available_rooms;
+	},
+
+	getFreeRoomsUI: function(day, hour){
+		var available_rooms = this.getFreeRooms(day, hour);
+		var htmlInfo = `<i>Szukano dla ${day} dnia tygodnia, ${hour} godziny lekcyjnej</i><br>`;
+		htmlInfo += `Znaleziono ${available_rooms.length} wolnych sal.<br>`;
+		if (available_rooms.length == 0){
+			htmlInfo += `Przykro mi :(`;
+		}else{
+			htmlInfo += `Kliknij aby podejrzeć zajętość sali <br><br>`;
+			for (r in available_rooms){
+				var room = available_rooms[r];
+				htmlInfo += `<span style="background: rgba(0,0,0,0.3); border: 1px solid #ddd; border-radius: 5px; padding: 4px; margin: 3px; text-align: center; cursor: pointer;" onclick="jumpTo(1, '${room}');">${room} </span>`;
+			}
+		}
+		app.modal.alert(htmlInfo, "blue");
 	}
 };
 
