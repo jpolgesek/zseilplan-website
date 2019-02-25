@@ -53,10 +53,10 @@ var app = {
 			theme_manager_ui: false,
 			theme_christmas_by_default: false,
 			new_hashparser: false,
-			prefs_enable: false,
-			prefs_transition: false,
+			prefs_enable: true,
+			prefs_transition: true,
 			overrides_summaryModal: true,
-			new_settings: false
+			new_settings: true
 		},
 	
 		internal: {
