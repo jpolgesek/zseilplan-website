@@ -39,11 +39,11 @@ var modal = {
 		// modalContainer.id = id;
 		modalContainer.className = "tabbedModal center-hv shadow";
 
-		var modalMenu = dom.createEWC("input", ["menuCheck"]);
-		modalMenu.type = "checkbox";
-		modalMenu.onClick = function(){
+		var modalMenu = dom.createEWC("div", ["menuCheck"]);
+		modalMenu.innerHTML = "☰";
+		modalMenu.onclick = function(){
 			if (this.parentElement.parentElement.className.indexOf("hideMenu") != -1){
-
+				dom.removeClass(this.parentElement.parentElement, "hideMenu")
 			}else{
 				dom.addClass(this.parentElement.parentElement, "hideMenu")
 			}

@@ -42,7 +42,8 @@ var app = {
 			new_hashparser: false,
 			prefs_enable: false,
 			prefs_transition: false,
-			overrides_summaryModal: false
+			overrides_summaryModal: false,
+			new_settings: false
 		},
 	
 		dev: {
@@ -54,19 +55,21 @@ var app = {
 			new_hashparser: false,
 			prefs_enable: false,
 			prefs_transition: false,
-			overrides_summaryModal: true
+			overrides_summaryModal: true,
+			new_settings: false
 		},
 	
 		internal: {
 			diff_diff: true,
 			diff_select_version: true,
 			theme_manager: true,
-			theme_manager_ui: true,
+			theme_manager_ui: false,
 			theme_christmas_by_default: false,
 			new_hashparser: true,
 			prefs_transition: true,
 			prefs_enable: true,
-			overrides_summaryModal: true
+			overrides_summaryModal: true,
+			new_settings: true
 		}
 	},
 	
@@ -156,6 +159,10 @@ var app = {
 				};
 			}
 		} catch (e) {}
+
+		if (this.isEnabled("new_settings")){
+			ui.createNavbarButton("S", "Ustawienia2", function(){settings.createModal()});
+		}
 
 		if (this.isEnabled("theme_manager")){
 			if (app.themeManager != undefined){

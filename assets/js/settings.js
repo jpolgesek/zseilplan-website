@@ -1,6 +1,7 @@
 var settings = {
 	createModal: function(){
-
+		this.unsavedPrefs = {};
+		
 		preferencesDiv = app.modal.createTabbed(
 			/*"preferences", 
 			"Settings - title",
@@ -8,7 +9,7 @@ var settings = {
 			function(){ui.showPreferences(0)},*/
 			{	
 				title: "Ustawienia",
-				closeAction: function(){alert("TODO")},
+				closeAction: settings.closeModal,
 				tabbed: true
 			}
 		);
@@ -22,7 +23,7 @@ var settings = {
 						devOnly: false,
 						type: "checkbox",
 						dataSource: ui.breakLineInItem,
-						onClick: function(x){ui.setLineBreak(x)},
+						onClick: function(){ui.setLineBreak(this.checked)},
 						desc: "Zawijaj wiersze po nazwie przedmiotu",
 						check: ui.setLineBreak
 					},
@@ -30,23 +31,23 @@ var settings = {
 						devOnly: false,
 						type: "checkbox",
 						dataSource: ui.jumpButtonsFloatRight,
-						onClick: function(x){ui.setJumpButtonsFloatRight(x)},
+						onClick: function(){ui.setJumpButtonsFloatRight(this.checked)},
 						desc: "Wyrównuj sale i nauczycieli do prawej strony",
 						check: ui.setJumpButtonsFloatRight
 					},
-					{
+					/*{
 						devOnly: false,
 						type: "checkbox",
 						dataSource: ui.darkMode,
 						onClick: function(x){ui.setDarkMode(this.checked)},
 						desc: "Tryb nocny (deprecated)",
 						check: ui.setDarkMode
-					},
+					},*/
 					{
 						devOnly: true,
 						type: "checkbox",
 						dataSource: notifications_enabled,
-						onClick: function(x){toggleNotifications(x)},
+						onClick: function(){toggleNotifications(this.checked)},
 						desc: "Odbieraj powiadomienia",
 						check: toggleNotifications
 					},
@@ -54,7 +55,7 @@ var settings = {
 						devOnly: false,
 						type: "checkbox",
 						dataSource: overrides_disabled,
-						onClick: function(x){return;},
+						onClick: function(){overrides_disabled = this.checked; refreshView();},
 						desc: "Tymczasowo ukryj zastępstwa",
 						check: toggleOverrides
 					},
@@ -75,14 +76,14 @@ var settings = {
 					{
 						devOnly: false,
 						type: "select",
-						dataSource: [
-							{name: "Domyślny",  value: "0"},
-							{name: "Ciemny", value: "1"},
-							{name: "Świąteczny", value: "2"},
-							{name: "Świąteczny ciemny", value: "3"},
-							{name: "Windows 95", value: "3"},
-						],
-						onClick: function(x){ui.setDarkMode(this.checked)},
+						dataSource: app.themeManager.getThemesList(),
+						onChange: function(){
+							settings.unsavedPrefs["modal_settings_s_look"] = this.value; 
+							var themeIndex = this.value.split(":")[0];
+							var versionIndex = this.value.split(":")[1];
+							app.themeManager.activate(themeIndex, versionIndex);
+						},
+						onClick: undefined,
 						desc: "Motyw aplikacji",
 						check: false
 					}
@@ -99,7 +100,10 @@ var settings = {
 							{name: "WWW (zseil.edu.pl)",  value: "www"},
 							{name: "Vulcan",  value: "vulcan"},
 						],
-						onClick: function(x){ui.setDarkMode(this.checked)},
+						onChange: function(){
+							settings.unsavedPrefs["modal_settings_s_dataSource_overrides"] = this.value; 
+						},
+						onClick: undefined,
 						desc: "Źródło zastępstw",
 						check: false
 					},
@@ -110,7 +114,10 @@ var settings = {
 							{name: "WWW (zseil.edu.pl)",  value: "www"},
 							{name: "Vulcan",  value: "vulcan"},
 						],
-						onClick: function(x){ui.setDarkMode(this.checked)},
+						onChange: function(){
+							settings.unsavedPrefs["modal_settings_s_dataSource_timetable"] = this.value; 
+						},
+						onClick: undefined,
 						desc: "Źródło planu",
 						check: false
 					}
@@ -155,7 +162,9 @@ var settings = {
 						devOnly: false,
 						type: "checkbox",
 						dataSource: ui.darkMode,
-						onClick: function(x){return;},
+						onClick: function(x){
+							settings.unsavedPrefs["modal_settings_s_tests_TEST_NAME"] = this.checked; 
+						},
 						desc: "Włącz test xyz.",
 						check: ui.setDarkMode
 					},
@@ -278,17 +287,15 @@ var settings = {
 		row.appendChild(app.modal.createButton({
 			innerHTML: "Zapisz zmiany",
 			onClick: function(){
-				myStorage.save();
-				ui.showPreferences(0);
+				settings.save();
+				settings.closeModal();
 			},
 			primary: true
 		}));
 
 		row.appendChild(app.modal.createButton({
 			innerHTML: "Anuluj",
-			onClick: function(){
-				ui.showPreferences(0);
-			}
+			onClick: settings.closeModal
 		}));
 
 		row.appendChild(app.modal.createButton({
@@ -305,8 +312,22 @@ var settings = {
 		setTimeout(function(){
 			dom.addClass(preferencesDiv, "modal-anim");
 		}, 1)
+		dom.addClass(document.getElementById("container"), "blur")
 
-		app.ae('settings', 'open', '1');
+		app.ae('settings2', 'open', '1');
+
+		document.onkeydown = function(evt) {
+			evt = evt || window.event;
+			if (evt.keyCode == 27) {
+				settings.closeModal();
+			}
+		};
+
+	},
+
+	closeModal: function(){
+		dom.removeClass(document.getElementById("container"), "blur")
+		document.body.removeChild(preferencesDiv);
 	},
 
 	createItem: function(itemData){
@@ -349,6 +370,10 @@ var settings = {
 			title = document.createElement("span");
 			title.className = "desc";
 			title.innerHTML = itemData.desc;
+			
+			try {
+				input.onchange = itemData.onChange;
+			} catch (e) {}
 
 			label.appendChild(input);
 			row.appendChild(label);
@@ -387,5 +412,28 @@ var settings = {
 		}
 
 		return row;
+	},
+
+	save: function(){
+		Object.keys(this.unsavedPrefs).forEach(key => {
+			value = this.unsavedPrefs[key];
+			switch (key) {
+				case "modal_settings_s_dataSource_overrides":
+					//TODO//preferences.set("modal_settings_s_dataSource_overrides", value);
+					break;
+				
+				case "modal_settings_s_dataSource_timetable":
+					//TODO//preferences.set("modal_settings_s_dataSource_overrides", value);
+					break;
+				
+				case "modal_settings_s_look":
+					preferences.set("thememanager.theme", value);
+					break;
+			
+				default:
+					break;
+			}
+		})
+		preferences.save();
 	}
 };

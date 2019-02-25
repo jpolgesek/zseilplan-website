@@ -10,8 +10,8 @@ var preferences = {
 		"LastModified": "01.01.1970 00:01",
 		preferences: {
 			//Default unit/room/teacher
-			"app.homeType": "unit", 	
-			"app.homeValue": "4G", 	
+			"app.homeType": undefined, 	
+			"app.homeValue": undefined, 	
 			"app.homeGroups": ["2/2"], //TODO 	
 
 			
@@ -20,7 +20,7 @@ var preferences = {
 			"ui.breakLineInItem": false,
 			"ui.jumpButtonsFloatRight": true,
 
-			"thememanager.enabled": false,
+			"thememanager.enabled": true,
 			"thememanager.theme": false,
 			"thememanager.version": false,
 
@@ -28,20 +28,20 @@ var preferences = {
 			/* UI Modifications */
 
 			//Which groups should *NOT* be hidden by grouphider
-			"ui.grouphider_groups": ["2/2"], 		
+			//"ui.grouphider_groups": ["2/2"], 		
 
 			//When to activate grouphider
 			//Possible values: false / "only_home" / "always" (why would anyone want this?)
-			"ui.activate_grouphider": "only_home", 	
+			"ui.activate_grouphider": false, 	
 
 			//Display quick grouphiden enable/disable switch
 			"ui.show_grouphider_switch": true,
 
 			//Removes group information from subject name and moves it to a .clickable span
-			"ui.show_group_info": true, 
+			"ui.show_group_info": false, 
 
 			//Normalize subject using internal dictionary (TODO: external ones)
-			"ui.normalize_subject": true
+			"ui.normalize_subject": false
 		}
 	},
 	storageMethod: undefined, 
@@ -60,7 +60,8 @@ var preferences = {
 
 		if (localStorage.getItem("SCP2Data") == null) {
 			utils.log("NewPrefs", "There is no data to load (no SCP2Data)");
-			if (app.isEnabled("prefs_autoconvert")){
+			if (app.isEnabled("prefs_transition")){
+				utils.log("NewPrefs", "Starting migration");
 				this.convert();
 				this.save();
 			}else{
@@ -151,8 +152,10 @@ var preferences = {
 		}
 		
 		if (localStorage.getItem("ui.darkMode") == "true") {
+			this.SCP2Data.preferences["thememanager.theme"] = "0:1";
 			this.SCP2Data.preferences["ui.darkMode"] = true;
 		} else {
+			this.SCP2Data.preferences["thememanager.theme"] = "0:0";
 			this.SCP2Data.preferences["ui.darkMode"] = false;
 		}
 		
@@ -197,13 +200,29 @@ var preferences = {
 				var target = document.getElementById("rooms");
 			}
 
-			target.value = this.SCP2Data.preferences["app.homeValue"];
-			refreshView();
+			if (target != undefined){
+				target.value = this.SCP2Data.preferences["app.homeValue"];
+				refreshView();
+			}
 		}
 		
-		if (this.SCP2Data.preferences["ui.darkMode"]) {
-			ui.setDarkMode(true);
+		/* Themes */
+		if ((this.SCP2Data.preferences["thememanager.enabled"]) && (typeof this.SCP2Data.preferences["thememanager.theme"] == "string")) {
+			try {
+				var themeIndex = this.SCP2Data.preferences["thememanager.theme"].split(":")[0];
+				var versionIndex = this.SCP2Data.preferences["thememanager.theme"].split(":")[1];
+				app.themeManager.activate(themeIndex, versionIndex);
+			} catch (e) {}
+		}else{
+			/* Remove me:
+			if (this.SCP2Data.preferences["ui.darkMode"]) {
+				ui.setDarkMode(true);
+			}*/
+			
+			// Dark mode by default
+			app.themeManager.activate(0, 1);
 		}
+
 		
 		ui.breakLineInItem = this.SCP2Data.preferences["ui.breakLineInItem"];
 		ui.jumpButtonsFloatRight = this.SCP2Data.preferences["ui.jumpButtonsFloatRight"];

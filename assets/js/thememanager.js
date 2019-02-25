@@ -2,6 +2,16 @@ app.themeManager = {
 	darkModeOverrided: false,
 	themes: [
 		{
+			"name": "Domyślny",
+			"darkCompatible": false,
+			"css": "",
+			"js": "",
+			"versions": [
+				{"name": "Jasny", "className": ""},
+				{"name": "Ciemny", "className": "dark"}
+			]
+		},
+		{
 			"name": "Świąteczny",
 			"darkCompatible": false,
 			"css": "assets/themes/christmas/christmas.css",
@@ -9,8 +19,8 @@ app.themeManager = {
 			"versions": [
 				{"name": "Czerwony (domyślny)", "className": "c_default"},
 				{"name": "Ciemny", "className": "c_dark"},
-				{"name": "Niebieski", "className": "c_blue"},
-				{"name": "Zielony", "className": "c_green"}
+				{"name": "Niebieski (DEVTEST)", "className": "c_blue"},
+				{"name": "Zielony (DEVTEST)", "className": "c_green"}
 			]
 		},
 		{
@@ -19,7 +29,7 @@ app.themeManager = {
 			"css": "assets/themes/windows95.css",
 			"js": "assets/themes/95/95.js",
 			"versions": [
-				{"name": "Domyślny", "className": "c_default"}
+				{"name": "Domyślny (DEVTEST)", "className": "c_default"}
 			]
 		}
 	],
@@ -99,6 +109,21 @@ app.themeManager = {
 	deactivate: function(themeIndex){
 		utils.log("themeMgr", "Deactivating theme");
 		return true;
+	},
+	
+	getThemesList: function(){
+		var out = [];
+		for (var i = 0; i < this.themes.length; i++){
+			var currentTheme = this.themes[i];
+			console.log(currentTheme.versions);
+			for (var j = 0; j < currentTheme.versions.length; j++){
+				out.push({
+					name: currentTheme.name + " - " + currentTheme.versions[j].name,
+					value: i + ":" + j
+				});
+			}
+		}
+		return out;
 	},
 
 	createModal: function(){
