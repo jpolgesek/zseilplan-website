@@ -32,6 +32,7 @@ var isIE = detectIE();
 
 
 var app = {
+	_ui_loaded: false,
 	_features: {
 		prod: {
 			diff_diff: false,
@@ -160,6 +161,8 @@ var app = {
 			}
 		} catch (e) {}
 
+		if (this._ui_loaded) return;
+
 		if (this.isEnabled("new_settings")){
 			ui.createNavbarButton("S", "Ustawienia2", function(){settings.createModal()});
 		}
@@ -190,6 +193,7 @@ var app = {
 		}
 
 		window.addEventListener("hashchange", app.parseHash, false);
+		this._ui_loaded = true;
 	},
 	getUrlRouter: function(){
 		var path = document.location.pathname;
