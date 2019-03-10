@@ -120,6 +120,7 @@ var utils = {
 	},
 
 	getFreeRoomsUI: function(day, hour){
+		/*
 		var available_rooms = this.getFreeRooms(day, hour);
 		var htmlInfo = `<i>Szukano dla ${day} dnia tygodnia, ${hour} godziny lekcyjnej</i><br>`;
 		htmlInfo += `Znaleziono ${available_rooms.length} wolnych sal.<br>`;
@@ -133,6 +134,8 @@ var utils = {
 			}
 		}
 		app.modal.alert(htmlInfo, "blue");
+		*/
+		return false; //Unavailable for now due to fucking IE
 	}
 };
 
