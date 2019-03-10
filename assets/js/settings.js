@@ -415,7 +415,7 @@ var settings = {
 	},
 
 	save: function(){
-		Object.keys(this.unsavedPrefs).forEach(key => {
+		Object.keys(this.unsavedPrefs).forEach(function(key){
 			value = this.unsavedPrefs[key];
 			switch (key) {
 				case "modal_settings_s_dataSource_overrides":
