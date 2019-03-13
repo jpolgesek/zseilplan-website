@@ -6,9 +6,9 @@
 	"background_color": "#042f5f",
 	"icons": [
 		{
-		"src": "/assets/img/launcher-icon-4x.png?new_logo",
+		"src": "/assets/img/launcher-icon-256.png?new_logo",
 		"type": "image/png",
-		"sizes": "192x192"
+		"sizes": "256x256"
 		},
 		{
 		"src": "/assets/img/launcher-icon-512.png?new_logo",
