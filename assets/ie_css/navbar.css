@@ -1,0 +1,196 @@
+.navbar-container{
+	position: relative;
+	transform-style: preserve-3d;
+}
+/*
+.navbar-container.notification .navbar{
+	transform: rotateX(90deg) translateZ(26px);
+}
+
+.navbar-container.notification .navbar-notification{
+	transform: rotateX(0deg) translateZ(26px);
+}
+*/
+.navbar-container.notification{
+	transform: translateZ(0) rotateX(180deg);
+	/* transform: translateZ(0) rotateX(90deg); */
+	/* transform-origin: 0 0; */
+}
+
+.navbar{
+	position: sticky;
+	top: 0;
+	width: 100%;
+    padding-top: 5px;
+	padding-bottom: 5px;
+	z-index: 200;
+	margin-bottom: 30px;
+}
+
+.navbar-title{
+    display: inline;
+    font-size: 1.5em;
+    font-weight: 300;
+	margin-left: 60px;
+	line-height: 178%;
+    color: #111;
+	text-shadow: 2px 1px 2px #00000021;
+}
+
+.navbar-buttons{
+	float: right;
+	margin-right: 0.5%;
+}
+
+.navbar{
+	background: #fbfbfb;
+	/* box-shadow: none; */
+    background-image: url("../img/icon_square.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+	height: 42px;
+}
+
+.navbar-logo{
+	display: inline-block;
+	width: 52px;
+	font-size: 1.5em;
+	text-align: center;
+}
+
+.navbar button {
+	display: inline-flex;
+	cursor: pointer;
+	border: 0;
+	overflow: hidden;
+	/* background: rgb(16, 128, 245); */
+	background: #0b60ca;
+	border-radius: 3px;
+	margin-left: 5px;
+}
+
+.navbar button .icon {
+	position: relative;
+	/* background: rgba(0, 0, 0, 0.45); */
+	line-height: 42px;
+	width: 40px;
+    height: 40px;
+    text-align: center;
+    color: #fff;
+    font-size: 29px;
+	border-radius: 2px;
+}
+
+@supports (-moz-appearance:none) {
+	.navbar button .icon {
+		margin-top: -2px;
+	}
+}
+
+.navbar button .icon .fa {
+	width: 30px;
+}
+
+.navbar button .text {
+	position: relative;
+	width: 0;
+	height: 40px;
+	overflow: hidden;
+	font-family: "Roboto", sans-serif;
+  	/* background: #046edd; */
+	text-align: center;
+	line-height: 40px;
+	color: #fff;
+	font-weight: 300;
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
+	font-size: 1.3em;
+}
+
+.navbar button .text span {
+	width: 100%;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+			transform: translateX(-50%);
+}
+
+.navbar button:hover .text span {
+	opacity: 1;
+}
+
+.navbar button:hover .text {
+	width: 120px;
+}
+
+.navbar button:hover .icon {
+	/* color: #5c53f3; */
+	/* background: none; */
+	border-radius: 0;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+}
+
+.navbar button:hover {
+	/* background: rgba(0, 0, 0, 0.45); */
+}
+
+.navbar button:hover .icon:after {
+	right: -2px;
+}
+
+.navbar-info{
+	color: #111;
+  	text-shadow: 2px 1px 2px #00000021;
+	font-weight: 300;
+	font-size: 1.5em;
+	border-left: 1px solid #8a8a8a;
+	margin-left: 10px;
+	padding-left: 10px;
+	line-height: 178%;
+}
+
+.navbar-copyright{
+    color: rgb(209, 209, 209);
+    margin-right: 15px;
+    float: right;
+    height: 42px;
+	text-align: right;
+}
+
+.navbar-copyright::before{
+    content: "dev.polgesek.pl/zseilplan"; /* TODO! */
+    position: absolute;
+    top: -26px;
+    left: 0;
+    font-size: 0.7em;
+    color: black;
+    width: 100%;
+    text-align: center;
+}
+
+
+.navbar-notification{
+    background-image: url("../img/icon_square.png"), linear-gradient(180deg, rgba(4,110,221,1) 0%, rgba(23,70,169,1) 100%);
+    background-repeat: no-repeat;
+    background-size: contain;
+	position: sticky;
+	top: 0;
+	width: 100%;
+    padding-top: 5px;
+	padding-bottom: 5px;
+	/* z-index: 2100; */
+	margin-bottom: 30px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: rotateX(-180deg) translateY(0) translateZ(1px);
+	display: none;
+	/* transform: rotateX(-90deg) translateY(25px) translateZ(21px); */
+}
+
+.navbar-notification .navbar-title{
+    color: #ececec;
+}

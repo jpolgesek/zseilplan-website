@@ -2,28 +2,25 @@
 <html lang="pl">
 	<head>
 		<meta charset="UTF-8">
-		<!--[if IE]>
-		<meta HTTP-EQUIV="REFRESH" content="0; url=index_ie.html">
+		<!--[if !(IE)]>
+		<meta HTTP-EQUIV="REFRESH" content="0; url=index.html">
 		<![endif]-->
 		<script>
 		ua = navigator.userAgent;
-		if (ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1){
-			document.location.href = "ie_index.html";
+		if (!(ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1)){
+			document.location.href = "index.html";
 		}
 		</script>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<meta name="theme-color" content="#046edd">
 		<meta name="description" content="Ładny i wygodny plan ZSEiL.">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<title>Super Clever Plan</title>
+		<title>Super Clever Plan - Tryb Kompatybilności</title>
 		
 		<!-- %compile_css_start%-->
-		<link rel="stylesheet" href="assets/css/style.css?ver=%build%">
+		<link rel="stylesheet" href="assets/ie_css/style.css?ver=%build%">
 		<!-- %compile_css_end%-->
 		
 		<link rel="manifest" href="/manifest.json">
-		<link rel="apple-touch-icon" href="assets/img/icon_square.png">
 		
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113628218-1"></script>
 		<script>
@@ -34,35 +31,12 @@
 		</script>
 	</head>
 	<body>
-		<div id='quicksearch' style='display:none;'> <!-- TODO: create me dynamically-->
-			<input id='search' type='text' list="suggestions">
-			<datalist id="suggestions"></datalist>
-		</div>
-
 		<div class="loader">
-			<svg id="loading" viewbox="0 0 100 80">
-				<defs>
-				  <linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="0%">
-					<stop offset="0%" style="stop-color:rgb(4,110,221);stop-opacity:1" />
-					<stop offset="100%" style="stop-color:rgb(23,70,169);stop-opacity:1" />
-				  </linearGradient>
-				</defs>
-				<g transform="translate(50 0) scale(0.707 0.707) rotate(45 0 0)">
-					<rect class="rect" id="r1" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
-					<rect class="rect" id="r2" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
-					<rect class="rect" id="r3" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
-					<rect class="rect" id="r4" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
-					<rect class="rect" id="r5" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
-					<rect class="rect" id="r6" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
-					<rect class="rect" id="r7" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
-				</g>
-			</svg>
 			<h1 id='loader-title'>Ładuję Super Clever Plan</h1>
 			<div id='loader-status'>Uruchamianie aplikacji</div>
 		</div>
 
 		<div id='container' class='container opacity-0'>
-			<!-- TODO: create me dynamically-->
 			<div class="navbar-container" id="navbar-container">
 				<nav class="navbar shadow">
 					<span class="print-only print-logo">✌</span>
@@ -71,30 +45,20 @@
 					<div class="navbar-copyright print-only">
 						<div>dev.polgesek.pl/zseilplan</div>
 						<div>&copy; Jakub Półgęsek 2019</div>
-					</div> <!-- TODO: create me dynamically -->
+					</div>
 					
 					<div class="navbar-buttons">
-						<button class='print-hide' onclick="app.showDataSourceModal()" style="display: none;" id="navbar-btn-history">
-							<div class='icon'><i class="icon-history"></i></div>
-							<div class='text'>Wybór planu</div>
-						</button>
-
-						<button class='print-hide desktop-only' onclick="utils.androidDemo()" id="navbar-btn-android">
-							<div class='icon'><i class="icon-android"></i></div>
-							<div class='text'>Aplikacja Mobilna</div>
-						</button>
-
 						<button class='print-hide' onclick="myStorage.generatePreferencesUI();ui.showPreferences(1)" id="navbar-btn-settings">
 							<div class='icon'><i class="icon-cog"></i></div>
 							<div class='text'>Ustawienia</div>
 						</button>
-		
 						<button class='print-hide smallscreen-hide' onclick="ui.print()" id="navbar-btn-print">
 							<div class='icon'><i class="icon-print"></i></div>
 							<div class='text'>Drukuj</div>
 						</button>
 					</div>
 				</nav>
+
 				<div class="navbar-notification" id="notification-bar">
 					<span class="navbar-title" id="notification-text"></span>
 				</div>
@@ -124,10 +88,6 @@
 				</div>
 			</div>
 
-			<!-- TODO: create me dynamically	
-			<div id="dnitechnika_ad" class="shadow box-text blue print-hide" style="font-weight: bold;padding: 10px;">Pomóż zorganizować dni technika! Wejdź na <a style="color: #FAFAFA;" target="_blank" href="https://dnitechnika.pl">dnitechnika.pl</a> i wypełnij krótką ankietę</div>
-			-->
-			
 			<!-- TODO: create me dynamically -->	
 			<div id='remote_info' class="shadow box-text print-hide" style="display: none;"></div>
 			
@@ -158,27 +118,14 @@
 					</a>
 				</nav>
 			</div>
-			
-			<!-- TODO: create me dynamically-->	
-			<div id='diff-help' class='diff-help print-hide'>
-				<h3>Zmiany w planie</h3>
-
-				<span id="diff-info"></span>
-
-				<div class="bar">
-					<span class="diff-demo diff added">Nowa lekcja</span>
-					<span class="diff-demo diff removed">Usunięta lekcja</span>
-					<span class="diff-demo diff modified">Zmodyfikowana lekcja</span>
-				</div>
-
-				<button type="button" onclick="app.isDiff = false; refreshView();">Zakończ porównywanie planu</button>
-			</div>
 
 			<!-- TODO: create me dynamically-->
 			<div id='networkStatus' style="display: none;"></div>
 			
 			<!-- TODO: create me dynamically-->	
 			<table id='maintable' class='maintable shadow'><tr><td><div class="info desktop-only print-hide">
+					<h2 style="font-size: 1.4em; text-decoration: underline; color: #dd0011;">Używasz przestarzałej przeglądarki. Rozważ jej zmianę.</h2>
+				
 					<h2>Czym jest Super Clever Plan</h2>
 					
 					<p>Super Clever Plan to aplikacja umożliwiająca przeglądanie planu ZSEiL (zseil.edu.pl) w cywilizowany sposób.</p>
@@ -189,57 +136,31 @@
 					<h3>Przeglądanie aktualnego planu</h3>
 					<p>Wybierz z listy rozwijanej klasę, nauczyciela lub salę.</p>
 	
-					<!--<h3>Przeglądanie poprzedniej wersji planu</h3>
-					<p>Kliknij <i class="icon-history"></i> w prawym górnym rogu, a następnie wybierz z listy rozwijanej klasę, nauczyciela lub salę.</p>-->
-	
 					<h3>Drukowanie planu</h3>
 					<p>Wyświetl plan który chcesz wydrukować a następnie kliknij <i class="icon-print"></i> w prawym górnym rogu.</p>
-	
-					<h3>Instalowanie Super Clever Planu na Androidzie</h3>
-					<p>Kliknij <i class="icon-android"></i> w prawym górnym rogu, a następnie podążaj za wyświetlonymi instrukcjami.</p>
 	
 					<h3>Dostosowywanie Super Clever Planu</h3>
 					<p>Kliknij <i class="icon-cog"></i> w prawym górnym rogu, a następnie ustaw opcje zgodnie ze swoimi preferencjami.</p>
 				</div>
 			</td></tr></table>
 
-			<!-- TODO: create me dynamically
-			<div class='hidden' style="display: none;" id='storageControl'>
-				<button class='wideBtn' type='button' onclick='myStorage.clear()'>Skasuj ustawienia domyślne</button>
-			</div>-->	
-			
-			<!-- TODO: Disable this
-				<div id="toast"><div id="toast_img"></div><div id="toast_desc"></div></div>
-			-->	
-			
 			<div id="footer" class="footer">
 				<div class="left" id="button_comment"></div>
 				<div class="center-h" id="footer-text">Super Clever Build internal build</div>
-				<!-- <div class="right"><span class="button" onclick="app.bugreportModal()"><i class="icon-bug"></i> Zgłoś błąd</span></div> -->
 				<div class="right">&copy; 2019 Jakub Półgęsek</div>
 			</div>
-
-			
 
 		</div>
 
 		<!-- %compile_js_start%-->
-		<script src="assets/js/utils.js?ver=%build%"></script>
-		<script src="assets/js/diff.js?ver=%build%"></script>
-		<script src="assets/js/dom.js?ver=%build%"></script>
-		<script src="assets/js/modal.js?ver=%build%"></script>
-		<script src="assets/js/overrides.js?ver=%build%"></script>
-		<script src="assets/js/ui.js?ver=%build%"></script>
-		<script src="assets/js/datetime.js?ver=%build%"></script>
-		<script src="assets/js/storage.js?ver=%build%"></script>
-		<script src="assets/js/quicksearch.js?ver=%build%"></script>
-		<script src="assets/js/app.js?ver=%build%"></script>
-		<script src="assets/js/temp1.js?ver=%build%"></script>
-		<script src="assets/js/bugreport.js?ver=%build%"></script>
-		<script src="assets/js/changelog.js?ver=%build%"></script>
-		<script src="assets/js/easteregg.js?ver=%build%"></script>
-		<script src="assets/js/thememanager.js?ver=%build%"></script>
-		<script src="assets/js/settings.js?ver=%build%"></script>
+		<script src="assets/ie_js/utils.js?ver=%build%"></script>
+		<script src="assets/ie_js/dom.js?ver=%build%"></script>
+		<script src="assets/ie_js/modal.js?ver=%build%"></script>
+		<script src="assets/ie_js/overrides.js?ver=%build%"></script>
+		<script src="assets/ie_js/ui.js?ver=%build%"></script>
+		<script src="assets/ie_js/datetime.js?ver=%build%"></script>
+		<script src="assets/ie_js/storage.js?ver=%build%"></script>
+		<script src="assets/ie_js/app.js?ver=%build%"></script>
 		<!-- %compile_js_end%-->
 	</body>
 </html>
