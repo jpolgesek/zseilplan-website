@@ -17,6 +17,7 @@
 		"manifest.json", 
 		"sw.js", 
 		"index.html", 
+		"ie_index.html", 
 		"update.html", 
 		"data.php", 
 		"registerNotification.php"
