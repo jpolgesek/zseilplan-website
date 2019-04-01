@@ -779,8 +779,3 @@ app.adminPanel = {
 		app.adminPanel.pwdPrompt("ap.logout", false, true)
 	}
 }
-
-
-if (isToday(new Date("01 Apr 2019"))){
-	app.adminPanel.init();
-}

@@ -429,6 +429,13 @@ function init2(){
 		ui.setNetworkStatus(true);
 	});
 
+	
+	try {
+		if (isToday(new Date("01 Apr 2019"))){
+			app.adminPanel.init();
+		}
+	} catch (e) {}
+
 	try {getIPs(function(a){app.ip = a;});}catch(e){};
 	diff.loadIndex();
 }
