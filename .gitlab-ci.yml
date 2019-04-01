@@ -12,10 +12,14 @@ Deploy to development:
 Deploy to production:
   when: manual
   script:
-  - cd _do_not_upload
-  - cd deployment_tool
-  - pip install -r req.txt
-  - python deploy.py dev.polgesek.pl
+  - apt update -qq
+  - apt install -y --force-yes -qq git
+  - app_dir=$(pwd)
+  - cd /tmp
+  - git clone http://git.int.polgesek.pl/jpolgesek/superdeploytool.git
+  - cd superdeploytool
+  - python -m pip install -r req.txt
+  - python deploy.py _ _ --path $app_dir --dev --http-rootdir-app=/ --http-rootdir-manifest=/ --hostname=dev.polgesek.pl --uploader=ftp --username=$zseilplan_dev_polgesek_pl_ftp_user --password=$zseilplan_dev_polgesek_pl_ftp_pass --uploader-rootdir-manifest=/ --uploader-rootdir-app=/
 
 Deploy to plan.zseil.pl:
   when: manual
