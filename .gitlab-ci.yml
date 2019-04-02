@@ -19,7 +19,7 @@ Deploy to production:
   - git clone http://git.int.polgesek.pl/jpolgesek/superdeploytool.git
   - cd superdeploytool
   - python -m pip install -r req.txt
-  - python deploy.py _ _ --path $app_dir --http-rootdir-app=/zseilplan/ --http-rootdir-manifest=/zseilplan/ --hostname=dev.polgesek.pl --uploader=ftp --username=$zseilplan_dev_polgesek_pl_ftp_user --password=$zseilplan_dev_polgesek_pl_ftp_pass --uploader-rootdir-manifest=/zseilplan/ --uploader-rootdir-app=/zseilplan/
+  - python deploy.py _ _ --path $app_dir --http-rootdir-app=/zseilplan/ --http-rootdir-manifest=/zseilplan/ --hostname=dev.polgesek.pl --uploader=ftp --username=$zseilplan_dev_polgesek_pl_ftp_user --password=$zseilplan_dev_polgesek_pl_ftp_pass --uploader-rootdir-manifest=/ --uploader-rootdir-app=/zseilplan/
 
 Deploy to plan.zseil.pl:
   when: manual
