@@ -11,7 +11,8 @@
 	"static_dirs": [
 		["assets","img"],
 		["assets","font"],
-		["assets","themes"]
+		["assets","themes"],
+		["goodbye"]
 	],
 	"static_files": [
 		"manifest.json", 

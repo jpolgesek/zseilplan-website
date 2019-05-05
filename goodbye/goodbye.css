@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700');
+
+html, body {
+	background: none;
+	color: rgb(46, 46, 46);
+	
+	/* TODO: external fonts */
+	font-family: 'Noto Sans', sans-serif, 'Segoe UI', Tahoma, 'Geneva', Verdana, sans-serif;
+
+	line-height: 1.45;
+	display: flex;
+
+	justify-content: center;
+	align-items: center;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 30vw;
+	max-width: 70vw;
+}
+
+body{
+	background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(241, 248, 255) 100%);
+    background-blend-mode: screen;
+	background-attachment: fixed;
+}
+
+.whiteBlock {
+    background: #ffffff;
+    box-shadow: 0 0.3px 0.9px rgba(0, 0, 0, 0.108), 0 1.6px 3.6px rgba(0, 0, 0, 0.132);
+	border-radius: 3px;
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+
+section > .content{
+	padding: 8px;
+}
+
+section{
+	transform: translateY(0px);
+	transition: 0.2s transform;
+}
+
+h1, h2, h3{
+	margin: 0;
+	margin-top: 2px;
+    color: #001a56;
+    text-shadow: 0px 0px 18px #082c672b;
+}
+
+h3.sectionTitle{
+    color: #ffffff;
+    margin: 0 !important;
+    padding: 7px 5px;
+    background: #1e64af;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 30vw;
+	max-width: 70vw;
+}
+
+p.right{
+	text-align: right;
+}
+
+p a, div a{
+    color: rgb(42, 85, 185);
+}
+
+div.mainHeader{
+	margin-top: 10px;
+	margin-bottom: 15px;
+	font-size: 1.4em;
+}
+
+div.mainHeader > h3{
+	margin-top: -2px;
+}
+
+.imgcontainer{
+    border: 2px solid #1e64af;
+	border-radius: 5px;
+	position: relative;
+    display: inline-block;
+    max-width: calc(50% - 8px);
+}
+
+
+.imgcontainer > img, .imgcontainer > video{
+	display: inline-block;
+    width: 100%;
+}
+
+.imgcontainer > img{
+	cursor: pointer;
+}
+
+.imgcontainer > .desc{
+	background: #1e64af;
+    color: white;
+    padding: 5px 5px;
+}
+
+ul {
+	font-size: 1.2em;
+}
+
+.signature{
+	margin: 0;
+    color: #103e6f;
+    text-shadow: 0px 0px 18px #082c672b;
+    font-weight: 100;
+    font-size: 2rem;
+    font-style: italic;
+}	
+
+
+
+@media screen and (max-width: 768px) {
+	.container {
+		max-width: 95vw;
+	}
+
+	h1 {
+		font-size: 1.6em;
+	}
+
+	h3 {
+		font-size: 1.1em;
+	}
+
+	.imgcontainer{
+		max-width: unset;
+		margin-bottom: 10px;
+	}
+
+	.signature{
+		font-size: 1.3em;
+	}
+}	
