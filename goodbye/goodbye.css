@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700');
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans');
 
 html, body {
 	background: none;
 	color: rgb(46, 46, 46);
 	
 	/* TODO: external fonts */
-	font-family: 'Noto Sans', sans-serif, 'Segoe UI', Tahoma, 'Geneva', Verdana, sans-serif;
+	font-family: 'Fira Sans', sans-serif, 'Segoe UI', Tahoma, 'Geneva', Verdana, sans-serif;
 
 	line-height: 1.45;
 	display: flex;
@@ -127,6 +127,10 @@ ul {
     font-weight: 100;
     font-size: 2rem;
 }	
+
+strong{
+	font-size: 1.1em;
+}
 
 
 @media screen and (max-width: 768px) {
