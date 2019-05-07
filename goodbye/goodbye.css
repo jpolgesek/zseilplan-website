@@ -12,6 +12,11 @@ html, body {
 
 	justify-content: center;
 	align-items: center;
+	font-size: 1.06em;
+}
+
+body{
+	background: #fbfbfb;
 }
 
 .container {
@@ -25,22 +30,16 @@ html, body {
 	max-width: 70vw;
 }
 
-body{
-	background: linear-gradient(180deg, rgb(241, 248, 255) 0%, rgb(210, 226, 243) 100%);
-    background-blend-mode: screen;
-	background-attachment: fixed;
-}
-
 .whiteBlock {
-    background: #ffffff;
-    box-shadow: 0 0.3px 0.9px rgba(0, 0, 0, 0.108), 0 1.6px 3.6px rgba(0, 0, 0, 0.132);
+    /* background: #ffffff; */
+    /* box-shadow: 0 0.3px 0.9px rgba(0, 0, 0, 0.108), 0 1.6px 3.6px rgba(0, 0, 0, 0.132); */
 	border-radius: 3px;
 	overflow: hidden;
 	margin-bottom: 10px;
 }
 
 section > .content{
-	padding: 8px;
+    /* padding: 0px 8px; */
 }
 
 section{
@@ -58,21 +57,11 @@ h1, h2, h3{
 h3.sectionTitle{
     color: #ffffff;
     margin: 0 !important;
-    padding: 9px;
-    background: #1e64af;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-}
-
-.container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-wrap: wrap;
-	margin-left: auto;
-	margin-right: auto;
-	min-width: 30vw;
-	max-width: 70vw;
+    color: #0d3a69;
+	font-weight: 400;
+	font-size: 1.8em;
+	/* padding: 0px 8px; */
+	padding-top: 52px;
 }
 
 p.right{
@@ -91,6 +80,8 @@ div.mainHeader{
 
 div.mainHeader > h3{
 	margin-top: -2px;
+    border-bottom: solid #001a56 2px;
+    padding-bottom: 10px;
 }
 
 .imgcontainer{
@@ -98,7 +89,8 @@ div.mainHeader > h3{
 	border-radius: 5px;
 	position: relative;
     display: inline-block;
-    max-width: calc(50% - 8px);
+    max-width: calc(50% - 20px);
+    margin: 5px;
 }
 
 .imgcontainer > img, .imgcontainer > video{
@@ -125,7 +117,9 @@ ul {
     color: #103e6f;
     text-shadow: 0px 0px 18px #082c672b;
     font-weight: 100;
-    font-size: 2rem;
+	font-size: 2rem;
+	margin-top: 60px;
+	margin-bottom: 30px;
 }	
 
 strong{
