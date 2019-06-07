@@ -17,7 +17,7 @@ To fully use this, you might need:
 ## Directory structure
 directory       | usage 
 ----------------| ----------
-aee/      		| A Easter Egg (accessible via ↑↑↓↓←→←→BA)
+aee/      		| An Easter Egg (accessible via ↑↑↓↓←→←→BA)
 assets/      	| App assets:
 assets/css/ 	| CSS Files (style.css includes other files)
 assets/font/	| Icon Font files
