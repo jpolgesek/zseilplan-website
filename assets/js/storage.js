@@ -331,6 +331,7 @@ var myStorage = {
 		// preferencesDiv = document.getElementById("preferences");
 		// preferencesDiv.innerHTML = "";
 		preferencesDiv = modal.create('preferences', "Ustawienia", "Tutaj możesz dostosować Super Clever Plan do swoich preferencji", function(){ui.showPreferences(0)});
+		preferencesDiv.className += " deprecated";
 		prefsList = [
 			//Source, Change, Name
 			["checkbox", ui.breakLineInItem, function(x){ui.setLineBreak(x)}, "Zawijaj wiersze po nazwie przedmiotu", "ui.setLineBreak"],

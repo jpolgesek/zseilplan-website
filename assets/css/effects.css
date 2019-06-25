@@ -30,3 +30,17 @@
 	-webkit-transform: translate(-50%, 0);
 			transform: translate(-50%, 0);
 }
+
+.deprecated{
+	border: 3px solid red;
+}
+.deprecated::before{
+	content: "TO BE DEPRECATED";
+	color: red;
+	background: black;
+	font-size: 2rem;
+	z-index: 2000;
+	opacity: 0.6;
+    float: right;
+    margin-right: 40px;
+}
