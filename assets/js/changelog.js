@@ -15,8 +15,8 @@ app.changelog = {
 		changelogHTML += "<li>Zmieniony interfejs</li>";
 		changelogHTML += "</ul>";
 		changelogDiv = modal.create('changelog', "Changelog", changelogHTML, function(){changelogDiv.parentElement.removeChild(changelogDiv);ui.containerBlur(false)});
-		changelogDiv.className += "deprecated";
-		
+		changelogDiv.className += " deprecated";
+
 		ui.containerBlur(true);
 		document.body.appendChild(changelogDiv);
 		setTimeout(function(){dom.addClass(changelogDiv, "modal-anim");},1);

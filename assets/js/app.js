@@ -241,8 +241,8 @@ var app = {
 	},
 	showDataSourceModal: function(){
 		datasourcepickerDiv = modal.create('datasourcepicker', "Wybór planu", "Tutaj możesz wybrać wersję danych Super Clever Planu", function(){datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false)});
-		datasourcepickerDiv.className += "deprecated";
-		
+		datasourcepickerDiv.className += " deprecated";
+
 		row = modal.createRow();
 		row.style.margin.bottom = "-10px";
 		row.style.fontSize = "1.5em";
