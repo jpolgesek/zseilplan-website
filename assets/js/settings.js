@@ -309,22 +309,24 @@ var settings = {
 			title = document.createElement("span");
 			title.className = "desc";
 
+			change_text = "Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i kliknij przycisk poniżej. <br> <button onclick='alert(\"todo\")'>Ustaw obecnie wyświetlany plan jako domyślny</button>";
+
 			if (preferences.get("app.homeValue") == false){
-				title.innerHTML = "Przy uruchamianiu nie ładuję automatycznie żadnego planu.<br>Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i zapisz zmiany.";
+				title.innerHTML = "Przy uruchamianiu nie ładuję automatycznie żadnego planu.<br>" + change_text;
 			}else{
 				biginfo = {};
 				biginfo.innerHTML = preferences.get("app.homeValue");
 				switch (preferences.get("app.homeType")){
 					case "unit":
-						title.innerHTML = "Przy uruchamianiu ładuję automatycznie plan klasy <b>"+biginfo.innerHTML+"</b>.<br>Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i zapisz zmiany.";
+						title.innerHTML = "Przy uruchamianiu ładuję automatycznie plan klasy <b>"+biginfo.innerHTML+"</b>.<br>" + change_text;
 					break;
 
 					case "teacher":
-						title.innerHTML = "Przy uruchamianiu ładuję automatycznie plan nauczyciela <b>"+biginfo.innerHTML+"</b>.<br>Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i zapisz zmiany.";
+						title.innerHTML = "Przy uruchamianiu ładuję automatycznie plan nauczyciela <b>"+biginfo.innerHTML+"</b>.<br>" + change_text;
 					break;
 
 					case "room":
-						title.innerHTML = "Przy uruchamianiu ładuję automatycznie plan sali <b>"+biginfo.innerHTML+"</b>.<br>Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i zapisz zmiany.";
+						title.innerHTML = "Przy uruchamianiu ładuję automatycznie plan sali <b>"+biginfo.innerHTML+"</b>.<br>" + change_text;
 					break;
 				}
 			}
