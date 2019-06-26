@@ -37,7 +37,6 @@
 	margin-left: 60px;
 	line-height: 178%;
     color: #111;
-	text-shadow: 2px 1px 2px #00000021;
 }
 
 .navbar-buttons{
@@ -66,8 +65,7 @@
 	cursor: pointer;
 	border: 0;
 	overflow: hidden;
-	/* background: rgb(16, 128, 245); */
-	background: #0b60ca;
+    background: #3b71ab;
 	border-radius: 3px;
 	margin-left: 5px;
 }
@@ -150,7 +148,6 @@
 
 .navbar-info{
 	color: #111;
-  	text-shadow: 2px 1px 2px #00000021;
 	font-weight: 300;
 	font-size: 1.5em;
 	border-left: 1px solid #8a8a8a;

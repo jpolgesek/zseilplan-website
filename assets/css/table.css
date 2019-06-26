@@ -8,22 +8,26 @@
 .maintable td, .maintable th {
 	border: 1px solid rgba(132, 132, 132, 0.25);
 	padding: 5px;
+	transition: 0.15s box-shadow, 0.15s background-color;
 }
 
 .maintable tr:nth-child(even){ background-color: #f2f2f2; }
 
-/* .maintable tr:hover { background-color: #ddd; } */
 
 .maintable td:hover {
-	background-color: rgba(146, 199, 255, 0.33) !important;
-	box-shadow: 1px 1px 12px 0px rgba(58, 58, 58, 0.5);
+    background-color: rgba(204, 229, 255, 0.52) !important;
+    box-shadow: 1px 1px 12px 0px rgba(58, 58, 58, 0.5);
+}
+
+.maintable tr:first-of-type > td {
+	border: 1px solid rgba(255, 255, 255, 0.56);
 }
 
 .maintable .header {
 	padding-top: 12px;
 	padding-bottom: 12px;
-	text-align: left;
-	background-color: #046edd;
+    text-align: left;
+    background-color: #3b71ab;
 	color: white;
 	font-weight: 600;
 }
@@ -42,8 +46,8 @@
 }
 */
 
-.maintable .currentTimeFull{
-	background-color: rgba(123, 187, 255, 0.15) !important;
+.maintable .currentTimeFull{        
+	background-color: rgba(176, 214, 255, 0.16) !important;
 }
 
 .maintable .item_linebreak{
@@ -60,21 +64,28 @@
 	text-align: center;
 }
 
+.jumpButtons > .clickable:first-of-type{
+    border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.jumpButtons > .clickable:last-of-type{
+	border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
 .maintable .clickable{
 	cursor: pointer;
-	background-color: rgb(51, 77, 226);
+    background-color: rgb(59, 113, 171);
 	padding: 3px;
-	border-radius: 4px;
+	/* border-radius: 4px; */
 	color: #FAFAFA;
-    margin-right: 5px;
+    /* margin-right: 5px; */
 }
 
 .maintable .clickable:hover{
-	cursor: pointer;
-	background-color: #FAFAFA;
-	padding: 3px;
-	border-radius: 4px;
-	color: rgb(51, 77, 226);
+	background-color: #f9f9f9;
+	color: rgb(59, 113, 171);
 }
 
 .maintable .override{    
