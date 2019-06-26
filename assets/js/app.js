@@ -169,9 +169,6 @@ var app = {
 			if (app.themeManager != undefined){
 				utils.log("app", "Found theme manager");
 				app.themeManager.init();
-				if (this.isEnabled("theme_manager_ui")){
-					ui.createNavbarButton("◪", "Motywy", function(){app.themeManager.createModal()});
-				}
 			}
 			if (this.isEnabled("theme_christmas_by_default") && !preferences.get("disable_auto_themes")){
 				if (preferences.get("disable_auto_themes_once")){
