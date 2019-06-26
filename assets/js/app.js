@@ -819,7 +819,7 @@ if ('serviceWorker' in navigator) {
 	window.addEventListener('load', function() {
 		navigator.serviceWorker.register('sw.js').then(function(registration) {
 			utils.log("app", "ServiceWorker registration successful with scope: " + registration.scope);
-			try {fetch('index.html?launcher=true').then(function(response) {console.log("------")})["catch"]();} catch (e) {}
+			try {fetch('index.html?launcher=true').then(function(response) {console.log("------")})["catch"]();} catch (e) {} // Make first request in background to force service worker to cache index page.
 			registration.pushManager.getSubscription().then(function(sub) {
 				if (sub === null) {
 					utils.log("app", "Not subscribed to push service");
