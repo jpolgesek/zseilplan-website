@@ -381,6 +381,7 @@ function init2(){
 		dom.addClass(document.getElementsByClassName('loader')[0], "opacity-0");
 		dom.removeClass(document.getElementsByClassName('container')[0], "opacity-0");
 		document.getElementsByClassName('loader')[0].parentElement.removeChild(document.getElementsByClassName('loader')[0]);
+		document.body.style.background = null;
 	} catch(e){};
 
 	

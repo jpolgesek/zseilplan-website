@@ -34,7 +34,7 @@
 		gtag('config', 'UA-113628218-1');
 		</script>-->
 	</head>
-	<body>
+	<body style="background: rgb(33, 33, 35);">
 		<div id='quicksearch' style='display:none;'> <!-- TODO: create me dynamically-->
 			<input id='search' type='text' list="suggestions">
 			<datalist id="suggestions"></datalist>
@@ -58,8 +58,11 @@
 					<rect class="rect" id="r7" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
 				</g>
 			</svg>
-			<h1 id='loader-title'>Ładuję Super Clever Plan</h1>
-			<div id='loader-status'>Uruchamianie aplikacji</div>
+			<h1 id='loader-title' style="color: #fafafa;">Ładuję Super Clever Plan</h1>
+			<div id="loader-status-container">
+				<div id='loader-status' style="color: #fafafa;">Uruchamianie aplikacji</div>
+			</div>
+			
 		</div>
 
 		<div id='container' class='container opacity-0'>
