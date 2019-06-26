@@ -55,11 +55,9 @@ var modal = {
 
 		modalMenu.onclick = function(){
 			if (this.parentElement.parentElement.className.indexOf("hideMenu") != -1){
-				dom.removeClass(this.parentElement.parentElement, "hideMenu")
-				sectionContent.style.display = "none";
+				dom.removeClass(this.parentElement.parentElement, "hideMenu");
 			}else{
-				dom.addClass(this.parentElement.parentElement, "hideMenu")
-				sectionContent.style.display = null;
+				dom.addClass(this.parentElement.parentElement, "hideMenu");
 			}
 		}
 
@@ -107,6 +105,7 @@ var modal = {
 
 			m_save.style.display = null;
 			dom.addClass(this, "active");
+			dom.addClass(this.parentElement.parentElement.parentElement, "hideMenu");
 		}
 		return tab;
 	},

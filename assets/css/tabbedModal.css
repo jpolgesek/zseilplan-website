@@ -168,6 +168,10 @@
         cursor: pointer;
     }
 
+    .tabbedModal:not(.hideMenu) .sectionContent{
+        display: none;
+    }
+
     .tabbedModal.hideMenu .sectionList{
         display: none;
     }
