@@ -19,24 +19,17 @@
 }
 
 .tabbedModal button{
-	/* width: calc(50% - 6px); */
 	background: none;
-	/* border: solid 1px #FAFAFA; */
 	border-style: none;
-	/* padding: 20px; */
     font-size: 1.1em;
     color: #FAFAFA;
-	margin-right: 20px;
+    padding: 15px;
 }
 
 .tabbedModal button:hover{
-	/*width: calc(50% - 6px);
-	background: #FAFAFA;
-	border: solid 1px #FAFAFA;
-    color: #0a1b3c;
-	padding: 20px;*/
-	text-shadow: 0px 3px 1px #000;
-    transform: scale(1.1);
+    text-shadow: 1px 1px 4px #0000008c;
+    background: #ffffff29;
+    cursor: pointer;
 }
 
 .tabbedModal .row{

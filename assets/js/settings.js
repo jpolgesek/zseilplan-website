@@ -198,7 +198,7 @@ var settings = {
 		}*/
 
 		row = document.createElement('div');
-		row.className = "row padding-15";
+		row.className = "row";
 
 		row.appendChild(app.modal.createButton({
 			innerHTML: "Zapisz zmiany",
