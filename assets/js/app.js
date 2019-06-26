@@ -11,9 +11,7 @@ var table = document.getElementById("maintable");
 var select_units = document.getElementById("units");
 var select_teachers = document.getElementById("teachers");
 var select_rooms = document.getElementById("rooms");
-var status_span = document.getElementById("status"); //TODO: should be safe to remove this
 var networkstatus = document.getElementById("networkStatus"); //TODO: should be safe to remove this
-var loaderstatus = document.getElementById("loader-status"); //TODO: should be safe to remove this
 var navbar_info = document.getElementById("navbar-info");
 var data_googleindex_info = document.getElementById("data-googleindex-info");
 
@@ -312,8 +310,6 @@ var app = {
 	}
 }
 
-
-
 function sortAsc (a, b) {
 	return a.localeCompare(b);
 }
@@ -342,21 +338,6 @@ function init(){
 	ui.loader.setStatus("Pobieram dane");
 	fetchData();
 }
-
-
-/*DEBUG!!!!!
-//This is bad.
-var dbg_console_store = [];
-var dbg_oldf = console.log;
-console.log = function(){
-   dbg_console_store.push(arguments);
-   dbg_oldf.apply(console, arguments);
-}
-
-function debug(){
-	//alert("Dane: "+JSON.stringify(dbg_console_store));
-}
-*/
 
 function init2(){
 	utils.log("app", "Loading app");
@@ -443,8 +424,6 @@ function init2(){
 
 
 function refreshView(){
-	//console.time('refreshView-pre');
-
 	if (select_units.value != "default") {
 		app.currentView.selectedType = "unit";
 		app.currentView.selectedValue = select_units.value;
@@ -517,9 +496,7 @@ function refreshView(){
 		table.innerHTML = "";
 	}
 	createHeader(table);
-	//console.timeEnd('refreshView-pre');
 	
-	//console.time('refreshView-1');
 	/* This looks terrible */
 
 	for (hour=1; hour<maxHours; hour++){
@@ -565,18 +542,6 @@ function refreshView(){
 							itemData.k = unit;
 							cell.appendChild(ui.createItem(itemData));
 						}
-						/*
-						
-						for (xyz in data.timetable[day][hour][unit]){
-							itemData = data.timetable[day][hour][unit][xyz].filter(function(v){return v.s == select_rooms.value;});
-							if (itemData.length > 0){
-								itemData = itemData[0];
-								itemData.k = unit;
-								cell.appendChild(ui.createItem(itemData));
-							}
-						}
-						
-						*/
 					}
 				}catch (e){}
 			}
@@ -599,21 +564,8 @@ function refreshView(){
 		app.element.diff.help.style.display = "none";
 	}
 
-	//console.timeEnd('refreshView-1');
-	//console.time('refreshView-2');
-	//style.update();
 	columns.showSelected();	
-	//console.timeEnd('refreshView-2');
-		
-	//console.time('refreshView-3');
-	/*
-	if(localStorage.getItem("autocfo") == "true"){
-		checkForOverrides();
-	}
-	*/
 	checkForOverrides();
-
-	//console.timeEnd('refreshView-3');
 	myTime.checkTime();
 
 	try {
