@@ -42,6 +42,10 @@
     min-height: 400px;
 }
 
+.tabbedModal .row .sectionHeader{
+    margin-top: 0;
+}
+
 .tabbedModal .row .sectionContent{
     flex: 1 65%;
     background: #104496;

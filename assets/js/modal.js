@@ -123,6 +123,7 @@ var modal = {
 	},
 	createSectionHeader: function(text){
 		var workHeader = document.createElement("h2");
+		workHeader.className = "sectionHeader";
 		workHeader.innerHTML = text;
 		
 		return workHeader;
