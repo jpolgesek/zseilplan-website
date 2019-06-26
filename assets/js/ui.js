@@ -103,7 +103,7 @@ var ui = {
 			if (Object.keys(data.overrideData).length > 0){
 				ui.updateStatus("<br>Zastępstwa na "+Object.keys(data.overrideData).map(function(s){return s.substr(0,5)}).sort().join());
 			}
-			ui.updateStatus("<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a> | <a href='#' onclick='app.changelog.modal()'>Changelog</a>");
+			ui.updateStatus("<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a>");
 		} catch (e) {}
 
 	},
