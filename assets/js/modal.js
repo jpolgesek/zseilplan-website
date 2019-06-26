@@ -41,13 +41,7 @@ var modal = {
 
 		var modalMenu = dom.createEWC("div", ["menuCheck"]);
 		modalMenu.innerHTML = "☰";
-		modalMenu.onclick = function(){
-			if (this.parentElement.parentElement.className.indexOf("hideMenu") != -1){
-				dom.removeClass(this.parentElement.parentElement, "hideMenu")
-			}else{
-				dom.addClass(this.parentElement.parentElement, "hideMenu")
-			}
-		}
+		dom.addClass(modalContainer, "hideMenu");
 
 		var modalTitle = dom.createEWC("span", ["title"]);
 		modalTitle.innerHTML = options.title;
@@ -58,6 +52,16 @@ var modal = {
 
 		var sectionList = dom.createEWC("span", ["sectionList"]);
 		var sectionContent = dom.createEWC("span", ["sectionContent"]);
+
+		modalMenu.onclick = function(){
+			if (this.parentElement.parentElement.className.indexOf("hideMenu") != -1){
+				dom.removeClass(this.parentElement.parentElement, "hideMenu")
+				sectionContent.style.display = "none";
+			}else{
+				dom.addClass(this.parentElement.parentElement, "hideMenu")
+				sectionContent.style.display = null;
+			}
+		}
 
 		modalDescRow = this.createRow();
 		modalDescRow.appendChild(modalMenu);

@@ -141,9 +141,6 @@
 .menuCheck{
     display: none;
 }
-.hideMenu .sectionList{
-    display: none;
-}
 
 
 /* mobile */
@@ -155,9 +152,9 @@
         overflow: scroll;
     }
 
-    .tabbedModal .row{
-        flex-wrap: wrap;
+    .tabbedModal > .row{
         align-items: center;
+        flex-wrap: wrap;
     }
 
     .sectionContent h2{
@@ -171,5 +168,17 @@
         cursor: pointer;
     }
 
+    .tabbedModal.hideMenu .sectionList{
+        display: none;
+    }
+
+    .tabbedModal .row .sectionContent {
+        padding: 2px;
+    }
+
+    .tabbedModal > .row:last-of-type{
+        position: absolute;
+        bottom: 0;
+    }
 
 }
