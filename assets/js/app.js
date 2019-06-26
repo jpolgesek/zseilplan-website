@@ -818,31 +818,18 @@ var notifications_enabled = false;
 if ('serviceWorker' in navigator) {
 	window.addEventListener('load', function() {
 		navigator.serviceWorker.register('sw.js').then(function(registration) {
-			// Registration was successful			
 			utils.log("app", "ServiceWorker registration successful with scope: " + registration.scope);
 			try {fetch('index.html?launcher=true').then(function(response) {console.log("------")})["catch"]();} catch (e) {}
-			// console.log('ServiceWorker registration successful with scope: ', registration.scope);
 			registration.pushManager.getSubscription().then(function(sub) {
 				if (sub === null) {
-					// Update UI to ask user to register for Push
 					utils.log("app", "Not subscribed to push service");
-					// console.log('Not subscribed to push service!');
-					////alert("niepodłączony pod powiadomienia, podłączam");
-					// toggleNotifications(1);
-					// document.getElementById("notificationSubscribe").innerHTML = "Włącz powiadomienia";
 				} else {
-					// We have a subscription, _update the database_???
-					// console.log('Subscription object: ', sub);
 					utils.log("app", "Subscription object: " + sub);
 					subscribeUser();
-					// document.getElementById("notificationSubscribe").innerHTML = "Powiadomienia włączone";
-					// document.getElementById("notificationSubscribe").onclick = unsubscribeUser;
 				}
 				});
 		}, function(err) {
-		// registration failed :(
-		// console.log('ServiceWorker registration failed: ', err);
-		utils.error("app", "ServiceWorker registration failed: " + err);
+			utils.error("app", "ServiceWorker registration failed: " + err);
 		});
 	});
 	}
@@ -859,14 +846,9 @@ if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.ready.then(function(reg) {
 			reg.pushManager.getSubscription().then(function(subscription) {
 			  subscription.unsubscribe().then(function(successful) {
-				// ui.createToast("Wyłączyłem powiadomienia");
 				ui.toast.show("Wyłączyłem powiadomienia");
-				// document.getElementById("notificationSubscribe").innerHTML = "Powiadomienia wyłączone";
-				// document.getElementById("notificationSubscribe").onclick = subscribeUser;
 			  })["catch"](function(e) {
-				// ui.createToast("Wystąpił nieznany błąd :(");
 				ui.toast.show("Wystąpił nieznany błąd :(");
-				// document.getElementById("notificationSubscribe").innerHTML = "Nie udało sie wyłączyć powiadomień";
 			  })
 			})        
 		  });
@@ -889,20 +871,12 @@ if ('serviceWorker' in navigator) {
 
 	function subscribeUser() {
 	if ('serviceWorker' in navigator) {
-		//alert("start su - 1");
 		navigator.serviceWorker.ready.then(function(reg) {
-			//alert("start su - 2");
 		reg.pushManager.subscribe({
 			userVisibleOnly: true,
 			applicationServerKey: urlBase64ToUint8Array('BONWBKVMibu_3nM_nAlQoiLCPm1BFTcag06eSaCnbgPx_QHtwv1mYIuR81nyzqldPeN4LeIiVNqi3WRtCH0CKRE')
 		}).then(function(sub) {
-			//alert("start su - 3");
 			console.log('Endpoint URL: ', sub.endpoint);
-			//alert('Endpoint URL: '+ sub.endpoint);
-			// document.getElementById("notificationSubscribe").innerHTML = "Powiadomienia włączone";
-			// document.getElementById("notificationSubscribe").onclick = unsubscribeUser;
-
-			//alert("start su - 4");
 			notifications_enabled = true;
 			fetch("registerNotification.php?new", {
 				method: 'POST', // or 'PUT'
@@ -912,24 +886,17 @@ if ('serviceWorker' in navigator) {
 				})
 			  }).then(function(){
 				  console.log("Wyslano");
-					//alert("zarejestrowano")
 			  })
 			  ["catch"](function(error){console.error('Error:', error)})
 			  .then(function(response){console.log('Success:', response)});
 			
 		})["catch"](function(e) {
 			if (Notification.permission === 'denied') {
-				//alert("Nie dostałem uprawnień");
 				console.warn('Permission for notifications was denied');
-				// ui.createToast("Brak uprawnień :(");
 				ui.toast.show("Brak uprawnień :(");
-				// document.getElementById("notificationSubscribe").innerHTML = "Brak uprawnień :/";
 			} else {
-				//alert("Błąd: "+e);
 				console.error('Unable to subscribe to push', e);
-				// ui.createToast("Wystąpił nieznany błąd :(");
 				ui.toast.show("Wystąpił nieznany błąd :(");
-				// document.getElementById("notificationSubscribe").innerHTML = "Błąd :/";
 			}
 		});
 		})
@@ -939,7 +906,6 @@ if ('serviceWorker' in navigator) {
 function dbg_clearCache(){
 	return;
 }
-
 /* %old-ie-remove-end% */
 
 
@@ -985,19 +951,9 @@ function detectIE() {
 	return false;
   }
 
- /* if ((window.chrome) && (navigator.userAgent.indexOf("Windows NT 6") !== -1)){
-	document.getElementsByClassName("print_icon")[0].className = "print_icon_compatible";
-	document.getElementsByClassName("print_icon_compatible")[0].innerHTML = "&#xe800;";
-	document.getElementsByClassName("settings_icon")[0].className = "settings_icon_compatible";
-	document.getElementsByClassName("settings_icon_compatible")[0].innerHTML = "&#xe801;";
-	}*/
 
 if (detectIE()){
 	console.log("Uzywasz IE, wspolczuje...");	
-	/*document.getElementsByClassName("print_icon")[0].className = "print_icon_compatible";
-	document.getElementsByClassName("print_icon_compatible")[0].innerHTML = "&#xe800;";
-	document.getElementsByClassName("settings_icon")[0].className = "settings_icon_compatible";
-	document.getElementsByClassName("settings_icon_compatible")[0].innerHTML = "&#xe801;";*/
 }
 
 
