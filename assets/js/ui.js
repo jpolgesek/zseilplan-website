@@ -219,7 +219,7 @@ var ui = {
 	 * @param {object} options			TODO: Options {desktop_only: true, mobile_only: false}
 	 */
 	createNavbarButton: function(src_icon, src_text, onclick){
-		var buttonsContainer = app.element.navbar.buttons.settings.parentElement;
+		var buttonsContainer = app.element.navbar.buttons.container;
 		var thisButton = document.createElement("button");
 		var icon = document.createElement("div");
 		var text = document.createElement("div");

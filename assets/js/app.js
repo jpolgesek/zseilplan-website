@@ -90,9 +90,9 @@ var app = {
 		navbar: {
 			container: document.getElementById("navbar-container"),
 			buttons: {
+				container: document.getElementsByClassName("navbar-buttons")[0],
 				history: document.getElementById("navbar-btn-history"),
 				android: document.getElementById("navbar-btn-android"),
-				settings: document.getElementById("navbar-btn-settings"),
 				print: document.getElementById("navbar-btn-print")
 			}
 		},
@@ -162,7 +162,7 @@ var app = {
 		if (this._ui_loaded) return;
 
 		if (this.isEnabled("new_settings")){
-			ui.createNavbarButton("S", "Ustawienia2", function(){settings.createModal()});
+			ui.createNavbarButton('<i class="icon-cog"></i>', "Ustawienia2", function(){settings.createModal()});
 		}
 
 		if (this.isEnabled("theme_manager")){
