@@ -18,7 +18,7 @@ var settings = {
 					{
 						devOnly: false,
 						type: "checkbox",
-						dataSource: ui.breakLineInItem,
+						dataTarget: "ui.breakLineInItem",
 						onClick: function(){ui.setLineBreak(this.checked)},
 						desc: "Zawijaj wiersze po nazwie przedmiotu",
 						check: ui.setLineBreak
@@ -26,7 +26,7 @@ var settings = {
 					{
 						devOnly: false,
 						type: "checkbox",
-						dataSource: ui.jumpButtonsFloatRight,
+						dataTarget: "ui.jumpButtonsFloatRight",
 						onClick: function(){ui.setJumpButtonsFloatRight(this.checked)},
 						desc: "Wyrównuj sale i nauczycieli do prawej strony",
 						check: ui.setJumpButtonsFloatRight
@@ -34,7 +34,7 @@ var settings = {
 					{
 						devOnly: true,
 						type: "checkbox",
-						dataSource: notifications_enabled,
+						dataTarget: "notifications_enabled",
 						onClick: function(){toggleNotifications(this.checked)},
 						desc: "Odbieraj powiadomienia",
 						check: toggleNotifications
@@ -42,18 +42,10 @@ var settings = {
 					{
 						devOnly: false,
 						type: "checkbox",
-						dataSource: overrides_disabled,
+						dataTarget: "overrides_disabled",
 						onClick: function(){overrides_disabled = this.checked; refreshView();},
 						desc: "Tymczasowo ukryj zastępstwa",
 						check: toggleOverrides
-					},
-					{
-						devOnly: false,
-						type: "timetable",
-						dataSource: undefined,
-						onClick: undefined,
-						desc: undefined,
-						check: undefined
 					}
 				]
 			},
@@ -65,8 +57,9 @@ var settings = {
 						devOnly: false,
 						type: "select",
 						dataSource: app.themeManager.getThemesList(),
+						dataTarget: "thememanager.theme",
 						onChange: function(){
-							settings.unsavedPrefs["modal_settings_s_look"] = this.value; 
+							settings.unsavedPrefs["thememanager.theme"] = this.value; 
 							var themeIndex = this.value.split(":")[0];
 							var versionIndex = this.value.split(":")[1];
 							app.themeManager.activate(themeIndex, versionIndex);
@@ -267,10 +260,16 @@ var settings = {
 
 			input = document.createElement('input');
 			input.type = "checkbox";
-			input.checked = itemData.dataSource;
+
+			if (itemData.dataTarget){
+				input.checked = preferences.get(itemData.dataTarget);
+			}
+
+			if (itemData.dataSource){
+				input.checked = itemData.dataSource;
+			}
 
 			input.onclick = itemData.onClick;
-			input.onchange = (t) => {console.log(t);};
 			
 			span = document.createElement('span');
 			span.className = "slider round";
@@ -292,15 +291,16 @@ var settings = {
 
 			for (var i = 0; i < itemData.dataSource.length; i++){
 				input.options[input.options.length] = new Option(itemData.dataSource[i].name, itemData.dataSource[i].value);
+				input.options[input.options.length - 1].selected = itemData.dataSource[i].selected ? itemData.dataSource[i].selected : false;
 			}
 
 			title = document.createElement("span");
 			title.className = "desc";
 			title.innerHTML = itemData.desc;
 			
-			try {
+			if (itemData.onChange){
 				input.onchange = itemData.onChange;
-			} catch (e) {}
+			}
 
 			label.appendChild(input);
 			row.appendChild(label);
@@ -332,29 +332,25 @@ var settings = {
 			row.appendChild(title);
 		}
 
+
+		if (input && itemData.dataTarget && !itemData.onChange){
+			input.onchange = function(e) {
+				if (typeof this.checked != undefined){
+					settings.unsavedPrefs[itemData.dataTarget] = this.checked;
+				}else{
+					settings.unsavedPrefs[itemData.dataTarget] = this.value;
+				}
+			}
+		}
+
 		return row;
 	},
 
 	save: function(){
-		console.log(this.unsavedPrefs);
-		Object.keys(this.unsavedPrefs).forEach(function(key){
+		Object.keys(this.unsavedPrefs).forEach((key) => {
 			value = this.unsavedPrefs[key];
-			switch (key) {
-				case "modal_settings_s_dataSource_overrides":
-					//TODO//preferences.set("modal_settings_s_dataSource_overrides", value);
-					break;
-				
-				case "modal_settings_s_dataSource_timetable":
-					//TODO//preferences.set("modal_settings_s_dataSource_overrides", value);
-					break;
-				
-				case "modal_settings_s_look":
-					preferences.set("thememanager.theme", value);
-					break;
-			
-				default:
-					break;
-			}
+			console.log(`preferences.set('${key}', ${value})`);
+			preferences.set(key, value);
 		})
 		preferences.save();
 	}

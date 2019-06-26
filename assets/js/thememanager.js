@@ -1,4 +1,6 @@
 app.themeManager = {
+	currentTheme: -1,
+	currentVersion: -1,
 	darkModeOverrided: false,
 	themes: [
 		{
@@ -49,6 +51,8 @@ app.themeManager = {
 			utils.error("themeMgr", "There is no theme with index: " + themeIndex);
 			return false;
 		}
+		this.currentTheme = themeIndex;
+		this.currentVersion = versionIndex;
 
 		utils.log("themeMgr", "Activating theme with index: " + themeIndex);
 
@@ -115,11 +119,11 @@ app.themeManager = {
 		var out = [];
 		for (var i = 0; i < this.themes.length; i++){
 			var currentTheme = this.themes[i];
-			console.log(currentTheme.versions);
 			for (var j = 0; j < currentTheme.versions.length; j++){
 				out.push({
 					name: currentTheme.name + " - " + currentTheme.versions[j].name,
-					value: i + ":" + j
+					value: i + ":" + j,
+					selected: i == this.currentTheme && j == this.currentVersion
 				});
 			}
 		}
