@@ -111,10 +111,7 @@ var settings = {
 					{
 						devOnly: false,
 						type: "select",
-						dataSource: [
-							{name: "WWW (zseil.edu.pl)",  value: "www"},
-							{name: "Vulcan",  value: "vulcan"},
-						],
+						dataSource: diff.getPreviousTimetableVersions(),
 						onClick: function(x){return;},
 						desc: "Tu możesz wybrać wersję danych planu, oraz porównać ją z obecną",
 						check: ui.setDarkMode

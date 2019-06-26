@@ -26,6 +26,21 @@ var diff = {
 		});
 	},
 
+	getPreviousTimetableVersions: function(){
+		var out = [];
+		for (i in diff.index.timetable_archives){
+			item = diff.index.timetable_archives[i];
+			if (!item.export_datetime){ item.export_datetime = item.date;}
+			
+			out.push({
+				name: item.export_datetime +  ' ('+item.hash+')',
+				value: 'data/' + item.filename,
+				selected: data.hash.substring(0, 8) == item.hash
+			});
+		}
+		return out;
+	},
+
 	createModal: function(){
 		diffDiv = modal.create('preferences', "Diff modal", "Tutaj możesz porównać aktualny plan z dowolnym starym", function(){ui.showPreferences(0)});
 
