@@ -40,71 +40,7 @@ var diff = {
 		}
 		return out;
 	},
-
-	createModal: function(){
-		diffDiv = modal.create('preferences', "Diff modal", "Tutaj możesz porównać aktualny plan z dowolnym starym", function(){ui.showPreferences(0)});
-
-		prefsList = [
-			//Source, Change, Name
-			["select", ui.breakLineInItem, function(x){ui.setLineBreak(x)}, "Zawijaj wiersze po nazwie przedmiotu", "ui.setLineBreak"],
-			["checkbox", ui.darkMode, function(x){ui.setDarkMode(x)}, "Tryb nocny", "ui.setDarkMode"],
-			//["checkbox", true, function(x){return false;}, "Ładuj zastępstwa"],
-			["checkbox", notifications_enabled, function(x){toggleNotifications(x);}, "Odbieraj powiadomienia", "toggleNotifications"],
-			["checkbox", overrides_disabled, function(x){return;}, "Tymczasowo ukryj zastępstwa", "toggleOverrides"],
-			["timetable", undefined, undefined, undefined, undefined]
-		];
-		
-		
-		for(var p_i=0; p_i<prefsList.length ; p_i++){
-			element = prefsList[p_i];
-			row = document.createElement('div');
-			row.className = "row";
-
-			if(element[0] == "checkbox"){
-				label = document.createElement('label');
-				label.className = "switch"
 	
-				input = document.createElement('input');
-				input.type = "checkbox";
-				input.checked = element[1];
-				
-				/* This is very bad. */
-				input.setAttribute("onclick",""+element[4]+"(this.checked)");
-				span = document.createElement('span');
-				span.className = "slider round";
-	
-				title = document.createElement("span");
-				title.className = "desc";
-				title.innerHTML = element[3];
-	
-				label.appendChild(input);
-				label.appendChild(span);
-				row.appendChild(label);
-				row.appendChild(title);
-			}
-
-			diffDiv.appendChild(row);
-		}
-		
-		row = document.createElement('div');
-		row.className = "row";
-
-		prefsBtnSave = document.createElement('button');
-		prefsBtnSave.innerHTML = "Zapisz zmiany";
-		prefsBtnSave.onclick = function(){myStorage.save();ui.showPreferences(0);};
-		prefsBtnSave.className = "btn-primary";
-		row.appendChild(prefsBtnSave);
-
-		prefsBtnCancel = document.createElement('button');
-		prefsBtnCancel.innerHTML = "Anuluj";
-		prefsBtnCancel.onclick = function(){ui.showPreferences(0)};
-		row.appendChild(prefsBtnCancel);
-
-		diffDiv.appendChild(row);
-		
-		document.body.appendChild(diffDiv);
-	},
-
 	updateIndexUI: function(){
 		for(i = 0; i < diff.index.timetable_archives.length; i++){
 			item = diff.index.timetable_archives[i];
