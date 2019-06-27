@@ -235,67 +235,6 @@ var app = {
 		}
 	},
 
-	showDataSourceModal: function(){
-		datasourcepickerDiv = modal.create('datasourcepicker', "Wybór planu", "Tutaj możesz wybrać wersję danych Super Clever Planu", function(){datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false)});
-		datasourcepickerDiv.className += " deprecated";
-
-		row = modal.createRow();
-		row.style.margin.bottom = "-10px";
-		row.style.fontSize = "1.5em";
-		section_title = document.createElement('span');
-		section_title.innerHTML = "Data planu";
-		row.appendChild(section_title);
-		datasourcepickerDiv.appendChild(row);
-
-		row = modal.createRow();
-
-		input = document.createElement('select');
-		input.type = "";
-		input.checked = true;
-		for (i in diff.index.timetable_archives){
-			item = diff.index.timetable_archives[i];
-			if (item.export_datetime == undefined){
-				item.export_datetime = item.date;
-			}
-			input.options[input.options.length] = new Option(item.export_datetime +  ' ('+item.hash+')', 'data/' + item.filename);
-		}
-		
-		title = document.createElement("span");
-		title.className = "desc";
-		title.innerHTML = "Wyświetl dowolny plan z przeszłości";
-
-		row.appendChild(input);
-		row.appendChild(title);
-		datasourcepickerDiv.appendChild(row);
-		
-		row = modal.createRow();
-
-		prefsBtnSave = document.createElement('button');
-		prefsBtnSave.innerHTML = "Wyświetl";
-		prefsBtnSave.onclick = function(){ui.clearTable(); app.isCustomDataVersion=true; fetchData(input.value); datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false);};
-		prefsBtnSave.className = "btn-primary";
-		prefsBtnSave.title = "Wyświetl wybrany plan";
-		row.appendChild(prefsBtnSave);
-
-		prefsBtnSave = document.createElement('button');
-		prefsBtnSave.innerHTML = "Porównaj";
-		prefsBtnSave.onclick = function(){diff.compareSelected(input.value); app.isDiff=true; datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false);};
-		prefsBtnSave.title = "Porównaj aktualny plan z wybranym";
-		row.appendChild(prefsBtnSave);
-
-		prefsBtnCancel = document.createElement('button');
-		prefsBtnCancel.innerHTML = "Anuluj";
-		prefsBtnCancel.onclick = function(){datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv);ui.containerBlur(false)};
-		row.appendChild(prefsBtnCancel);
-		datasourcepickerDiv.appendChild(row);
-
-		ui.containerBlur(true);
-		document.body.appendChild(datasourcepickerDiv);
-		setTimeout(function(){
-			dom.addClass(datasourcepickerDiv, "modal-anim");
-		}, 1)
-	},
-
 	setDataSource: function(dataSource){
 		try {
 			localStorage.setItem("app.dataSource", dataSource);
