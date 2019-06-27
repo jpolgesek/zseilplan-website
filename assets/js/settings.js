@@ -148,6 +148,12 @@ var settings = {
 						dataSource: false,
 						onClick: function(x){return;}
 					},
+					{
+						devOnly: false,
+						type: "button",
+						onclick: function(){alert("TODO")},
+						desc: "Ustaw obecnie wyświetlany plan jako domyślny"
+					},
 				]
 			},
 			{
@@ -302,7 +308,7 @@ var settings = {
 			title = document.createElement("span");
 			title.className = "desc";
 
-			change_text = "Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i kliknij przycisk poniżej. <br> <button onclick='alert(\"todo\")'>Ustaw obecnie wyświetlany plan jako domyślny</button>";
+			change_text = "Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i kliknij przycisk poniżej.";
 
 			if (preferences.get("app.homeValue") == false){
 				title.innerHTML = "Przy uruchamianiu nie ładuję automatycznie żadnego planu.<br>" + change_text;
@@ -327,6 +333,7 @@ var settings = {
 			row.appendChild(title);
 		}else if(itemData.type == "button"){
 			btn = document.createElement("button");
+			btn.className = "content_btn";
 			btn.innerHTML = itemData.desc;
 			btn.onclick = itemData.onclick;
 			row.appendChild(btn);
