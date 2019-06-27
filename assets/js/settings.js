@@ -348,7 +348,7 @@ var settings = {
 
 	save: function(){
 		Object.keys(this.unsavedPrefs).forEach((key) => {
-			if (key.startsWith("_internal")) continue;
+			if (key.startsWith("_internal")) return;
 			value = this.unsavedPrefs[key];
 			console.log(`preferences.set('${key}', ${value})`);
 			preferences.set(key, value);
