@@ -20,32 +20,28 @@ var settings = {
 						type: "checkbox",
 						dataTarget: "ui.breakLineInItem",
 						onClick: function(){ui.setLineBreak(this.checked)},
-						desc: "Zawijaj wiersze po nazwie przedmiotu",
-						check: ui.setLineBreak
+						desc: "Zawijaj wiersze po nazwie przedmiotu"
 					},
 					{
 						devOnly: false,
 						type: "checkbox",
 						dataTarget: "ui.jumpButtonsFloatRight",
 						onClick: function(){ui.setJumpButtonsFloatRight(this.checked)},
-						desc: "Wyrównuj sale i nauczycieli do prawej strony",
-						check: ui.setJumpButtonsFloatRight
+						desc: "Wyrównuj sale i nauczycieli do prawej strony"
 					},
 					{
 						devOnly: true,
 						type: "checkbox",
 						dataTarget: "notifications_enabled",
 						onClick: function(){toggleNotifications(this.checked)},
-						desc: "Odbieraj powiadomienia",
-						check: toggleNotifications
+						desc: "Odbieraj powiadomienia"
 					},
 					{
 						devOnly: false,
 						type: "checkbox",
 						dataTarget: "overrides_disabled",
 						onClick: function(){overrides_disabled = this.checked; refreshView();},
-						desc: "Tymczasowo ukryj zastępstwa",
-						check: toggleOverrides
+						desc: "Tymczasowo ukryj zastępstwa"
 					}
 				]
 			},
@@ -84,9 +80,7 @@ var settings = {
 						onChange: function(){
 							settings.unsavedPrefs["modal_settings_s_dataSource_overrides"] = this.value; 
 						},
-						onClick: undefined,
-						desc: "Źródło zastępstw",
-						check: false
+						desc: "Źródło zastępstw"
 					},
 					{
 						devOnly: false,
@@ -98,9 +92,7 @@ var settings = {
 						onChange: function(){
 							settings.unsavedPrefs["modal_settings_s_dataSource_timetable"] = this.value; 
 						},
-						onClick: undefined,
-						desc: "Źródło planu",
-						check: false
+						desc: "Źródło planu"
 					}
 				]
 			},
@@ -112,9 +104,7 @@ var settings = {
 						devOnly: false,
 						type: "select",
 						dataSource: diff.getPreviousTimetableVersions(),
-						onClick: function(x){return;},
-						desc: "Tu możesz wybrać wersję danych planu, oraz porównać ją z obecną",
-						check: ui.setDarkMode
+						desc: "Tu możesz wybrać wersję danych planu, oraz porównać ją z obecną"
 					},
 				]
 			},
@@ -127,8 +117,7 @@ var settings = {
 						type: "special_default",
 						dataSource: false,
 						onClick: function(x){return;},
-						desc: "Tu przyda się ta dziwna kontrolka którą kiedyś pisałem",
-						check: ui.setDarkMode
+						desc: "Tu przyda się ta dziwna kontrolka którą kiedyś pisałem"
 					},
 				]
 			},
@@ -139,28 +128,9 @@ var settings = {
 					{
 						devOnly: false,
 						type: "checkbox",
-						dataSource: ui.darkMode,
-						onClick: function(x){
-							settings.unsavedPrefs["modal_settings_s_tests_TEST_NAME"] = this.checked; 
-						},
-						desc: "Włącz test xyz.",
-						check: ui.setDarkMode
-					},
-					{
-						devOnly: false,
-						type: "checkbox",
-						dataSource: ui.darkMode,
-						onClick: function(x){return;},
-						desc: "Włącz test xyz.",
-						check: ui.setDarkMode
-					},
-					{
-						devOnly: false,
-						type: "checkbox",
-						dataSource: ui.darkMode,
-						onClick: function(x){return;},
-						desc: "Włącz test xyz.",
-						check: ui.setDarkMode
+						dataSource: "app.testMode",
+						dataTarget: "app.testMode",
+						desc: "Włącz funkcje testowe."
 					},
 				]
 			}
@@ -225,9 +195,6 @@ var settings = {
 		preferencesDiv.appendChild(row);
 		
 		document.body.appendChild(preferencesDiv);
-		setTimeout(function(){
-			dom.addClass(preferencesDiv, "modal-anim");
-		}, 1)
 		dom.addClass(document.getElementById("container"), "blur")
 
 		app.ae('settings2', 'open', '1');
