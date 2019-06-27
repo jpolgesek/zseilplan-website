@@ -11,14 +11,12 @@
 	"static_dirs": [
 		["assets","img"],
 		["assets","font"],
-		["assets","themes"],
-		["goodbye"]
+		["assets","themes"]
 	],
 	"static_files": [
 		"manifest.json", 
 		"sw.js", 
 		"index.html", 
-		"ie_index.html", 
 		"update.html", 
 		"data.php", 
 		"registerNotification.php"
