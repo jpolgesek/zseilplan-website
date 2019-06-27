@@ -103,8 +103,38 @@ var settings = {
 					{
 						devOnly: false,
 						type: "select",
+						dataTarget: "_internal.data_view.file",
 						dataSource: diff.getPreviousTimetableVersions(),
-						desc: "Tu możesz wybrać wersję danych planu, oraz porównać ją z obecną"
+						desc: "Wybierz wersję planu"
+					},
+					{
+						devOnly: false,
+						type: "select",
+						dataTarget: "_internal.data_view.type",
+						dataSource: [
+							{"name": "Tylko wyświetl", "value": "view"},
+							{"name": "Wyświetl i porównaj z obecną wersją", "value": "compare"},
+						],
+						desc: ""
+					},
+					{
+						devOnly: false,
+						type: "button",
+						onclick: function(){
+							file = settings.unsavedPrefs["_internal.data_view.file"] || diff.getPreviousTimetableVersions()[0].value;
+
+							if (settings.unsavedPrefs["_internal.data_view.type"] == "compare"){
+								diff.compareSelected(file); 
+								app.isDiff = true;
+								settings.closeModal();
+							}else{
+								ui.clearTable(); 
+								app.isCustomDataVersion = true; 
+								fetchData(file); 
+								settings.closeModal();
+							}
+						},
+						desc: "Wykonaj"
 					},
 				]
 			},
@@ -116,8 +146,7 @@ var settings = {
 						devOnly: false,
 						type: "special_default",
 						dataSource: false,
-						onClick: function(x){return;},
-						desc: "Tu przyda się ta dziwna kontrolka którą kiedyś pisałem"
+						onClick: function(x){return;}
 					},
 				]
 			},
@@ -296,12 +325,17 @@ var settings = {
 			}
 			
 			row.appendChild(title);
+		}else if(itemData.type == "button"){
+			btn = document.createElement("button");
+			btn.innerHTML = itemData.desc;
+			btn.onclick = itemData.onclick;
+			row.appendChild(btn);
 		}
 
 
 		if (input && itemData.dataTarget && !itemData.onChange){
 			input.onchange = function(e) {
-				if (typeof this.checked != undefined){
+				if (typeof this.checked != "undefined"){
 					settings.unsavedPrefs[itemData.dataTarget] = this.checked;
 				}else{
 					settings.unsavedPrefs[itemData.dataTarget] = this.value;
@@ -314,6 +348,7 @@ var settings = {
 
 	save: function(){
 		Object.keys(this.unsavedPrefs).forEach((key) => {
+			if (key.startsWith("_internal")) continue;
 			value = this.unsavedPrefs[key];
 			console.log(`preferences.set('${key}', ${value})`);
 			preferences.set(key, value);
