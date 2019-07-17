@@ -2,7 +2,7 @@
 /* (C) 2019 Jakub Półgęsek */
 
 /* Config */
-maxHours = 11;
+maxHours = 10;
 weekDays = 5;
 
 
@@ -437,7 +437,7 @@ function refreshView(){
 	
 	/* This looks terrible */
 
-	for (hour=1; hour<maxHours; hour++){
+	for (hour=1; hour<(maxHours + 1); hour++){
 		row = insertNumber(table,hour);
 		for (day=1; day<6; day++){
 			var cell = row.insertCell(-1); //-1 for backwards compatibility

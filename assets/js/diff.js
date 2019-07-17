@@ -114,7 +114,7 @@ var diff = {
 
 
 		for (day=1; day<6; day++){
-			for (hour=1; hour<maxHours; hour++){
+			for (hour=1; hour<(maxHours + 1); hour++){
 				try {
 					itemsContainer = table.rows[hour].cells[day];
 					cell = itemsContainer;
