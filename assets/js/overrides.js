@@ -20,7 +20,7 @@ var overrides = {
 
 		utils.log("overrides", "Start loading overrides");
 			
-		for (hour=1; hour<maxHours; hour++) {
+		for (hour=1; hour<(maxHours + 1); hour++) {
 			for (day=1; day<(weekDays + 1); day++) {
 				
 				/* Decide to show overrides for this or next week */
