@@ -1,0 +1,98 @@
+.tableTopInfo{
+	display: flex;
+	flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -35px; /* TODO: */
+    width: 100%;
+}
+
+.tableTopInfo > div#status{
+	order: 2;
+	background: transparent;
+    box-shadow: none;
+    flex: 1;
+    min-width: 200px;
+}
+
+.tableTopInfo > div#remote_info{
+	width: 100%;
+	flex: 1 100%;
+    order: 3;
+}
+
+@media screen and (max-width: 768px) {
+    #status{
+        order: 0 !important;
+    }
+
+    
+    .bar {
+        padding: 0px 20px !important;
+        margin-top: 0 !important;
+        padding-left: 18px !important;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .unitsContainer::before {
+        content: "Klasa";
+        font-size: 1.5em;
+        font-weight: 600;
+    }
+
+    .teachersContainer::before {
+        content: "Nauczyciel";
+        font-size: 1.5em;
+        font-weight: 600;
+    }
+
+    .roomsContainer::before {
+        content: "Sala";
+        font-size: 1.5em;
+        font-weight: 600;
+        color: var(--accent-color-light);
+    }
+
+    .bar {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding: 10px;
+    }
+}
+
+.unitsContainer, .roomsContainer {
+    margin: 10px !important;
+    width: 33% !important;
+}
+
+.teachersContainer {
+    margin: 10px !important;
+    width: 66% !important;
+}
+
+.bar {
+    flex: 2;
+    min-width: 340px;
+
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+	overflow: visible;
+    padding: 20px;
+}
+
+.box-text {
+    color: var(--accent-color-light);
+    background: transparent;
+    border-radius: 1px;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 26%;
+    float: right;
+    padding: 30px;
+    padding-bottom: 0;
+    box-shadow: none;
+}

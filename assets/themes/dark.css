@@ -70,7 +70,7 @@
 
 .dark .maintable td:hover {
     background-color: rgba(21, 82, 146, 0.8) !important;
-    box-shadow: inset 1px 1px 5px 0px rgba(0, 0, 0, 0.4);
+    box-shadow: 1px 1px 5px 0px rgba(165, 165, 165, 0.4);
 }
 
 .dark .currentTimeFull{
