@@ -96,6 +96,39 @@ app.ui = {
 		}
 	},
 
+	table: {
+		createHeader: function(table){
+			var header = table.insertRow(-1); //-1 for backwards compatibility
+		
+			header.className = "header";
+			for (i=0; i<6; i++){
+				header.insertCell();
+			}
+			
+			table.rows[0].cells[0].innerHTML = "Nr";
+			table.rows[0].cells[1].innerHTML = "Poniedziałek";
+			table.rows[0].cells[2].innerHTML = "Wtorek";
+			table.rows[0].cells[3].innerHTML = "Środa";
+			table.rows[0].cells[4].innerHTML = "Czwartek";
+			table.rows[0].cells[5].innerHTML = "Piątek";
+			
+		},
+
+		insertNumber: function(table, y){
+			var row = table.insertRow(-1); //-1 for backwards compatibility
+			var cell = row.insertCell(-1); //-1 for backwards compatibility
+		
+			timespan = timeSteps[(y*2-2)] + " - "+ timeSteps[(y*2)-1];
+		
+			cell.appendChildren([
+				app.utils.createEWC("b", ["col-lesson-number"], y.toString()),
+				app.utils.createEWC("span", ["col-lesson-timespan"], timespan),
+			]);
+			
+			return row;
+		}
+	},
+
 	showBuild: function(){
 		if (document.ZSEILPLAN_BUILD){
 			this.setElementText("footer.build_text", `Super Clever Plan build ${ZSEILPLAN_BUILD}`);
@@ -117,10 +150,10 @@ app.ui = {
 		if (data._updateDate_max == data._updateDate_min) {
 			//TODO: do not show on desktop
 			this.updateStatus("Plan z dnia "+data._updateDate_max); 
-			this.setElementText("navba", "Plan z dnia "+data._updateDate_max);
+			this.setElementText("navbar.datasrc_text", "Plan z dnia "+data._updateDate_max);
 		} else {
 			//TODO: do not show on desktop
-			this.setElementText("navba", "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min);
+			this.setElementText("navbar.datasrc_text", "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min);
 		}
 		
 		/* TODO: fix me */
