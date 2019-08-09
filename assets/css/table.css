@@ -132,3 +132,9 @@
     border-top-color: #609de8;
     border-top-width: 3px;
 }
+
+.maintable tr.header > th{
+	position: sticky;
+	top: 0;
+    background-color: #3b71ab;
+}

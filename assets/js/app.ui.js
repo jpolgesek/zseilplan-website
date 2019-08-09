@@ -104,8 +104,7 @@ app.ui = {
 			text_arr = ["Nr", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek"];
 
 			for (i=0; i<6; i++){
-				c = header.insertCell();
-				c.innerHTML = text_arr[i];
+				header.appendChild(app.utils.createEWC("th", [], text_arr[i]));
 			}
 			
 		},

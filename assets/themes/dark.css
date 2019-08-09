@@ -192,3 +192,9 @@
     color: #FAFAFA;
     text-shadow: none;
 }
+
+
+
+.maintable tr.header > th{
+    background: #272727;
+}
