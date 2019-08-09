@@ -136,7 +136,26 @@ var utils = {
 		app.modal.alert(htmlInfo, "blue");
 		*/
 		return false; //Unavailable for now due to fucking IE
-	}
+	},
+
+	createEWC: function(elementType, classList = [], innerHTML = ""){
+		var element = document.createElement(elementType);
+		if (classList.length){
+			classList.forEach(className => {
+				element.classList.add(className);
+			});
+		}
+		if (innerHTML.length){ element.innerHTML = innerHTML; }
+		if (elementType == "button") element.type = "button";
+		return element;
+	},
+
+    appendChildren: function (element, childList) {
+        childList.forEach(c => {
+            element.appendChild(c);
+        })
+        return element;
+    }
 };
 
 
@@ -188,3 +207,9 @@ if ( (!('innerText' in document.createElement('a'))) && ('getSelection' in windo
         this.innerHTML = str.replace(/\n/g, "<br />");
     });
 }
+
+Element.prototype.appendChildren = function(childList){
+	app.utils.appendChildren(this, childList);
+}
+
+app.utils = utils;
