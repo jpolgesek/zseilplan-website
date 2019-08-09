@@ -1,4 +1,38 @@
 var utils = {
+	fetchJson(url, callback, failCallback){
+		var compat = false;
+		try {
+			var a = "Found fetch" + fetch.toString().substr(0,0);
+		} catch (error) {
+			compat = true;
+		}
+			
+		if (compat){
+			var fetchDataCompatXHR = new XMLHttpRequest();
+			fetchDataCompatXHR.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					jdata = JSON.parse(fetchDataCompatXHR.responseText);
+					callback(jdata);
+				} else if (this.readyState == 4 && this.status != 200){
+					failCallback(this);
+				}
+			};
+			fetchDataCompatXHR.open("GET", url, true);
+			fetchDataCompatXHR.send();
+			return true;
+		};
+		
+		fetch(url).then(function(response) {
+			return response.json();
+		}).then(function(jdata) {
+			callback(jdata);
+		})["catch"](function(error){
+			failCallback(error);
+		});
+
+		return true;
+	},
+	
 	log: function(caller, text){
 		caller = caller.rpad(" ",10);
 		text = caller + "\t" + text;
