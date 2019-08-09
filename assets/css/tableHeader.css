@@ -28,6 +28,7 @@
     
     .bar {
         padding: 0px 20px !important;
+        padding-right: 30px !important;
         margin-top: 0 !important;
         padding-left: 18px !important;
     }
@@ -61,13 +62,15 @@
 }
 
 .unitsContainer, .roomsContainer {
-    margin: 10px !important;
-    width: 33% !important;
+    flex: 0 0 20%;
+    margin: unset !important;
+    width: unset !important;
 }
 
 .teachersContainer {
-    margin: 10px !important;
-    width: 66% !important;
+    flex: 0 0 50%;
+    margin: unset !important;
+    width: unset !important;
 }
 
 .bar {
@@ -78,9 +81,10 @@
     margin-bottom: 0;
     padding: 30px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 	overflow: visible;
     padding: 20px;
+    
 }
 
 .box-text {

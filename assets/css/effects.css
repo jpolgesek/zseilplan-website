@@ -11,6 +11,10 @@
 	filter: blur(5px);	
 }
 
+.flex-center{
+    justify-content: center;
+}
+
 
 .left {float: left;}
 .right {float: right;}
