@@ -82,7 +82,7 @@ var themeloader = {
 		//this.prepareWindow("msg_information-2.png", undefined, "Dni Technika", document.querySelector("#dnitechnika_ad"));
 		// this.prepareWindow("template_empty-3.png", undefined, "Porównanie planów", document.querySelector("#diff-help"));
 
-		document.querySelector("#footer-text").innerHTML = "<i>Microsoft® Windows® XP Professional 5.1 Build 2600</i>";
+		document.querySelector("#footer__build").innerHTML = "<i>Microsoft® Windows® XP Professional 5.1 Build 2600</i>";
 		
 		document.querySelector("#remote_info").style.display = '';
 		document.querySelector("#remote_info").innerHTML = "<b>Tryb retro sponsorowany przez 18 urodziny Windowsa XP. Świętujmy je razem z salą 116.</b>";

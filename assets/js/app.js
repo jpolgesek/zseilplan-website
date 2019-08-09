@@ -7,7 +7,7 @@ var select_units = document.getElementById("units");
 var select_teachers = document.getElementById("teachers");
 var select_rooms = document.getElementById("rooms");
 var networkstatus = document.getElementById("networkStatus"); //TODO: should be safe to remove this
-var navbar_info = document.getElementById("navbar-info");
+//var navbar_info = document.getElementById("navbar-info");
 var data_googleindex_info = document.getElementById("data-googleindex-info");
 
 /* Global variables */
@@ -419,14 +419,7 @@ function refreshView(){
 		app.ui.resetSelects(this.id);
 	}
 
-	//TODO: isn't there a function to do that?
-	if (detectIE() && document.super_fucking_old_ie){
-		while (table.hasChildNodes()) {
-			table.removeChild(table.lastChild);
-		}
-	}else{
-		table.innerHTML = "";
-	}
+	app.ui.clearTable();
 	createHeader(table);
 	
 	/* This looks terrible */

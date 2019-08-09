@@ -6,6 +6,34 @@ app.ui = {
 	isToastInProgress: false,
 	jumpButtonsFloatRight: true,
 
+	elements: {
+		navbar: {
+			datasrc_text: document.querySelector("#nav__datasrc"),
+			buttons_container: document.querySelector("#navbar-buttons"),
+			buttons: {}
+		},
+
+		select: {
+			unit: document.querySelector("#units"),
+			teacher: document.querySelector("#teachers"),
+			classroom: document.querySelector("#rooms")
+		},
+
+		info: {
+			status_text: document.querySelector("#status")
+			//TODO: other ones (remote_info, networkStatus)
+		},
+
+		table: document.querySelector("#maintable"),
+
+		footer: {
+			datasrc_text: 	document.querySelector("#footer__datasrc"),
+			build_text: 	document.querySelector("#footer__build"),
+			bugreport_btn: 	document.querySelector("#footer__bugreport"),
+			copyright_text: document.querySelector("#footer__copyright")
+		}
+	},
+
 	toast: {
 		timerID: undefined,
 		inProgress: false,
@@ -69,41 +97,39 @@ app.ui = {
 	},
 
 	showBuild: function(){
-		try {
-			if (typeof(ZSEILPLAN_BUILD) == "undefined"){
-				document.getElementById("footer-text").innerHTML = "Super Clever Plan internal build";
-			} else {
-				document.getElementById("footer-text").innerHTML = "Super Clever Plan build " + ZSEILPLAN_BUILD;
-			}
-		} catch (e) {}
+		if (document.ZSEILPLAN_BUILD){
+			this.setElementText("footer.build_text", `Super Clever Plan build ${ZSEILPLAN_BUILD}`);
+		} else {
+			this.setElementText("footer.build_text", "Super Clever Plan internal build");
+		}
 		return;
 	},
 
 	initComments: function(){
 		/* Show data comment */
 		try {
-			document.getElementById("button_comment").innerHTML = data.comment;
-			document.getElementById("button_comment").innerHTML += " (" + data.hash.substr(0,8) + ")";
+			this.setElementText("footer.datasrc_text", `${data.comment} (${data.hash.substr(0,8)})`);
 		} catch (error) {
-			document.getElementById("button_comment").innerHTML = "Nie udało się pobrać wersji planu.";
+			this.setElementText("footer.datasrc_text", "Nie udało się pobrać wersji planu.");
 		}
 		
 		/* TODO: fix me */
 		/* Show timetable update date */
 		if (data._updateDate_max == data._updateDate_min) {
-			app.ui.updateStatus("Plan z dnia "+data._updateDate_max); //do not show on desktop
-			navbar_info.innerHTML = "Plan z dnia "+data._updateDate_max;
+			//TODO: do not show on desktop
+			this.updateStatus("Plan z dnia "+data._updateDate_max); 
+			this.setElementText("navba", "Plan z dnia "+data._updateDate_max);
 		} else {
-			app.ui.updateStatus("Plan z dni "+data._updateDate_max+" - "+data._updateDate_min); //do not show on desktop
-			navbar_info.innerHTML = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min;
+			//TODO: do not show on desktop
+			this.setElementText("navba", "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min);
 		}
 		
 		/* TODO: fix me */
 		try {
 			if (Object.keys(data.overrideData).length > 0){
-				app.ui.updateStatus("<br>Zastępstwa na "+Object.keys(data.overrideData).map(function(s){return s.substr(0,5)}).sort().join());
+				this.updateStatus("<br>Zastępstwa na "+Object.keys(data.overrideData).map(function(s){return s.substr(0,5)}).sort().join());
 			}
-			app.ui.updateStatus("<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a>");
+			this.updateStatus("<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a>");
 		} catch (e) {}
 
 	},
@@ -187,9 +213,33 @@ app.ui = {
 	 * @param {string} 	text 			Text to be shown
 	 * @returns {boolean} 				True on success, false on failure
 	 */
-	setStatus: function(text){
+	setStatus: function(text, update){
+		return this.setElementText("info.status_text", text, update);
+	},
+
+	/**
+	 * Changes text of any element in app.ui.elements
+	 * @param {string} 	el_path 		Path to element (ex: navbar.datasrc_text)
+	 * @param {string} 	text 			Text to be shown
+	 * @param {boolean} update 			Update or overwrite previous text
+	 * @returns {boolean} 				True on success, false on failure
+	 */
+	setElementText: function(el_path, text, update){
+		el_path = el_path.split(".");
+		if (el_path.length > 10) return false;
+		
+		el = this.elements;
+
+		while (el_path.length){
+			el = el[el_path.shift()];
+		}
+
 		try{
-			app.element.status.innerHTML = text;
+			if (update){
+				el.innerHTML += text;
+			}else{
+				el.innerHTML = text;
+			}
 			return true;
 		}catch(e){
 			return false;
@@ -201,14 +251,10 @@ app.ui = {
 	 * Updates status text
 	 * @param {string} 	text 			Text to be shown
 	 * @returns {boolean} 				True on success, false on failure
+	 * @deprecated 						Use setStatus with update = true
 	 */
 	updateStatus: function(text){
-		try{
-			app.element.status.innerHTML += text;
-			return true;
-		}catch(e){
-			return false;
-		};	
+		return this.setStatus(text, true);
 	},
 
 	/**
@@ -466,12 +512,6 @@ app.ui = {
 		dom.addClass(app.element.navbar.container, "notification");
 		setTimeout(function(){dom.removeClass(app.element.navbar.container, "notification")}, 3000);
 		setTimeout(function(){app.element.notification.bar.style.display = "none"; app.ui.isToastInProgress = false;}, 4000);
-		/*
-		document.getElementById("toast_desc").innerHTML = text;
-		var x = document.getElementById("toast")
-		x.className = "show";
-		setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
-		*/
 	},
 
 	/**
@@ -554,33 +594,29 @@ app.ui = {
 		columns.setActive(-1);
 		refreshView();
 		
-		o_copy = document.getElementsByClassName("copyright")[0].innerHTML;
-		o_status = document.getElementById("status").innerHTML;
+		o_copy = this.elements.navbar.datasrc_text.innerHTML;
 
-		/*document.getElementsByClassName("copyright")[0].innerHTML = "<i>(dev.polgesek.pl/zseilplan)</i><br>"+o_copy+"<br>";*/
-		// document.getElementsByClassName("copyright")[0].innerHTML = " <span class='copyright_small'>"+document.getElementsByClassName("copyright")[0].innerHTML+"</span>";
-		document.getElementsByClassName("copyright")[0].innerHTML = "Plan lekcji dla&nbsp;<b>";
+		this.elements.navbar.datasrc_text.innerHTML = "Plan lekcji dla&nbsp;<b>";
 		if (this.itemDisplayType == 0){
-			document.getElementsByClassName("copyright")[0].innerHTML += "nauczyciela ";
+			this.elements.navbar.datasrc_text.innerHTML += "nauczyciela ";
 			try {
-				document.getElementsByClassName("copyright")[0].innerHTML += data.teachermap[select_teachers.value.toLowerCase()][0];
+				this.elements.navbar.datasrc_text.innerHTML += data.teachermap[select_teachers.value.toLowerCase()][0];
 			} catch (error) {
-				document.getElementsByClassName("copyright")[0].innerHTML += select_teachers.value;
+				this.elements.navbar.datasrc_text.innerHTML += select_teachers.value;
 			}
 		}else if (this.itemDisplayType == 1){
-			document.getElementsByClassName("copyright")[0].innerHTML += "<b>sali " + select_rooms.value + "</b>";
+			this.elements.navbar.datasrc_text.innerHTML += "<b>sali " + select_rooms.value + "</b>";
 		}else if (this.itemDisplayType == 2){
-			document.getElementsByClassName("copyright")[0].innerHTML += "<b> klasy " + select_units.value + "</b>";
+			this.elements.navbar.datasrc_text.innerHTML += "<b> klasy " + select_units.value + "</b>";
 		}
-		document.getElementsByClassName("copyright")[0].innerHTML += " z dnia <b>"+data._updateDate_min+"</b>";
+		this.elements.navbar.datasrc_text.innerHTML += " z dnia <b>"+data._updateDate_min+"</b>";
 
-		dom.addClass(document.getElementsByClassName("navbar-buttons")[0],"hidden");
+		dom.addClass(this.elements.navbar.buttons_container, "hidden");
 
 		print();
 		
-		dom.removeClass(document.getElementsByClassName("navbar-buttons")[0],"hidden");
-		document.getElementsByClassName("copyright")[0].innerHTML = o_copy;
-		document.getElementById("status").innerHTML = o_status;
+		dom.removeClass(this.elements.navbar.buttons_container,"hidden");
+		this.elements.navbar.datasrc_text.innerHTML = o_copy;
 		overrides_disabled = old_overrides_disabled;
 		
 		if (oldActiveColumn != 9000) columns.setActive(oldActiveColumn);
@@ -619,6 +655,7 @@ app.ui = {
 
 
 	showXPinfo: function(){
+		// TODO: Will be replaced with auto redirect to old version.
 		XPinfo = document.createElement("div");
 		XPinfo.id = "XPinfo";
 		XPinfo.innerHTML = "Ups, wygląda na to że twórca tej aplikacji nie przewidział wchodzenia na nią z systemu, od którego premiery:"
