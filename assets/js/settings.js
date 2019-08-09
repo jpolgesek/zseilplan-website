@@ -130,7 +130,7 @@ var settings = {
 							}else{
 								app.ui.clearTable(); 
 								app.isCustomDataVersion = true; 
-								fetchData(file); 
+								app.fetchData(file); 
 								settings.closeModal();
 							}
 						},

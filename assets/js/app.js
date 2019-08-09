@@ -129,6 +129,47 @@ var app = {
 		//todo: disabler
 		try{gtag('event', a,{'event_category':c,'event_label':l});}catch(e){};
 	},
+
+	fetchData: function(customURL){	
+		// Prepare URL
+		if (customURL){
+			utils.log("app", "Will load custom timetable version: " + customURL);
+			url = customURL;
+		}else{
+			if (navigator.onLine === false) {
+				app.ui.loader.setStatus("Jesteś offline, próbuję pobrać plan z lokalnego cache");
+				timestamp = "localstorage";
+			}else{
+				timestamp = Date.now();
+			}
+			url = `data.php?ver=${timestamp}`;
+		}
+	
+		app.ui.loader.setStatus("Rozpoczynam pobieranie danych");
+	
+		app.utils.fetchJson(url, function(jdata){
+			app.ui.loader.setStatus("Pobrano plan lekcji");
+			utils.log("app", "Downloaded data using app.utils.fetchJson");
+	
+			// TODO: This should be a separate function
+			data = jdata;
+			app.data = data;
+			teachermap = data.teachermap;
+			teacherMapping = data.teachermap;		
+			
+			if ((getTextDate() in data.timesteps) && myTime.time < "17:00"){
+				console.log("Specjalny rozklad godzin dla dnia "+getTextDate()+" - laduje");
+				timeSteps = data.timesteps[getTextDate()];
+			}else{
+				timeSteps = data.timesteps['default'];
+			}
+	
+			init2();
+		}, function(e){
+			app.ui.loader.setError("<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.", `<a style='color: white;' href='#' onclick='document.location.reload()'>Spróbuj ponownie</a>`);
+			utils.error("app", "Failed to download data.json");
+		});
+	},
 	
 	init: function(){
 		//try {utils.consoleStartup();} catch (e) {}
@@ -152,7 +193,7 @@ var app = {
 
 		app.ui.setStatus("Ładowanie danych planu...");
 		app.ui.loader.setStatus("Pobieram dane");
-		fetchData();
+		app.fetchData();
 	},
 
 	init3: function(){
@@ -545,113 +586,6 @@ function jumpTo(type, value){
 		select_units.value = value;
 		select_units.onchange();
 	}
-}
-
-
-
-function fetchData(customURL){	
-	console.warn("USAGE OF GLOBAL FUNCTION - fetchdata!");
-
-	try {
-		utils.log("app", "Found fetch" + fetch.toString().substr(0,0));
-	} catch (error) {
-		utils.warn("app", "Fetch not found, enabling compatibility layer");
-		compat = true;
-	}
-	
-	
-	
-	timestamp = Date.now();
-
-	/* %old-ie-remove-start% */
-	if (!navigator.onLine) {
-		app.ui.loader.setStatus("Jesteś offline, próbuję pobrać plan z lokalnego cache");
-		timestamp = "localstorage";
-	}
-	/* %old-ie-remove-end% */
-
-	url = 'data.php?ver='+timestamp;
-	
-	if (customURL != undefined){
-		utils.log("app", "Will load custom timetable version: " + customURL);
-		url = customURL;
-	}
-
-	data = "wait";
-
-
-	if (compat){
-		//Compatibility mode
-		app.ui.loader.setStatus("Rozpoczynam pobieranie danych w trybie kompatybilności wstecznej");
-		
-		timestamp = Date.now();
-		var fetchDataCompatXHR = new XMLHttpRequest();
-		fetchDataCompatXHR.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				jdata = JSON.parse(fetchDataCompatXHR.responseText);
-				data = jdata;
-				teachermap = data.teachermap;
-				teacherMapping = data.teachermap;
-				
-				/*
-				if (getTextDate() in data.timesteps){
-					console.log("[COMPAT] Specjalny rozklad godzin dla dnia "+getTextDate()+" - laduje");
-					timeSteps = data.timesteps[getTextDate()];
-				}else{
-					timeSteps = data.timesteps['default'];
-				}
-				*/
-				timeSteps = data.timesteps['default'];
-					
-				utils.log("app", "Downloaded data.json using XHR");
-				init2();
-			}
-		};
-		fetchDataCompatXHR.open("GET", url, true);
-		fetchDataCompatXHR.send();
-		return true;
-	}
-	
-	isOK = true;
-
-	/* %old-ie-remove-start% */
-	/* is this needed? TODO
-	try {
-		fetch('data.php?ver=localstorage').then(function(response) {return response.json();})["catch"]();
-	} catch (e) {}
-	*/
-	
-	fetch(url).then(function(response) {
-		return response.json();
-	}).then(function(jdata) {
-		data = jdata;
-		teachermap = data.teachermap;
-		teacherMapping = data.teachermap;
-		
-		if ((getTextDate() in data.timesteps) && myTime.time < "17:00"){
-			console.log("Specjalny rozklad godzin dla dnia "+getTextDate()+" - laduje");
-			timeSteps = data.timesteps[getTextDate()];
-		}else{
-			timeSteps = data.timesteps['default'];
-		}
-			
-
-		utils.log("app", "Downloaded data.json using fetch");
-		init2();
-	})["catch"](function(error){
-		isOK = false;
-		app.ui.loader.setError("<b>Nie udało się pobrać planu lekcji</b>", "Upewnij się że masz połączenie z internetem i spróbuj ponownie.");
-		utils.error("app", "Fetch - failed to download data.json. Reason: " + error);
-	});
-	/* %old-ie-remove-end% */
-
-	if (!isOK){
-		app.ui.loader.setStatus("<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.");
-		utils.error("app", "Failed to download data.json");
-	}else{
-		app.ui.loader.setStatus("Pobrano plan lekcji");
-	}
-	return isOK;
 }
 
 
