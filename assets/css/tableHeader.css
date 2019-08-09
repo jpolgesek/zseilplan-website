@@ -62,13 +62,13 @@
 }
 
 .unitsContainer, .roomsContainer {
-    flex: 0 0 20%;
+    flex: 0 0 22%;
     margin: unset !important;
     width: unset !important;
 }
 
 .teachersContainer {
-    flex: 0 0 50%;
+    flex: 0 0 52%;
     margin: unset !important;
     width: unset !important;
 }

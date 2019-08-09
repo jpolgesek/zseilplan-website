@@ -8,7 +8,7 @@ html, body{
 
 *{
 	outline-style: none;
-	box-sizing: content-box;
+	box-sizing: border-box;
 }
 
 

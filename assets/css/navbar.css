@@ -28,6 +28,7 @@
 	z-index: 200;
 	transition: transform 0.5s;
 	transition-timing-function: ease-in-out;
+    box-sizing: content-box; /* I'm sorry */
 }
 
 .navbar-title{
