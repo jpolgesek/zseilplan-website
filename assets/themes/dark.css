@@ -193,8 +193,6 @@
     text-shadow: none;
 }
 
-
-
-.maintable tr.header > th{
+.dark .maintable tr.header > th{
     background: #272727;
 }
