@@ -129,7 +129,33 @@ var app = {
 		//todo: disabler
 		try{gtag('event', a,{'event_category':c,'event_label':l});}catch(e){};
 	},
+	
 	init: function(){
+		//try {utils.consoleStartup();} catch (e) {}
+		utils.log("app", "Initializing");
+
+		app.ui.loader.setStatus("Ładuję preferencje");
+		app.ui.setStatus("Ładowanie preferencji...");
+
+		if (preferences.get("tests_enabled") == "true"){
+			this._features.prod = this._features.dev;
+		}
+
+		if (app.isEnabled("prefs_enable")){
+			preferences.load();
+		}else{
+			/* If HTML5 storage is available, try to load user saved settings */
+			if (typeof(Storage) !== "undefined") {
+				myStorage.load();
+			}
+		}
+
+		app.ui.setStatus("Ładowanie danych planu...");
+		app.ui.loader.setStatus("Pobieram dane");
+		fetchData();
+	},
+
+	init3: function(){
 		app.modal = modal;
 		app.storage = myStorage;
 		app.refreshView = refreshView;
@@ -242,38 +268,13 @@ function sortAsc (a, b) {
 	return a.localeCompare(b);
 }
 
-function init(){
-	console.warn("USAGE OF GLOBAL FUNCTION!");
-	//try {utils.consoleStartup();} catch (e) {}
-	utils.log("app", "Initializing");
-
-	app.ui.loader.setStatus("Ładuję preferencje");
-	app.ui.setStatus("Ładowanie preferencji...");
-
-	if (preferences.get("tests_enabled") == "true"){
-		this._features.prod = this._features.dev;
-	}
-
-	if (app.isEnabled("prefs_enable")){
-		preferences.load();
-	}else{
-		/* If HTML5 storage is available, try to load user saved settings */
-		if (typeof(Storage) !== "undefined") {
-			myStorage.load();
-		}
-	}
-
-	app.ui.setStatus("Ładowanie danych planu...");
-	app.ui.loader.setStatus("Pobieram dane");
-	fetchData();
-}
 
 function init2(){
-	console.warn("USAGE OF GLOBAL FUNCTION!");
+	console.warn("USAGE OF GLOBAL FUNCTION - init2!");
 	utils.log("app", "Loading app");
 
 	try{
-		app.init();
+		app.init3();
 	} catch(e) {}
 	
 	if (!navigator.onLine) {
@@ -355,7 +356,7 @@ function init2(){
 
 
 function refreshView(){
-	console.warn("USAGE OF GLOBAL FUNCTION!");
+	console.warn("USAGE OF GLOBAL FUNCTION - refreshview!");
 	if (select_units.value != "default") {
 		app.currentView.selectedType = "unit";
 		app.currentView.selectedValue = select_units.value;
@@ -420,12 +421,12 @@ function refreshView(){
 	}
 
 	app.ui.clearTable();
-	createHeader(table);
+	app.ui.table.createHeader(table);
 	
 	/* This looks terrible */
 
 	for (hour=1; hour<(maxHours + 1); hour++){
-		row = insertNumber(table,hour);
+		row = app.ui.table.insertNumber(table,hour);
 		for (day=1; day<6; day++){
 			var cell = row.insertCell(-1); //-1 for backwards compatibility
 			
@@ -513,44 +514,9 @@ function refreshView(){
 	} catch (e) {}
 }
 
-function createHeader(table){
-	console.warn("USAGE OF GLOBAL FUNCTION!");
-	//compat
-	//var header = table.insertRow();
-	var header = table.insertRow(-1); //-1 for backwards compatibility
-
-	header.className = "header";
-	for (i=0; i<6; i++){
-		header.insertCell();
-	}
-	
-	table.rows[0].cells[0].innerHTML = "Nr";
-	table.rows[0].cells[1].innerHTML = "Poniedziałek";
-	table.rows[0].cells[2].innerHTML = "Wtorek";
-	table.rows[0].cells[3].innerHTML = "Środa";
-	table.rows[0].cells[4].innerHTML = "Czwartek";
-	table.rows[0].cells[5].innerHTML = "Piątek";
-	
-}
-
-function insertNumber(table, y){
-	console.warn("USAGE OF GLOBAL FUNCTION!");
-	//compat
-	//var row = table.insertRow();
-	//var cell = row.insertCell();
-	var row = table.insertRow(-1); //-1 for backwards compatibility
-	var cell = row.insertCell(-1); //-1 for backwards compatibility
-	
-	cell.innerHTML = "<b class='col-lesson-number'>"+y+"</b>"; //TODO: fix me
-	cell.innerHTML += "<span class='col-lesson-timespan'>" + timeSteps[(y*2-2)] + " - "+ timeSteps[(y*2)-1] + "</span>"; //TODO: fix me
-	return row;
-}
-
 function jumpTo(type, value){
-	console.warn("USAGE OF GLOBAL FUNCTION!");
-	select_units.value = "default";
-	select_teachers.value = "default";
-	select_rooms.value = "default";
+	console.warn("USAGE OF GLOBAL FUNCTION - jumpto!");
+	app.ui.resetSelects();
 
 	if (type == 0){
 		if(!isIE){
@@ -584,7 +550,7 @@ function jumpTo(type, value){
 
 
 function fetchData(customURL){	
-	console.warn("USAGE OF GLOBAL FUNCTION!");
+	console.warn("USAGE OF GLOBAL FUNCTION - fetchdata!");
 
 	try {
 		utils.log("app", "Found fetch" + fetch.toString().substr(0,0));
@@ -689,7 +655,7 @@ function fetchData(customURL){
 }
 
 
-document.body.onload = init;
+document.body.onload = app.init;
 
 
 
@@ -792,14 +758,14 @@ function dbg_clearCache(){
 
 
 function updateData(){
-	alert("USAGE OF GLOBAL FUNCTION!");
+	alert("USAGE OF GLOBAL FUNCTION - updatedate!");
 	return console.warn("USAGE OF GLOBAL FUNCTION!");
 	location.reload();
 }
 
 
 function tempTest(){
-	alert("USAGE OF GLOBAL FUNCTION!");
+	alert("USAGE OF GLOBAL FUNCTION - temptest!");
 	return console.warn("USAGE OF GLOBAL FUNCTION!");
 	o = "";
 	o += "in:"+window.innerWidth;
