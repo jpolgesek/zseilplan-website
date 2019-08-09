@@ -77,13 +77,13 @@
 						<div>&copy; Jakub Półgęsek 2019</div>
 					</div> <!-- TODO: create me dynamically -->
 					
-					<div class="navbar-buttons">
+					<div class="navbar-buttons" id="navbar-buttons">
 						<button class='print-hide desktop-only' onclick="utils.androidDemo()" id="navbar-btn-android">
 							<div class='icon'><i class="icon-android"></i></div>
 							<div class='text'>Aplikacja Mobilna</div>
 						</button>
 		
-						<button class='print-hide smallscreen-hide' onclick="ui.print()" id="navbar-btn-print">
+						<button class='print-hide smallscreen-hide' onclick="app.ui.print()" id="navbar-btn-print">
 							<div class='icon'><i class="icon-print"></i></div>
 							<div class='text'>Drukuj</div>
 						</button>
@@ -214,18 +214,19 @@
 		</div>
 
 		<!-- %compile_js_start%-->
+		<script src="assets/js/app.config.js?ver=%build%"></script>
+		<script src="assets/js/app.js?ver=%build%"></script>
+		<script src="assets/js/app.ui.js?ver=%build%"></script>
 		<script src="assets/js/utils.js?ver=%build%"></script>
 		<script src="assets/js/diff.js?ver=%build%"></script>
 		<script src="assets/js/dom.js?ver=%build%"></script>
 		<script src="assets/js/modal.js?ver=%build%"></script>
 		<script src="assets/js/overrides.js?ver=%build%"></script>
-		<script src="assets/js/ui.js?ver=%build%"></script>
 		<script src="assets/js/datetime.js?ver=%build%"></script>
 		<script src="assets/js/storage.js?ver=%build%"></script>
 		<script src="assets/js/quicksearch.js?ver=%build%"></script>
-		<script src="assets/js/app.js?ver=%build%"></script>
 		<script src="assets/js/temp1.js?ver=%build%"></script>
-		<script src="assets/js/bugreport.js?ver=%build%"></script>
+		<script src="assets/js/app.bugreport.js?ver=%build%"></script>
 		<script src="assets/js/easteregg.js?ver=%build%"></script>
 		<script src="assets/js/thememanager.js?ver=%build%"></script>
 		<script src="assets/js/settings.js?ver=%build%"></script>

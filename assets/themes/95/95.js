@@ -51,7 +51,7 @@ var themeloader = {
 		app.modal.create = modal.create;
 
 		//app.themeLoaded = true;
-		ui.setDarkMode(false); //sorry :/
+		app.ui.setDarkMode(false); //sorry :/
 		//this.importCSS();
 		this.prepareWindow(undefined, undefined, "Navbar", document.querySelector("#navbar-container"));
 		window_timetable = this.prepareWindow("calendar-5.png", undefined, "Plan lekcji", table);
@@ -135,10 +135,10 @@ var themeloader = {
 	closeClick: function(t){
 		console.log(t);
 
-		try { ui.showPreferences(0); } catch (e) {}
+		try { app.ui.showPreferences(0); } catch (e) {}
 		try { changelogDiv.parentElement.removeChild(changelogDiv); } catch (e) {}
 		try { datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv); } catch (e) {}
-		try { ui.containerBlur(false); } catch (e) {}
+		try { app.ui.containerBlur(false); } catch (e) {}
 
 		return;
 	}

@@ -40,7 +40,7 @@ var overrides = {
 				if (overrideData[date][day] == undefined) continue; 
 				
 				//Show (Z) mark to indicate that overrides for this day are loaded correctly
-				ui.createZMark(day);
+				app.ui.createZMark(day);
 
 				override = overrideData[date][day][hour];
 
@@ -110,7 +110,7 @@ var overrides = {
 			}
 		}
 
-		overridesModal = modal.create('overridesmodal', "Podsumowanie zastępstw", "", function(){overridesModal.parentElement.removeChild(overridesModal);ui.containerBlur(false)});
+		overridesModal = modal.create('overridesmodal', "Podsumowanie zastępstw", "", function(){overridesModal.parentElement.removeChild(overridesModal);app.ui.containerBlur(false)});
 		overridesModal.style.height = "80%";
 		row = modal.createRow();
 		row.style.margin.bottom = "-10px";
@@ -169,7 +169,7 @@ var overrides = {
 		
 		overridesModal.appendChild(outHTML2);
 
-		ui.containerBlur(true);
+		app.ui.containerBlur(true);
 		document.body.appendChild(overridesModal);
 		setTimeout(function(){dom.addClass(overridesModal, "modal-anim");},1);
 
@@ -242,7 +242,7 @@ function checkForOverrides(){
 			if (overrideData[ind] == undefined) continue; //There are no overrides for this day, skip this loop
 			if (overrideData[ind][x] == undefined) continue; //There are no overrides for this day, skip this loop
 			
-			ui.createZMark(x);
+			app.ui.createZMark(x);
 
 			override = overrideData[ind][x][y];
 			if (override == undefined) continue; //There are no overrides for this hour, skip this loop
@@ -297,9 +297,9 @@ function unitParse(unit, override, cell){
 					}
 					temp_data.s = override[o].s;
 	
-					ui.isOverride = true;
-					cell.replaceChild(ui.createItem(temp_data), cell.children[i]);
-					ui.isOverride = false;
+					app.ui.isOverride = true;
+					cell.replaceChild(app.ui.createItem(temp_data), cell.children[i]);
+					app.ui.isOverride = false;
 	
 				}
 			}
@@ -328,9 +328,9 @@ function teacherParse(teacher, override, cell){
 				}
 				temp_data.s = override[unit][o].s;
 				temp_data.n = teacher;
-				ui.isOverride = true;
-				cell.appendChild(ui.createItem(temp_data));
-				ui.isOverride = false;
+				app.ui.isOverride = true;
+				cell.appendChild(app.ui.createItem(temp_data));
+				app.ui.isOverride = false;
 			}
 			if (override[unit][o].oldTeacherShort == teacher){
 				console.log("Nauczyciel "+teacher+" nie ma lekcji na godzinie "+y+" w dniu "+x+" z klasą "+unit+"  ");
@@ -339,10 +339,10 @@ function teacherParse(teacher, override, cell){
 				temp_data.p = "Okienko";
 				temp_data.s = "";
 				temp_data.n = "";
-				ui.isOverride = true;
+				app.ui.isOverride = true;
 				cell.innerHTML = "";
-				cell.appendChild(ui.createItem(temp_data));
-				ui.isOverride = false;
+				cell.appendChild(app.ui.createItem(temp_data));
+				app.ui.isOverride = false;
 			}
 		}
 	}
@@ -364,14 +364,14 @@ function roomParse(room, override, cell){
 				}
 				temp_data.s = override[unit][o].s;
 				temp_data.n = override[unit][o].newTeacherShort;
-				ui.isOverride = true;
+				app.ui.isOverride = true;
 				try{	
 					if (override[unit][o].oldTeacherShort == cell.children[0].children[3].innerText){
 						cell.innerHTML = "";
 					}
 				}catch(e){}		
-				cell.appendChild(ui.createItem(temp_data));
-				ui.isOverride = false;
+				cell.appendChild(app.ui.createItem(temp_data));
+				app.ui.isOverride = false;
 			}else if (override[unit][o].s == room && override[unit][o].newTeacherShort == -1){
 				console.log("Mam zastepstwo w sali "+room+" - ktos nie ma lekcji z klasa "+unit+" na godzinie "+y+" w dniu "+x);
 				temp_data = Object();
@@ -379,10 +379,10 @@ function roomParse(room, override, cell){
 				temp_data.p = "";
 				temp_data.s = "";
 				temp_data.n = "";
-				ui.isOverride = true;
+				app.ui.isOverride = true;
 				cell.innerHTML = "";
-				cell.appendChild(ui.createItem(temp_data));
-				ui.isOverride = false;
+				cell.appendChild(app.ui.createItem(temp_data));
+				app.ui.isOverride = false;
 			}else{
 				for (i = 0; i<cell.children.length; i++){
 					if (override[unit][o].oldTeacherShort == cell.children[i].children[2].children[1].innerText){
@@ -392,10 +392,10 @@ function roomParse(room, override, cell){
 						temp_data.p = "";
 						temp_data.s = "";
 						temp_data.n = "";
-						ui.isOverride = true;
+						app.ui.isOverride = true;
 						cell.innerHTML = "";
-						cell.appendChild(ui.createItem(temp_data));
-						ui.isOverride = false;
+						cell.appendChild(app.ui.createItem(temp_data));
+						app.ui.isOverride = false;
 					}
 				}
 			}

@@ -6,14 +6,14 @@ var quicksearch = {
 		document.getElementById('suggestions').innerHTML = "";
 	},
 	show: function(){
-		ui.containerBlur(true);
+		app.ui.containerBlur(true);
 		document.getElementById("quicksearch").style.display = "flex";
 		document.getElementById("search").value = "";
 		document.getElementById("search").focus();
 		app.ae('quicksearch', 'show', "show");
 	},
 	hide: function(){
-		ui.containerBlur(false);
+		app.ui.containerBlur(false);
 		document.getElementById("quicksearch").style.display = "none";
 		document.getElementById("search").value = "";
 		// document.getElementById("preferences").style.display = "none";

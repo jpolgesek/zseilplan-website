@@ -1,4 +1,4 @@
-var ui = {
+app.ui = {
 	breakLineInItem: false,
 	darkMode: false,
 	itemDisplayType: 0,
@@ -10,23 +10,23 @@ var ui = {
 		timerID: undefined,
 		inProgress: false,
 		show: function(text, time){
-			if (ui.toast.inProgress) return false;
-			ui.toast.inProgress = true;
-			if (ui.toast.timerID != undefined) clearTimeout(ui.toast.timerID);
+			if (app.ui.toast.inProgress) return false;
+			app.ui.toast.inProgress = true;
+			if (app.ui.toast.timerID != undefined) clearTimeout(app.ui.toast.timerID);
 			if (time == undefined) time = 2400;
 			app.element.notification.text.innerHTML = text;
 			app.element.notification.bar.style.display = "inherit";
 			dom.addClass(app.element.navbar.container, "notification");
-			// app.element.notification.bar.onclick = ui.toast.hide;
-			setTimeout(ui.toast.hide, time);
+			// app.element.notification.bar.onclick = app.ui.toast.hide;
+			setTimeout(app.ui.toast.hide, time);
 			return true;
 		},
 		hide: function(){
 			dom.removeClass(app.element.navbar.container, "notification");
 			// app.element.notification.bar.onclick = null;
-			ui.toast.timerID = setTimeout(function(){
+			app.ui.toast.timerID = setTimeout(function(){
 				app.element.notification.bar.style.display = "none"; 
-				ui.toast.inProgress = false;
+				app.ui.toast.inProgress = false;
 			}, 800);
 			return true;
 		}
@@ -91,19 +91,19 @@ var ui = {
 		/* TODO: fix me */
 		/* Show timetable update date */
 		if (data._updateDate_max == data._updateDate_min) {
-			ui.updateStatus("Plan z dnia "+data._updateDate_max); //do not show on desktop
+			app.ui.updateStatus("Plan z dnia "+data._updateDate_max); //do not show on desktop
 			navbar_info.innerHTML = "Plan z dnia "+data._updateDate_max;
 		} else {
-			ui.updateStatus("Plan z dni "+data._updateDate_max+" - "+data._updateDate_min); //do not show on desktop
+			app.ui.updateStatus("Plan z dni "+data._updateDate_max+" - "+data._updateDate_min); //do not show on desktop
 			navbar_info.innerHTML = "Plan z dni "+data._updateDate_max+" - "+data._updateDate_min;
 		}
 		
 		/* TODO: fix me */
 		try {
 			if (Object.keys(data.overrideData).length > 0){
-				ui.updateStatus("<br>Zastępstwa na "+Object.keys(data.overrideData).map(function(s){return s.substr(0,5)}).sort().join());
+				app.ui.updateStatus("<br>Zastępstwa na "+Object.keys(data.overrideData).map(function(s){return s.substr(0,5)}).sort().join());
 			}
-			ui.updateStatus("<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a>");
+			app.ui.updateStatus("<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a>");
 		} catch (e) {}
 
 	},
@@ -458,14 +458,14 @@ var ui = {
 	 * @param {string} 	text		String which should be shown
 	 */
 	createToast: function(text){
-		if (ui.isToastInProgress) return;
+		if (app.ui.ui.isToastInProgress) return;
 
-		ui.isToastInProgress = true;
+		app.ui.ui.isToastInProgress = true;
 		app.element.notification.text.innerHTML = text;
 		app.element.notification.bar.style.display = "inherit";
 		dom.addClass(app.element.navbar.container, "notification");
 		setTimeout(function(){dom.removeClass(app.element.navbar.container, "notification")}, 3000);
-		setTimeout(function(){app.element.notification.bar.style.display = "none"; ui.isToastInProgress = false;}, 4000);
+		setTimeout(function(){app.element.notification.bar.style.display = "none"; app.ui.isToastInProgress = false;}, 4000);
 		/*
 		document.getElementById("toast_desc").innerHTML = text;
 		var x = document.getElementById("toast")

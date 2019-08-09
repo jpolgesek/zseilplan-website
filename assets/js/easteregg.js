@@ -75,7 +75,7 @@ app.adminPanel = {
 		fakeAdminHeader.className = "adminPanel"
 		fakeAdminString = "<h3>/&gt Witaj jpolgesek!</h3>";
 		fakeAdminString += "<span class='t'>Wyświetl:</span>";
-		fakeAdminString += "<button onclick='ui.toast.show(\"Błąd HTTP 104\");'>Statystyki</button>";
+		fakeAdminString += "<button onclick='app.ui.toast.show(\"Błąd HTTP 104\");'>Statystyki</button>";
 
 		fakeAdminString += "<span class='t'>Zarządzaj:</span>";
 		fakeAdminString += "<button onclick='app.adminPanel.manage(\"timetable\")'>Plan</button>";

@@ -224,8 +224,8 @@ var preferences = {
 		}
 
 		
-		ui.breakLineInItem = this.SCP2Data.preferences["ui.breakLineInItem"];
-		ui.jumpButtonsFloatRight = this.SCP2Data.preferences["ui.jumpButtonsFloatRight"];
+		app.ui.breakLineInItem = this.SCP2Data.preferences["ui.breakLineInItem"];
+		app.ui.jumpButtonsFloatRight = this.SCP2Data.preferences["ui.jumpButtonsFloatRight"];
 
 		return true;
 	}
@@ -251,7 +251,7 @@ var myStorage = {
 
 		localStorage.setItem("saved", true);
 		// ui.createToast("Zapisałem ustawienia");
-		ui.toast.show("Zapisałem ustawienia");
+		app.ui.toast.show("Zapisałem ustawienia");
 		app.ae('preferences', 'save', '1');
 	},
 	clear: function(){
@@ -264,7 +264,7 @@ var myStorage = {
 		localStorage.removeItem("ui.breakLineInItem");
 		localStorage.removeItem("ui.jumpButtonsFloatRight");
 		// ui.createToast("Wyczyściłem ustawienia domyślne");
-		ui.toast.show("Wyczyściłem ustawienia domyślne");
+		app.ui.toast.show("Wyczyściłem ustawienia domyślne");
 	},
 	load: function(){
 		if (localStorage.getItem("saved") != "true"	){
@@ -300,15 +300,15 @@ var myStorage = {
 	
 		
 		if(localStorage.getItem("ui.darkMode") == "true"){
-			ui.setDarkMode(true);
+			app.ui.setDarkMode(true);
 		}
 		
 		if(localStorage.getItem("ui.breakLineInItem") == "true"){
-			ui.breakLineInItem = true;
+			app.ui.breakLineInItem = true;
 		}
 
 		if(localStorage.getItem("ui.jumpButtonsFloatRight") == "true"){
-			ui.jumpButtonsFloatRight = true;
+			app.ui.jumpButtonsFloatRight = true;
 		}
 
 		/* Deprecated in zseilplan 2.0 */
@@ -334,9 +334,9 @@ var myStorage = {
 		preferencesDiv.className += " deprecated";
 		prefsList = [
 			//Source, Change, Name
-			["checkbox", ui.breakLineInItem, function(x){ui.setLineBreak(x)}, "Zawijaj wiersze po nazwie przedmiotu", "ui.setLineBreak"],
-			["checkbox", ui.jumpButtonsFloatRight, function(x){ui.setJumpButtonsFloatRight(x)}, "Wyrównuj sale i nauczycieli do prawej strony", "ui.setJumpButtonsFloatRight"],
-			["checkbox", ui.darkMode, function(x){ui.setDarkMode(x)}, "Tryb nocny", "ui.setDarkMode"],
+			["checkbox", app.ui.breakLineInItem, function(x){app.ui.setLineBreak(x)}, "Zawijaj wiersze po nazwie przedmiotu", "ui.setLineBreak"],
+			["checkbox", app.ui.jumpButtonsFloatRight, function(x){app.ui.setJumpButtonsFloatRight(x)}, "Wyrównuj sale i nauczycieli do prawej strony", "ui.setJumpButtonsFloatRight"],
+			["checkbox", app.ui.darkMode, function(x){app.ui.setDarkMode(x)}, "Tryb nocny", "ui.setDarkMode"],
 			//["checkbox", true, function(x){return false;}, "Ładuj zastępstwa"],
 			["checkbox", notifications_enabled, function(x){toggleNotifications(x);}, "Odbieraj powiadomienia", "toggleNotifications"],
 			["checkbox", overrides_disabled, function(x){return;}, "Tymczasowo ukryj zastępstwa", "toggleOverrides"],

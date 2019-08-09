@@ -1,11 +1,6 @@
 /*    SUPER CLEVER PLAN    */
 /* (C) 2019 Jakub Półgęsek */
 
-/* Config */
-maxHours = 10;
-weekDays = 5;
-
-
 /* Global ui */
 var table = document.getElementById("maintable");
 var select_units = document.getElementById("units");
@@ -25,9 +20,6 @@ var overrides_disabled = false;
 
 var compat = false;
 var isIE = detectIE();
-
-
-
 
 var app = {
 	_ui_loaded: false,
@@ -138,7 +130,6 @@ var app = {
 		try{gtag('event', a,{'event_category':c,'event_label':l});}catch(e){};
 	},
 	init: function(){
-		app.ui = ui;
 		app.modal = modal;
 		app.storage = myStorage;
 		app.refreshView = refreshView;
@@ -162,7 +153,7 @@ var app = {
 		if (this._ui_loaded) return;
 
 		if (this.isEnabled("new_settings")){
-			ui.createNavbarButton('<i class="icon-cog"></i>', "Ustawienia2", function(){settings.createModal()});
+			app.ui.createNavbarButton('<i class="icon-cog"></i>', "Ustawienia2", function(){settings.createModal()});
 		}
 
 		if (this.isEnabled("theme_manager")){
@@ -252,11 +243,12 @@ function sortAsc (a, b) {
 }
 
 function init(){
+	console.warn("USAGE OF GLOBAL FUNCTION!");
 	//try {utils.consoleStartup();} catch (e) {}
 	utils.log("app", "Initializing");
 
-	ui.loader.setStatus("Ładuję preferencje");
-	ui.setStatus("Ładowanie preferencji...");
+	app.ui.loader.setStatus("Ładuję preferencje");
+	app.ui.setStatus("Ładowanie preferencji...");
 
 	if (preferences.get("tests_enabled") == "true"){
 		this._features.prod = this._features.dev;
@@ -271,12 +263,13 @@ function init(){
 		}
 	}
 
-	ui.setStatus("Ładowanie danych planu...");
-	ui.loader.setStatus("Pobieram dane");
+	app.ui.setStatus("Ładowanie danych planu...");
+	app.ui.loader.setStatus("Pobieram dane");
 	fetchData();
 }
 
 function init2(){
+	console.warn("USAGE OF GLOBAL FUNCTION!");
 	utils.log("app", "Loading app");
 
 	try{
@@ -285,7 +278,7 @@ function init2(){
 	
 	if (!navigator.onLine) {
 		utils.warn("app", "App is offline, be careful!");
-		ui.setNetworkStatus(false);
+		app.ui.setNetworkStatus(false);
 	}
 	
 	app.ui.loader.setStatus("Wczytuję dane");
@@ -296,7 +289,7 @@ function init2(){
 	overrideData = data.overrideData; //Quick fix, overrides were not loading on 08.11.2018
 
 	if (app.testMode) {
-		ui.updateStatus("<b>Tryb testowy, uważaj!</b><br>");
+		app.ui.updateStatus("<b>Tryb testowy, uważaj!</b><br>");
 	}
 
 	app.ui.initComments();
@@ -314,7 +307,7 @@ function init2(){
 
 	quicksearch.init();
 	try {
-		ui.loader.setStatus("Ładuję interfejs");
+		app.ui.loader.setStatus("Ładuję interfejs");
 		dom.addClass(document.getElementsByClassName('loader')[0], "opacity-0");
 		dom.removeClass(document.getElementsByClassName('container')[0], "opacity-0");
 		document.getElementsByClassName('loader')[0].parentElement.removeChild(document.getElementsByClassName('loader')[0]);
@@ -343,10 +336,10 @@ function init2(){
 	
 
 	window.addEventListener('offline', function(e) { 
-		ui.setNetworkStatus(false);
+		app.ui.setNetworkStatus(false);
 	});
 	window.addEventListener('online', function(e) { 
-		ui.setNetworkStatus(true);
+		app.ui.setNetworkStatus(true);
 	});
 
 	
@@ -362,6 +355,7 @@ function init2(){
 
 
 function refreshView(){
+	console.warn("USAGE OF GLOBAL FUNCTION!");
 	if (select_units.value != "default") {
 		app.currentView.selectedType = "unit";
 		app.currentView.selectedValue = select_units.value;
@@ -422,7 +416,7 @@ function refreshView(){
 	}
 
 	if (this.id != undefined){
-		ui.resetSelects(this.id);
+		app.ui.resetSelects(this.id);
 	}
 
 	//TODO: isn't there a function to do that?
@@ -444,41 +438,41 @@ function refreshView(){
 			
 			/* Show unit view */
 			if (select_units.value != "default"){
-				ui.itemDisplayType = 2;
+				app.ui.itemDisplayType = 2;
 				try {
 					classesArr = data.timetable[day][hour][select_units.value];
 					for (cls in classesArr){
-						cell.appendChild(ui.createItem(classesArr[cls]));
+						cell.appendChild(app.ui.createItem(classesArr[cls]));
 					}
 				}catch (e){}
 				
 
 			/* Show teacher view */
 			}else if (select_teachers.value != "default"){
-				ui.itemDisplayType = 0;
+				app.ui.itemDisplayType = 0;
 				try {
 					if (typeof data.teachers_new != 'undefined'){
 						//New - fixed view of teachers timetable
 						itemData = data.teachers_new[select_teachers.value][day][hour];
 						for (var i in itemData){
-							cell.appendChild(ui.createItem(itemData[i]));
+							cell.appendChild(app.ui.createItem(itemData[i]));
 						}
 					}else{
 						itemData = data.teachers[select_teachers.value][day][hour];
-						cell.appendChild(ui.createItem(itemData));
+						cell.appendChild(app.ui.createItem(itemData));
 					}
 				}catch (e){}
 			
 			/* Show room view */
 			}else if (select_rooms.value != "default"){
-				ui.itemDisplayType = 1;
+				app.ui.itemDisplayType = 1;
 				try {		
 					for (unit in data.timetable[day][hour]){
 						itemData = data.timetable[day][hour][unit].filter(function(v){return v.s == select_rooms.value;});
 						if (itemData.length > 0){
 							itemData = itemData[0];
 							itemData.k = unit;
-							cell.appendChild(ui.createItem(itemData));
+							cell.appendChild(app.ui.createItem(itemData));
 						}
 					}
 				}catch (e){}
@@ -527,6 +521,7 @@ function refreshView(){
 }
 
 function createHeader(table){
+	console.warn("USAGE OF GLOBAL FUNCTION!");
 	//compat
 	//var header = table.insertRow();
 	var header = table.insertRow(-1); //-1 for backwards compatibility
@@ -546,6 +541,7 @@ function createHeader(table){
 }
 
 function insertNumber(table, y){
+	console.warn("USAGE OF GLOBAL FUNCTION!");
 	//compat
 	//var row = table.insertRow();
 	//var cell = row.insertCell();
@@ -558,6 +554,7 @@ function insertNumber(table, y){
 }
 
 function jumpTo(type, value){
+	console.warn("USAGE OF GLOBAL FUNCTION!");
 	select_units.value = "default";
 	select_teachers.value = "default";
 	select_rooms.value = "default";
@@ -594,6 +591,8 @@ function jumpTo(type, value){
 
 
 function fetchData(customURL){	
+	console.warn("USAGE OF GLOBAL FUNCTION!");
+
 	try {
 		utils.log("app", "Found fetch" + fetch.toString().substr(0,0));
 	} catch (error) {
@@ -607,7 +606,7 @@ function fetchData(customURL){
 
 	/* %old-ie-remove-start% */
 	if (!navigator.onLine) {
-		ui.loader.setStatus("Jesteś offline, próbuję pobrać plan z lokalnego cache");
+		app.ui.loader.setStatus("Jesteś offline, próbuję pobrać plan z lokalnego cache");
 		timestamp = "localstorage";
 	}
 	/* %old-ie-remove-end% */
@@ -624,7 +623,7 @@ function fetchData(customURL){
 
 	if (compat){
 		//Compatibility mode
-		ui.loader.setStatus("Rozpoczynam pobieranie danych w trybie kompatybilności wstecznej");
+		app.ui.loader.setStatus("Rozpoczynam pobieranie danych w trybie kompatybilności wstecznej");
 		
 		timestamp = Date.now();
 		var fetchDataCompatXHR = new XMLHttpRequest();
@@ -682,16 +681,16 @@ function fetchData(customURL){
 		init2();
 	})["catch"](function(error){
 		isOK = false;
-		ui.loader.setError("<b>Nie udało się pobrać planu lekcji</b>", "Upewnij się że masz połączenie z internetem i spróbuj ponownie.");
+		app.ui.loader.setError("<b>Nie udało się pobrać planu lekcji</b>", "Upewnij się że masz połączenie z internetem i spróbuj ponownie.");
 		utils.error("app", "Fetch - failed to download data.json. Reason: " + error);
 	});
 	/* %old-ie-remove-end% */
 
 	if (!isOK){
-		ui.loader.setStatus("<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.");
+		app.ui.loader.setStatus("<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.");
 		utils.error("app", "Failed to download data.json");
 	}else{
-		ui.loader.setStatus("Pobrano plan lekcji");
+		app.ui.loader.setStatus("Pobrano plan lekcji");
 	}
 	return isOK;
 }
@@ -736,9 +735,9 @@ if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.ready.then(function(reg) {
 			reg.pushManager.getSubscription().then(function(subscription) {
 			  subscription.unsubscribe().then(function(successful) {
-				ui.toast.show("Wyłączyłem powiadomienia");
+				app.ui.toast.show("Wyłączyłem powiadomienia");
 			  })["catch"](function(e) {
-				ui.toast.show("Wystąpił nieznany błąd :(");
+				app.ui.toast.show("Wystąpił nieznany błąd :(");
 			  })
 			})        
 		  });
@@ -783,10 +782,10 @@ if ('serviceWorker' in navigator) {
 		})["catch"](function(e) {
 			if (Notification.permission === 'denied') {
 				console.warn('Permission for notifications was denied');
-				ui.toast.show("Brak uprawnień :(");
+				app.ui.toast.show("Brak uprawnień :(");
 			} else {
 				console.error('Unable to subscribe to push', e);
-				ui.toast.show("Wystąpił nieznany błąd :(");
+				app.ui.toast.show("Wystąpił nieznany błąd :(");
 			}
 		});
 		})
@@ -800,11 +799,15 @@ function dbg_clearCache(){
 
 
 function updateData(){
+	alert("USAGE OF GLOBAL FUNCTION!");
+	return console.warn("USAGE OF GLOBAL FUNCTION!");
 	location.reload();
 }
 
 
 function tempTest(){
+	alert("USAGE OF GLOBAL FUNCTION!");
+	return console.warn("USAGE OF GLOBAL FUNCTION!");
 	o = "";
 	o += "in:"+window.innerWidth;
 	o += ",ou:"+window.outerWidth;

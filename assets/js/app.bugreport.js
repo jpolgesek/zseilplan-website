@@ -74,7 +74,7 @@ app.bugreport = {
     },
 
 	modal: function(){
-		bugreportDiv = modal.create('bugreport', "Zgłoś błąd", "", function(){bugreportDiv.parentElement.removeChild(bugreportDiv);ui.containerBlur(false)});
+		bugreportDiv = modal.create('bugreport', "Zgłoś błąd", "", function(){bugreportDiv.parentElement.removeChild(bugreportDiv);app.ui.containerBlur(false)});
 		
 		row = modal.createRow();
 		row.style.margin.bottom = "-10px";
@@ -120,11 +120,11 @@ app.bugreport = {
 
 		prefsBtnCancel = document.createElement('button');
 		prefsBtnCancel.innerHTML = "Anuluj";
-		prefsBtnCancel.onclick = function(){bugreportDiv.parentElement.removeChild(bugreportDiv);ui.containerBlur(false)};
+		prefsBtnCancel.onclick = function(){bugreportDiv.parentElement.removeChild(bugreportDiv);app.ui.containerBlur(false)};
 		row.appendChild(prefsBtnCancel);
 		bugreportDiv.appendChild(row);
 
-		ui.containerBlur(true);
+		app.ui.containerBlur(true);
 		document.body.appendChild(bugreportDiv);
 		setTimeout(function(){dom.addClass(bugreportDiv, "modal-anim");},1);
 	},

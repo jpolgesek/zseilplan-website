@@ -90,7 +90,7 @@ var diff = {
 		}
 
 		/* Prepare table UI */
-		ui.jumpButtonsFloatRight = true;
+		app.ui.jumpButtonsFloatRight = true;
 		old_overrides_disabled = overrides_disabled;
 		overrides_disabled = true;
 		oldActiveColumn = columns.activeColumn;
@@ -128,7 +128,7 @@ var diff = {
 							oldItem = this.data.teachers[select_teachers.value][day][hour];
 							if (oldItem != undefined){
 								oldItem.diff = "removed";
-								itemsContainer.append(ui.createItem(oldItem));
+								itemsContainer.append(app.ui.createItem(oldItem));
 							}
 						} else if (this.selectedType == "room"){
 							for (unit in this.data.timetable[day][hour]){
@@ -137,7 +137,7 @@ var diff = {
 									oldItem = oldItem[0];
 									oldItem.k = unit;
 									oldItem.diff = "removed";
-									itemsContainer.appendChild(ui.createItem(oldItem));
+									itemsContainer.appendChild(app.ui.createItem(oldItem));
 								}
 							}
 						} else if (this.selectedType == "unit"){
@@ -146,7 +146,7 @@ var diff = {
 								if (classesArr != undefined){
 									for (cls in classesArr){
 										classesArr[cls].diff = "removed";
-										itemsContainer.appendChild(ui.createItem(classesArr[cls]));
+										itemsContainer.appendChild(app.ui.createItem(classesArr[cls]));
 									}
 								}
 							} catch (e) {}
@@ -162,7 +162,7 @@ var diff = {
 
 							if (oldItem == undefined){
 								currentItem.diff = "added";
-								currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+								currentItemElement.parentNode.replaceChild(cell.appendChild(app.ui.createItem(currentItem)), currentItemElement);
 							} else {
 								if (oldItem.p != currentItem.p){
 									currentItem.diffModifiedP = "Był " + oldItem.p + "; Jest " + currentItem.p;
@@ -176,7 +176,7 @@ var diff = {
 									currentItem.diffModified1 = "Była " + oldItem.k + "; Jest " + currentItem.k;
 									currentItem.diff = "modified";
 								}
-								currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+								currentItemElement.parentNode.replaceChild(cell.appendChild(app.ui.createItem(currentItem)), currentItemElement);
 							}
 						} else if (this.selectedType == "room"){
 							wasEmpty = true;
@@ -202,12 +202,12 @@ var diff = {
 									currentItem.diff = "modified";
 								}
 
-								currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+								currentItemElement.parentNode.replaceChild(cell.appendChild(app.ui.createItem(currentItem)), currentItemElement);
 							}
 
 							if (wasEmpty){
 								currentItem.diff = "added";
-								currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+								currentItemElement.parentNode.replaceChild(cell.appendChild(app.ui.createItem(currentItem)), currentItemElement);
 							}
 						} else if (this.selectedType == "unit"){
 							//todo: tortury
@@ -259,7 +259,7 @@ var diff = {
 									}
 
 									if (currentItem.diff == "modified"){
-										currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+										currentItemElement.parentNode.replaceChild(cell.appendChild(app.ui.createItem(currentItem)), currentItemElement);
 									}else{
 										classesArr[cls].originalCLA = originalCLA;
 										notFound.push(classesArr[cls]);
@@ -278,9 +278,9 @@ var diff = {
 											try {
 												/* TODO: create pref item to control whether to display this as two separate entries or one */
 												currentItem.diff = "added";	
-												currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+												currentItemElement.parentNode.replaceChild(cell.appendChild(app.ui.createItem(currentItem)), currentItemElement);
 												oldItem.diff = "removed";
-												itemsContainer.appendChild(ui.createItem(oldItem));
+												itemsContainer.appendChild(app.ui.createItem(oldItem));
 											} catch (e) {console.error(e);}
 										}else{
 											for(q = 0; q < il; q++ ){
@@ -293,7 +293,7 @@ var diff = {
 												}else if ((oldItem.s == i_currentItem.s) && (oldItem.n == i_currentItem.n) && (oldItem.p == i_currentItem.p)){
 												}else{
 													notFound[nf_i].diff = "removed";
-													itemsContainer.appendChild(ui.createItem(notFound[nf_i]));
+													itemsContainer.appendChild(app.ui.createItem(notFound[nf_i]));
 												}
 											}
 
@@ -302,7 +302,7 @@ var diff = {
 								}
 							} else {
 								currentItem.diff = "added";
-								currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+								currentItemElement.parentNode.replaceChild(cell.appendChild(app.ui.createItem(currentItem)), currentItemElement);
 							}
 						}
 					}

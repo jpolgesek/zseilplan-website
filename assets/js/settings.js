@@ -18,15 +18,15 @@ var settings = {
 					{
 						devOnly: false,
 						type: "checkbox",
-						dataTarget: "ui.breakLineInItem",
-						onClick: function(){ui.setLineBreak(this.checked)},
+						dataTarget: "app.ui.breakLineInItem",
+						onClick: function(){app.ui.setLineBreak(this.checked)},
 						desc: "Zawijaj wiersze po nazwie przedmiotu"
 					},
 					{
 						devOnly: false,
 						type: "checkbox",
-						dataTarget: "ui.jumpButtonsFloatRight",
-						onClick: function(){ui.setJumpButtonsFloatRight(this.checked)},
+						dataTarget: "app.ui.jumpButtonsFloatRight",
+						onClick: function(){app.ui.setJumpButtonsFloatRight(this.checked)},
 						desc: "Wyrównuj sale i nauczycieli do prawej strony"
 					},
 					{
@@ -128,7 +128,7 @@ var settings = {
 								app.isDiff = true;
 								settings.closeModal();
 							}else{
-								ui.clearTable(); 
+								app.ui.clearTable(); 
 								app.isCustomDataVersion = true; 
 								fetchData(file); 
 								settings.closeModal();
@@ -222,7 +222,7 @@ var settings = {
 		row.appendChild(app.modal.createButton({
 			innerHTML: "QS",
 			onClick: function(){
-				ui.showPreferences(0); 
+				app.ui.showPreferences(0); 
 				quicksearch.show();
 			}
 		}));
