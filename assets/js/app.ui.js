@@ -101,16 +101,12 @@ app.ui = {
 			var header = table.insertRow(-1); //-1 for backwards compatibility
 		
 			header.className = "header";
+			text_arr = ["Nr", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek"];
+
 			for (i=0; i<6; i++){
-				header.insertCell();
+				c = header.insertCell();
+				c.innerHTML = text_arr[i];
 			}
-			
-			table.rows[0].cells[0].innerHTML = "Nr";
-			table.rows[0].cells[1].innerHTML = "Poniedziałek";
-			table.rows[0].cells[2].innerHTML = "Wtorek";
-			table.rows[0].cells[3].innerHTML = "Środa";
-			table.rows[0].cells[4].innerHTML = "Czwartek";
-			table.rows[0].cells[5].innerHTML = "Piątek";
 			
 		},
 
@@ -176,7 +172,8 @@ app.ui = {
 	},
 
 	initSelects: function(){		
-		try {data_googleindex_info.innerHTML = "W indeksie jest: ";} catch (e){}
+		data_googleindex_info_text = ""
+		data_googleindex_info_text = "W indeksie jest: ";
 
 		/* Add units to select_units and quicksearch */
 		this.setStatus("Przygotowywanie interfejsu: klasy");
@@ -188,8 +185,8 @@ app.ui = {
 		select_units.options[0] = new Option("Klasa", "default");
 		for (unit in data.units) {
 			select_units.options[select_units.options.length] = new Option(data.units[unit], data.units[unit]);
-			// try {data_googleindex_info.innerHTML += "<a href='index.html#k"+data.units[unit]+"'>plan "+data.units[unit]+"</a>, ";} catch (e){}
-			try {data_googleindex_info.innerHTML += "plan "+data.units[unit]+", ";} catch (e){}
+			// data_googleindex_info_text += "<a href='index.html#k"+data.units[unit]+"'>plan "+data.units[unit]+"</a>, ";
+			data_googleindex_info_text += "plan "+data.units[unit]+", ";
 			//quicksearch.add("Klasa "+data.units[unit], "K"+data.units[unit]);
 		};
 
@@ -205,7 +202,7 @@ app.ui = {
 			select_teachers.options[select_teachers.options.length] = new Option(data.teachermap[key]+' ('+key+')', key);
 		}
 
-		try {data_googleindex_info.innerHTML += "plany "+ Object.keys(data.teachermap).length +" nauczycieli";} catch (e){}
+		data_googleindex_info_text += "plany "+ Object.keys(data.teachermap).length +" nauczycieli";
 		
 		/* Add classrooms to select_rooms and quicksearch */
 		this.setStatus("Przygotowywanie interfejsu: sale");
@@ -220,7 +217,7 @@ app.ui = {
 			//quicksearch.add("Sala "+data.classrooms[i], "S"+data.classrooms[i]);
 		}
 
-		try {data_googleindex_info.innerHTML += " i "+ data.classrooms.length +" sal.";} catch (e){}
+		data_googleindex_info_text += " i "+ data.classrooms.length +" sal.";
 		
 		/* Attach change events to select menus */
 		select_units.onchange = refreshView	;
@@ -229,6 +226,7 @@ app.ui = {
 		select_teachers.oninput = refreshView;
 		select_rooms.onchange = refreshView;
 		select_rooms.oninput = refreshView;
+		data_googleindex_info.innerHTML = data_googleindex_info_text;
 
 		return true;
 	},
@@ -349,16 +347,16 @@ app.ui = {
 	 * @param {object} 	itemData		Data for new item (TODO: write structure somewhere)
 	 */
 	createItem: function(itemData){
-		span = [document.createElement('span'), document.createElement('span'), document.createElement('span'), document.createElement('span')];
-		
 		if (itemData.p.length >= 30){
 			itemData.p = itemData.p.split(" ")[0];
 		}
 
-		span[0].className = 'pName';
-		span[0].innerHTML = itemData.p;
-		span[1].className = 'clickable';
-		span[2].className = 'clickable';
+		span = [
+			app.utils.createEWC("span", ["pName"], itemData.p),
+			app.utils.createEWC("span", ["clickable"]),
+			app.utils.createEWC("span", ["clickable"]),
+			document.createElement('span')
+		];
 
 		if (app.testMode == true) {
 			if (app.prefs["ui.normalize_subject"] === true){
