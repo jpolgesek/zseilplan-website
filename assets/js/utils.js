@@ -167,7 +167,7 @@ var utils = {
 				htmlInfo += `<span style="background: rgba(0,0,0,0.3); border: 1px solid #ddd; border-radius: 5px; padding: 4px; margin: 3px; text-align: center; cursor: pointer;" onclick="jumpTo(1, '${room}');">${room} </span>`;
 			}
 		}
-		app.modal.alert(htmlInfo, "blue");
+		app.ui.modal.alert(htmlInfo, "blue");
 		*/
 		return false; //Unavailable for now due to fucking IE
 	},

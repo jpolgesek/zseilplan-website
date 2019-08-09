@@ -126,7 +126,16 @@ app.ui = {
 			]);
 			
 			return row;
-		}
+		},
+
+		visibleColumn: -1,
+		
+		setVisibleColumn: function(i){
+			this.visibleColumn = i;
+			this.updateVisibleColumn();
+		},
+
+		updateVisibleColumn: function(){},
 	},
 
 	showBuild: function(){

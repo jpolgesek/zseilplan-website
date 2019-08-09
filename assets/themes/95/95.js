@@ -17,6 +17,7 @@ var themeloader = {
 			
 
 		modal.create = function(id ,title, desc, closeAction){
+			//TODO: Might be broken.
 			console.log("OVERRIDE!");
 			if (document.getElementById(id) != undefined){
 				modalContainer = document.getElementById(id);
@@ -48,7 +49,7 @@ var themeloader = {
 
 		}	
 
-		app.modal.create = modal.create;
+		app.ui.modal.create = modal.create;
 
 		//app.themeLoaded = true;
 		app.ui.setDarkMode(false); //sorry :/

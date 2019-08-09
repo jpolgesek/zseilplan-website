@@ -1,6 +1,29 @@
 var modal = {
+	elements: [],
+
+	close: function(modal_el){
+		this.elements = this.elements.filter(el => (el != modal_el));
+		requestAnimationFrame(()=>{
+			modal_el.classList.add("hide-animation");
+		});
+		setTimeout(() => {
+			modal_el.parentElement.removeChild(modal_el);
+			if (!this.elements.length){
+				app.ui.containerBlur(0);
+			}
+		}, 300);
+	},
+
+	closeAll: function(){
+		this.elements.map(el => {this.close(el)})
+	},
+
 	element: undefined,
+
 	create: function(id ,title, desc, closeAction){
+		console.log("DEPRECATED modal.create!!!!!!!!!");
+		alert("DEPRECATED modal.create!!!!!!!!!");
+		return;
 		if (document.getElementById(id) != undefined){
 			modalContainer = document.getElementById(id);
 			modalContainer.innerHTML = "";
@@ -34,60 +57,77 @@ var modal = {
 		return modalContainer;
 
 	},
+
 	createTabbed: function(options){
-		modalContainer = document.createElement("div");
-		// modalContainer.id = id;
-		modalContainer.className = "tabbedModal center-hv shadow";
+		modalContainer = app.utils.createEWC("div", ["tabbedModal", "center-hv", "shadow", "hideMenu"]);
 
-		var modalMenu = dom.createEWC("div", ["menuCheck"]);
-		modalMenu.innerHTML = "☰";
-		dom.addClass(modalContainer, "hideMenu");
+		var modalTitle = app.utils.createEWC("span", ["title"], options.title);
+		var modalClose = app.utils.createEWC("span", ["close"], '<i class="icon-cancel"></i>');
 
-		var modalTitle = dom.createEWC("span", ["title"]);
-		modalTitle.innerHTML = options.title;
-		
-		var modalClose = dom.createEWC("span", ["close"]);
-		modalClose.innerHTML = '<i class="icon-cancel"></i>';
-		modalClose.onclick = function(){options.closeAction();};
+		modalClose.modal_el = modalContainer;
+		modalClose.onclick = function(){
+			app.ui.modal.close(modalClose.modal_el);
+			if (options.closeAction){
+				options.closeAction();
+			}
+		};
 
-		var sectionList = dom.createEWC("span", ["sectionList"]);
-		var sectionContent = dom.createEWC("span", ["sectionContent"]);
+		if (options.tabbed){
+			var modalMenu = app.utils.createEWC("div", ["menuCheck"], "☰");
+			var sectionList = app.utils.createEWC("span", ["sectionList"]);
 
-		modalMenu.onclick = function(){
-			if (this.parentElement.parentElement.className.indexOf("hideMenu") != -1){
-				dom.removeClass(this.parentElement.parentElement, "hideMenu");
-			}else{
-				dom.addClass(this.parentElement.parentElement, "hideMenu");
+			modalMenu.onclick = function(){
+				if (this.parentElement.parentElement.className.indexOf("hideMenu") != -1){
+					dom.removeClass(this.parentElement.parentElement, "hideMenu");
+				}else{
+					dom.addClass(this.parentElement.parentElement, "hideMenu");
+				}
 			}
 		}
 
+		var sectionContent = app.utils.createEWC("span", ["sectionContent"]);
+
 		modalDescRow = this.createRow();
-		modalDescRow.appendChild(modalMenu);
-		modalDescRow.appendChild(modalTitle);
-		modalDescRow.appendChild(modalClose);
+
+		if (options.tabbed){
+			modalDescRow.appendChild(modalMenu);
+		}
+
+		modalDescRow.appendChildren([
+			modalTitle,
+			modalClose
+		]);
+
 		modalContainer.appendChild(modalDescRow);
 
 		modalDescRow = this.createRow();
-		modalDescRow.appendChild(sectionList);
+
+		if (options.tabbed){
+			modalDescRow.appendChild(sectionList);
+		}
+
 		modalDescRow.appendChild(sectionContent);
 		modalContainer.appendChild(modalDescRow);
 
 		modalContainer.sectionList = sectionList;
 		modalContainer.sectionContent = sectionContent;
 
+		this.elements.push(modalContainer);
 		return modalContainer;
-
 	},
+
 	createTab: function(text, id, active){
 		tab = dom.createEWC("div", ["listItem"])
 		tab.innerHTML = text;
 		tab.changeID = id;
+
 		if (active){
 			dom.addClass(tab, "active");
 		}
 
 		tab.onclick = function(){
-			var allTabs = this.parentElement.parentElement.parentElement.sectionList;
+			//FIXME: wtf is that parentElement shit?
+			var allTabs = this.parentElement.parentElement.parentElement.sectionList; 
 			var m = this.parentElement.parentElement.parentElement.sectionContent;
 			var m_save = document.getElementById(this.changeID);
 
@@ -109,28 +149,22 @@ var modal = {
 		}
 		return tab;
 	},
+
 	createRow: function(){
-		row = document.createElement("div");
-		row.className = "row";
-		return row;
+		return app.utils.createEWC("div", ["row"]);
 	},
+
 	createButton: function(options){
-		var workBtn = document.createElement('button');
-		workBtn.innerHTML = options.innerHTML;
+		var workBtn = app.utils.createEWC("button", (options.primary) ? ["btn-primary"] : [], options.innerHTML);
 		workBtn.onclick = options.onClick;
-		if (options.primary){
-			workBtn.className = "btn-primary";
-		}
 		
 		return workBtn;
 	},
+
 	createSectionHeader: function(text){
-		var workHeader = document.createElement("h2");
-		workHeader.className = "sectionHeader";
-		workHeader.innerHTML = text;
-		
-		return workHeader;
+		return app.utils.createEWC("h2", ["sectionheader"], text);
 	},
+
 	alert: function(text, className){
 		var remoteInfo = document.getElementById("remote_info");
 		if (typeof className != "undefined"){
@@ -139,6 +173,7 @@ var modal = {
 		remoteInfo.innerHTML = text;
 		remoteInfo.style.display = "";
 	},
+
 	hideAlert: function(){
 		var remoteInfo = document.getElementById("remote_info");
 		remoteInfo.style.display = "none";

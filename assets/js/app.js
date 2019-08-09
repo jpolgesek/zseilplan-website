@@ -197,7 +197,7 @@ var app = {
 	},
 
 	init3: function(){
-		app.modal = modal;
+		app.ui.modal = modal;
 		app.storage = myStorage;
 		app.refreshView = refreshView;
 

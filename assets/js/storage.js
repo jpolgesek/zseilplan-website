@@ -328,6 +328,8 @@ var myStorage = {
 
 	/* Czemu w storage są funkcje UI? */
 	generatePreferencesUI: function(){
+		alert("generatePreferencesUI - DEPRECATED!");
+		return;
 		// preferencesDiv = document.getElementById("preferences");
 		// preferencesDiv.innerHTML = "";
 		preferencesDiv = modal.create('preferences', "Ustawienia", "Tutaj możesz dostosować Super Clever Plan do swoich preferencji", function(){ui.showPreferences(0)});

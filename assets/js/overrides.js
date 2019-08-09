@@ -110,7 +110,7 @@ var overrides = {
 			}
 		}
 
-		overridesModal = modal.create('overridesmodal', "Podsumowanie zastępstw", "", function(){overridesModal.parentElement.removeChild(overridesModal);app.ui.containerBlur(false)});
+		overridesModal = app.ui.modal.create('overridesmodal', "Podsumowanie zastępstw", "", function(){overridesModal.parentElement.removeChild(overridesModal);app.ui.containerBlur(false)});
 		overridesModal.style.height = "80%";
 		row = modal.createRow();
 		row.style.margin.bottom = "-10px";

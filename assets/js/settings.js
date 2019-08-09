@@ -2,7 +2,7 @@ var settings = {
 	createModal: function(){
 		this.unsavedPrefs = {};
 		
-		preferencesDiv = app.modal.createTabbed(
+		preferencesDiv = app.ui.modal.createTabbed(
 			{	
 				title: "Ustawienia",
 				closeAction: settings.closeModal,
@@ -176,7 +176,7 @@ var settings = {
 			var section = sections[i];
 			var sectionContainer = document.createElement("div");
 			sectionContainer.id = section.id;
-			sectionContainer.appendChild(app.modal.createSectionHeader(
+			sectionContainer.appendChild(app.ui.modal.createSectionHeader(
 				section.name
 			));
 
@@ -191,7 +191,7 @@ var settings = {
 			}
 
 			preferencesDiv.sectionContent.appendChild(sectionContainer);
-			preferencesDiv.sectionList.appendChild(modal.createTab(
+			preferencesDiv.sectionList.appendChild(app.ui.modal.createTab(
 				section.name,
 				section.id,
 				(i == 0)
@@ -205,7 +205,7 @@ var settings = {
 		row = document.createElement('div');
 		row.className = "row";
 
-		row.appendChild(app.modal.createButton({
+		row.appendChild(app.ui.modal.createButton({
 			innerHTML: "Zapisz zmiany",
 			onClick: function(){
 				settings.save();
@@ -214,12 +214,12 @@ var settings = {
 			primary: true
 		}));
 
-		row.appendChild(app.modal.createButton({
+		row.appendChild(app.ui.modal.createButton({
 			innerHTML: "Anuluj",
 			onClick: settings.closeModal
 		}));
 
-		row.appendChild(app.modal.createButton({
+		row.appendChild(app.ui.modal.createButton({
 			innerHTML: "QS",
 			onClick: function(){
 				app.ui.showPreferences(0); 
@@ -251,7 +251,7 @@ var settings = {
 	createItem: function(itemData){
 		var workItem = document.createElement("div");
 		workItem.className = "modalSingleItem";
-		var row = app.modal.createRow();
+		var row = app.ui.modal.createRow();
 
 		if (itemData.type == "checkbox"){
 			label = document.createElement('label');

@@ -74,6 +74,37 @@ app.bugreport = {
     },
 
 	modal: function(){
+		bugreportDiv = app.ui.modal.createTabbed(
+			{	
+				title: "Zgłoś błąd",
+				tabbed: false
+			}
+		);
+
+		row = document.createElement('div');
+		row.className = "row";
+
+		row.appendChild(app.ui.modal.createButton({
+			innerHTML: "Zgłoś błąd",
+			onClick: function(){
+				settings.save();
+				settings.closeModal();
+			},
+			primary: true
+		}));
+
+		row.appendChild(app.ui.modal.createButton({
+			innerHTML: "Anuluj",
+			onClick: settings.closeModal
+		}));
+
+		bugreportDiv.appendChild(row);
+		
+		document.body.appendChild(bugreportDiv);
+		dom.addClass(document.getElementById("container"), "blur")
+
+
+		return;
 		bugreportDiv = modal.create('bugreport', "Zgłoś błąd", "", function(){bugreportDiv.parentElement.removeChild(bugreportDiv);app.ui.containerBlur(false)});
 		
 		row = modal.createRow();
