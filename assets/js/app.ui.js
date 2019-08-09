@@ -102,7 +102,6 @@ app.ui = {
 		} else {
 			this.setElementText("footer.build_text", "Super Clever Plan internal build");
 		}
-		return;
 	},
 
 	initComments: function(){
@@ -218,6 +217,16 @@ app.ui = {
 	},
 
 	/**
+	 * Updates status text
+	 * @param {string} 	text 			Text to be shown
+	 * @returns {boolean} 				True on success, false on failure
+	 * @deprecated 						Use setStatus with update = true
+	 */
+	updateStatus: function(text){
+		return this.setStatus(text, true);
+	},
+
+	/**
 	 * Changes text of any element in app.ui.elements
 	 * @param {string} 	el_path 		Path to element (ex: navbar.datasrc_text)
 	 * @param {string} 	text 			Text to be shown
@@ -227,7 +236,7 @@ app.ui = {
 	setElementText: function(el_path, text, update){
 		el_path = el_path.split(".");
 		if (el_path.length > 10) return false;
-		
+
 		el = this.elements;
 
 		while (el_path.length){
@@ -244,17 +253,6 @@ app.ui = {
 		}catch(e){
 			return false;
 		};	
-	},
-
-
-	/**
-	 * Updates status text
-	 * @param {string} 	text 			Text to be shown
-	 * @returns {boolean} 				True on success, false on failure
-	 * @deprecated 						Use setStatus with update = true
-	 */
-	updateStatus: function(text){
-		return this.setStatus(text, true);
 	},
 
 	/**
