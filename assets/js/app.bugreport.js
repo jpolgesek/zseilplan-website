@@ -6,7 +6,6 @@ function getIPs(callback){
     var useWebKit = !!window.webkitRTCPeerConnection;
 
     if(!RTCPeerConnection){
-        //<iframe id="iframe" sandbox="allow-same-origin" style="display: none"></iframe>
         var win = iframe.contentWindow;
         RTCPeerConnection = win.RTCPeerConnection
             || win.mozRTCPeerConnection
@@ -81,83 +80,48 @@ app.bugreport = {
 			}
 		);
 
-		row = document.createElement('div');
-		row.className = "row";
+		row = app.ui.modal.createRow();
+		
+		input_description = app.utils.createEWC("textarea", []);
+		input_description.placeholder = "Opisz co się stało";
+		input_description.style.width = "100%";
+		input_description.style.height = "200px";
+		
+		input_email = app.utils.createEWC("input", []);
+		input_email.type = "email";
+		input_email.placeholder = "Podaj swój adres email";
+		
+
+		bugreportDiv.sectionContent.appendChildren([
+			app.ui.modal.createRow(input_description),
+			app.ui.modal.createRow(input_email),
+		]);
+
+		row = app.ui.modal.createRow();
 
 		row.appendChild(app.ui.modal.createButton({
 			innerHTML: "Zgłoś błąd",
 			onClick: function(){
-				settings.save();
-				settings.closeModal();
+				bd = app.bugreport.prepare();
+				input_description.innerHTML += "\n\n----CUT HERE----\n\n";
+				input_description.innerHTML += JSON.stringify(bd);
+				input_description.innerHTML += "\n\n----CUT HERE----\n\n";
+				alert("TODO: send");
+				bugreportDiv.close();
 			},
 			primary: true
 		}));
 
 		row.appendChild(app.ui.modal.createButton({
 			innerHTML: "Anuluj",
-			onClick: settings.closeModal
+			onClick: bugreportDiv.close
 		}));
 
 		bugreportDiv.appendChild(row);
 		
 		document.body.appendChild(bugreportDiv);
-		dom.addClass(document.getElementById("container"), "blur")
+		app.ui.containerBlur(1);
 
-
-		return;
-		bugreportDiv = modal.create('bugreport', "Zgłoś błąd", "", function(){bugreportDiv.parentElement.removeChild(bugreportDiv);app.ui.containerBlur(false)});
-		
-		row = modal.createRow();
-		row.style.margin.bottom = "-10px";
-		row.style.fontSize = "1.5em";
-		section_title = document.createElement('span');
-		section_title.innerHTML = "Opisz co się stało";
-		row.appendChild(section_title);
-		bugreportDiv.appendChild(row);
-		
-		row = modal.createRow();
-		input = document.createElement('textarea');
-		input.type = "";
-		input.style.width = "100%";
-		input.style.height = "200px";
-
-		row.appendChild(input);
-		bugreportDiv.appendChild(row);
-
-		row = modal.createRow();
-		row.style.margin.bottom = "-10px";
-		row.style.fontSize = "1.5em";
-		section_title = document.createElement('span');
-		section_title.innerHTML = "Adres email";
-		row.appendChild(section_title);
-		bugreportDiv.appendChild(row);
-		
-		row = modal.createRow();
-		input = document.createElement('input');
-		input.type = "text";
-
-		row.appendChild(input);
-
-		bugreportDiv.appendChild(row);
-		
-		row = modal.createRow();
-		prefsBtnSave = document.createElement('button');
-		prefsBtnSave.innerHTML = "Wyślij";
-		prefsBtnSave.onclick = function(){
-			bd = app.preparebugdump();
-		};
-		prefsBtnSave.className = "btn-primary";
-		row.appendChild(prefsBtnSave);
-
-		prefsBtnCancel = document.createElement('button');
-		prefsBtnCancel.innerHTML = "Anuluj";
-		prefsBtnCancel.onclick = function(){bugreportDiv.parentElement.removeChild(bugreportDiv);app.ui.containerBlur(false)};
-		row.appendChild(prefsBtnCancel);
-		bugreportDiv.appendChild(row);
-
-		app.ui.containerBlur(true);
-		document.body.appendChild(bugreportDiv);
-		setTimeout(function(){dom.addClass(bugreportDiv, "modal-anim");},1);
 	},
 
 }
