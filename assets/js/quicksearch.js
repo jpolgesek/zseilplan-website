@@ -30,11 +30,9 @@ var quicksearch = {
 			case "test":
 				if (code[1] == "1"){
 					alert("Włączam funkcje testowe");
-					localStorage.setItem("tests_enabled", "true");
 					location.reload();
 				}else{
 					alert("Wyłączam funkcje testowe");
-					localStorage.setItem("tests_enabled", "false");
 					location.reload();
 				}
 				break;
@@ -50,9 +48,7 @@ var quicksearch = {
 				break;
 				
 			case "95":
-				localStorage.removeItem("disable_116_birthday");
-				localStorage.removeItem("disable_116_birthday_once");
-				themeloader.prepareHTML();
+				// themeloader.prepareHTML();
 				break;
 				
 			case "@":

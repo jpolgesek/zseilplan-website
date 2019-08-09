@@ -62,8 +62,10 @@ var preferences = {
 			utils.log("NewPrefs", "There is no data to load (no SCP2Data)");
 			if (app.isEnabled("prefs_transition")){
 				utils.log("NewPrefs", "Starting migration");
+				alert("Migracja ustawień do formatu SCP2Data rozpoczęta."); //TODO: user friendly messages
 				this.convert();
 				this.save();
+				alert("OK!"); //TODO: user friendly messages
 			}else{
 				return;
 			}
@@ -75,18 +77,7 @@ var preferences = {
 
 		utils.log("NewPrefs", "Dane w formacie " + this.SCP2Data.Version);
 		utils.log("NewPrefs", "Last modified " + this.SCP2Data.LastModified);
-		
-		/*
-		for (key in this.SCP2Data.preferences){
-			utils.log("NewPrefs", "Loading " + key +" to app.prefs");
-			app.prefs[key] = this.SCP2Data.preferences[key];
-		}
-		*/
-
-		// app.prefs = this.SCP2Data.preferences;
-		
 		return true;
-
 	},
 
 	get: function(prefName){
@@ -214,11 +205,6 @@ var preferences = {
 				app.themeManager.activate(themeIndex, versionIndex);
 			} catch (e) {}
 		}else{
-			/* Remove me:
-			if (this.SCP2Data.preferences["ui.darkMode"]) {
-				ui.setDarkMode(true);
-			}*/
-			
 			// Dark mode by default
 			app.themeManager.activate(0, 1);
 		}
@@ -233,12 +219,6 @@ var preferences = {
 
 var myStorage = {
 	save: function(){
-		/*
-			select_units = document.getElementById("units").value;
-			select_teachers = document.getElementById("teachers").value;
-			select_rooms = document.getElementById("rooms").value;
-		*/
-
 		localStorage.setItem("select_units", select_units.value);
 		localStorage.setItem("select_teachers", select_teachers.value);
 		localStorage.setItem("select_rooms", select_rooms.value);
@@ -273,7 +253,6 @@ var myStorage = {
 		
 		/* Deprecated in zseilplan 1.0 */
 		if (localStorage.getItem("displayColumn") != undefined){
-			// localStorage.setItem("activeColumn", localStorage.getItem("displayColumn")); /* Deprecated in zseilplan 2.0 */
 			localStorage.removeItem("displayColumn");
 			localStorage.removeItem("activeColumn");
 			localStorage.removeItem("columns.activeColumn");
@@ -310,142 +289,10 @@ var myStorage = {
 		if(localStorage.getItem("ui.jumpButtonsFloatRight") == "true"){
 			app.ui.jumpButtonsFloatRight = true;
 		}
-
-		/* Deprecated in zseilplan 2.0 */
-		/*
-		try {
-			columns.setActive(localStorage.getItem("columns.activeColumn"));
-		} catch (error) {
-			console.log("Domyslny layout, ale bez selektora. E:"+error)
-		}*/
-
-		
-
-
-		//refreshView();
-		//TODO: updateStyle();
 	},
 
-	/* Czemu w storage są funkcje UI? */
 	generatePreferencesUI: function(){
 		alert("generatePreferencesUI - DEPRECATED!");
 		return;
-		// preferencesDiv = document.getElementById("preferences");
-		// preferencesDiv.innerHTML = "";
-		preferencesDiv = modal.create('preferences', "Ustawienia", "Tutaj możesz dostosować Super Clever Plan do swoich preferencji", function(){ui.showPreferences(0)});
-		preferencesDiv.className += " deprecated";
-		prefsList = [
-			//Source, Change, Name
-			["checkbox", app.ui.breakLineInItem, function(x){app.ui.setLineBreak(x)}, "Zawijaj wiersze po nazwie przedmiotu", "ui.setLineBreak"],
-			["checkbox", app.ui.jumpButtonsFloatRight, function(x){app.ui.setJumpButtonsFloatRight(x)}, "Wyrównuj sale i nauczycieli do prawej strony", "ui.setJumpButtonsFloatRight"],
-			["checkbox", app.ui.darkMode, function(x){app.ui.setDarkMode(x)}, "Tryb nocny", "ui.setDarkMode"],
-			//["checkbox", true, function(x){return false;}, "Ładuj zastępstwa"],
-			["checkbox", notifications_enabled, function(x){toggleNotifications(x);}, "Odbieraj powiadomienia", "toggleNotifications"],
-			["checkbox", overrides_disabled, function(x){return;}, "Tymczasowo ukryj zastępstwa", "toggleOverrides"],
-			["timetable", undefined, undefined, undefined, undefined]
-		];
-
-		if (!app.testMode){
-			prefsList.splice(3,1);
-		}
-		
-		// prefsTitle = document.createElement('h1');
-		// prefsTitle.innerHTML = "Ustawienia";
-		// preferencesDiv.appendChild(prefsTitle);
-		for(var p_i=0; p_i<prefsList.length ; p_i++){
-			element = prefsList[p_i];
-			row = document.createElement('div');
-			row.className = "row";
-
-			if(element[0] == "checkbox"){
-				label = document.createElement('label');
-				label.className = "switch"
-	
-				input = document.createElement('input');
-				input.type = "checkbox";
-				input.checked = element[1];
-				
-				/* This is very bad. */
-				input.setAttribute("onclick",""+element[4]+"(this.checked)");
-				/*
-				if (isIE){
-					input.setAttribute("onclick",""+element[4]+"(this.checked)");
-				}else{
-					input.onchange = function(){prefsList[(p_i+1)-1][2](this.checked)};
-				}
-				*/
-				span = document.createElement('span');
-				span.className = "slider round";
-	
-				title = document.createElement("span");
-				title.className = "desc";
-				title.innerHTML = element[3];
-	
-				label.appendChild(input);
-				label.appendChild(span);
-				row.appendChild(label);
-				row.appendChild(title);
-			}else if(element[0] == "timetable"){
-				biginfo = document.createElement("span");
-				biginfo.className = "preferences_default_big";
-
-				title = document.createElement("span");
-				title.className = "desc";
-
-				if ((localStorage.getItem("select_units") != "default") && (localStorage.getItem("select_units") != null)){
-					title.innerHTML = "Przy uruchamianiu ładuję automatycznie plan klasy <b>"+localStorage.getItem("select_units")+"</b>.<br>Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i zapisz zmiany.";
-					biginfo.innerHTML = localStorage.getItem("select_units");
-				}else if ((localStorage.getItem("select_teachers") != "default") && (localStorage.getItem("select_teachers") != null)){
-					title.innerHTML = "Przy uruchamianiu ładuję automatycznie plan nauczyciela <b>"+localStorage.getItem("select_teachers")+"</b>.<br>Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i zapisz zmiany.";
-					biginfo.innerHTML = localStorage.getItem("select_teachers");
-				}else if ((localStorage.getItem("select_rooms") != "default") && (localStorage.getItem("select_rooms") != null)){
-					title.innerHTML = "Przy uruchamianiu ładuję automatycznie plan sali <b>"+localStorage.getItem("select_rooms")+"</b>.<br>Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i zapisz zmiany.";
-					biginfo.innerHTML = localStorage.getItem("select_rooms");
-				}else{
-					title.innerHTML = "Przy uruchamianiu nie ładuję automatycznie żadnego planu.<br>Jeśli chcesz to zmienić, wyświetl plan który chcesz ustawić jako domyślny, a następnie wróć tutaj i zapisz zmiany.";
-					biginfo.innerHTML = "??";
-					biginfo.className = "preferences_default_big preferences_default_inactive";
-				}
-
-				//title.innerHTML = "TODO: fix wrapping";
-				
-				row.appendChild(biginfo);
-				row.appendChild(title);
-			}
-
-			preferencesDiv.appendChild(row);
-		}
-		
-		row = document.createElement('div');
-		row.className = "row";
-
-		prefsBtnSave = document.createElement('button');
-		prefsBtnSave.innerHTML = "Zapisz zmiany";
-		prefsBtnSave.onclick = function(){myStorage.save();ui.showPreferences(0);};
-		prefsBtnSave.className = "btn-primary";
-		row.appendChild(prefsBtnSave);
-
-		prefsBtnCancel = document.createElement('button');
-		prefsBtnCancel.innerHTML = "Anuluj";
-		prefsBtnCancel.onclick = function(){ui.showPreferences(0)};
-		row.appendChild(prefsBtnCancel);
-
-		prefsBtnCancel = document.createElement('button');
-		prefsBtnCancel.innerHTML = "QS";
-		prefsBtnCancel.onclick = function(){ui.showPreferences(0); quicksearch.show();};
-		row.appendChild(prefsBtnCancel);
-
-		preferencesDiv.appendChild(row);
-		/*
-		prefsBtnClear = document.createElement('button');
-		prefsBtnClear.innerHTML = "Usuń ustawienia domyślne";
-		prefsBtnClear.onclick = function(){myStorage.CLEAR();ui.showPreferences(0)};
-		preferencesDiv.appendChild(prefsBtnClear);
-		*/
-		document.body.appendChild(preferencesDiv);
-		setTimeout(function(){
-			dom.addClass(preferencesDiv, "modal-anim");
-		}, 1)
-		app.ae('preferences', 'open', '1');
 	}
 } 	
