@@ -64,13 +64,14 @@ var modal = {
 		var modalTitle = app.utils.createEWC("span", ["title"], options.title);
 		var modalClose = app.utils.createEWC("span", ["close"], '<i class="icon-cancel"></i>');
 
-		modalClose.modal_el = modalContainer;
-		modalClose.onclick = function(){
-			app.ui.modal.close(modalClose.modal_el);
+		modalContainer.close = function(){
+			app.ui.modal.close(modalContainer);
 			if (options.closeAction){
 				options.closeAction();
 			}
-		};
+		}
+
+		modalClose.onclick = modalContainer.close;
 
 		if (options.tabbed){
 			var modalMenu = app.utils.createEWC("div", ["menuCheck"], "☰");
@@ -150,8 +151,12 @@ var modal = {
 		return tab;
 	},
 
-	createRow: function(){
-		return app.utils.createEWC("div", ["row"]);
+	createRow: function(child){
+		var row = app.utils.createEWC("div", ["row"]);
+		if (child){
+			row.appendChild(child);
+		}
+		return row;
 	},
 
 	createButton: function(options){
