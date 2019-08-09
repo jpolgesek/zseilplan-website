@@ -203,7 +203,7 @@ var app = {
 
 		try {
 			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (preferences.get("tests_enabled") == "true") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
-				utils.warn("internal","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
+				utils.warn("app","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
 				app.testMode = true;
 				data.normalizationData = {
 					"IM9": "Bazy danych",
@@ -220,7 +220,7 @@ var app = {
 		if (this._ui_loaded) return;
 
 		if (this.isEnabled("new_settings")){
-			app.ui.createNavbarButton('<i class="icon-cog"></i>', "Ustawienia2", function(){settings.createModal()});
+			app.ui.createNavbarButton('<i class="icon-cog"></i>', "Ustawienia", function(){settings.createModal()});
 		}
 
 		if (this.isEnabled("theme_manager")){
@@ -241,9 +241,9 @@ var app = {
 			}
 		}
 
-		if (this.isEnabled("diff_diff")){
-			app.element.navbar.buttons.history.style.display = null;
-		}
+		//if (this.isEnabled("diff_diff")){
+		//	app.element.navbar.buttons.history.style.display = null;
+		//}
 
 		window.addEventListener("hashchange", app.parseHash, false);
 		this._ui_loaded = true;
@@ -526,9 +526,10 @@ function refreshView(){
 	if (app.isDiff){
 		console.log("redo diff");
 		diff.generateDiff();
-		app.element.diff.help.style.display = "inherit";
+		//TODO: 
+		//app.element.diff.help.style.display = "inherit";
 	}else{
-		app.element.diff.help.style.display = "none";
+		//app.element.diff.help.style.display = "none";
 	}
 
 	columns.showSelected();	
