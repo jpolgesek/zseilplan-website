@@ -218,6 +218,8 @@ var app = {
 		} catch (e) {}
 
 		if (this._ui_loaded) return;
+		
+		app.ui.createNavbarButton('N', "Narzędzia", function(){app.tools.selectToolModal()});
 
 		if (this.isEnabled("new_settings")){
 			app.ui.createNavbarButton('<i class="icon-cog"></i>', "Ustawienia", function(){settings.createModal()});
