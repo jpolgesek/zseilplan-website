@@ -17,14 +17,14 @@ var settings = {
 					{
 						devOnly: false,
 						type: "checkbox",
-						dataTarget: "app.ui.breakLineInItem",
+						dataTarget: "ui.breakLineInItem",
 						onClick: function(){app.ui.setLineBreak(this.checked)},
 						desc: "Zawijaj wiersze po nazwie przedmiotu"
 					},
 					{
 						devOnly: false,
 						type: "checkbox",
-						dataTarget: "app.ui.jumpButtonsFloatRight",
+						dataTarget: "ui.jumpButtonsFloatRight",
 						onClick: function(){app.ui.setJumpButtonsFloatRight(this.checked)},
 						desc: "Wyrównuj sale i nauczycieli do prawej strony"
 					},
