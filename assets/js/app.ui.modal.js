@@ -199,7 +199,13 @@ var modal = {
 	createRow: function(child){
 		var row = app.utils.createEWC("div", ["row"]);
 		if (child){
-			row.appendChild(child);
+			if (Array.isArray(child)){
+				child.forEach(c => {
+					row.appendChild(c);
+				})
+			}else{
+				row.appendChild(child);
+			}
 		}
 		return row;
 	},
