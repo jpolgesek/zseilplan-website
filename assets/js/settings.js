@@ -228,8 +228,7 @@ var settings = {
 
 		preferencesDiv.appendChild(row);
 		
-		document.body.appendChild(preferencesDiv);
-		dom.addClass(document.getElementById("container"), "blur")
+		preferencesDiv.show();
 
 		app.ae('settings2', 'open', '1');
 

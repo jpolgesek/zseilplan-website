@@ -12,7 +12,7 @@ var modal = {
 		});
 
 		requestAnimationFrame(()=>{
-			modal_el.classList.add("hide-animation");
+			modal_el.classList.add((window.innerHeight >= 768) ? "hide-animation" : "anim-start");
 		});
 		
 		setTimeout(() => {
@@ -20,7 +20,7 @@ var modal = {
 			if (!this.elements.length){
 				app.ui.containerBlur(0);
 			}
-		}, (window.innerHeight >= 768) ? 1000 : 100);
+		}, (window.innerHeight >= 768) ? 1000 : 300);
 		
 	},
 
@@ -69,10 +69,20 @@ var modal = {
 	},
 
 	createTabbed: function(options){
-		modalContainer = app.utils.createEWC("div", ["tabbedModal", "center-hv", "shadow", "hideMenu"]);
+		modalContainer = app.utils.createEWC("div", ["tabbedModal", "center-hv", "shadow", "hideMenu", "anim-start"]);
 
 		var modalTitle = app.utils.createEWC("span", ["title"], options.title);
 		var modalClose = app.utils.createEWC("span", ["close"], '<i class="icon-cancel"></i>');
+
+		modalContainer.show = function(){
+			document.body.appendChild(modalContainer);
+
+			requestAnimationFrame(()=>{
+				modalContainer.classList.remove("anim-start");
+			});
+			
+			app.ui.containerBlur(1);
+		}
 
 		modalContainer.close = function(){
 			app.ui.modal.close(modalContainer);

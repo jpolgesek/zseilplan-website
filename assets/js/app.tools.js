@@ -25,7 +25,6 @@ app.tools = {
 		row.style.opacity = "0";
 		toolselectDiv.appendChild(row);
 		
-		document.body.appendChild(toolselectDiv);
-		app.ui.containerBlur(1);
+		toolselectDiv.show();
 	}
 }
