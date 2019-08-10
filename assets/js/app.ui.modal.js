@@ -12,7 +12,7 @@ var modal = {
 		});
 
 		requestAnimationFrame(()=>{
-			modal_el.classList.add((window.innerHeight >= 768) ? "hide-animation" : "anim-start");
+			modal_el.classList.add((window.innerWidth >= 768) ? "hide-animation" : "anim-start");
 		});
 		
 		setTimeout(() => {
@@ -20,7 +20,7 @@ var modal = {
 			if (!this.elements.length){
 				app.ui.containerBlur(0);
 			}
-		}, (window.innerHeight >= 768) ? 1000 : 300);
+		}, (window.innerWidth >= 768) ? 1000 : 300);
 		
 	},
 
@@ -81,7 +81,7 @@ var modal = {
 				modalContainer.classList.remove("anim-start");
 			});
 			
-			if (window.innerHeight >= 768){
+			if (window.innerWidth >= 768){
 				app.ui.containerBlur(1);
 			}
 		}
