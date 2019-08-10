@@ -2,16 +2,19 @@ var modal = {
 	elements: [],
 
 	close: function(modal_el){
+		console.log("Closing modal");
 		this.elements = this.elements.filter(el => (el != modal_el));
 		requestAnimationFrame(()=>{
 			modal_el.classList.add("hide-animation");
 		});
+		
 		setTimeout(() => {
 			modal_el.parentElement.removeChild(modal_el);
 			if (!this.elements.length){
 				app.ui.containerBlur(0);
 			}
-		}, 300);
+		}, 1000);
+		
 	},
 
 	closeAll: function(){
@@ -99,9 +102,12 @@ var modal = {
 			modalClose
 		]);
 
+		modalDescRow.classList.add("header");
+
 		modalContainer.appendChild(modalDescRow);
 
 		modalDescRow = this.createRow();
+		modalDescRow.classList.add("menu_and_content");
 
 		if (options.tabbed){
 			modalDescRow.appendChild(sectionList);

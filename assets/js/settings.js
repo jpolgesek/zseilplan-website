@@ -5,7 +5,6 @@ var settings = {
 		preferencesDiv = app.ui.modal.createTabbed(
 			{	
 				title: "Ustawienia",
-				closeAction: settings.closeModal,
 				tabbed: true
 			}
 		);
@@ -209,20 +208,20 @@ var settings = {
 			innerHTML: "Zapisz zmiany",
 			onClick: function(){
 				settings.save();
-				settings.closeModal();
+				preferencesDiv.close();
 			},
 			primary: true
 		}));
 
 		row.appendChild(app.ui.modal.createButton({
 			innerHTML: "Anuluj",
-			onClick: settings.closeModal
+			onClick: preferencesDiv.close
 		}));
 
 		row.appendChild(app.ui.modal.createButton({
 			innerHTML: "QS",
 			onClick: function(){
-				app.ui.showPreferences(0); 
+				preferencesDiv.close();
 				quicksearch.show();
 			}
 		}));
