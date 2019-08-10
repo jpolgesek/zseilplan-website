@@ -60,13 +60,13 @@
     background: #000000;
 }
 
-.dark #maintable td, #maintable th {
+.dark .maintable td, .maintable th {
 	border: 1px solid #565656;
 }
 
-.dark #maintable tr:nth-child(even){background-color: #1d1d1d;}
+.dark .maintable tr:nth-child(even){background-color: #1d1d1d;}
 
-.dark #maintable tr:nth-child(odd){background-color: #272727;}
+.dark .maintable tr:nth-child(odd){background-color: #272727;}
 
 .dark .maintable td:hover {
     background-color: rgba(21, 82, 146, 0.8) !important;
