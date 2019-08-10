@@ -1,7 +1,6 @@
 app.tools = {
 	selectToolModal: function(){
 		toolselectDiv = app.ui.modal.createTabbed({title: "Narzędzia", tabbed: false});
-
 		row = app.ui.modal.createRow();
 
 		tools_desc = `Tutaj znajdzie się jakiś ładny opis wyjaśniający czym są te narzędzia.`
@@ -16,6 +15,16 @@ app.tools = {
 			app.tools.findFreeRooms.modal();
 		}
 
+		btn2.onclick = function(){
+			toolselectDiv.close();
+			app.tools.timeTravel.viewModal();
+		}
+
+		btn3.onclick = function(){
+			toolselectDiv.close();
+			app.tools.timeTravel.diffModal();
+		}
+
 		toolselectDiv.sectionContent.appendChildren([
 			app.ui.modal.createRow(desc),
 			app.ui.modal.createRow(btn1),
@@ -27,7 +36,6 @@ app.tools = {
 		toolselectDiv.sectionContent.style.padding = "10px";
 
 		toolselectDiv.appendChild(app.ui.modal.createRow());
-		
 		toolselectDiv.show();
 	},
 
@@ -58,12 +66,11 @@ app.tools = {
 
 		modal: function(){
 			findFreeRoomsDiv = app.ui.modal.createTabbed({title: "Znajdź wolne sale", tabbed: false});
-
 			row = app.ui.modal.createRow();
 
 			tools_desc = `Tutaj znajdzie się jakiś ładny opis wyjaśniający jak to działa.`
-			
 			desc = app.utils.createEWC("p", ["desc"], tools_desc);
+
 			text_result = app.utils.createEWC("p", ["desc"], "");
 
 			input_day = app.utils.createEWC("input");
@@ -95,7 +102,92 @@ app.tools = {
 			findFreeRoomsDiv.sectionContent.style.padding = "10px";
 
 			findFreeRoomsDiv.appendChild(app.ui.modal.createRow());
+			findFreeRoomsDiv.show();
+		}
+	},
+
+	timeTravel: {
+		diffModal: function(){
+			findFreeRoomsDiv = app.ui.modal.createTabbed({title: "Wyświetl zmiany w planie", tabbed: false});
+			row = app.ui.modal.createRow();
+
+			tools_desc = `Tutaj znajdzie się jakiś ładny opis wyjaśniający jak to działa.`
+			desc = app.utils.createEWC("p", ["desc"], tools_desc);
+
+			select_datafile_old = app.utils.createEWC("select");
+			select_datafile_new = app.utils.createEWC("select");
+
+			dataSource = diff.getPreviousTimetableVersions();
+
+			dataSource.forEach(src => {
+				var opt = new Option(src.name, src.value);
+				opt.selected = src.selected ? src.selected : false;
+				select_datafile_old.add(opt);
+			});
+
+			dataSource.forEach(src => {
+				var opt = new Option(src.name, src.value);
+				opt.selected = src.selected ? src.selected : false;
+				select_datafile_new.add(opt);
+			});
+
+			text_select_datafile_old = app.utils.createEWC("span", ["desc"], "Wybierz plan bazowy");
+			text_select_datafile_new = app.utils.createEWC("span", ["desc"], "Wybierz plan do porównania");
+
+			button_diff = app.utils.createEWC("button", ["content_btn"], '<i class="fas fa-dice"></i> Porównaj');
+			button_diff.onclick = function(){
+				diff.compareSelected(select_datafile_new.value); 
+				app.isDiff = true;
+				findFreeRoomsDiv.close();
+			}
+
+			findFreeRoomsDiv.sectionContent.appendChildren([
+				app.ui.modal.createRow(desc),
+				app.ui.modal.createRow([select_datafile_old, text_select_datafile_old]),
+				app.ui.modal.createRow([select_datafile_new, text_select_datafile_new]),
+				app.ui.modal.createRow(button_diff)
+			]);
+
+			//FIXME: layout
+			findFreeRoomsDiv.sectionContent.style.padding = "10px";
+
+			findFreeRoomsDiv.appendChild(app.ui.modal.createRow());
+			findFreeRoomsDiv.show();
+		},
+		viewModal: function(){
+			findFreeRoomsDiv = app.ui.modal.createTabbed({title: "Wyświetl starszy plan", tabbed: false});
+			row = app.ui.modal.createRow();
+
+			tools_desc = `Tutaj znajdzie się jakiś ładny opis wyjaśniający jak to działa.`
+			desc = app.utils.createEWC("p", ["desc"], tools_desc);
+
+			select_datafile = app.utils.createEWC("select");
+			diff.getPreviousTimetableVersions().forEach(src => {
+				var opt = new Option(src.name, src.value);
+				opt.selected = src.selected ? src.selected : false;
+				select_datafile.add(opt);
+			});
+
+			text_select_datafile = app.utils.createEWC("span", ["desc"], "Wybierz wersję planu");
 			
+			button_diff = app.utils.createEWC("button", ["content_btn"], '<i class="fas fa-history"></i> Wyświetl poprzednią wersję planu');
+			button_diff.onclick = function(){
+				app.ui.clearTable(); 
+				app.isCustomDataVersion = true; 
+				app.fetchData(select_datafile.value); 
+				findFreeRoomsDiv.close();
+			}
+
+			findFreeRoomsDiv.sectionContent.appendChildren([
+				app.ui.modal.createRow(desc),
+				app.ui.modal.createRow([select_datafile, text_select_datafile]),
+				app.ui.modal.createRow(button_diff)
+			]);
+
+			//FIXME: layout
+			findFreeRoomsDiv.sectionContent.style.padding = "10px";
+
+			findFreeRoomsDiv.appendChild(app.ui.modal.createRow());
 			findFreeRoomsDiv.show();
 		}
 	}
