@@ -15,20 +15,6 @@ var settings = {
 				id: "modal_settings_s_main",
 				items: [
 					{
-						devOnly: false,
-						type: "checkbox",
-						dataTarget: "ui.breakLineInItem",
-						onClick: function(){app.ui.setLineBreak(this.checked)},
-						desc: "Zawijaj wiersze po nazwie przedmiotu"
-					},
-					{
-						devOnly: false,
-						type: "checkbox",
-						dataTarget: "ui.jumpButtonsFloatRight",
-						onClick: function(){app.ui.setJumpButtonsFloatRight(this.checked)},
-						desc: "Wyrównuj sale i nauczycieli do prawej strony"
-					},
-					{
 						devOnly: true,
 						type: "checkbox",
 						dataTarget: "notifications_enabled",
@@ -62,7 +48,33 @@ var settings = {
 						onClick: undefined,
 						desc: "Motyw aplikacji",
 						check: false
-					}
+					},
+					{
+						devOnly: false,
+						type: "checkbox",
+						dataTarget: "ui.breakLineInItem",
+						onClick: function(){
+							app.ui.setLineBreak(this.checked); 
+							try{document.querySelector("#special_preview_cell").reload()}catch(e){}
+						},
+						desc: "Zawijaj wiersze po nazwie przedmiotu"
+					},
+					{
+						devOnly: false,
+						type: "checkbox",
+						dataTarget: "ui.jumpButtonsFloatRight",
+						onClick: function(){
+							app.ui.setJumpButtonsFloatRight(this.checked); 
+							try{document.querySelector("#special_preview_cell").reload()}catch(e){}
+						},
+						desc: "Wyrównuj sale i nauczycieli do prawej strony"
+					},
+					{
+						devOnly: false,
+						type: "special_preview_cell",
+						dataSource: false,
+						onClick: function(x){return;}
+					},
 				]
 			},
 			{
@@ -279,6 +291,38 @@ var settings = {
 			}
 			
 			row.appendChild(title);
+		}else if(itemData.type == "special_preview_cell"){
+			special_preview_cell = app.utils.createEWC("span", ["desc"]);
+			special_preview_cell.id = "special_preview_cell";
+
+			special_preview_cell.reload = function(){
+				gen_items = app.ui.createItem({n: "XY", g: "1/2", s: "123", p: "Przedmiot"}).outerHTML;
+				gen_items += app.ui.createItem({n: "ZY", g: "2/2", s: "321", p: "Przedmiot"}).outerHTML;
+				
+				// FIXME: Uh, don't look here for now
+				special_preview_cell.innerHTML = `
+					<table class="maintable shadow" style="min-width: 320px;">
+						<tbody>
+							<tr class="header">
+								<th class="col_0 currentTimeFull">Nr</th>
+								<th class="col_1">Poniedziałek</th>
+							</tr>
+							<tr class="">
+								<td class="col_0 currentTimeFull">
+									<b class="col-lesson-number">1</b>
+									<span class="col-lesson-timespan">12:34 - 13:37</span>
+								</td>
+								<td class="col_1">
+									${gen_items}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				`;
+			};
+
+			special_preview_cell.reload();
+			row.appendChild(special_preview_cell);
 		}else if(itemData.type == "button"){
 			btn = document.createElement("button");
 			btn.className = "content_btn";
