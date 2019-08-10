@@ -61,6 +61,12 @@
     }
 }
 
+.unitsContainer > select, 
+.teachersContainer > select, 
+.roomsContainer > select {
+    width: 100%
+}
+
 .unitsContainer, .roomsContainer {
     flex: 0 0 22%;
     margin: unset !important;
