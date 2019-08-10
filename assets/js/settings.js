@@ -120,7 +120,14 @@ var settings = {
 					{
 						devOnly: false,
 						type: "button",
-						onclick: function(){alert("TODO")},
+						onclick: function(){
+							if (app.currentView.selectedType == ""){
+								return alert("Nic nie jest wybrane"); //TODO: User friendly message
+							}
+							preferences.set("app.homeType", app.currentView.selectedType, true);
+							preferences.set("app.homeValue", app.currentView.selectedValue, true);
+							alert("OK!");
+						},
 						desc: "Ustaw obecnie wyświetlany plan jako domyślny"
 					},
 				]
