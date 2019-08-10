@@ -13,7 +13,7 @@ var modal = {
 			if (!this.elements.length){
 				app.ui.containerBlur(0);
 			}
-		}, 1000);
+		}, (window.innerHeight >= 768) ? 1000 : 0);
 		
 	},
 

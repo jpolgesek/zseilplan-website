@@ -110,16 +110,18 @@
     background: var(--header-primary);
     align-items: center;
     justify-content: space-between;
+    align-content: center;
     height: 45px;
     border-bottom: 3px solid var(--header-primary-border);
     margin-top: 3px;
+    overflow: hidden;
 }
 
 .tabbedModal .close {
     top: 0;
     right: 0;
     padding: 10px;
-    font-size: 1.5em;
+    font-size: 1.3em;
     float: right;
 }
 
@@ -198,6 +200,7 @@
     align-items: center;
     justify-content: flex-start;
     height: 45px;
+    width: 100%;
 
     border-top: 3px solid var(--header-primary-border);
 }
@@ -281,15 +284,31 @@
     }
     .menuCheck {
         display: block;
-        font-size: 2em;
+        font-size: 1.5em;
         margin-left: 14px;
         cursor: pointer;
     }
-    .tabbedModal:not(.hideMenu) .sectionContent {
-        display: none;
+    .tabbedModal .row.menu_and_content{
+        position: relative;
     }
-    .tabbedModal.hideMenu .sectionList {
-        display: none;
+    .tabbedModal:not(.hideMenu) .sectionContent {
+        /* display: none; */
+    }
+    .tabbedModal .row .sectionList {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 300px;
+        z-index: 10;
+        box-shadow: 1px 1px 10px 1px #00000036;
+        overflow: hidden;
+        max-height: 100vh;
+        min-height: 100vh;
+        flex: 1;
+        transition: 0.3s left ease-in-out;
+    }
+    .tabbedModal.hideMenu .row .sectionList {
+        left: -310px;
     }
     .tabbedModal .row .sectionContent {
         padding: 2px;
