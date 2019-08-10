@@ -58,6 +58,7 @@
 
 .dark .maintable {
     background: #000000;
+    color: #EEE;
 }
 
 .dark .maintable td, .maintable th {
