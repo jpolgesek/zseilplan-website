@@ -238,6 +238,28 @@
     }
 }
 
+@keyframes modal-content-in-mobile {
+    from {
+        opacity: 0;
+        left: 100vw;
+    }
+    to {
+        left: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes modal-content-out-mobile {
+    from {
+        left: 0;
+        opacity: 1;
+    }
+    to {
+        left: 100vw;
+        opacity: 0;
+    }
+}
+
 /* desktop */
 
 @media screen and (min-width: 768px) {
@@ -256,12 +278,11 @@
 
 @media screen and (max-width: 768px) {
     .tabbedModal {
-        animation: modal-content-in 1s cubic-bezier(.25,.75,.5,1);
+        animation: modal-content-in-mobile 0.3s cubic-bezier(.25,.75,.5,1);
     }
     
     .tabbedModal.hide-animation {
-        animation: modal-content-out 1s cubic-bezier(.25,.75,.5,1);
-        /* max-height: 0px; */
+        animation: modal-content-out-mobile 0.3s cubic-bezier(.25,.75,.5,1);
     }
 
     .tabbedModal {
