@@ -96,48 +96,6 @@ var settings = {
 				]
 			},
 			{
-				name: '<i class="fas fa-history" style="min-width: 20px"></i> Wersja danych',
-				id: "modal_settings_s_diff",
-				items: [
-					{
-						devOnly: false,
-						type: "select",
-						dataTarget: "_internal.data_view.file",
-						dataSource: diff.getPreviousTimetableVersions(),
-						desc: "Wybierz wersję planu"
-					},
-					{
-						devOnly: false,
-						type: "select",
-						dataTarget: "_internal.data_view.type",
-						dataSource: [
-							{"name": "Tylko wyświetl", "value": "view"},
-							{"name": "Wyświetl i porównaj z obecną wersją", "value": "compare"},
-						],
-						desc: ""
-					},
-					{
-						devOnly: false,
-						type: "button",
-						onclick: function(){
-							file = settings.unsavedPrefs["_internal.data_view.file"] || diff.getPreviousTimetableVersions()[0].value;
-
-							if (settings.unsavedPrefs["_internal.data_view.type"] == "compare"){
-								diff.compareSelected(file); 
-								app.isDiff = true;
-								settings.closeModal();
-							}else{
-								app.ui.clearTable(); 
-								app.isCustomDataVersion = true; 
-								app.fetchData(file); 
-								settings.closeModal();
-							}
-						},
-						desc: "Wykonaj"
-					},
-				]
-			},
-			{
 				name: '<i class="fas fa-home" style="min-width: 20px"></i> Strona startowa',
 				id: "modal_settings_s_defaults",
 				items: [
