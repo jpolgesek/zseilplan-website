@@ -4,6 +4,13 @@ var modal = {
 	close: function(modal_el){
 		console.log("Closing modal");
 		this.elements = this.elements.filter(el => (el != modal_el));
+
+		Object.keys(modal_el.tg_ids).forEach(key => {
+			modal_el.tg_ids[key].forEach(id => {
+				app.touchGestures[key].splice((id - 1), 1);
+			});
+		});
+
 		requestAnimationFrame(()=>{
 			modal_el.classList.add("hide-animation");
 		});
@@ -80,11 +87,31 @@ var modal = {
 			var modalMenu = app.utils.createEWC("div", ["menuCheck"], "☰");
 			var sectionList = app.utils.createEWC("span", ["sectionList"]);
 
+			//mobile support
+			modalContainer.tg_ids = {
+				on_left: [],
+				on_right: [],
+				on_top: [],
+				on_bottom: []
+			};
+			
+			modalContainer.tg_ids.on_left.push(app.touchGestures.on_left.push(function(){
+				console.log("toggle menu off");
+				console.log(modalContainer.tg_ids );
+				dom.addClass(modalContainer, "hideMenu");
+			}));
+
+			modalContainer.tg_ids.on_right.push(app.touchGestures.on_right.push(function(){
+				console.log("toggle menu on");
+				console.log(modalContainer.tg_ids );
+				dom.removeClass(modalContainer, "hideMenu");
+			}));
+
 			modalMenu.onclick = function(){
-				if (this.parentElement.parentElement.className.indexOf("hideMenu") != -1){
-					dom.removeClass(this.parentElement.parentElement, "hideMenu");
+				if (modalContainer.className.indexOf("hideMenu") != -1){
+					dom.removeClass(modalContainer, "hideMenu");
 				}else{
-					dom.addClass(this.parentElement.parentElement, "hideMenu");
+					dom.addClass(modalContainer, "hideMenu");
 				}
 			}
 		}
