@@ -1,28 +1,28 @@
 .tabbedModal {
-    --modal-background: #002764;
+    --modal-background: #3268bf;
 
-    --header-primary: #002764;
-    --header-primary-border: #5a91e6;
-    --header-button-close-hover-background: #0b60ca;
+    --header-primary: #3268bf;
+    --header-primary-border: #72a3ef;
+    --header-button-close-hover-background: #4f93e8;
 
-    --menu-background: #0b2752;
-    --menu-item-hover-background: #1d3963;
-    --menu-item-selected-background: #1f447d;
-    --menu-item-font-color: #c1c6ce;
+    --menu-background: #4977bd;
+    --menu-item-hover-background: #5c8ad0;
+    --menu-item-selected-background: #558ce2;
+    --menu-item-font-color: #fbfdff;
     --menu-item-selected-font-color: #fff;
 
-    --content-background: #1f447d;
+    --content-background: #558ce2;
     --content-font-color: #fafafa;
 
-    --input-slider-bg: #4f6e9e;
-    --input-slider-active-bg: #162f56;
+    --input-slider-bg: #92bcff;
+    --input-slider-active-bg: #456eaf;
 
     --input-button-background: none;
     --input-button-font-color: #FAFAFA;
     --input-button-hover-background: #ffffff29;
 
     --input-content-button-border: #ffffff96;
-    --input-content-button-active-background: #e2e2e2;
+    --input-content-button-active-background: #fff;
     --input-content-button-active-font-color: #002764;
 
     --input-select-text-color: #EEE;
@@ -207,6 +207,10 @@
     animation: modal-in-out 0.9s ease-in-out;
     animation-direction: reverse;
     opacity: 0;
+}
+
+.tabbedModal>.row:last-of-type:empty {
+    height: 0;
 }
 
 @keyframes modal-in-out {
