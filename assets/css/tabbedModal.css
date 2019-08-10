@@ -70,6 +70,7 @@
 }
 
 .tabbedModal .row .sectionContent .row {
+    flex-wrap: wrap-reverse;
     margin: 10px;
     display: flex;
     align-items: center;
@@ -349,7 +350,7 @@
         will-change: transform;
     }
     .tabbedModal .row .sectionContent {
-        padding: 2px;
+        padding: 10px;
     }
     .tabbedModal>.row:last-of-type {
         position: absolute;
