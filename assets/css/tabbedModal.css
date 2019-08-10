@@ -326,10 +326,16 @@
         max-height: 100vh;
         min-height: 100vh;
         flex: 1;
-        transition: 0.3s left ease-in-out;
+        -webkit-transform: translateX(none);
+        transform: translateX(none);
+        transition: transform 300ms ease-in-out;
+        will-change: transform;
     }
     .tabbedModal.hideMenu .row .sectionList {
-        left: -310px;
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+        transition: transform 300ms ease-in-out;
+        will-change: transform;
     }
     .tabbedModal .row .sectionContent {
         padding: 2px;
