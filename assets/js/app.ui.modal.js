@@ -81,7 +81,9 @@ var modal = {
 				modalContainer.classList.remove("anim-start");
 			});
 			
-			app.ui.containerBlur(1);
+			if (window.innerHeight >= 768){
+				app.ui.containerBlur(1);
+			}
 		}
 
 		modalContainer.close = function(){
