@@ -1,11 +1,33 @@
 .tabbedModal {
+    --modal-background: #002764;
+
     --header-primary: #002764;
     --header-primary-border: #5a91e6;
+    --header-button-close-hover-background: #0b60ca;
+
     --menu-background: #0b2752;
     --menu-item-hover-background: #1d3963;
     --menu-item-selected-background: #1f447d;
+    --menu-item-font-color: #c1c6ce;
+    --menu-item-selected-font-color: #fff;
+
+    --content-background: #1f447d;
+    --content-font-color: #fafafa;
+
     --input-slider-bg: #4f6e9e;
     --input-slider-active-bg: #162f56;
+
+    --input-button-background: none;
+    --input-button-font-color: #FAFAFA;
+    --input-button-hover-background: #ffffff29;
+
+    --input-content-button-border: #ffffff96;
+    --input-content-button-active-background: #e2e2e2;
+    --input-content-button-active-font-color: #002764;
+
+    --input-select-text-color: #EEE;
+    --input-select-background: #3962a0;
+    --input-select-border: #bfbfbf00;
 }
 
 .tabbedModal>* {
@@ -14,29 +36,43 @@
 
 .tabbedModal {
     width: 880px;
-    background: rgb(0, 39, 100);
+    background: var(--modal-background);
     padding: 0;
     border-radius: 5px;
     z-index: 250;
-    color: #fafafa;
+    color: var(--content-font-color);
     position: fixed;
     flex-flow: row wrap;
     overflow: hidden;
 }
 
 .tabbedModal button {
-    background: none;
+    background: var(--input-button-background);
     border-style: none;
     font-size: 1em;
-    color: #FAFAFA;
+    color: var(--input-button-font-color);
     padding: 8px 10px;
     height: 100%;
 }
 
 .tabbedModal button:hover {
-    background: #ffffff29;
+    background: var(--input-button-hover-background);
     cursor: pointer;
 }
+
+
+.tabbedModal .content_btn {
+    border: 1px solid var(--input-content-button-border);
+    padding: 9px;
+    font-size: 1em;
+    margin-top: 8px;
+}
+
+.tabbedModal .content_btn:active {
+    background: var(--input-content-button-active-background);
+    color: var(--input-content-button-active-font-color);
+}
+
 
 .tabbedModal .row {
     flex: 1 100%;
@@ -58,7 +94,7 @@
 
 .tabbedModal .row .sectionContent {
     flex: 1 65%;
-    background: #1f447d;
+    background: var(--content-background);
     padding: 20px;
 }
 
@@ -78,7 +114,7 @@
     flex: 1 100%;
     padding: 10px 10px;
     cursor: pointer;
-    color: #c1c6ce;
+    color: var(--menu-item-font-color);
 }
 
 .tabbedModal .row .sectionList .listItem:hover {
@@ -88,15 +124,14 @@
 
 .tabbedModal .row .sectionList .listItem.active {
     background: var(--menu-item-selected-background);
-    color: #fff;
+    color: var(--menu-item-selected-font-color);
     font-weight: 500;
 }
 
 .dark .tabbedModal .row select {
-    color: #EEE;
-    background: #3962a0;
-    border-color: #001638;
-    border: 1px solid rgba(191, 191, 191, 0);
+    color: var( --input-select-text-color);
+    background: var(--input-select-background);
+    border: 1px solid var(--input-select-border);
 }
 
 .tabbedModal .row.header {
@@ -119,7 +154,7 @@
 }
 
 .tabbedModal .close:hover {
-    background: #0b60ca;
+    background: var(--header-button-close-hover-background);
     cursor: pointer;
 }
 
@@ -128,22 +163,6 @@
     height: fit-content;
     padding-left: 10px;
     font-weight: 300;
-}
-
-.tabbedModal .preferences_default_big {
-    text-align: center;
-    width: 46px;
-    height: 34px;
-    padding: 12px;
-    font-size: 2em;
-    background: #2196f3;
-    text-shadow: 1px 1px 1px #000;
-    border-radius: 13px;
-    line-height: 34px;
-}
-
-.tabbedModal .preferences_default_inactive {
-    background: #ccc;
 }
 
 .tabbedModal .btn-primary {
@@ -164,18 +183,6 @@
 
 .menuCheck {
     display: none;
-}
-
-.tabbedModal .content_btn {
-    border: 1px solid #ffffff96;
-    padding: 9px;
-    font-size: 1em;
-    margin-top: 8px;
-}
-
-.tabbedModal .content_btn:active {
-    background: #e2e2e2;
-    color: #002764;
 }
 
 .tabbedModal .slider {
@@ -312,7 +319,6 @@
         top: 0;
         width: 300px;
         z-index: 10;
-        box-shadow: 1px 1px 10px 1px #00000036;
         overflow: hidden;
         max-height: 100vh;
         min-height: 100vh;
