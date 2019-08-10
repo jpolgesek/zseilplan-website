@@ -83,18 +83,18 @@ var modal = {
 
 		modalClose.onclick = modalContainer.close;
 
+		//mobile support
+		modalContainer.tg_ids = {
+			on_left: [],
+			on_right: [],
+			on_top: [],
+			on_bottom: []
+		};
+
 		if (options.tabbed){
 			var modalMenu = app.utils.createEWC("div", ["menuCheck"], "☰");
 			var sectionList = app.utils.createEWC("span", ["sectionList"]);
 
-			//mobile support
-			modalContainer.tg_ids = {
-				on_left: [],
-				on_right: [],
-				on_top: [],
-				on_bottom: []
-			};
-			
 			modalContainer.tg_ids.on_left.push(app.touchGestures.on_left.push(function(){
 				console.log("toggle menu off");
 				console.log(modalContainer.tg_ids );

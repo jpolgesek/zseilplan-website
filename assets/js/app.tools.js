@@ -22,7 +22,7 @@ app.tools = {
 		toolselectDiv.sectionContent.style.padding = "10px";
 
 		row = app.ui.modal.createRow();
-
+		row.style.opacity = "0";
 		toolselectDiv.appendChild(row);
 		
 		document.body.appendChild(toolselectDiv);
