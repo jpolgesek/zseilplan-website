@@ -218,14 +218,6 @@ var settings = {
 			onClick: preferencesDiv.close
 		}));
 
-		row.appendChild(app.ui.modal.createButton({
-			innerHTML: "QS",
-			onClick: function(){
-				preferencesDiv.close();
-				quicksearch.show();
-			}
-		}));
-
 		preferencesDiv.appendChild(row);
 		
 		preferencesDiv.show();
