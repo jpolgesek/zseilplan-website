@@ -19,10 +19,6 @@
     border-radius: 5px;
     z-index: 250;
     color: #fafafa;
-    /* text-shadow: 1px 1px 1px #000; */
-    /* transform: scale(0.7) translate(-50%, -50%); */
-    /* opacity: 0; */
-    /* transition: all 0.3s; */
     position: fixed;
     flex-flow: row wrap;
     overflow: hidden;
@@ -38,7 +34,6 @@
 }
 
 .tabbedModal button:hover {
-    /* text-shadow: 1px 1px 4px #0000008c; */
     background: #ffffff29;
     cursor: pointer;
 }
@@ -63,9 +58,7 @@
 
 .tabbedModal .row .sectionContent {
     flex: 1 65%;
-    background: #104496;
     background: #1f447d;
-    /* background: #041735; */
     padding: 20px;
 }
 
@@ -101,7 +94,6 @@
 
 .dark .tabbedModal .row select {
     color: #EEE;
-    /* background: #002c71; */
     background: #3962a0;
     border-color: #001638;
     border: 1px solid rgba(191, 191, 191, 0);
@@ -133,9 +125,7 @@
 
 .tabbedModal .title {
     font-size: 1.4em;
-    /* flex: 1 auto; */
     height: fit-content;
-    /* padding: 15px; */
     padding-left: 10px;
     font-weight: 300;
 }
@@ -278,14 +268,6 @@
 /* mobile */
 
 @media screen and (max-width: 768px) {
-    .tabbedModal {
-        /* animation: modal-content-in-mobile 0.3s cubic-bezier(.25,.75,.5,1); */
-    }
-    
-    .tabbedModal.hide-animation {
-        /* animation: modal-content-out-mobile 0.3s cubic-bezier(.25,.75,.5,1); */
-    }
-
     .tabbedModal.anim-start {
         -webkit-transform: translateX(100%);
         transform: translateX(100%);
@@ -323,9 +305,6 @@
     }
     .tabbedModal .row.menu_and_content{
         position: relative;
-    }
-    .tabbedModal:not(.hideMenu) .sectionContent {
-        /* display: none; */
     }
     .tabbedModal .row .sectionList {
         position: absolute;
