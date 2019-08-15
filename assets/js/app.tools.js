@@ -72,28 +72,56 @@ app.tools = {
 			desc = app.utils.createEWC("p", ["desc"], tools_desc);
 
 			text_result = app.utils.createEWC("p", ["desc"], "");
+			
+			input_day_source = [];
+			text_arr = ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek"];
 
-			input_day = app.utils.createEWC("input");
-			input_hour = app.utils.createEWC("input");
-			input_day.placeholder = "Dzień tygodnia";
-			input_hour.placeholder = "Godzina lekcyjna";
-			input_day.type = input_hour.type = "number";
+			for (i=0; i<5; i++){
+				input_day_source.push({name: text_arr[i], value: (i+1), selected: (i == columns.getCurrentDay())});
+			}
+			
+			input_day = settings.createItem({
+				type: "select",
+				dataSource: input_day_source,
+				onChange: function(){},
+				desc: "Dzień tygodnia"
+			});
+
+			input_hour_source = [];
+			for (i=1; i<maxHours+1; i++){
+				input_hour_source.push({
+					name: timeSteps[(i*2-2)] + " - "+ timeSteps[(i*2)-1], 
+					value: i
+				});
+			}
+			
+			//TODO: Mark current hour as selected
+			input_hour = settings.createItem({
+				type: "select",
+				dataSource: input_hour_source,
+				onChange: function(){},
+				desc: "Godzina lekcyjna"
+			});
 
 			button_search = app.utils.createEWC("button", ["content_btn"], '<i class="fas fa-search-location"></i> Szukaj');
 
 			button_search.onclick = function(){
-				r = app.tools.findFreeRooms.find(input_day.value, input_hour.value);
+				r = app.tools.findFreeRooms.find(input_day.input.value, input_hour.input.value);
 				if (!r.length){
 					text_result.innerHTML = "Niestety, żadna sala lekcyjna nie jest wolna.";
 				}else{
-					text_result.innerHTML = `Następujące sale powinny być wolne: ${r.join(", ")}`;
+					out = "";
+					r.forEach(rx => {
+						out += `<span style="padding: 4px; margin: 4px; display: inline-block; background: var(--input-button-hover-background); box-shadow: none;" class="clickable">${rx}</span>`;
+					})
+					text_result.innerHTML = `Następujące sale powinny być wolne: ${out}`;
 				}
 			}
 
 			findFreeRoomsDiv.sectionContent.appendChildren([
 				app.ui.modal.createRow(desc),
-				app.ui.modal.createRow(input_day),
-				app.ui.modal.createRow(input_hour),
+				input_day,
+				input_hour,
 				app.ui.modal.createRow(text_result),
 				app.ui.modal.createRow(button_search)
 			]);

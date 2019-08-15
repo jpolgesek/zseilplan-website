@@ -269,6 +269,7 @@ var settings = {
 			}
 
 			label.appendChild(input);
+			row.input = input;
 			row.appendChild(label);
 			row.appendChild(title);
 		}else if(itemData.type == "special_default"){
