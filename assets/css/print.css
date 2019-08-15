@@ -6,6 +6,20 @@
 		margin: 5mm 5mm 5mm 5mm; /* change the margins as you want them to be. */
 	}
 
+	body, .maintable, .navbar, tr, td, th, 
+	.clickable, .footer, .maintable .currentTimeFull, 
+	.dark .maintable .currentTimeFull{
+		background: none !important;
+	}
+
+	.footer {
+		color: rgb(46, 46, 46) !important;
+	}
+
+	.maintable tr:nth-child(even) {
+		background-color: #f2f2f2;
+	}
+
 	.bar, #storageControl, #networkStatus{
 		display: none !important;
 	}
