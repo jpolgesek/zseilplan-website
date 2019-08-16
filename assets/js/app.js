@@ -315,9 +315,10 @@ function sortAsc (a, b) {
 function init2(){
 	console.warn("USAGE OF GLOBAL FUNCTION - init2!");
 	utils.log("app", "Loading app");
-
+	
 	try{
 		app.init3();
+		app.serviceWorkersSuck.register();
 	} catch(e) {}
 	
 	if (!navigator.onLine) {
@@ -592,107 +593,167 @@ function jumpTo(type, value){
 }
 
 
+app.getSWURL = function(){
+	base_url = document.location.href;
+	base_url = base_url.split("#")[0];
+	ur = app.getUrlRouter();
+	if (ur){
+		base_url = base_url.split(ur)[0];
+	}
+	return base_url;
+}
+
 document.body.onload = app.init;
 
+app.resetURL = function(){
+	history.pushState(null, null, app.getSWURL());
+}
 
+async function getServiceWorker(){
+	return navigator.serviceWorker.getRegistrations().then(registrations => {
+		success = false;
+		swurl = app.getSWURL();
+		
+		oreg = "-1";
+		registrations.forEach(reg => {
+			if (reg.scope == swurl){
+				success = true;
+				oreg = reg;
+			}
+		});
+		return oreg;
+	});
+}
 
 var notifications_enabled = false;
 
-/* %old-ie-remove-start% */
-/* Tak. */
-if ('serviceWorker' in navigator) {
-	window.addEventListener('load', function() {
-		navigator.serviceWorker.register('sw.js').then(function(registration) {
-			utils.log("app", "ServiceWorker registration successful with scope: " + registration.scope);
-			try {fetch('index.html?launcher=true').then(function(response) {console.log("------")})["catch"]();} catch (e) {} // Make first request in background to force service worker to cache index page.
-			registration.pushManager.getSubscription().then(function(sub) {
-				if (sub === null) {
-					utils.log("app", "Not subscribed to push service");
-				} else {
-					utils.log("app", "Subscription object: " + sub);
-					subscribeUser();
+app.serviceWorkersSuck = {
+	register: function(){
+		// Uh, this is ugly. I know. Sorry.
+		if (!('serviceWorker' in navigator)){
+			return false;
+		}
+		
+		navigator.serviceWorker.getRegistrations().then(registrations => {
+			success = false;
+			swurl = app.getSWURL();
+
+			registrations.forEach(reg => {
+				if (reg.scope == swurl){
+					success = true;
+					reg.update();
 				}
-				});
-		}, function(err) {
-			utils.error("app", "ServiceWorker registration failed: " + err);
-		});
-	});
-	}
+			});
 
-	function toggleNotifications(v){
-		if (v){
-			subscribeUser();
-		}else{
-			unsubscribeUser();
-		}
-	}
-	
-	function unsubscribeUser() {
-		navigator.serviceWorker.ready.then(function(reg) {
-			reg.pushManager.getSubscription().then(function(subscription) {
-			  subscription.unsubscribe().then(function(successful) {
-				app.ui.toast.show("Wyłączyłem powiadomienia");
-			  })["catch"](function(e) {
-				app.ui.toast.show("Wystąpił nieznany błąd :(");
-			  })
-			})        
-		  });
-	}
-
-	function urlBase64ToUint8Array(base64String) {
-		var padding = '='.repeat((4 - base64String.length % 4) % 4);
-		var base64 = (base64String + padding)
-		  .replace(/-/g, '+')
-		  .replace(/_/g, '/');
-	  
-		var rawData = window.atob(base64);
-		var outputArray = new Uint8Array(rawData.length);
-	  
-		for (var i = 0; i < rawData.length; ++i) {
-		  outputArray[i] = rawData.charCodeAt(i);
-		}
-		return outputArray;
-	  }
-
-	function subscribeUser() {
-	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker.ready.then(function(reg) {
-		reg.pushManager.subscribe({
-			userVisibleOnly: true,
-			applicationServerKey: urlBase64ToUint8Array('BONWBKVMibu_3nM_nAlQoiLCPm1BFTcag06eSaCnbgPx_QHtwv1mYIuR81nyzqldPeN4LeIiVNqi3WRtCH0CKRE')
-		}).then(function(sub) {
-			console.log('Endpoint URL: ', sub.endpoint);
-			notifications_enabled = true;
-			fetch("registerNotification.php?new", {
-				method: 'POST', // or 'PUT'
-				body: JSON.stringify(sub), 
-				headers: new Headers({
-				  'Content-Type': 'application/json'
-				})
-			  }).then(function(){
-				  console.log("Wyslano");
-			  })
-			  ["catch"](function(error){console.error('Error:', error)})
-			  .then(function(response){console.log('Success:', response)});
-			
-		})["catch"](function(e) {
-			if (Notification.permission === 'denied') {
-				console.warn('Permission for notifications was denied');
-				app.ui.toast.show("Brak uprawnień :(");
-			} else {
-				console.error('Unable to subscribe to push', e);
-				app.ui.toast.show("Wystąpił nieznany błąd :(");
+			if (success) {
+				utils.log("app.sws", "Found correct service worker");
+			}else{
+				utils.log("app.sws", "No correct service worker. Creating iframe, lol");
+				sw_iframe = document.createElement("iframe");
+				sw_iframe.src =  `${swurl}register_sw.html`;
+				sw_iframe.style.width = "0";
+				sw_iframe.style.height = "0";
+				sw_iframe.style.opacity = "0";
+				document.body.appendChild(sw_iframe);
 			}
+
+			app.serviceWorkersSuck.notifications.stateCheck();
 		});
-		})
+	},
+
+	notifications: {
+		state: undefined,
+		serverkey: 'BONWBKVMibu_3nM_nAlQoiLCPm1BFTcag06eSaCnbgPx_QHtwv1mYIuR81nyzqldPeN4LeIiVNqi3WRtCH0CKRE',
+
+		stateCheck: function(){
+			navigator.serviceWorker.ready.then((reg) => {
+				reg.pushManager.getSubscription().then(function(sub) {
+					if (sub === null) {
+						app.serviceWorkersSuck.notifications.state = false;
+						utils.log("app.sws", "Not subscribed to push service");
+					} else {
+						app.serviceWorkersSuck.notifications.state = true;
+						utils.log("app.sws", "Subscription object: " + sub);
+
+						//TODO: Why?
+						app.serviceWorkersSuck.notifications.subscribe();
+					}
+				});
+			});
+			
+		},
+
+		toggle: function(value){
+			if (value){
+				app.serviceWorkersSuck.notifications.subscribe();
+			}else{
+				app.serviceWorkersSuck.notifications.unsubscribe();
+			}
+		},
+
+		subscribe: function(){
+			navigator.serviceWorker.ready.then(function(reg) {
+				reg.pushManager.subscribe({
+					userVisibleOnly: true,
+					applicationServerKey: urlBase64ToUint8Array(app.serviceWorkersSuck.notifications.serverkey)
+				}).then((sub) => {
+					utils.log("app.sws", "Endpoint URL: " + sub.endpoint);
+					notifications_enabled = true;
+					fetch("registerNotification.php?new", {
+						method: 'POST', // or 'PUT'
+						body: JSON.stringify(sub), 
+						headers: new Headers({
+							'Content-Type': 'application/json'
+						})
+					})
+					.then(() => {console.log("Wyslano");})
+					.catch((error) => {console.error('Error:', error)})
+					.then((response) => {console.log('Success:', response)});
+					
+				}).catch((e) => {
+					if (Notification.permission === 'denied') {
+						console.warn('Permission for notifications was denied');
+						app.ui.toast.show("Brak uprawnień :(");
+					} else {
+						console.error('Unable to subscribe to push', e);
+						app.ui.toast.show("Wystąpił nieznany błąd :(");
+					}
+				});
+			})
+		},
+
+		unsubscribe: function(){
+			navigator.serviceWorker.ready.then((reg) => {
+				reg.pushManager.getSubscription().then((subscription) => {
+					subscription.unsubscribe().then((successful) => {
+						console.log("Wyłączyłem powiadomienia");
+					}).catch((e) => {
+						console.log("Wystąpił nieznany błąd :(");
+					});
+				})        
+			});
+		}
 	}
+}
+
+function urlBase64ToUint8Array(base64String) {
+	var padding = '='.repeat((4 - base64String.length % 4) % 4);
+	var base64 = (base64String + padding)
+	  .replace(/-/g, '+')
+	  .replace(/_/g, '/');
+  
+	var rawData = window.atob(base64);
+	var outputArray = new Uint8Array(rawData.length);
+  
+	for (var i = 0; i < rawData.length; ++i) {
+	  outputArray[i] = rawData.charCodeAt(i);
 	}
+	return outputArray;
+}
 
 function dbg_clearCache(){
 	return;
 }
-/* %old-ie-remove-end% */
-
 
 function updateData(){
 	alert("USAGE OF GLOBAL FUNCTION - updatedate!");

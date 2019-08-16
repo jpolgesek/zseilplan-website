@@ -17,8 +17,9 @@ var settings = {
 					{
 						devOnly: true,
 						type: "checkbox",
-						dataTarget: "notifications_enabled",
-						onClick: function(){toggleNotifications(this.checked)},
+						dataSource: app.serviceWorkersSuck.notifications.state,
+						dataTarget: "__internal",
+						onClick: function(){app.serviceWorkersSuck.notifications.toggle(this.checked)},
 						desc: "Odbieraj powiadomienia"
 					},
 					{
