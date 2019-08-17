@@ -25,6 +25,7 @@ var settings = {
 					{
 						devOnly: false,
 						type: "checkbox",
+						dataSource: overrides_disabled,
 						dataTarget: "overrides_disabled",
 						onClick: function(){overrides_disabled = this.checked; refreshView();},
 						desc: "Tymczasowo ukryj zastępstwa"
