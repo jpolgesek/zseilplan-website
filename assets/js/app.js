@@ -609,22 +609,6 @@ app.resetURL = function(){
 	history.pushState(null, null, app.getSWURL());
 }
 
-async function getServiceWorker(){
-	return navigator.serviceWorker.getRegistrations().then(registrations => {
-		success = false;
-		swurl = app.getSWURL();
-		
-		oreg = "-1";
-		registrations.forEach(reg => {
-			if (reg.scope == swurl){
-				success = true;
-				oreg = reg;
-			}
-		});
-		return oreg;
-	});
-}
-
 var notifications_enabled = false;
 
 app.serviceWorkersSuck = {
