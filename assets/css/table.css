@@ -99,6 +99,7 @@
 }
 
 .maintable .override .clickable:hover{
+	background: #fff;
 	color: rgb(119, 22, 22);
 }
 
