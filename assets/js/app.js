@@ -43,7 +43,7 @@ var app = {
 			theme_manager: true,
 			theme_manager_ui: false,
 			theme_christmas_by_default: false,
-			new_hashparser: false,
+			new_hashparser: true,
 			prefs_enable: true,
 			prefs_transition: true,
 			overrides_summaryModal: true,
