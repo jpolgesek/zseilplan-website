@@ -109,9 +109,14 @@ var overrides = {
 				}
 			}
 		}
+		
+		overridesModal = app.ui.modal.createTabbed(
+			{	
+				title: "Podsumowanie zastępstw",
+				tabbed: false
+			}
+		);
 
-		overridesModal = app.ui.modal.create('overridesmodal', "Podsumowanie zastępstw", "", function(){overridesModal.parentElement.removeChild(overridesModal);app.ui.containerBlur(false)});
-		overridesModal.style.height = "80%";
 		row = modal.createRow();
 		row.style.margin.bottom = "-10px";
 		row.style.fontSize = "1.5em";
@@ -164,6 +169,7 @@ var overrides = {
 		}
 		outHTML2 = document.createElement("div");
 		outHTML2.innerHTML = outHTML;
+		outHTML2.style.display = "block";
 		outHTML2.style.overflowY = "scroll";
 		outHTML2.style.height = "89%";
 		
