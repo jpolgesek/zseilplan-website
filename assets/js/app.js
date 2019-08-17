@@ -609,8 +609,6 @@ app.resetURL = function(){
 	history.pushState(null, null, app.getSWURL());
 }
 
-var notifications_enabled = false;
-
 app.serviceWorkersSuck = {
 	register: function(){
 		// Uh, this is ugly. I know. Sorry.
@@ -682,7 +680,6 @@ app.serviceWorkersSuck = {
 					applicationServerKey: urlBase64ToUint8Array(app.serviceWorkersSuck.notifications.serverkey)
 				}).then((sub) => {
 					utils.log("app.sws", "Endpoint URL: " + sub.endpoint);
-					notifications_enabled = true;
 					fetch("registerNotification.php?new", {
 						method: 'POST', // or 'PUT'
 						body: JSON.stringify(sub), 
