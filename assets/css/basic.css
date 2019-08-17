@@ -30,7 +30,7 @@ body{
 	transition: opacity 0.3s;
 	padding: 1%;
 	border-radius: 3px;
-	transition: filter 0.2s;   
+	/* transition: filter 0.2s;    */
 }
 
 .separator{
