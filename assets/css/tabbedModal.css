@@ -44,6 +44,7 @@
     position: fixed;
     flex-flow: row wrap;
     overflow: hidden;
+    border: 1px solid var(--modal-background);
 }
 
 .tabbedModal button {
