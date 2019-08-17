@@ -62,10 +62,11 @@ var preferences = {
 			utils.log("NewPrefs", "There is no data to load (no SCP2Data)");
 			if (app.isEnabled("prefs_transition")){
 				utils.log("NewPrefs", "Starting migration");
-				alert("Migracja ustawień do formatu SCP2Data rozpoczęta."); //TODO: user friendly messages
-				this.convert();
+				result = this.convert();
 				this.save();
-				alert("OK!"); //TODO: user friendly messages
+				if (result){
+					alert("Migracja ustawień do formatu SCP2Data zakończona pomyślnie."); //TODO: user friendly messages
+				}
 			}else{
 				return;
 			}
