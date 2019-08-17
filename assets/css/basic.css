@@ -171,3 +171,14 @@ body{
 	cursor: pointer;
 	color: #FAFAFA;
 }
+
+.android-instruction-container{
+	width: 100vw;
+    height: 100vh;
+    background: #000000d6;
+    position: absolute;
+    top: 0;
+	left: 0;
+	
+	animation: modal-in-out 1s;
+}
