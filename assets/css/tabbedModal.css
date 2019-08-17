@@ -142,7 +142,6 @@
     align-content: center;
     height: 45px;
     border-bottom: 3px solid var(--header-primary-border);
-    margin-top: 3px;
     overflow: hidden;
 }
 
