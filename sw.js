@@ -11,6 +11,7 @@ var CACHE_NAME = 'dev-zseilplan-'+SW_CHECKSUM;
 
 var urlsToCache = [
 	'./',
+	'./manifest.json',
 	'./index.html',
 	'./index.html?launcher=true',
 	
@@ -43,13 +44,31 @@ if (ENABLE_CACHE){
 		console.log(event);
 
 		event.respondWith(
-			fetch(event.request).catch(function(e) {
+			fetch(event.request)
+			.catch(function(e) {
 				console.log("event.respondWith E:");
 				console.log(e);
+				console.log("ER: ");
+				console.log(event.request);
+				console.log(event.request.url);
+				new_url = "./" + event.request.url.split(".pl/")[1];
+				console.log(new_url);
 				console.log("CM:");
-				console.log(cm);
-				cm = caches.match(event.request);
-				return caches.match(cm);
+				return caches.match(new_url).then(resp => {
+					console.log("resp");
+					console.log(resp);
+					if (typeof resp == "undefined"){
+						console.log("Eundefined!!!!!!");
+						return caches.match('./index.html');
+					}
+					return resp;
+				}).catch(e => {
+					console.log("E!!!!!!!");
+					console.log(e);
+					return caches.match('./index.html');
+				})
+				//console.log(cm);
+				//return cm;
 			})
 		);
 
@@ -81,6 +100,7 @@ if (ENABLE_CACHE){
 	
 	self.addEventListener('activate', function(event) {
 		console.log("activate new sw!")
+		/*
 		event.waitUntil(
 		  caches.keys().then(function(cacheNames) {
 			return Promise.all(
@@ -95,6 +115,8 @@ if (ENABLE_CACHE){
 			);
 		  })
 		);
+		*/
+
 	  });
 	/*self.addEventListener('fetch', function(event) {
 		console.log("Cache used, network status: "+navigator.onLine);
