@@ -604,7 +604,9 @@ app.getSWURL = function(){
 	if (ur){
 		base_url = base_url.split(ur)[0];
 	}
-	return base_url;
+	base_url = base_url.split("/");
+	base_url.pop();
+	return base_url.join("/") + "/";
 }
 
 document.body.onload = app.init;
