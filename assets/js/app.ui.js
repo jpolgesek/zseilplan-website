@@ -618,6 +618,10 @@ app.ui = {
 	 * 3. Undo changes made to layout
 	 */
 	print: function(){
+		if (typeof window.print != "function"){
+			return alert("Twoja przeglądarka nie wspiera funkcji drukowania");
+		}
+
 		if (app.themeLoaded){
 			alert("Drukowanie z włączonym motywem nie jest wspierane. Tymczasowo wyłączam motyw.")
 			localStorage.setItem("disable_116_birthday_once", true);
