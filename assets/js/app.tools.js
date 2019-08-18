@@ -103,7 +103,8 @@ app.tools = {
 				desc: "Godzina lekcyjna"
 			});
 
-			button_search = app.utils.createEWC("button", ["content_btn"], '<i class="fas fa-search-location"></i> Szukaj');
+			button_search = app.utils.createEWC("button", ["btn-primary"], '<i class="fas fa-search-location"></i> Szukaj');
+			button_back = app.utils.createEWC("button", [], 'Anuluj');
 
 			button_search.onclick = function(){
 				r = app.tools.findFreeRooms.find(input_day.input.value, input_hour.input.value);
@@ -118,18 +119,26 @@ app.tools = {
 				}
 			}
 
+			button_back.onclick = function(){
+				findFreeRoomsDiv.close();
+				app.tools.selectToolModal();
+			}
+
 			findFreeRoomsDiv.sectionContent.appendChildren([
 				app.ui.modal.createRow(desc),
 				input_day,
 				input_hour,
-				app.ui.modal.createRow(text_result),
-				app.ui.modal.createRow(button_search)
+				app.ui.modal.createRow(text_result)
 			]);
 
 			//FIXME: layout
 			findFreeRoomsDiv.sectionContent.style.padding = "10px";
 
-			findFreeRoomsDiv.appendChild(app.ui.modal.createRow());
+			findFreeRoomsDiv.appendChild(app.ui.modal.createRow([
+				button_search,
+				button_back	
+			]));
+
 			findFreeRoomsDiv.show();
 		}
 	},
@@ -162,24 +171,34 @@ app.tools = {
 			text_select_datafile_old = app.utils.createEWC("span", ["desc"], "Wybierz plan bazowy");
 			text_select_datafile_new = app.utils.createEWC("span", ["desc"], "Wybierz plan do porównania");
 
-			button_diff = app.utils.createEWC("button", ["content_btn"], '<i class="fas fa-dice"></i> Porównaj');
+			button_diff = app.utils.createEWC("button", ["btn-primary"], '<i class="fas fa-dice"></i> Porównaj');
+			button_back = app.utils.createEWC("button", [], 'Anuluj');
+
 			button_diff.onclick = function(){
 				diff.compareSelected(select_datafile_new.value); 
 				app.isDiff = true;
 				findFreeRoomsDiv.close();
 			}
+			
+			button_back.onclick = function(){
+				findFreeRoomsDiv.close();
+				app.tools.selectToolModal();
+			}
 
 			findFreeRoomsDiv.sectionContent.appendChildren([
 				app.ui.modal.createRow(desc),
 				app.ui.modal.createRow([select_datafile_old, text_select_datafile_old]),
-				app.ui.modal.createRow([select_datafile_new, text_select_datafile_new]),
-				app.ui.modal.createRow(button_diff)
+				app.ui.modal.createRow([select_datafile_new, text_select_datafile_new])
 			]);
 
 			//FIXME: layout
 			findFreeRoomsDiv.sectionContent.style.padding = "10px";
 
-			findFreeRoomsDiv.appendChild(app.ui.modal.createRow());
+			findFreeRoomsDiv.appendChild(app.ui.modal.createRow([
+				button_diff,
+				button_back	
+			]));
+
 			findFreeRoomsDiv.show();
 		},
 		viewModal: function(){
@@ -198,24 +217,34 @@ app.tools = {
 
 			text_select_datafile = app.utils.createEWC("span", ["desc"], "Wybierz wersję planu");
 			
-			button_diff = app.utils.createEWC("button", ["content_btn"], '<i class="fas fa-history"></i> Wyświetl poprzednią wersję planu');
+			button_diff = app.utils.createEWC("button", ["btn-primary"], '<i class="fas fa-history"></i> Wyświetl');
+			button_back = app.utils.createEWC("button", [], 'Anuluj');
+
 			button_diff.onclick = function(){
 				app.ui.clearTable(); 
 				app.isCustomDataVersion = true; 
 				app.fetchData(select_datafile.value); 
 				findFreeRoomsDiv.close();
 			}
+			
+			button_back.onclick = function(){
+				findFreeRoomsDiv.close();
+				app.tools.selectToolModal();
+			}
 
 			findFreeRoomsDiv.sectionContent.appendChildren([
 				app.ui.modal.createRow(desc),
-				app.ui.modal.createRow([select_datafile, text_select_datafile]),
-				app.ui.modal.createRow(button_diff)
+				app.ui.modal.createRow([select_datafile, text_select_datafile])
 			]);
 
 			//FIXME: layout
 			findFreeRoomsDiv.sectionContent.style.padding = "10px";
 
-			findFreeRoomsDiv.appendChild(app.ui.modal.createRow());
+			findFreeRoomsDiv.appendChild(app.ui.modal.createRow([
+				button_diff,
+				button_back	
+			]));
+
 			findFreeRoomsDiv.show();
 		}
 	}
