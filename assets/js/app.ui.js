@@ -650,7 +650,11 @@ app.ui = {
 
 		dom.addClass(this.elements.navbar.buttons_container, "hidden");
 
-		print();
+		try {
+			print();
+		} catch(e) {
+			alert(`Wystąpił błąd podczas drukowania.\nE: ${e.toString()}`);
+		}
 		
 		dom.removeClass(this.elements.navbar.buttons_container,"hidden");
 		this.elements.navbar.datasrc_text.innerHTML = o_copy;
