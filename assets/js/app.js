@@ -636,6 +636,7 @@ app.serviceWorkersSuck = {
 				sw_iframe.style.width = "0";
 				sw_iframe.style.height = "0";
 				sw_iframe.style.opacity = "0";
+				sw_iframe.title = "Service Worker Registration";
 				document.body.appendChild(sw_iframe);
 			}
 
