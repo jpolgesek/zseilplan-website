@@ -331,6 +331,7 @@
         transform: translateX(none);
         transition: transform 300ms ease-in-out;
         will-change: transform;
+     box-shadow: 2px 2px 9px 0px #06070a59;
     }
     .tabbedModal.hideMenu .row .sectionList {
         -webkit-transform: translateX(-100%);
