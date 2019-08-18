@@ -100,7 +100,6 @@ if (ENABLE_CACHE){
 	
 	self.addEventListener('activate', function(event) {
 		console.log("activate new sw!")
-		/*
 		event.waitUntil(
 		  caches.keys().then(function(cacheNames) {
 			return Promise.all(
@@ -108,14 +107,13 @@ if (ENABLE_CACHE){
 				// Return true if you want to remove this cache,
 				// but remember that caches are shared across
 				// the whole origin
-				return true;
+				return (cacheName != CACHE_NAME);
 			  }).map(function(cacheName) {
 				return caches.delete(cacheName);
 			  })
 			);
 		  })
 		);
-		*/
 
 	  });
 	/*self.addEventListener('fetch', function(event) {
