@@ -51,6 +51,9 @@ if (ENABLE_CACHE){
 		event.respondWith(
 			fetch(event.request)
 			.catch(function(e) {
+				if (event.request.method == "POST"){
+					return;
+				}
 				console.log("event.respondWith E:");
 				console.log(e);
 				console.log("ER: ");
