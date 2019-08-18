@@ -120,7 +120,7 @@ app.themeManager = {
 		for (var i = 0; i < this.themes.length; i++){
 			var currentTheme = this.themes[i];
 			for (var j = 0; j < currentTheme.versions.length; j++){
-				if (currentTheme.name.indexOf("DEVTEST") == -1 || app.testMode){
+				if (currentTheme.versions[j].name.indexOf("DEVTEST") == -1 || app.testMode){
 					out.push({
 						name: currentTheme.name + " - " + currentTheme.versions[j].name,
 						value: i + ":" + j,
