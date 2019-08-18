@@ -306,8 +306,8 @@ var settings = {
 			special_preview_cell.id = "special_preview_cell";
 
 			special_preview_cell.reload = function(){
-				gen_items = app.ui.createItem({n: "XY", g: "1/2", s: "123", p: "Przedmiot"}).outerHTML;
-				gen_items += app.ui.createItem({n: "ZY", g: "2/2", s: "321", p: "Przedmiot"}).outerHTML;
+				gen_items = app.ui.createItem({n: "XY", k: "4G", g: "1/2", s: "123", p: "Przedmiot"}).outerHTML;
+				gen_items += app.ui.createItem({n: "ZY", k: "4G", g: "2/2", s: "321", p: "Przedmiot"}).outerHTML;
 				
 				// FIXME: Uh, don't look here for now
 				special_preview_cell.innerHTML = `
