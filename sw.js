@@ -8,18 +8,23 @@ var SW_CHECKSUM = "%compiler_checksums%";
 var ENABLE_CACHE = false;
 
 var CACHE_NAME = 'dev-zseilplan-'+SW_CHECKSUM;
-//var CACHE_NAME = 'my-site-cache-A';
+
 var urlsToCache = [
+	'./',
 	'./index.html',
 	'./index.html?launcher=true',
-	'./data.php?ver=localstorage',
+	
 	'./assets/js/c_app.js?ver=%build%',
 	'./assets/css/c_style.css?ver=%build%',
-	'./',
+	'./assets/img/launcher-icon-256.png',
+	'./assets/img/icon_square.png',
+
+	'./data.php?ver=localstorage'
 ];
 
 if (ENABLE_CACHE){
 	console.log("cache is enabled");
+	
 	self.addEventListener('install', function(event) {
 		// Perform install steps
 		event.waitUntil(
@@ -34,13 +39,19 @@ if (ENABLE_CACHE){
 
 	
 	self.addEventListener('fetch', function(event) {
-		// console.log("Fetch event");
-		// console.log(event);
+		console.log("Fetch event: ");
+		console.log(event);
+
 		event.respondWith(
-		  fetch(event.request).catch(function() {
-			return caches.match(event.request);
-		  })
+			fetch(event.request).catch(function(e) {
+				console.log("event.respondWith E:");
+				console.log(e);
+				console.log("CM:");
+				console.log(caches.match(event.request));
+				return caches.match(event.request);
+			})
 		);
+
 	});
 	
 	/*
