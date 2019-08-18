@@ -104,7 +104,7 @@ var modal = {
 		};
 
 		if (options.tabbed){
-			var modalMenu = app.utils.createEWC("div", ["menuCheck"], "☰");
+			var modalMenu = app.utils.createEWC("div", ["menuCheck"], '<i class="fas fa-bars"></i>');
 			var sectionList = app.utils.createEWC("span", ["sectionList"]);
 
 			modalContainer.tg_ids.on_left.push(app.touchGestures.on_left.push(function(){
