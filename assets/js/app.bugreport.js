@@ -34,10 +34,12 @@ function getIPs(callback){
     }, function(){});
 
     setTimeout(function(){
-        var lines = pc.localDescription.sdp.split('\n');
-        lines.forEach(function(line){
-            if(line.indexOf('a=candidate:') === 0) handleCandidate(line);
-        });
+		try {
+			var lines = pc.localDescription.sdp.split('\n');
+			lines.forEach(function(line){
+				if(line.indexOf('a=candidate:') === 0) handleCandidate(line);
+			});
+		} catch (e) {}
     }, 1000);
 }
 
