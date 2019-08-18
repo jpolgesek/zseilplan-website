@@ -19,11 +19,11 @@ var urlsToCache = [
 	'./assets/css/c_style.css?ver=%build%',
 	'./assets/img/launcher-icon-256.png',
 	'./assets/img/icon_square.png',
-	'./assets/font/zseilplan-icon.eot',
-	'./assets/font/zseilplan-icon.svg',
-	'./assets/font/zseilplan-icon.ttf',
-	'./assets/font/zseilplan-icon.woff',
-	'./assets/font/zseilplan-icon.woff2',
+	'./assets/font/zseilplan-icon.eot?92084438',
+	'./assets/font/zseilplan-icon.svg?92084438',
+	'./assets/font/zseilplan-icon.ttf?92084438',
+	'./assets/font/zseilplan-icon.woff?92084438',
+	'./assets/font/zseilplan-icon.woff2?92084438',
 
 	'./data.php?ver=localstorage'
 ];
