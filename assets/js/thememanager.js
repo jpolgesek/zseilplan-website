@@ -81,12 +81,12 @@ app.themeManager = {
 			document.getElementById('thememanager_css').parentElement.removeChild(document.getElementById('thememanager_css'));
 		}
 
-		if (selectedTheme.css != null) {
+		if (selectedTheme.css != null && selectedTheme.css.length) {
 			utils.log("themeMgr", "Loading CSS: " + selectedTheme.css);
 			document.head.insertAdjacentHTML( "beforeend", "<link id='thememanager_css' rel='stylesheet' media='screen' href='" + selectedTheme.css + "?rand=" + Date.now() + "'>");
 		}
 
-		if (selectedTheme.js != null) {
+		if (selectedTheme.js != null && selectedTheme.css.length) {
 			utils.log("themeMgr", "Loading JS: " + selectedTheme.js);
 			if (document.getElementById('thememanager_js') != undefined){
 				document.getElementById('thememanager_js').parentElement.removeChild(document.getElementById('thememanager_js'));
