@@ -178,12 +178,24 @@ var app = {
 		app.ui.loader.setStatus("Ładuję preferencje");
 		app.ui.setStatus("Ładowanie preferencji...");
 
-		if (preferences.get("tests_enabled") == "true"){
-			this._features.prod = this._features.dev;
-		}
+		try {
+			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (preferences.get("tests_enabled") == "true") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
+				utils.warn("app","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
+				app.testMode = true;
+			}
+		} catch (e) {}
 
 		if (app.isEnabled("prefs_enable")){
 			preferences.load();
+
+			if (preferences.get("tests_enabled")){
+				this._features.prod = this._features.dev;
+			}
+			
+			if (preferences.get("app.testMode")){
+				app.testMode = true;
+			}
+			
 		}else{
 			/* If HTML5 storage is available, try to load user saved settings */
 			if (typeof(Storage) !== "undefined") {
@@ -200,22 +212,16 @@ var app = {
 		app.ui.modal = modal;
 		app.storage = myStorage;
 		app.refreshView = refreshView;
-
-		try {
-			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (preferences.get("tests_enabled") == "true") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
-				utils.warn("app","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
-				app.testMode = true;
-				data.normalizationData = {
-					"IM9": "Bazy danych",
-					"IM10": "PHP/JS",
-					"zaj. wych.": "Wychowawcza",
-					"j. polski": "Polski",
-					"j. angielski": "Angielski",
-					"j. niemiecki": "Niemiecki",
-					"hist. i społ": "Historia (his)"
-				};
-			}
-		} catch (e) {}
+		
+		data.normalizationData = {
+			"IM9": "Bazy danych",
+			"IM10": "PHP/JS",
+			"zaj. wych.": "Wychowawcza",
+			"j. polski": "Polski",
+			"j. angielski": "Angielski",
+			"j. niemiecki": "Niemiecki",
+			"hist. i społ": "Historia (his)"
+		};
 
 		if (this._ui_loaded) return;
 		

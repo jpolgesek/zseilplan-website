@@ -141,7 +141,7 @@ var settings = {
 					{
 						devOnly: false,
 						type: "checkbox",
-						dataSource: "app.testMode",
+						dataSource: app.testMode,
 						dataTarget: "app.testMode",
 						desc: "Włącz funkcje testowe."
 					},
