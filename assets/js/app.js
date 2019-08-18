@@ -25,16 +25,16 @@ var app = {
 	_ui_loaded: false,
 	_features: {
 		prod: {
-			diff_diff: false,
-			diff_select_version: false,
+			diff_diff: true,
+			diff_select_version: true,
 			theme_manager: true,
 			theme_manager_ui: false,
 			theme_christmas_by_default: false,
-			new_hashparser: false,
-			prefs_enable: false,
-			prefs_transition: false,
+			new_hashparser: true,
+			prefs_enable: true,
+			prefs_transition: true,
 			overrides_summaryModal: false,
-			new_settings: false
+			new_settings: true
 		},
 	
 		dev: {
