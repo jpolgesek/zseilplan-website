@@ -160,7 +160,7 @@ var utils = {
 			htmlInfo += `Kliknij aby podejrzeć zajętość sali <br><br>`;
 			for (r in available_rooms){
 				var room = available_rooms[r];
-				htmlInfo += `<span style="background: rgba(0,0,0,0.3); border: 1px solid #ddd; border-radius: 5px; padding: 4px; margin: 3px; text-align: center; cursor: pointer;" onclick="jumpTo(1, '${room}');">${room} </span>`;
+				htmlInfo += `<span style="background: rgba(0,0,0,0.3); border: 1px solid #ddd; border-radius: 5px; padding: 4px; margin: 3px; text-align: center; cursor: pointer;" onclick="app.jumpTo(1, '${room}');">${room} </span>`;
 			}
 		}
 		app.ui.modal.alert(htmlInfo, "blue");

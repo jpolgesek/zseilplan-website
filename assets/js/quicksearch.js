@@ -61,9 +61,9 @@ var quicksearch = {
 			var raw_term = document.getElementById('search').value;
 			term = raw_term.toUpperCase();
 			app.ae('quicksearch', 'search', 'search='+term);
-			if 		(term[0] == "N") jumpTo(0, term.substr(1,2))
-			else if (term[0] == "K") jumpTo(2, term.substr(1))
-			else if (term[0] == "S") jumpTo(1, term.substr(1))
+			if 		(term[0] == "N") app.jumpTo(0, term.substr(1,2))
+			else if (term[0] == "K") app.jumpTo(2, term.substr(1))
+			else if (term[0] == "S") app.jumpTo(1, term.substr(1))
 			else if (term[0] == "!") quicksearch.parse(raw_term.substr(1))
 			quicksearch.hide();
 		}

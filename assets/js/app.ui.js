@@ -404,19 +404,19 @@ app.ui = {
 
 		if (this.itemDisplayType == 0){
 			span[1].innerHTML = itemData.k;
-			span[1].onclick = function(){jumpTo(2, itemData.k)};
+			span[1].onclick = function(){app.jumpTo(2, itemData.k)};
 			span[2].innerHTML = itemData.s;
-			span[2].onclick = function(){jumpTo(1, itemData.s)};
+			span[2].onclick = function(){app.jumpTo(1, itemData.s)};
 		}else if (this.itemDisplayType == 1){
 			span[1].innerHTML = itemData.k;
-			span[1].onclick = function(){jumpTo(2, itemData.k)};
+			span[1].onclick = function(){app.jumpTo(2, itemData.k)};
 			span[2].innerHTML = itemData.n;
 			try {
 				span[2].title = data.teachermap[itemData.n];
 			} catch (error) {
 				span[2].title = "Brak informacji";
 			}
-			span[2].onclick = function(){jumpTo(0, itemData.n)};
+			span[2].onclick = function(){app.jumpTo(0, itemData.n)};
 		}else if (this.itemDisplayType == 2){
 			span[1].innerHTML = itemData.n;
 			try {
@@ -424,9 +424,9 @@ app.ui = {
 			} catch (error) {
 				span[1].title = "Brak informacji";
 			}
-			span[1].onclick = function(){jumpTo(0, itemData.n)};
+			span[1].onclick = function(){app.jumpTo(0, itemData.n)};
 			span[2].innerHTML = itemData.s;
-			span[2].onclick = function(){jumpTo(1, itemData.s)};
+			span[2].onclick = function(){app.jumpTo(1, itemData.s)};
 		}
 		
 		

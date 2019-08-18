@@ -266,7 +266,7 @@ var app = {
 			var path = document.location.pathname;
 			if (path.indexOf("/klasa/") != -1){
 				value = document.location.pathname.substring(document.location.pathname.indexOf("/klasa/")).split("/")[2];
-				jumpTo(2,value.toUpperCase());
+				app.jumpTo(2,value.toUpperCase());
 			}else if (path.indexOf("/nauczyciel/") != -1){
 				value = document.location.pathname.substring(document.location.pathname.indexOf("/nauczyciel/")).split("/")[2];
 				if (typeof data.teachermap[value] == "undefined"){
@@ -276,20 +276,20 @@ var app = {
 						}
 					}
 				}
-				jumpTo(0,value.toUpperCase());
+				app.jumpTo(0,value.toUpperCase());
 			}else if (path.indexOf("/sala/") != -1){
 				value = document.location.pathname.substring(document.location.pathname.indexOf("/sala/")).split("/")[2];
-				jumpTo(1,value.toUpperCase());
+				app.jumpTo(1,value.toUpperCase());
 			}
 		}else{
 			/* Allow to link directly to specific timetable */
 			if (location.hash.length > 2){
 				if(location.hash[1] == "n"){
-					jumpTo(0,location.hash.substr(2).toUpperCase());
+					app.jumpTo(0,location.hash.substr(2).toUpperCase());
 				}else if(location.hash[1] == "s"){
-					jumpTo(1,location.hash.substr(2).toUpperCase());
+					app.jumpTo(1,location.hash.substr(2).toUpperCase());
 				}else if(location.hash[1] == "k"){
-					jumpTo(2,location.hash.substr(2).toUpperCase());
+					app.jumpTo(2,location.hash.substr(2).toUpperCase());
 				}
 			}
 		}
@@ -304,6 +304,38 @@ var app = {
 		}
 
 		return;
+	},
+
+	jumpTo: function(type, value){
+		app.ui.resetSelects();
+	
+		if (type == 0){
+			if(!isIE){
+				if (data.teachermap[value] == undefined){
+					return;
+				}
+			}
+			select_teachers.value = value;
+			select_teachers.onchange();
+	
+		}else if (type == 1){
+			if(!isIE){
+				if (data.classrooms.find(function(x){return x == value}) == undefined){
+					return;
+				}
+			}
+			select_rooms.value = value;
+			select_rooms.onchange();
+	
+		}else if (type == 2){
+			if(!isIE){
+				if (data.units.find(function(x){return x == value}) == undefined){
+					return;
+				}
+			}
+			select_units.value = value;
+			select_units.onchange();
+		}
 	}
 }
 
@@ -558,40 +590,6 @@ function refreshView(){
 			}
 	} catch (e) {}
 }
-
-function jumpTo(type, value){
-	console.warn("USAGE OF GLOBAL FUNCTION - jumpto!");
-	app.ui.resetSelects();
-
-	if (type == 0){
-		if(!isIE){
-			if (data.teachermap[value] == undefined){
-				return;
-			}
-		}
-		select_teachers.value = value;
-		select_teachers.onchange();
-
-	}else if (type == 1){
-		if(!isIE){
-			if (data.classrooms.find(function(x){return x == value}) == undefined){
-				return;
-			}
-		}
-		select_rooms.value = value;
-		select_rooms.onchange();
-
-	}else if (type == 2){
-		if(!isIE){
-			if (data.units.find(function(x){return x == value}) == undefined){
-				return;
-			}
-		}
-		select_units.value = value;
-		select_units.onchange();
-	}
-}
-
 
 app.getSWURL = function(){
 	base_url = document.location.href;
