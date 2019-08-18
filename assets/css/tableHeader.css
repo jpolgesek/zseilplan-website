@@ -32,22 +32,29 @@
         margin-top: 0 !important;
         padding-left: 18px !important;
     }
+    
+    .unitsContainer > label,
+    .teachersContainer > label,
+    .roomsContainer > label{
+        display: none;
+    }
 }
 
+
 @media screen and (min-width: 768px) {
-    .unitsContainer::before {
+    .unitsContainer > label {
         content: "Klasa";
         font-size: 1.5em;
         font-weight: 600;
     }
 
-    .teachersContainer::before {
+    .teachersContainer > label {
         content: "Nauczyciel";
         font-size: 1.5em;
         font-weight: 600;
     }
 
-    .roomsContainer::before {
+    .roomsContainer > label {
         content: "Sala";
         font-size: 1.5em;
         font-weight: 600;
