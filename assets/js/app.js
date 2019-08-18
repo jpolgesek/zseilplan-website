@@ -225,7 +225,7 @@ var app = {
 
 		if (this._ui_loaded) return;
 		
-		app.ui.createNavbarButton('<i class="fas fa-toolbox"></i>', "Narzędzia", function(){app.tools.selectToolModal()});
+		app.ui.createNavbarButton('<i class="icon-toolbox"></i>', "Narzędzia", function(){app.tools.selectToolModal()});
 
 		if (this.isEnabled("new_settings")){
 			app.ui.createNavbarButton('<i class="icon-cog"></i>', "Ustawienia", function(){settings.createModal()});

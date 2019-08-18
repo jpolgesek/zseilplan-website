@@ -6,9 +6,9 @@ app.tools = {
 		tools_desc = `Tutaj znajdzie się jakiś ładny opis wyjaśniający czym są te narzędzia.`
 		
 		desc = app.utils.createEWC("p", ["desc"], tools_desc);
-		btn1 = app.utils.createEWC("button", ["content_btn"], '<i class="fas fa-search-location"></i> Wyszukaj wolne sale');
-		btn2 = app.utils.createEWC("button", ["content_btn"], '<i class="fas fa-history"></i> Wyświetl poprzednią wersję planu');
-		btn3 = app.utils.createEWC("button", ["content_btn"], '<i class="fas fa-dice"></i> Zmiany w planie');
+		btn1 = app.utils.createEWC("button", ["content_btn"], '<i class="icon-search-location"></i> Wyszukaj wolne sale');
+		btn2 = app.utils.createEWC("button", ["content_btn"], '<i class="icon-history"></i> Wyświetl poprzednią wersję planu');
+		btn3 = app.utils.createEWC("button", ["content_btn"], '<i class="icon-dice"></i> Zmiany w planie');
 
 		btn1.onclick = function(){
 			toolselectDiv.close();
@@ -103,7 +103,7 @@ app.tools = {
 				desc: "Godzina lekcyjna"
 			});
 
-			button_search = app.utils.createEWC("button", ["btn-primary"], '<i class="fas fa-search-location"></i> Szukaj');
+			button_search = app.utils.createEWC("button", ["btn-primary"], '<i class="icon-search-location"></i> Szukaj');
 			button_back = app.utils.createEWC("button", [], 'Anuluj');
 
 			button_search.onclick = function(){
@@ -171,7 +171,7 @@ app.tools = {
 			text_select_datafile_old = app.utils.createEWC("span", ["desc"], "Wybierz plan bazowy");
 			text_select_datafile_new = app.utils.createEWC("span", ["desc"], "Wybierz plan do porównania");
 
-			button_diff = app.utils.createEWC("button", ["btn-primary"], '<i class="fas fa-dice"></i> Porównaj');
+			button_diff = app.utils.createEWC("button", ["btn-primary"], '<i class="icon-dice"></i> Porównaj');
 			button_back = app.utils.createEWC("button", [], 'Anuluj');
 
 			button_diff.onclick = function(){
@@ -217,7 +217,7 @@ app.tools = {
 
 			text_select_datafile = app.utils.createEWC("span", ["desc"], "Wybierz wersję planu");
 			
-			button_diff = app.utils.createEWC("button", ["btn-primary"], '<i class="fas fa-history"></i> Wyświetl');
+			button_diff = app.utils.createEWC("button", ["btn-primary"], '<i class="icon-history"></i> Wyświetl');
 			button_back = app.utils.createEWC("button", [], 'Anuluj');
 
 			button_diff.onclick = function(){

@@ -48,7 +48,7 @@ var modal = {
 		modalTitle.className = "title";
 
 		modalClose = document.createElement("span");
-		modalClose.innerHTML = '<i class="icon-cancel"></i>';
+		modalClose.innerHTML = '<i class="icon-times"></i>';
 		modalClose.className = "close";
 
 		modalClose.onclick = function(){closeAction();};
@@ -72,7 +72,7 @@ var modal = {
 		modalContainer = app.utils.createEWC("div", ["tabbedModal", "center-hv", "shadow", "hideMenu", "anim-start"]);
 
 		var modalTitle = app.utils.createEWC("span", ["title"], options.title);
-		var modalClose = app.utils.createEWC("span", ["close"], '<i class="icon-cancel"></i>');
+		var modalClose = app.utils.createEWC("span", ["close"], '<i class="icon-times"></i>');
 
 		modalContainer.show = function(){
 			document.body.appendChild(modalContainer);
@@ -104,7 +104,7 @@ var modal = {
 		};
 
 		if (options.tabbed){
-			var modalMenu = app.utils.createEWC("div", ["menuCheck"], '<i class="fas fa-bars"></i>');
+			var modalMenu = app.utils.createEWC("div", ["menuCheck"], '<i class="icon-bars"></i>');
 			var sectionList = app.utils.createEWC("span", ["sectionList"]);
 
 			modalContainer.tg_ids.on_left.push(app.touchGestures.on_left.push(function(){

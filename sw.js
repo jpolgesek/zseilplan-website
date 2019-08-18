@@ -19,6 +19,11 @@ var urlsToCache = [
 	'./assets/css/c_style.css?ver=%build%',
 	'./assets/img/launcher-icon-256.png',
 	'./assets/img/icon_square.png',
+	'./assets/font/zseilplan-icon.eot',
+	'./assets/font/zseilplan-icon.svg',
+	'./assets/font/zseilplan-icon.ttf',
+	'./assets/font/zseilplan-icon.woff',
+	'./assets/font/zseilplan-icon.woff2',
 
 	'./data.php?ver=localstorage'
 ];

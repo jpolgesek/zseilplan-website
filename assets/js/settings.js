@@ -11,7 +11,7 @@ var settings = {
 
 		var sections = [
 			{
-				name: '<i class="fas fa-history" style="min-width: 20px"></i> Ogólne',
+				name: '<i class="icon-history" style="min-width: 20px"></i> Ogólne',
 				id: "modal_settings_s_main",
 				items: [
 					{
@@ -33,7 +33,7 @@ var settings = {
 				]
 			},
 			{
-				name: '<i class="fas fa-pencil-ruler" style="min-width: 20px"></i> Wygląd',
+				name: '<i class="icon-pencil-ruler" style="min-width: 20px"></i> Wygląd',
 				id: "modal_settings_s_look",
 				items: [
 					{
@@ -80,7 +80,7 @@ var settings = {
 				]
 			},
 			{
-				name: '<i class="fas fa-database" style="min-width: 20px"></i> Źródło danych',
+				name: '<i class="icon-database" style="min-width: 20px"></i> Źródło danych',
 				id: "modal_settings_s_dataSource",
 				items: [
 					{
@@ -110,7 +110,7 @@ var settings = {
 				]
 			},
 			{
-				name: '<i class="fas fa-home" style="min-width: 20px"></i> Strona startowa',
+				name: '<i class="icon-home" style="min-width: 20px"></i> Strona startowa',
 				id: "modal_settings_s_defaults",
 				items: [
 					{
@@ -135,7 +135,7 @@ var settings = {
 				]
 			},
 			{
-				name: '<i class="fas fa-flask" style="min-width: 20px"></i> Funkcje testowe',
+				name: '<i class="icon-flask" style="min-width: 20px"></i> Funkcje testowe',
 				id: "modal_settings_s_tests",
 				items: [
 					{

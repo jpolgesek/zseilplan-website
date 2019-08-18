@@ -82,7 +82,7 @@ var utils = {
 		console.table(content);
 	},
 	androidDemo: function(){
-		close_btn = app.utils.createEWC("div", ["android-close-btn"], `<i class='icon-cancel'></i> Wróć do planu`);
+		close_btn = app.utils.createEWC("div", ["android-close-btn"], `<i class='icon-times'></i> Wróć do planu`);
 		steps_src = [
 			{
 				no: 1,
