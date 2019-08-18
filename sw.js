@@ -47,8 +47,9 @@ if (ENABLE_CACHE){
 				console.log("event.respondWith E:");
 				console.log(e);
 				console.log("CM:");
-				console.log(caches.match(event.request));
-				return caches.match(event.request);
+				console.log(cm);
+				cm = caches.match(event.request);
+				return caches.match(cm);
 			})
 		);
 
