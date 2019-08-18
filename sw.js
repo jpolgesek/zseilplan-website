@@ -52,6 +52,9 @@ if (ENABLE_CACHE){
 				console.log(event.request);
 				console.log(event.request.url);
 				new_url = "./" + event.request.url.split(".pl/")[1];
+				new_url = new_url.replace("klasa/", "");
+				new_url = new_url.replace("nauczyciel/", "");
+				new_url = new_url.replace("sala/", "");
 				console.log(new_url);
 				console.log("CM:");
 				return caches.match(new_url).then(resp => {
