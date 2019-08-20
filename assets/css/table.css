@@ -8,8 +8,8 @@
 
 	--table-row-first-top-border: #5589c5;
 
-	--table-row-odd-bg: #f7f7f7;
-	--table-row-even-bg: #b8c3d01e;
+    --table-row-odd-bg: #eaeaea;
+    --table-row-even-bg: #e4e4e4;
 
 	--table-clickable-bg: #00000005;
 	--table-clickable-color: #0b2f5a;
@@ -34,8 +34,8 @@
 
 
 .maintable td:hover {
-    background-color: rgba(204, 229, 255, 0.52) !important;
-    box-shadow: 1px 1px 12px 0px rgba(58, 58, 58, 0.5);
+    background-color: rgba(255, 255, 255, 0.52) !important;
+    box-shadow: 1px 1px 12px 0px rgba(58, 58, 58, 0.2);
 }
 
 .maintable tr:first-of-type > td {
@@ -72,8 +72,15 @@
 }
 */
 
-.maintable tr:not(.header) .currentTimeFull{        
-    background-color: rgba(128, 165, 206, 0.12) !important;
+.maintable tr:not(.header) .currentTimeFull,        
+.maintable tr:not(.header).currentTimeFull{        
+	/* background-color: rgba(76, 144, 220, 0.14); */
+	
+    /* background: #d4dde8; */
+    /* background: #cfd8e3; */
+	background: #e2ebf6;
+	
+    text-shadow: 0px 0px 14px #fff;
 }
 
 .maintable .item_linebreak{
