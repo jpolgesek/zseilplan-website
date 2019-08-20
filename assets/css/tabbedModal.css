@@ -90,6 +90,7 @@
 }
 
 .tabbedModal label {
+    margin: 2px 0;
     margin-right: 8px;
 }
 
@@ -349,5 +350,9 @@
     .tabbedModal>.row:last-of-type {
         position: absolute;
         bottom: 0;
+    }
+
+    .tabbedModal .row span.desc{
+        font-size: 0.9em;
     }
 }
