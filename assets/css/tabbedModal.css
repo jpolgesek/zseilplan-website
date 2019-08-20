@@ -130,6 +130,12 @@
     font-weight: 500;
 }
 
+.tabbedModal .row select{
+    background: #5986b9;
+    color: white;
+    border: 1px solid #6b8baf;
+}
+
 .dark .tabbedModal .row select {
     color: var( --input-select-text-color);
     background: var(--input-select-background);
@@ -353,7 +359,8 @@
         bottom: 0;
     }
 
-    .tabbedModal .row span.desc{
+    .tabbedModal .row span.desc,
+    .tabbedModal .row select{
         font-size: 0.9em;
     }
 }
