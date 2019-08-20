@@ -133,7 +133,7 @@ main {
 .navbar-button-expand:hover span{	 
 }
 
-.navbar-title{
+.navbar__title{
     font-size: 1.5em;
     color: #ececec;
     font-weight: 300;
