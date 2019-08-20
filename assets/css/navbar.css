@@ -48,7 +48,7 @@
 .navbar{
 	background: #fbfbfb;
 	/* box-shadow: none; */
-    background-image: url("../img/icon_square.png");
+    background-image: url("../img/icon_square_test_new.png");
     background-repeat: no-repeat;
     background-size: contain;
 	height: 42px;
@@ -67,7 +67,8 @@
 	cursor: pointer;
 	border: 0;
 	overflow: hidden;
-    background: #3b71ab;
+    /* background: #3b71ab; */
+    background: transparent;
 	border-radius: 3px;
 	margin-left: 5px;
 }
@@ -79,7 +80,7 @@
 	width: 40px;
     height: 40px;
     text-align: center;
-    color: #fff;
+    color: #4382c8;
     font-size: 1.8em;
 	transition: .2s color;
 	border-radius: 2px;
@@ -105,8 +106,8 @@
   	/* background: #046edd; */
 	text-align: center;
 	line-height: 40px;
-	color: #fff;
-	font-weight: 300;
+    color: #1648ab;
+    font-weight: 400;
 	transition: .2s all;
 	border-top-right-radius: 2px;
 	border-bottom-right-radius: 2px;
@@ -142,6 +143,12 @@
 
 .navbar button:hover {
 	/* background: rgba(0, 0, 0, 0.45); */
+    background: #4382c8;
+}
+
+.navbar button:hover > div.icon,
+.navbar button:hover > div.text{
+    color: #fbfbfb;
 }
 
 .navbar button:hover .icon:after {

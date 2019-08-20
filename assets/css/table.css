@@ -1,9 +1,26 @@
 .maintable {
+	--table-bg: #fafafa;
+	--table-text-color: black;
+
+	--table-header-bg: #4c90dc;
+	--table-header-border-color: #5287c1;
+	--table-header-text-color: white;
+
+	--table-row-first-top-border: #5589c5;
+
+	--table-row-odd-bg: #f7f7f7;
+	--table-row-even-bg: #b8c3d01e;
+
+	--table-clickable-bg: #00000005;
+	--table-clickable-color: #0b2f5a;
+}
+
+.maintable {
 	border-collapse: collapse;
 	width: 100%;
 	margin-bottom: 1%;
-	background: #fafafa;
-	color: black;
+	background: var(--table-bg);
+	color: var(--table-text-color);
 }
 
 .maintable td, .maintable th {
@@ -12,7 +29,8 @@
 	transition: 0.15s box-shadow, 0.15s background-color;
 }
 
-.maintable tr:nth-child(even){ background-color: #f2f2f2; }
+.maintable tr:nth-child(odd){ background-color: var(--table-row-odd-bg); }
+.maintable tr:nth-child(even){ background-color: var(--table-row-even-bg); }
 
 
 .maintable td:hover {
@@ -24,13 +42,20 @@
 	border: 1px solid rgba(255, 255, 255, 0.56);
 }
 
-.maintable .header {
+.maintable tr.header {
 	padding-top: 12px;
 	padding-bottom: 12px;
     text-align: left;
-    background-color: #3b71ab;
-	color: white;
+    background-color: var(--table-header-bg);
+	color: var(--table-header-text-color);
 	font-weight: 600;
+}
+
+.maintable tr.header > th{
+	position: sticky;
+	top: 0;
+    background-color: var(--table-header-bg);
+    border-color: var(--table-header-border-color);
 }
 
 .maintable .item{
@@ -47,8 +72,8 @@
 }
 */
 
-.maintable .currentTimeFull{        
-	background-color: rgba(176, 214, 255, 0.16) !important;
+.maintable tr:not(.header) .currentTimeFull{        
+    background-color: rgba(128, 165, 206, 0.12) !important;
 }
 
 .maintable .item_linebreak{
@@ -68,20 +93,24 @@
 .jumpButtons > .clickable:first-of-type{
     border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
+
+    border: 1px solid #cecece;
+    border-right: none;
 }
 
 .jumpButtons > .clickable:last-of-type{
 	border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	
+    border: 1px solid #cecece;
+    border-left: none;
 }
 
 .maintable .clickable{
 	cursor: pointer;
-    background-color: rgb(59, 113, 171);
+    background-color: var(--table-clickable-bg);
 	padding: 3px;
-	/* border-radius: 4px; */
-	color: #FAFAFA;
-    /* margin-right: 5px; */
+	color:  var(--table-clickable-color);
 }
 
 .maintable .clickable:hover{
@@ -130,13 +159,5 @@
 }
 
 .maintable .border-top-blue{
-	border-top-style: solid;
-    border-top-color: #609de8;
-    border-top-width: 3px;
-}
-
-.maintable tr.header > th{
-	position: sticky;
-	top: 0;
-    background-color: #3b71ab;
+	border-top: 3px solid var(--table-row-first-top-border);
 }

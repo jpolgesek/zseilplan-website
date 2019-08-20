@@ -232,3 +232,30 @@
     --input-select-background: #3962a0;
     --input-select-border: #bfbfbf00;
 }
+
+body.dark{
+	/* --site-container-bg: #1d1d1d; */
+	--site-container-bg: none;
+
+	--link-color: #1a63b1;
+	--link-hover-color: #2e73bd;
+
+    --footer-bg: #4c90dc;
+}
+
+.dark .tableTopInfo.shadow {
+    box-shadow: none !important;
+} 
+
+.dark .tableTopInfo > div#status {
+    border-left: 1px solid #464646;
+}
+
+.dark .jumpButtons > .clickable {
+    --table-clickable-color: #fff;
+    border: none;
+}
+
+.dark .maintable tr.header > th {
+    --table-header-border-color: #565656;
+}
