@@ -61,20 +61,15 @@
 	.mobile-only-flex	{ display: flex; }
 	.desktop-only		{ display: none !important;}
 
-	.navbar-buttons {
-		top: 0;
-		position: absolute;
-		right: 0;
+	.navbar__title {
+		font-size: 1.4em;
 	}
+	
 	.navbar button {
 		background: none;
 		height: 52px;
 		padding: 0;
 	  	margin-left: 1px;
-	}
-	.navbar button .icon {
-		background: rgb(239, 239, 239);
-		color: #0a61cc;
 	}
 	.navbar button:hover .text span {
 		opacity: 0;
