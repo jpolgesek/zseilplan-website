@@ -39,12 +39,17 @@
 		padding: 1.5px;
 	}
 
+	.maintable tr.header > th{
+		border: 1px solid rgba(132, 132, 132, 0.25);
+	}
+
 	td, th, tr, body, .item, .clickable, h1, #status, .copyright{
 		color: #000000 !important;
 	}
 	
 	.clickable{
 		font-style: italic;
+		border: none !important;
 	}
 
 	h1{
@@ -68,8 +73,21 @@
 		margin-bottom: 0;
 	}
 
+	.navbar__title,
+	.navbar-info{
+		white-space: nowrap;
+	}
+
+	.navbar__icon{
+		display: none;
+	}
+
+	.border-top-blue{
+		border: none !important;
+	}
+
 	.print-logo{
-		margin-left: 10px;
+		margin: 0 10px;
 	}
 
 	.print-logo{
@@ -79,5 +97,13 @@
 
 	.navbar__title{
 		margin-left: 5px;
+	}
+
+	.shadow {
+		box-shadow: none;
+	}
+
+	.navbar-copyright{
+		width: 100%;
 	}
 }
