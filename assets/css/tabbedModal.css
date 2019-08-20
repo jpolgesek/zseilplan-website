@@ -2,7 +2,7 @@
     --modal-background: #3268bf;
 
     --header-primary: #367ece;
-    --header-primary-border: #3e6ea5;
+    --header-primary-border: #6fa1da;
     --header-button-close-hover-background: #316db7;
 
     --menu-background: #404b5d;
@@ -11,7 +11,7 @@
     --menu-item-font-color: #fbfdff;
     --menu-item-selected-font-color: #fff;
 
-    --content-background: #4777ab;
+    --content-background: #22548c;
     --content-font-color: #ffffff;
     
     --input-slider-bg: #84aeda;
@@ -297,6 +297,7 @@
         overflow: hidden;
 
         border-radius: 0;
+        border: none;
         
         -webkit-transform: translateX(0);
         transform: translateX(0);
