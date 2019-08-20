@@ -1,21 +1,21 @@
 .tabbedModal {
     --modal-background: #3268bf;
 
-    --header-primary: #3268bf;
-    --header-primary-border: #72a3ef;
-    --header-button-close-hover-background: #4f93e8;
+    --header-primary: #367ece;
+    --header-primary-border: #3e6ea5;
+    --header-button-close-hover-background: #316db7;
 
-    --menu-background: #4977bd;
-    --menu-item-hover-background: #5c8ad0;
-    --menu-item-selected-background: #558ce2;
+    --menu-background: #404b5d;
+    --menu-item-hover-background: #6a93bf;
+    --menu-item-selected-background: #4777ab;
     --menu-item-font-color: #fbfdff;
     --menu-item-selected-font-color: #fff;
 
-    --content-background: #558ce2;
-    --content-font-color: #fafafa;
-
-    --input-slider-bg: #456eaf;
-    --input-slider-active-bg: #92bcff;
+    --content-background: #4777ab;
+    --content-font-color: #ffffff;
+    
+    --input-slider-bg: #84aeda;
+    --input-slider-active-bg: #93bdff;
 
     --input-button-background: none;
     --input-button-font-color: #FAFAFA;
