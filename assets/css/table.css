@@ -65,19 +65,8 @@
 	overflow: hidden;
 }
 
-
-/*
-.maintable b{
-	line-height: 200%;
-}
-*/
-
 .maintable tr:not(.header) .currentTimeFull,        
 .maintable tr:not(.header).currentTimeFull{        
-	/* background-color: rgba(76, 144, 220, 0.14); */
-	
-    /* background: #d4dde8; */
-    /* background: #cfd8e3; */
 	background: #e2ebf6;
 	
     text-shadow: 0px 0px 14px #fff;

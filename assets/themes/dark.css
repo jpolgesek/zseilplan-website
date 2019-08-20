@@ -76,6 +76,7 @@
 
 .dark .currentTimeFull{
     background-color: rgba(14, 65, 140, 0.42) !important;
+    text-shadow: none !important;
 }
 
 .dark #status > a{
