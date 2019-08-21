@@ -148,6 +148,10 @@ var settings = {
 					{
 						devOnly: false,
 						type: "input_text",
+						onEnter: function(text){
+							document.getElementById('search').value = text;
+							quicksearch.search({keyCode: 13});
+						},
 						dataSource: app.testMode,
 						dataTarget: "app.testMode",
 						placeholder: "Wpisz kod",
@@ -360,6 +364,14 @@ var settings = {
 
 			if (itemData.placeholder){
 				input.placeholder = itemData.placeholder;
+			}
+
+			if (itemData.onEnter){
+				input.onkeyup = function(event){
+					if (event.which == 13 || event.keyCode == 13){
+						itemData.onEnter(input.value);
+					}
+				}
 			}
 
 			label.appendChild(input);

@@ -23,7 +23,7 @@ var quicksearch = {
 		if (e.keyCode == 27) 				quicksearch.hide(); //Escape
 	},
 	parse: function(code){
-		app.ae('quicksearch', 'code', 'code='+term);
+		app.ae('quicksearch', 'code', 'code='+code);
 		raw_code = code;
 		code = code.toLowerCase().split(":");
 		switch(code[0]){
