@@ -228,3 +228,179 @@ app.adminPanel = {
 		app.adminPanel.pwdPrompt("ap.logout", false, true)
 	}
 }
+
+
+app.breakout = {
+	paddle: {
+		element: document.querySelector("#footer"),
+		position: {},
+		move: function(offset){
+			paddle_current_x = parseInt(this.element.style.left.split("px")[0]);
+			this.element.style.left = (paddle_current_x + offset) + "px";
+			this.position.x = this.element.getBoundingClientRect().left + window.scrollX;
+			this.position.y = this.element.getBoundingClientRect().top + window.scrollY;
+			app.breakout.ball.move(
+				this.position.x,
+				this.position.y
+			);
+		}
+	},
+
+	ball: {
+		element: undefined,
+		position: {},
+		width: (52/2),
+		height: (52/2),
+		speed: 1,
+		direction_x: 1,
+		direction_y: 1,
+
+		move: function(x, y){
+			console.log(`Moving ball to ${x} ${y}`);
+			console.log(app.breakout.ball.element);	
+			app.breakout.ball.position.x = x;
+			app.breakout.ball.position.y = y;
+			app.breakout.ball.element.style.left = (x + (app.breakout.ball.width / 2)) + "px";
+			app.breakout.ball.element.style.top = (y - app.breakout.ball.height) + "px";
+		},
+
+		start: function(){
+			app.breakout.started = true;
+		},
+
+		tick: function(){
+			app.breakout.ball.move(
+				app.breakout.ball.position.x + (app.breakout.ball.speed * app.breakout.ball.direction_x),
+				app.breakout.ball.position.y - (app.breakout.ball.speed * app.breakout.ball.direction_y)
+			);
+			app.breakout.ball.collision();
+		},
+
+		collision: function(){
+			if (app.breakout.ball.position.x < 0){
+				app.breakout.ball.position.x = 0;
+				app.breakout.ball.direction_x = app.breakout.ball.direction_x * -1;
+			}else if (app.breakout.ball.position.x + app.breakout.ball.width > window.innerWidth){
+				app.breakout.ball.position.x = window.innerWidth;
+				app.breakout.ball.direction_x = app.breakout.ball.direction_x * -1;
+			}
+
+			if (app.breakout.ball.position.y < 0){
+				app.breakout.ball.position.y = 0;
+				app.breakout.ball.direction_y = app.breakout.ball.direction_y * -1;
+			}else if (app.breakout.ball.position.y + app.breakout.ball.height > window.innerHeight){
+				app.breakout.ball.position.y = window.innerHeight - app.breakout.ball.height;
+				app.breakout.ball.direction_y = app.breakout.ball.direction_y * -1;
+			}
+			
+			//TODO: conditional
+			app.breakout.ball.move(
+				app.breakout.ball.position.x + (app.breakout.ball.speed * app.breakout.ball.direction_x),
+				app.breakout.ball.position.y - (app.breakout.ball.speed * app.breakout.ball.direction_y)
+			);
+
+			
+			tbl = document.querySelector("#maintable");
+			Array.from(tbl.rows).forEach(row => {
+				Array.from(row.children).forEach(cell => {
+					x0 = parseInt(cell.getBoundingClientRect().left + window.scrollX);
+					y0 = parseInt(cell.getBoundingClientRect().top + window.scrollY);
+					x1 = x0 + parseInt(getComputedStyle(cell).width);
+					y1 = y0 + parseInt(getComputedStyle(cell).height);
+
+					bc_x = app.breakout.ball.position.x + app.breakout.ball.width;
+					bc_y = app.breakout.ball.position.y - app.breakout.ball.height;
+					document.getElementById("rdot").style.left = bc_x + "px";
+					document.getElementById("rdot").style.top = bc_y + "px";
+					
+					if (typeof cell.hit == "undefined" && !cell.hit &&
+						(bc_x >= x0) && (bc_x <= x1) &&
+						(bc_y >= y0) && (bc_y <= y1)
+						){
+						console.log(cell);
+						cell.style.background = "red";
+						cell.hit = true;
+						cell.style.opacity = 0;
+						app.breakout.ball.direction_x = app.breakout.ball.direction_x * -1;
+						app.breakout.ball.direction_y = app.breakout.ball.direction_y * -1;
+					}
+				});
+			})
+		},
+
+		init: function(){
+			original_icon = document.querySelector(".navbar__icon");
+			original_icon_rect = original_icon.getBoundingClientRect();
+	
+			ball = original_icon.cloneNode(true);
+			ball.style.position = "absolute";
+			ball.style.width = (parseInt(getComputedStyle(original_icon).width) / 1) + "px";
+			ball.style.height = (parseInt(getComputedStyle(original_icon).height) / 1) + "px";
+			ball.style.width = app.breakout.ball.width + "px";
+			ball.style.height = app.breakout.ball.height + "px";
+			ball.style.left = (original_icon_rect.left + window.scrollX) + "px";
+			ball.style.top = (original_icon_rect.top + window.scrollY) + "px";
+			ball.style.borderRadius = "50%";
+			ball.id = "aee_ball";
+			// ball.style.transition = "1s all";
+			ball.style.transition = "none";
+			app.breakout.ball.element = ball;
+
+			document.body.appendChild(ball);
+		}
+	},
+	
+	init: function(){
+		tbl = document.querySelector("#maintable");
+		tbl.rows[tbl.rows.length - 1].parentElement.removeChild(tbl.rows[tbl.rows.length - 1]);
+		tbl.rows[tbl.rows.length - 1].parentElement.removeChild(tbl.rows[tbl.rows.length - 1]);
+		tbl.rows[tbl.rows.length - 1].parentElement.removeChild(tbl.rows[tbl.rows.length - 1]);
+		tbl.rows[tbl.rows.length - 1].parentElement.removeChild(tbl.rows[tbl.rows.length - 1]);
+
+		rdot = document.createElement("div");
+		rdot.style.background = "red";
+		rdot.style.zIndex = 90000;
+		rdot.style.position = "absolute";
+		rdot.style.width = "1px";
+		rdot.style.height = "1px";
+		rdot.id = "rdot";
+		document.body.appendChild(rdot);
+
+		app.breakout.ball.init();
+
+		paddle = document.querySelector("#footer");
+		paddle.style.left = "0px";
+	
+		document.addEventListener('keydown', (e) => {
+			if (e.code === "ArrowLeft")        app.breakout.paddle.move(-20);
+			else if (e.code === "ArrowRight")  app.breakout.paddle.move(20);
+			else if (e.code === "Space")  	   app.breakout.ball.start();
+		});
+
+		document.querySelector("#nav__datasrc").innerHTML = "<p>JAKUB POLGESEK PROUDLY PRESENTS...          ZSEILPLAN 2.0!   </p>";
+
+		app.breakout.paddle.move(20);
+
+		setTimeout(() => {
+			link = document.createElement("link");
+			link.rel = "stylesheet";
+			link.href = "assets/css/easteregg.css";
+			document.head.appendChild(link);
+		}, 10);
+
+		setInterval(() => {
+			app.breakout.tick();
+		}, 2);
+	},
+
+	tick: function(){
+		if(app.breakout.started){
+			app.breakout.ball.tick();
+		}
+	}
+};
+
+
+setTimeout(() => {
+	app.breakout.init();
+}, 1000);
