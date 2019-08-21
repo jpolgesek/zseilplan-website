@@ -25,6 +25,11 @@
     --input-content-button-active-background: #fff;
     --input-content-button-active-font-color: #002764;
 
+    --input-text-background: #112f5d;
+    --input-text-border: #0b2752;
+    --input-text-color: #eee;
+    --input-text-placeholder: #ccc;
+
     --input-select-text-color: #EEE;
     --input-select-background: #3962a0;
     --input-select-border: #bfbfbf00;
@@ -222,6 +227,16 @@
 
 .tabbedModal>.row:last-of-type:empty {
     height: 0;
+}
+
+.tabbedModal .row input[type="text"]{
+    background: var(--input-text-background);
+    border-color: var(--input-text-border);
+    color: var(--input-text-color);
+}
+
+.tabbedModal .row input[type="text"]::placeholder{
+    color: var(--input-text-placeholder);
 }
 
 @keyframes modal-in-out {

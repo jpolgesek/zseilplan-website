@@ -145,6 +145,14 @@ var settings = {
 						dataTarget: "app.testMode",
 						desc: "Włącz funkcje testowe."
 					},
+					{
+						devOnly: false,
+						type: "input_text",
+						dataSource: app.testMode,
+						dataTarget: "app.testMode",
+						placeholder: "Wpisz kod",
+						desc: "QuickSearch"
+					},
 				]
 			}
 			
@@ -339,6 +347,25 @@ var settings = {
 			btn.innerHTML = itemData.desc;
 			btn.onclick = itemData.onclick;
 			row.appendChild(btn);
+		}else if (itemData.type == "input_text"){
+			label = document.createElement('label');
+			label.className = ""
+
+			input = document.createElement('input');
+			input.type = "text";
+
+			title = document.createElement("span");
+			title.className = "desc";
+			title.innerHTML = itemData.desc;
+
+			if (itemData.placeholder){
+				input.placeholder = itemData.placeholder;
+			}
+
+			label.appendChild(input);
+			row.input = input;
+			row.appendChild(label);
+			row.appendChild(title);
 		}
 
 

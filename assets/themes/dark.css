@@ -229,6 +229,11 @@
     --input-content-button-active-background: #e2e2e2;
     --input-content-button-active-font-color: #002764;
 
+    --input-text-background: #112f5d;
+    --input-text-border: #0b2752;
+    --input-text-color: #eee;
+    --input-text-placeholder: #ccc;
+
     --input-select-text-color: #EEE;
     --input-select-background: #3962a0;
     --input-select-border: #bfbfbf00;
