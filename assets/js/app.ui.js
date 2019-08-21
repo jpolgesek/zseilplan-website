@@ -753,6 +753,14 @@ app.ui = {
 		}else{
 			table.innerHTML = "";
 		}
+	},
+
+	setPageTitle: function(text){
+		if (text){
+			document.getElementsByTagName("title")[0].innerHTML = `${text} | Super Clever Plan`;
+		}else{
+			document.getElementsByTagName("title")[0].innerHTML = `Super Clever Plan`;
+		}
 	}
 }
 

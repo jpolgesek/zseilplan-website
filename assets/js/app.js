@@ -443,14 +443,17 @@ function refreshView(){
 		app.currentView.selectedType = "unit";
 		app.currentView.selectedValue = select_units.value;
 		app.currentView.selectedShort = "k" + select_units.value;
+		app.ui.setPageTitle(`Plan klasy ${select_units.value}`);
 	} else if (select_teachers.value != "default") {
 		app.currentView.selectedType = "teacher";
 		app.currentView.selectedValue = select_teachers.value;
 		app.currentView.selectedShort = "n" + select_teachers.value;
+		app.ui.setPageTitle(`Plan nauczyciela ${data.teachermap[select_teachers.value]}`);
 	} else if (select_rooms.value != "default") {
 		app.currentView.selectedType = "room";
 		app.currentView.selectedValue = select_rooms.value;
 		app.currentView.selectedShort = "s" + select_rooms.value;
+		app.ui.setPageTitle(`Plan sali ${select_rooms.value}`);
 	} else {
 		utils.log("app", "Nothing is selected, not refreshing view");
 		return;
