@@ -4,7 +4,7 @@ app.themeManager = {
 	darkModeOverrided: false,
 	themes: [
 		{
-			"name": "Domyślny",
+			"name": "Klasyczny",
 			"darkCompatible": false,
 			"css": "",
 			"js": "",
@@ -19,8 +19,8 @@ app.themeManager = {
 			"css": "assets/themes/christmas/christmas.css",
 			"js": "assets/themes/christmas/christmas.js",
 			"versions": [
-				{"name": "Czerwony (domyślny)", "className": "c_default"},
-				{"name": "Ciemny", "className": "c_dark"},
+				{"name": "Czerwony (DEVTEST)", "className": "c_default"},
+				{"name": "Ciemny (DEVTEST)", "className": "c_dark"},
 				{"name": "Niebieski (DEVTEST)", "className": "c_blue"},
 				{"name": "Zielony (DEVTEST)", "className": "c_green"}
 			]
