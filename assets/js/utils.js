@@ -135,7 +135,7 @@ var utils = {
 		})
 
 
-		android_instructions_div = app.utils.createEWC("div", ["android-instruction-container"]);
+		android_instructions_div = app.utils.createEWC("div", ["html-fullscreen"]);
 		android_instructions_div.appendChild(close_btn);
 		android_instructions_div.appendChild(instructions);
 		document.body.appendChild(android_instructions_div);
