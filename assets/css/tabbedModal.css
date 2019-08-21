@@ -91,7 +91,7 @@
 .tabbedModal .row .sectionList {
     flex: 1 30%;
     flex-wrap: wrap;
-    min-height: 330px;
+    min-height: 360px;
 }
 
 .tabbedModal .sectionHeader, .tabbedModal .sectionheader {
