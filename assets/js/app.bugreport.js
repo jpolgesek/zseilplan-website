@@ -105,10 +105,25 @@ app.bugreport = {
 			innerHTML: "Zgłoś błąd",
 			onClick: function(){
 				bd = app.bugreport.prepare();
-				input_description.innerHTML += "\n\n----CUT HERE----\n\n";
-				input_description.innerHTML += JSON.stringify(bd);
-				input_description.innerHTML += "\n\n----CUT HERE----\n\n";
-				alert("TODO: send");
+				
+				fetch("src/sendBugReport.php", {
+					method: "POST",
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						dump: bd,
+						text: input_description.value,
+						email: input_email.value
+					})
+				})
+				.then(function(response) {
+					return response.json();
+				})
+				.then(function(myJson) {
+					console.log(JSON.stringify(myJson));
+				});
+
 				bugreportDiv.close();
 			},
 			primary: true

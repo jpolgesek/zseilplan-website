@@ -11,7 +11,9 @@
 	"static_dirs": [
 		["assets","img"],
 		["assets","font"],
-		["assets","themes"]
+		["assets","themes"],
+		["src", "PHPMailer"],
+		["src"]
 	],
 	"static_files": [
 		"manifest.json", 

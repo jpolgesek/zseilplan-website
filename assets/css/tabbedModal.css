@@ -229,13 +229,17 @@
     height: 0;
 }
 
-.tabbedModal .row input[type="text"]{
+.tabbedModal .row textarea,
+.tabbedModal .row input[type="text"],
+.tabbedModal .row input[type="email"]{
     background: var(--input-text-background);
     border-color: var(--input-text-border);
     color: var(--input-text-color);
 }
 
-.tabbedModal .row input[type="text"]::placeholder{
+.tabbedModal .row textarea::placeholder,
+.tabbedModal .row input[type="text"]::placeholder,
+.tabbedModal .row input[type="email"]::placeholder{
     color: var(--input-text-placeholder);
 }
 

@@ -9,6 +9,7 @@ app.tools = {
 		btn1 = app.utils.createEWC("button", ["content_btn", "big_btn"], '<i class="icon-search-location"></i> Wyszukaj wolne sale');
 		btn2 = app.utils.createEWC("button", ["content_btn", "big_btn"], '<i class="icon-history"></i> Wyświetl poprzednią wersję planu');
 		btn3 = app.utils.createEWC("button", ["content_btn", "big_btn"], '<i class="icon-dice"></i> Zmiany w planie');
+		btn4 = app.utils.createEWC("button", ["content_btn", "big_btn"], '<i class="icon-user-ninja"></i> Zgłoś błąd');
 
 		btn1.onclick = function(){
 			toolselectDiv.close();
@@ -24,8 +25,13 @@ app.tools = {
 			toolselectDiv.close();
 			app.tools.timeTravel.diffModal();
 		}
+
+		btn4.onclick = function(){
+			toolselectDiv.close();
+			app.bugreport.modal();
+		}
 		
-		btns_row = app.ui.modal.createRow([btn1, btn2,btn3]);
+		btns_row = app.ui.modal.createRow([btn1, btn2, btn3, btn4]);
 		btns_row.classList.add("flex", "wrap");
 
 		toolselectDiv.sectionContent.appendChildren([
