@@ -82,6 +82,7 @@ var settings = {
 			{
 				name: '<i class="icon-database" style="min-width: 20px"></i> Źródło danych',
 				id: "modal_settings_s_dataSource",
+				test_only: true,
 				items: [
 					{
 						devOnly: false,
@@ -164,6 +165,11 @@ var settings = {
 
 		for (var i = 0; i < sections.length; i++){
 			var section = sections[i];
+
+			if (section.test_only && !app.testMode) {
+				continue;
+			}
+
 			var sectionContainer = document.createElement("div");
 			sectionContainer.id = section.id;
 			sectionContainer.appendChild(app.ui.modal.createSectionHeader(
