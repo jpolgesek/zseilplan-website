@@ -40,7 +40,7 @@
 	}
 
 	.maintable tr.header > th{
-		border: 1px solid rgba(132, 132, 132, 0.25);
+		border: 1px solid #565656;
 	}
 
 	td, th, tr, body, .item, .clickable, h1, #status, .copyright{

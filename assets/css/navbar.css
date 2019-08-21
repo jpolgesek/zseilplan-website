@@ -178,18 +178,6 @@
 	text-align: right;
 }
 
-.navbar-copyright::before{
-    content: "dev.polgesek.pl/zseilplan"; /* TODO! */
-    position: absolute;
-    top: -26px;
-    left: 0;
-    font-size: 0.7em;
-    color: black;
-    width: 100%;
-    text-align: center;
-}
-
-
 .navbar-notification{
     background-image: url("../img/icon_square.png"), linear-gradient(180deg, rgba(4,110,221,1) 0%, rgba(23,70,169,1) 100%);
     background-repeat: no-repeat;
