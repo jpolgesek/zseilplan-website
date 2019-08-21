@@ -20,7 +20,8 @@
 		"register_sw.html", 
 		"update.html", 
 		"data.php", 
-		"registerNotification.php"
+		"registerNotification.php",
+		"sitemap.php"
 	],
 
 	"hash_this": [ 
