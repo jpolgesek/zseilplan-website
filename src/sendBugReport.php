@@ -1,4 +1,5 @@
 <?php
+die("Service disabled");
 
 try {
 	$user_input = file_get_contents('php://input');
