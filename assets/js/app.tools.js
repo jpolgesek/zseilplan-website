@@ -153,7 +153,6 @@ app.tools = {
 			tools_desc = `Tutaj znajdzie się jakiś ładny opis wyjaśniający jak to działa.`
 			desc = app.utils.createEWC("p", ["desc"], tools_desc);
 
-			select_datafile_old = app.utils.createEWC("select");
 			select_datafile_new = app.utils.createEWC("select");
 
 			dataSource = diff.getPreviousTimetableVersions();
@@ -161,16 +160,9 @@ app.tools = {
 			dataSource.forEach(src => {
 				var opt = new Option(src.name, src.value);
 				opt.selected = src.selected ? src.selected : false;
-				select_datafile_old.add(opt);
-			});
-
-			dataSource.forEach(src => {
-				var opt = new Option(src.name, src.value);
-				opt.selected = src.selected ? src.selected : false;
 				select_datafile_new.add(opt);
 			});
 
-			text_select_datafile_old = app.utils.createEWC("span", ["desc"], "Wybierz plan bazowy");
 			text_select_datafile_new = app.utils.createEWC("span", ["desc"], "Wybierz plan do porównania");
 
 			button_diff = app.utils.createEWC("button", ["btn-primary"], '<i class="icon-dice"></i> Porównaj');
@@ -189,7 +181,6 @@ app.tools = {
 
 			findFreeRoomsDiv.sectionContent.appendChildren([
 				app.ui.modal.createRow(desc),
-				app.ui.modal.createRow([select_datafile_old, text_select_datafile_old]),
 				app.ui.modal.createRow([select_datafile_new, text_select_datafile_new])
 			]);
 
