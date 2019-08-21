@@ -92,7 +92,8 @@ app.tools = {
 			for (i=1; i<maxHours+1; i++){
 				input_hour_source.push({
 					name: `(${i}) ` + timeSteps[(i*2-2)] + " - "+ timeSteps[(i*2)-1], 
-					value: i
+					value: i,
+					selected: (i == app.datetime.getCurrentLessonHour())
 				});
 			}
 			
