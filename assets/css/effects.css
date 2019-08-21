@@ -11,6 +11,14 @@
 	filter: blur(5px);	
 }
 
+.flex {
+	display: flex;
+}
+
+.wrap {
+	flex-wrap: wrap !important;
+}
+
 .flex-center{
     justify-content: center;
 }

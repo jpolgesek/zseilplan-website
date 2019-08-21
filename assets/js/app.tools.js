@@ -6,9 +6,9 @@ app.tools = {
 		tools_desc = `Tutaj znajdzie się jakiś ładny opis wyjaśniający czym są te narzędzia.`
 		
 		desc = app.utils.createEWC("p", ["desc"], tools_desc);
-		btn1 = app.utils.createEWC("button", ["content_btn"], '<i class="icon-search-location"></i> Wyszukaj wolne sale');
-		btn2 = app.utils.createEWC("button", ["content_btn"], '<i class="icon-history"></i> Wyświetl poprzednią wersję planu');
-		btn3 = app.utils.createEWC("button", ["content_btn"], '<i class="icon-dice"></i> Zmiany w planie');
+		btn1 = app.utils.createEWC("button", ["content_btn", "big_btn"], '<i class="icon-search-location"></i> Wyszukaj wolne sale');
+		btn2 = app.utils.createEWC("button", ["content_btn", "big_btn"], '<i class="icon-history"></i> Wyświetl poprzednią wersję planu');
+		btn3 = app.utils.createEWC("button", ["content_btn", "big_btn"], '<i class="icon-dice"></i> Zmiany w planie');
 
 		btn1.onclick = function(){
 			toolselectDiv.close();
@@ -24,12 +24,13 @@ app.tools = {
 			toolselectDiv.close();
 			app.tools.timeTravel.diffModal();
 		}
+		
+		btns_row = app.ui.modal.createRow([btn1, btn2,btn3]);
+		btns_row.classList.add("flex", "wrap");
 
 		toolselectDiv.sectionContent.appendChildren([
 			app.ui.modal.createRow(desc),
-			app.ui.modal.createRow(btn1),
-			app.ui.modal.createRow(btn2),
-			app.ui.modal.createRow(btn3)
+			btns_row
 		]);
 
 		//FIXME: layout

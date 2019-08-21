@@ -74,6 +74,10 @@
     color: var(--input-content-button-active-font-color);
 }
 
+.tabbedModal .big_btn{
+    width: calc(50% - 10px);
+    margin: 5px;
+}
 
 .tabbedModal .row {
     flex: 1 100%;
@@ -362,5 +366,9 @@
     .tabbedModal .row span.desc,
     .tabbedModal .row select{
         font-size: 0.9em;
+    }
+
+    .tabbedModal .big_btn{
+        width: 100%;
     }
 }
