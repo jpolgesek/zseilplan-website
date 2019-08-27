@@ -8,29 +8,29 @@ app.ui = {
 
 	elements: {
 		navbar: {
-			datasrc_text: document.querySelector("#nav__datasrc"),
-			buttons_container: document.querySelector("#navbar-buttons"),
+			datasrc_text: document.getElementById("nav__datasrc"),
+			buttons_container: document.getElementById("navbar-buttons"),
 			buttons: {}
 		},
 
 		select: {
-			unit: document.querySelector("#units"),
-			teacher: document.querySelector("#teachers"),
-			classroom: document.querySelector("#rooms")
+			unit: document.getElementById("units"),
+			teacher: document.getElementById("teachers"),
+			classroom: document.getElementById("rooms")
 		},
 
 		info: {
-			status_text: document.querySelector("#status")
+			status_text: document.getElementById("status")
 			//TODO: other ones (remote_info, networkStatus)
 		},
 
-		table: document.querySelector("#maintable"),
+		table: document.getElementById("maintable"),
 
 		footer: {
-			datasrc_text: 	document.querySelector("#footer__datasrc"),
-			build_text: 	document.querySelector("#footer__build"),
-			bugreport_btn: 	document.querySelector("#footer__bugreport"),
-			copyright_text: document.querySelector("#footer__copyright")
+			datasrc_text: 	document.getElementById("footer__datasrc"),
+			build_text: 	document.getElementById("footer__build"),
+			bugreport_btn: 	document.getElementById("footer__bugreport"),
+			copyright_text: document.getElementById("footer__copyright")
 		}
 	},
 
