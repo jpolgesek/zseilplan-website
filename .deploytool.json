@@ -18,6 +18,7 @@
 	"static_files": [
 		"manifest.json", 
 		"sw.js", 
+		"ie_index.html", 
 		"index.html", 
 		"register_sw.html", 
 		"update.html", 
