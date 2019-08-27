@@ -23,7 +23,7 @@
 		</script>-->
 	</head>
 	<body>
-		<div id='container' class='container'>
+		<div id='container' class='container' style="width: 90%;">
 			<!-- TODO: create me dynamically-->
 			<div class="navbar-container" id="navbar-container">
 				<nav class="navbar shadow">
@@ -142,12 +142,22 @@
 		</div>
 
 		<!-- %compile_js_start%-->
+		<script>
+			var app = {};
+			if (!window.console){
+				window.console = {
+					log: function(x){return;},
+					error: function(x){return;},
+					warn: function(x){return;},
+					clear: function(){return;}
+				}
+			}
+		</script>
+		<script src="assets/ie_js/dom.js?ver=%build%"></script>
 		<script src="assets/ie_js/app.config.js?ver=%build%"></script>
 		<script src="assets/ie_js/app.js?ver=%build%"></script>
 		<script src="assets/ie_js/app.ui.js?ver=%build%"></script>
 		<script src="assets/ie_js/utils.js?ver=%build%"></script>
-		<script src="assets/ie_js/diff.js?ver=%build%"></script>
-		<script src="assets/ie_js/dom.js?ver=%build%"></script>
 		<script src="assets/ie_js/overrides.js?ver=%build%"></script>
 		<script src="assets/ie_js/datetime.js?ver=%build%"></script>
 		<!-- %compile_js_end%-->

@@ -115,10 +115,8 @@ app.ui = {
 		
 			timespan = timeSteps[(y*2-2)] + " - "+ timeSteps[(y*2)-1];
 		
-			cell.appendChildren([
-				app.utils.createEWC("b", ["col-lesson-number"], y.toString()),
-				app.utils.createEWC("span", ["col-lesson-timespan"], timespan),
-			]);
+			cell.appendChild(app.utils.createEWC("b", ["col-lesson-number"], y.toString()));
+			cell.appendChild(app.utils.createEWC("span", ["col-lesson-timespan"], timespan));
 			
 			return row;
 		},
@@ -130,7 +128,9 @@ app.ui = {
 			this.updateVisibleColumn();
 		},
 
-		updateVisibleColumn: function(){},
+		updateVisibleColumn: function(){
+			return;
+		}
 	},
 
 	showBuild: function(){
@@ -200,7 +200,7 @@ app.ui = {
 			select_teachers.options[select_teachers.options.length] = new Option(data.teachermap[key]+' ('+key+')', key);
 		}
 
-		data_googleindex_info_text += "plany "+ Object.keys(data.teachermap).length +" nauczycieli";
+		// data_googleindex_info_text += "plany "+ Object.keys(data.teachermap).length +" nauczycieli";
 		
 		/* Add classrooms to select_rooms and quicksearch */
 		this.setStatus("Przygotowywanie interfejsu: sale");
@@ -215,7 +215,7 @@ app.ui = {
 			//quicksearch.add("Sala "+data.classrooms[i], "S"+data.classrooms[i]);
 		}
 
-		data_googleindex_info_text += " i "+ data.classrooms.length +" sal.";
+		// data_googleindex_info_text += " i "+ data.classrooms.length +" sal.";
 		
 		/* Attach change events to select menus */
 		select_units.onchange = refreshView	;
@@ -345,7 +345,11 @@ app.ui = {
 	 * @param {object} 	itemData		Data for new item (TODO: write structure somewhere)
 	 */
 	createItem: function(itemData){
-		if (itemData.p.length >= 30){
+		if (typeof itemData.k == "undefined" && typeof itemData.s == "undefined"){
+			return document.createElement("span");
+		}
+
+		if (typeof itemData.p != "undefined" && itemData.p.length >= 30){
 			itemData.p = itemData.p.split(" ")[0];
 		}
 
@@ -355,52 +359,7 @@ app.ui = {
 			app.utils.createEWC("span", ["clickable"]),
 			document.createElement('span')
 		];
-
-		if (app.testMode == true) {
-			if (app.prefs["ui.normalize_subject"] === true){
-				if (itemData.p.indexOf("JM") != -1){
-					//to pewnie modul
-					mod_name = itemData.p.split("JM")[0];
-					if ((mod_name[0] == mod_name[1]) && (mod_name[0] == "I")){
-						mod_name = mod_name.substr(1);
-					}
-				}else{
-					mod_name = itemData.p;
-				}
-				try {
-					newName = mod_name;
-					newName = data.normalizationData[newName];
-					if (newName != undefined){
-						itemData.p = newName;
-						span[0].innerHTML = newName;
-					} 
-				} catch (error) {
-					console.log("Normalization not found for '"+mod_name+"'")
-				}
-			}
-			
-			grp = itemData.g;
-			if ((grp != undefined) && (grp != -1)) {
-				if (grp.indexOf("-") != -1) {
-					grp = grp.split("-")[1];
-				}
-			}
-			
-			if ((typeof grp != 'undefined') && (grp != "-1")){
-				if (app.prefs["ui.show_group_info"]){
-					span[3].innerHTML = "G" + grp;
-					span[3].className = 'clickable';
-				}
 		
-				if (app.prefs["ui.show_only_selected_group"]) {
-					if (app.prefs["ui.selected_groups"].indexOf(grp) == -1){
-						return document.createElement("span");
-					}
-				}
-			}
-
-		}
-
 		if (this.itemDisplayType == 0){
 			span[1].innerHTML = itemData.k;
 			span[1].onclick = function(){app.jumpTo(2, itemData.k)};
@@ -755,11 +714,13 @@ app.ui = {
 	},
 
 	setPageTitle: function(text){
-		if (text){
-			document.getElementsByTagName("title")[0].innerHTML = text + " | Super Clever Plan";
-		}else{
-			document.getElementsByTagName("title")[0].innerHTML = "Super Clever Plan";
-		}
+		try {
+			if (text){
+				document.getElementsByTagName("title")[0].innerHTML = text + " | Super Clever Plan";
+			}else{
+				document.getElementsByTagName("title")[0].innerHTML = "Super Clever Plan";
+			}
+		} catch (e) {}
 	}
 }
 

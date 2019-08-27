@@ -124,12 +124,7 @@ var app = {
 			utils.log("app", "Will load custom timetable version: " + customURL);
 			url = customURL;
 		}else{
-			if (navigator.onLine === false) {
-				app.ui.loader.setStatus("Jesteś offline, próbuję pobrać plan z lokalnego cache");
-				timestamp = "localstorage";
-			}else{
-				timestamp = Date.now();
-			}
+			timestamp = new Date().getTime();
 			url = "data.php?ver=" + timestamp;
 		}
 	
@@ -204,12 +199,6 @@ var app = {
 				}
 			}
 		}
-
-		//if (this.isEnabled("diff_diff")){
-		//	app.element.navbar.buttons.history.style.display = null;
-		//}
-
-		window.addEventListener("hashchange", app.parseHash, false);
 		this._ui_loaded = true;
 	},
 	getUrlRouter: function(){
@@ -370,24 +359,6 @@ function init2(){
 	}
 
 	app.parseHash();
-	
-
-	window.addEventListener('offline', function(e) { 
-		app.ui.setNetworkStatus(false);
-	});
-	window.addEventListener('online', function(e) { 
-		app.ui.setNetworkStatus(true);
-	});
-
-	
-	try {
-		if (isToday(new Date("01 Apr 2019"))){
-			app.adminPanel.init();
-		}
-	} catch (e) {}
-
-	try {getIPs(function(a){app.ip = a;});}catch(e){};
-	diff.loadIndex();
 }
 
 

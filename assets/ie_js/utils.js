@@ -8,13 +8,26 @@ var utils = {
 		}
 			
 		if (compat){
-			var fetchDataCompatXHR = new XMLHttpRequest();
+			if (window.XMLHttpRequest){
+				var fetchDataCompatXHR = new XMLHttpRequest();
+			}else{
+				var fetchDataCompatXHR = new ActiveXObject("Microsoft.XMLHTTP");
+			}
 			fetchDataCompatXHR.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					jdata = JSON.parse(fetchDataCompatXHR.responseText);
+				if (fetchDataCompatXHR.readyState == 4 && fetchDataCompatXHR.status == 200) {
+					if (window.JSON){
+						jdata = JSON.parse(fetchDataCompatXHR.responseText);
+					}else{
+						// So sorry for this...
+						// Thank you IE...
+						jdata = eval("window.jdata = " + fetchDataCompatXHR.responseText + ";");
+						try {
+							document.getElementById("remote_info").innerHTML += "<hr><b>Używasz wybitnie starej przeglądarki (tak minimum 10-letniej obstawiam).<br> Z jednej strony gratuluję, bo uwielbiam sprzęt i soft retro, ale jednak jeśli używasz tego codziennie to trochę współczuję.</b>";
+						} catch (e) {}
+					}
 					callback(jdata);
-				} else if (this.readyState == 4 && this.status != 200){
-					failCallback(this);
+				} else if (fetchDataCompatXHR.readyState == 4 && fetchDataCompatXHR.status != 200){
+					failCallback(fetchDataCompatXHR);
 				}
 			};
 			fetchDataCompatXHR.open("GET", url, true);
@@ -102,8 +115,13 @@ var utils = {
 	},
 
     appendChildren: function (element, childList) {
+		if (typeof element == "undefined"){
+			return false;
+		}
 		for (var _i = 0; _i < childList.length; _i++){
-			element.appendChild(childList[_i]);
+			if (childList[_i]){
+				element.appendChild(childList[_i]);
+			}
 		};
         return element;
     }
@@ -158,8 +176,10 @@ if ( (!('innerText' in document.createElement('a'))) && ('getSelection' in windo
     });
 }
 
-Element.prototype.appendChildren = function(childList){
-	app.utils.appendChildren(this, childList);
-}
+try {
+	Element.prototype.appendChildren = function(childList){
+		app.utils.appendChildren(this, childList);
+	}
+} catch (e) {}
 
 app.utils = utils;

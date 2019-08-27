@@ -62,7 +62,7 @@
 .maintable .item_linebreak_disabled{
 	height: 0;
 	width: 10px;
-	display: inline-block;
+	display: none;
 }
 
 .maintable .col_0{
@@ -123,7 +123,12 @@
 }
 
 .maintable .jumpButtons{
-	display: inline-block
+	display: inline-block;
+	width: 40px;
+}
+
+.pName{
+	display: inline;
 }
 
 .maintable .float-right{
