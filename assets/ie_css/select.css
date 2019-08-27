@@ -1,0 +1,15 @@
+select{
+	padding: 5px;
+	font-size: 1em;
+	border-radius: 3px;
+    border: 1px solid rgb(239, 239, 239);
+    box-shadow: 0 0.3px 0.9px rgba(0, 0, 0, 0.06), 0 1.6px 3.6px rgba(0, 0, 0, 0.062);
+}
+
+.bar{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: flex;
+	/* justify-content: center; */
+	overflow: visible;
+}

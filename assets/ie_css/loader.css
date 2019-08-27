@@ -1,0 +1,72 @@
+.loader{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #cfcfcf;
+	font-weight: 300;
+	z-index: 250;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	
+	-webkit-touch-callout: none; /* iOS Safari */
+	  -webkit-user-select: none; /* Safari */
+	   -khtml-user-select: none; /* Konqueror HTML */
+		 -moz-user-select: none; /* Firefox */
+		  -ms-user-select: none; /* Internet Explorer/Edge */
+			  user-select: none; /* Non-prefixed version, currently
+									supported by Chrome and Opera */
+}
+
+.loader h1{
+	font-display: fallback;
+	font-weight: 300;
+	color: #191919;
+	font-size: 1.8em;
+	text-align: center;
+}
+
+.loader div{
+	font-display: fallback;
+	text-align: center;
+}
+
+@keyframes slide {
+	0% 		{ transform: translate(0, 0); 			}
+	2% 		{ transform: translate(33px, 0);		}
+	12.5% 	{ transform: translate(33px, 0);		}
+	15.5% 	{ transform: translate(66px, 0);		}
+	25% 	{ transform: translate(66px, 0);		}
+	27% 	{ transform: translate(66px, 33px);		}
+	37.5%	{ transform: translate(66px, 33px);		}
+	39.5%	{ transform: translate(33px, 33px);		}
+	50% 	{ transform: translate(33px, 33px);		}
+	52% 	{ transform: translate(33px, 66px);		}
+	62.5% 	{ transform: translate(33px, 66px);		}
+	64.5% 	{ transform: translate(0, 66px); 		}
+	75% 	{ transform: translate(0, 66px); 		}
+	77% 	{ transform: translate(0, 33px); 		}
+	87.5% 	{ transform: translate(0, 33px); 		}
+	89.5% 	{ transform: translate(0, 0); 			}
+	100% 	{ transform: translate(0, 0); 			}
+}
+
+svg#loading {
+	display: block;
+	margin: auto;
+	width: 20rem;
+	height: auto;
+}
+
+svg#loading .rect  {
+	width: 30px;
+	height: 30px;
+	animation: slide 10s ease infinite;
+}
+
+svg#loading #r1 {animation-delay: 0s;}
+svg#loading #r2 {animation-delay: -1.42857143s;}
+svg#loading #r3 {animation-delay: -2.85714286s;}
+svg#loading #r4 {animation-delay: -4.28571429s;}
+svg#loading #r5 {animation-delay: -5.71428571s;}
+svg#loading #r6 {animation-delay: -7.14285714s;}
+svg#loading #r7 {animation-delay: -8.57142857s;}

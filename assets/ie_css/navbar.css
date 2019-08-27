@@ -1,0 +1,204 @@
+.navbar-container{
+	position: relative;
+	transform-style: preserve-3d;
+	transition: all 1s;
+}
+
+.navbar-container.notification{
+	transform: translateZ(0) rotateX(180deg);
+}
+
+.navbar{
+	display: block;
+	position: sticky;
+    align-items: center;
+	top: 0;
+	width: 100%;
+    /* padding-top: 5px; */
+	/* padding-bottom: 5px; */
+	z-index: 200;
+	transition: transform 0.5s;
+	transition-timing-function: ease-in-out;
+	box-sizing: content-box; /* I'm sorry */
+	
+	background: #fbfbfb;
+	height: 52px;
+
+    background-image: url(../img/icon_square_test_new.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.navbar__icon{
+    width: auto;
+    height: 100%;
+	display: inline-block;
+}
+
+.navbar__title{
+    font-size: 1.5em;
+    font-weight: 300;
+	color: #111;
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	margin-left: 60px;
+    display: inline-block;
+    line-height: 54px;
+    height: 100%;
+}
+
+.navbar-notification .navbar__title{
+    color: #ececec;
+}
+
+.navbar-buttons{
+	margin-right: 0.5%;
+	display: inline-block;
+	float: right;
+    height: 100%;
+}
+
+.navbar-logo{
+	display: inline-block;
+	width: 52px;
+	font-size: 1.5em;
+	text-align: center;
+}
+
+.navbar button {
+	align-items: center;
+	cursor: pointer;
+	border: 0;
+	overflow: hidden;
+    /* background: #3b71ab; */
+    background: transparent;
+	border-radius: 3px;
+	margin-left: 5px;
+	display: inline-block;
+}
+
+.navbar button .icon {
+	position: relative;
+	/* background: rgba(0, 0, 0, 0.45); */
+	line-height: 42px;
+	width: 40px;
+    height: 40px;
+    text-align: center;
+    color: #4382c8;
+    font-size: 1.8em;
+	transition: .2s color;
+	border-radius: 2px;
+    display: inline-block;
+}
+
+@supports (-moz-appearance:none) {
+	.navbar button .icon {
+		margin-top: -2px;
+	}
+}
+
+.navbar button .icon .fa {
+	width: 30px;
+	transition: .2s all;
+}
+
+.navbar button .text {
+	position: relative;
+	width: 0;
+	height: 40px;
+	overflow: hidden;
+	font-family: "Roboto", sans-serif;
+  	/* background: #046edd; */
+	text-align: center;
+	line-height: 40px;
+    color: #1648ab;
+    font-weight: 400;
+	transition: .2s all;
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
+	font-size: 1.3em;
+    display: inline-block;
+}
+
+.navbar button .text span {
+	width: 100%;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+			transform: translateX(-50%);
+	transition: .3s all;
+}
+
+.navbar button:hover .text span {
+	opacity: 1;
+}
+
+.navbar button:hover .text {
+	width: 120px;
+}
+
+.navbar button:hover .icon {
+	/* color: #5c53f3; */
+	/* background: none; */
+	border-radius: 0;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+}
+
+.navbar button:hover {
+	/* background: rgba(0, 0, 0, 0.45); */
+    background: #4382c8;
+}
+
+.navbar button:hover > div.icon,
+.navbar button:hover > div.text{
+    color: #fbfbfb;
+}
+
+.navbar button:hover .icon:after {
+	right: -2px;
+}
+
+.navbar-info{
+	color: #111;
+	font-weight: 300;
+	font-size: 1.5em;
+    border-left: 1px solid #d8d8d8;
+	margin-left: 10px;
+	padding-left: 10px;
+    display: inline-block;
+    line-height: 54px;
+    height: 100%;
+}
+
+.navbar-copyright{
+    color: rgb(146, 146, 146);
+    margin-right: 15px;
+    float: right;
+    height: 42px;
+	text-align: right;
+}
+
+.navbar-notification{
+    background-image: url("../img/icon_square.png"), linear-gradient(180deg, rgba(4,110,221,1) 0%, rgba(23,70,169,1) 100%);
+    background-repeat: no-repeat;
+    background-size: contain;
+	position: sticky;
+	top: 0;
+	width: 100%;
+    padding-top: 5px;
+	padding-bottom: 5px;
+	/* z-index: 2100; */
+	margin-bottom: 30px;
+	transition: transform 0.5s;
+	transition-timing-function: ease-in-out;
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: rotateX(-180deg) translateY(0) translateZ(1px);
+	display: none;
+	/* transform: rotateX(-90deg) translateY(25px) translateZ(21px); */
+}

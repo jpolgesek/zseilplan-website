@@ -1,0 +1,69 @@
+/* Widescreen support */
+@media screen and (max-width: 1600px) {
+	.container{
+		width: 98%;
+	}
+}
+
+/* Mobile support */
+.mobile-only-flex	{ display: none; }
+
+@media screen and (max-width: 768px) {
+	.container{
+		width: 100%;
+		padding: 0;
+	}
+	.wideBtn {
+		width: calc(100% - 10px) !important;
+	}
+	button:hover .text {
+		width: inherit;
+	}
+	.tab-long-name{
+		display: none;
+	}
+	.tab-short-name{
+		display: inline;
+	}
+	.copyright{
+		display: none;
+	}
+
+	.mobile-only		{ display: inline-block; }
+	.mobile-only-flex	{ display: flex; }
+	.desktop-only		{ display: none !important;}
+
+	.navbar__title {
+		font-size: 1.4em;
+	}
+	
+	.navbar button {
+		background: none;
+		height: 52px;
+		padding: 0;
+	  	margin-left: 1px;
+	}
+	.navbar button:hover .text span {
+		opacity: 0;
+	}
+	
+	.navbar button:hover .text {
+		width: 0;
+	}
+
+	.footer {
+		height: auto;
+	}
+
+	.footer .left{float: unset; margin: 5px;}
+	.footer .center-h{position: inherit;float: unset; margin: 5px;}
+	.footer .right{float: unset; margin: 5px;}
+	.footer .button{position: inherit;float: unset; margin: 5px;}
+}
+
+
+@media screen and (max-width: 350px) {
+	.smallscreen-hide, #btn_0{
+		display: none !important;
+	}
+}

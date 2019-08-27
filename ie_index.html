@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pl">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta name="theme-color" content="#046edd">
+		<meta name="description" content="Ładny i wygodny plan ZSEiL.">
+		<title>Super Clever Plan</title>
+		
+		<!-- %compile_css_start%-->
+		<link rel="stylesheet" href="assets/ie_css/style.css?ver=%build%">
+		<!-- %compile_css_end%-->
+		
+		<link rel="shortcut icon" type="image/png" href="assets/img/launcher-icon-256.png"/>
+		
+		<!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113628218-1"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-113628218-1');
+		</script>-->
+	</head>
+	<body>
+		<div id='container' class='container'>
+			<!-- TODO: create me dynamically-->
+			<div class="navbar-container" id="navbar-container">
+				<nav class="navbar shadow">
+					<span class="print-only print-logo">✌</span>
+					<h1 class="navbar__title">Super Clever Plan</h1>
+					<span class="copyright navbar-info" id="nav__datasrc"></span>
+					<div class="navbar-copyright print-only">
+						<div>dev.polgesek.pl/zseilplan</div>
+						<div>&copy; Jakub Półgęsek 2019</div>
+					</div> <!-- TODO: create me dynamically -->
+					
+					<div class="navbar-buttons" id="navbar-buttons">
+						<button class='print-hide smallscreen-hide' onclick="app.ui.print()" id="navbar-btn-print">
+							<div class='icon'><i class="icon-print"></i></div>
+							<div class='text'>Drukuj</div>
+						</button>
+					</div>
+				</nav>
+			</div>
+
+			<!-- TODO: create me dynamically -->	
+			<div id='data_info' class="shadow box-text print-hide" style="display: none;"></div>
+
+			<div class="tableTopInfo shadow">
+				<!-- TODO: create me dynamically -->	
+				<div id='status' class="box-text print-hide">Ładowanie skryptu...</div>
+				
+				<!-- TODO: create me dynamically -->	
+				<!-- TODO: fix my css! -->
+				<div class='bar print-hide'>
+					<div class="unitsContainer">
+						<label for="units">Klasa</label>
+						<select id='units'></select>
+					</div>
+
+					<div class="teachersContainer">
+						<label for="teachers">Nauczyciel</label>
+						<select id='teachers'></select>
+					</div>
+
+					<div class="roomsContainer">
+						<label for="rooms">Sala</label>
+						<select id='rooms'></select>
+					</div>
+				</div>
+			</div>
+			
+			<!-- TODO: create me dynamically -->	
+			<div id='remote_info' style="width: 100%; padding: 10px; font-size: 1em; font-weight: 600; line-height: 1.6;" class="shadow box-text red print-hide">
+				Korzystasz z trybu kompatybilności wstecznej, jako że twoja przeglądarka nie wspiera pełnej wersji planu.<br>
+				Większość funkcji będzie niedostępna. Zaktualizuj przeglądarkę.
+			</div>
+			
+			<!-- TODO: create me dynamically-->	
+			<div class='bar print-hide mobile-only-flex flex-center' style="padding: 0 !important;">
+				<nav class="tabs">
+					<a href="#" onclick='columns.setActive(-1)' class="active" id='btn_-1'>
+						<span class="mobile-only">All</span>
+					</a>
+					<a href="#" onclick='columns.setActive(0)' id='btn_0' class="smallscreen-hide">Dziś</a>
+
+					<div class="separator smallscreen-hide">&nbsp;</div>
+
+					<a href="#" onclick='columns.setActive(1)' id='btn_1'>
+						<span class="mobile-only">Pn</span>
+					</a>
+					<a href="#" onclick='columns.setActive(2)' id='btn_2'>
+						<span class="mobile-only">Wt</span>
+					</a>
+					<a href="#" onclick='columns.setActive(3)' id='btn_3'>
+						<span class="mobile-only">Śr</span>
+					</a>
+					<a href="#" onclick='columns.setActive(4)' id='btn_4'>
+						<span class="mobile-only">Cz</span>
+					</a>
+					<a href="#" onclick='columns.setActive(5)' id='btn_5'>
+						<span class="mobile-only">Pt</span>
+					</a>
+				</nav>
+			</div>
+
+			<!-- TODO: create me dynamically-->
+			<div id='networkStatus' style='display: none;'></div>
+			
+			<!-- TODO: create me dynamically-->	
+			<table id='maintable' class='maintable shadow'><tr><td><div class="info desktop-only print-hide">
+					<h2>Czym jest Super Clever Plan</h2>
+					
+					<p>Super Clever Plan to aplikacja umożliwiająca przeglądanie planu ZSEiL (zseil.edu.pl) w cywilizowany sposób.</p>
+					<p id="data-googleindex-info">W indeksie znajduje się dane takie jak:</p>
+	
+					<h2>Jak Używać Super Clever Planu?</h2>
+	
+					<h3>Przeglądanie aktualnego planu</h3>
+					<p>Wybierz z listy rozwijanej klasę, nauczyciela lub salę.</p>
+	
+					<h3>Drukowanie planu</h3>
+					<p>Wyświetl plan który chcesz wydrukować a następnie kliknij <i class="icon-print"></i> w prawym górnym rogu.</p>
+	
+					<h3>Instalowanie Super Clever Planu na Androidzie</h3>
+					<p>Kliknij <i class="icon-android"></i> w prawym górnym rogu, a następnie podążaj za wyświetlonymi instrukcjami.</p>
+	
+					<h3>Dostosowywanie Super Clever Planu</h3>
+					<p>Kliknij <i class="icon-cog"></i> w prawym górnym rogu, a następnie ustaw opcje zgodnie ze swoimi preferencjami.</p>
+				</div>
+			</td></tr></table>
+					
+			<div id="footer" class="footer shadow">
+				<div class="left" id="footer__datasrc"></div>
+				<div class="center-h" id="footer__build">Super Clever Build internal build</div>
+				<div class="right" id="footer__copyright">&copy; 2019 Jakub Półgęsek</div>
+			</div>
+
+			
+
+		</div>
+
+		<!-- %compile_js_start%-->
+		<script src="assets/ie_js/app.config.js?ver=%build%"></script>
+		<script src="assets/ie_js/app.js?ver=%build%"></script>
+		<script src="assets/ie_js/app.ui.js?ver=%build%"></script>
+		<script src="assets/ie_js/utils.js?ver=%build%"></script>
+		<script src="assets/ie_js/diff.js?ver=%build%"></script>
+		<script src="assets/ie_js/dom.js?ver=%build%"></script>
+		<script src="assets/ie_js/overrides.js?ver=%build%"></script>
+		<script src="assets/ie_js/datetime.js?ver=%build%"></script>
+		<!-- %compile_js_end%-->
+	</body>
+</html>

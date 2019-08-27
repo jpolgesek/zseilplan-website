@@ -1,0 +1,142 @@
+.maintable {
+	border-collapse: collapse;
+	width: 100%;
+	margin-bottom: 1%;
+	background: #fafafa;
+	color: black;
+}
+
+.maintable td, .maintable th {
+	border: 1px solid rgba(132, 132, 132, 0.25);
+	padding: 5px;
+	transition: 0.15s box-shadow, 0.15s background-color;
+}
+
+.maintable tr:nth-child(odd){ background-color: #eaeaea; }
+.maintable tr:nth-child(even){ background-color: #e4e4e4; }
+
+
+.maintable td:hover {
+    background-color: rgba(255, 255, 255, 0.52) !important;
+    box-shadow: 1px 1px 12px 0px rgba(58, 58, 58, 0.2);
+}
+
+.maintable tr:first-of-type > td {
+	border: 1px solid rgba(255, 255, 255, 0.56);
+}
+
+.maintable tr.header {
+	padding-top: 12px;
+	padding-bottom: 12px;
+    text-align: left;
+    background-color: #4c90dc;
+	color: white;
+	font-weight: 600;
+}
+
+.maintable tr.header > th{
+	position: sticky;
+	top: 0;
+    background-color: #4c90dc;
+    border-color: #5287c1;
+}
+
+.maintable .item{
+	padding: 4px;
+	word-break: keep-all;
+    margin: 2px;
+	overflow: hidden;
+}
+
+.maintable tr:not(.header) .currentTimeFull,        
+.maintable tr:not(.header).currentTimeFull{        
+	background: #e2ebf6;
+	
+    text-shadow: 0px 0px 14px #fff;
+}
+
+.maintable .item_linebreak{
+	height: 5px !important;
+}
+
+.maintable .item_linebreak_disabled{
+	height: 0;
+	width: 10px;
+	display: inline-block;
+}
+
+.maintable .col_0{
+	text-align: center;
+}
+
+.jumpButtons > .clickable:first-of-type{
+    border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+
+    border: 1px solid #cecece;
+    border-right: none;
+}
+
+.jumpButtons > .clickable:last-of-type{
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	
+    border: 1px solid #cecece;
+    border-left: none;
+}
+
+.maintable .clickable{
+	cursor: pointer;
+    background-color: #00000005;
+	padding: 3px;
+	color:  #0b2f5a;
+}
+
+.maintable .clickable:hover{
+	background-color: #f9f9f9;
+	color: rgb(59, 113, 171);
+}
+
+.maintable .override{    
+	background: rgba(199, 0, 0, 0.78);
+    color: #ffffff;
+}
+
+.maintable .override .clickable{
+	background-color: rgb(119, 22, 22);
+}
+
+.maintable .override .clickable:hover{
+	background: #fff;
+	color: rgb(119, 22, 22);
+}
+
+
+.maintable .zMark{    
+    margin-left: 10px;
+    width: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    text-align: center;
+    background: white;
+    color: #046edd;
+}
+
+.maintable .jumpButtons{
+	display: inline-block
+}
+
+.maintable .float-right{
+	float: right;
+}
+
+.maintable b.col-lesson-number {
+    width: 16px;
+    display: inline-block;
+    text-align: left;
+    margin-right: 3px;
+}
+
+.maintable .border-top-blue{
+	border-top: 3px solid #5589c5;
+}

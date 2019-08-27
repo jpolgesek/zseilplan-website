@@ -1,0 +1,224 @@
+
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,500,600');
+
+:root{
+	--site-container-bg: #fbfbfb;
+
+	--link-color: #1a63b1;
+	--link-hover-color: #2e73bd;
+
+	--footer-bg: #4c90dc;
+}
+
+html, body{
+	margin: 0;
+	padding: 0;
+}
+
+*{
+	outline-style: none;
+	box-sizing: border-box;
+}
+
+:link{
+	color: var(--link-color);
+	text-decoration: none;
+}
+
+:link:hover{
+	color: var(--link-hover-color);
+	text-decoration: underline;
+	text-decoration-color: var(--link-hover-color);
+}
+
+
+body{
+	min-width: 300px;
+	overflow-x: hidden;
+	font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	font-style: normal;
+	font-display: fallback;
+	background: url("../img/stripes-light.png");
+	min-height: 100vh;
+}
+
+.container{
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	opacity: 1;
+	transition: opacity 0.3s;
+	padding: 1%;
+	border-radius: 3px;
+	/* transition: filter 0.2s;    */
+}
+
+.separator{
+	display: inline-block;
+    width: 1px;
+    background: #636363;
+}
+
+.print-only, .mobile-only{
+	display: none;
+}
+
+.bar{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: flex;
+	justify-content: center;
+    overflow: hidden;
+}
+
+.hidden{
+	display: none;
+}
+
+::selection, ::-moz-selection{
+	background: #0767d3;
+    color: #FFFFFF;
+}
+
+.footer{
+    box-sizing: content-box;
+    background: var(--footer-bg);
+    margin: 0;
+    color: #ffffff;
+    padding: 5px;
+    text-align: center;
+    position: static;
+    bottom: 0;
+    left: 0;
+	height: 20px;
+	position: relative;
+}
+
+.footer .button{    
+	border: none;
+    background: none;
+	color: inherit;
+    font-size: 1em;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px;
+}
+
+.footer .button:hover{    
+	background: rgba(148, 19, 19, 0.38);
+	cursor: pointer;
+}
+
+
+.android-instruction{
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 600px;
+	max-width: 1000px;
+	margin-top: 1%;
+	z-index: 250;
+	top: -100%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, 0);
+	transition-property: all;
+	transition-duration: 1.5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.android-instruction.anim{
+	top: 1%;
+}
+
+.android-desc{
+	display: block;
+	font-size: 2.3em;
+	/* text-align: center; */
+}
+
+.android-step{
+	display: block;
+	font-size: 1.3em;
+}
+
+.android-img{
+	height: 90px;
+	display: block;
+}
+
+.android-step-no{
+	display: inline-block;
+    width: 150px;
+    height: 150px;
+    text-align: center;
+	background: linear-gradient(180deg, rgba(4,110,221,1) 0%, rgba(23,70,169,1) 100%);
+    font-size: 6em;
+    border-radius: 50%;
+	line-height: 150px;
+	text-shadow: 1px 1px 1px #000;
+	color: #FAFAFA;
+}
+
+.android-step-desc{
+	display: inline-block;
+	height: 150px;
+	position: absolute;
+	top: 0;
+	left: 160px;
+}
+
+.android-step-div{
+	position: relative;
+	overflow: hidden;
+	margin-top: 5%;
+	margin-bottom: 4%;
+}
+
+.android-close-btn{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 19px;
+    font-size: 1.5em;
+    border-top-right-radius: 5px;
+    float: right;
+}
+
+.android-close-btn:hover{
+	background: #0b60ca;
+	cursor: pointer;
+	color: #FAFAFA;
+}
+
+.html-fullscreen{
+	width: 100vw;
+    height: 100vh;
+    background: #000000d6;
+	position: fixed;
+	overflow-y: scroll;
+    top: 0;
+	left: 0;
+	
+	animation: modal-in-out 1s;
+}
+
+.android-step {
+    padding: 10px 0px;
+}
+
+.android-step-div::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: calc(100% - 75px);
+    margin-left: 75px;
+	z-index: -1;
+	background: linear-gradient(180deg, rgba(4,110,221,1) 0%, rgba(23,70,169,1) 100%);
+	opacity: 0.3;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}

@@ -1,0 +1,117 @@
+.tableTopInfo{
+	display: flex;
+	flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: #fbfbfb;
+    margin: 10px 0px;
+}
+
+.tableTopInfo > div#status{
+	order: 2;
+	background: transparent;
+    box-shadow: none;
+    flex: 1;
+    min-width: 200px;
+    border-left: 1px solid #efefef;
+}
+
+.tableTopInfo > div#remote_info{
+	width: 100%;
+	flex: 1 100%;
+    order: 3;
+}
+
+@media screen and (max-width: 768px) {
+    #status{
+        order: 0 !important;
+    }
+
+    
+    .bar {
+        padding: 0px 20px !important;
+        padding-right: 30px !important;
+        margin-top: 0 !important;
+        padding-left: 18px !important;
+    }
+    
+    .unitsContainer > label,
+    .teachersContainer > label,
+    .roomsContainer > label{
+        display: none;
+    }
+}
+
+
+@media screen and (min-width: 768px) {
+    .unitsContainer > label {
+        content: "Klasa";
+        font-size: 1.5em;
+        font-weight: 600;
+    }
+
+    .teachersContainer > label {
+        content: "Nauczyciel";
+        font-size: 1.5em;
+        font-weight: 600;
+    }
+
+    .roomsContainer > label {
+        content: "Sala";
+        font-size: 1.5em;
+        font-weight: 600;
+        color: var(--accent-color-light);
+    }
+
+    .bar {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding: 10px;
+    }
+}
+
+.unitsContainer > select, 
+.teachersContainer > select, 
+.roomsContainer > select {
+    width: 100%;
+    background: #fafafa;
+}
+
+.unitsContainer, .roomsContainer {
+    flex: 0 0 22%;
+    margin: unset !important;
+    width: unset !important;
+}
+
+.teachersContainer {
+    flex: 0 0 52%;
+    margin: unset !important;
+    width: unset !important;
+}
+
+.bar {
+    flex: 2;
+    min-width: 340px;
+
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+	overflow: visible;
+    padding: 20px;
+    margin: 0;
+}
+
+.box-text {
+    background: transparent;
+    border-radius: 1px;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 26%;
+    float: right;
+    padding: 30px;
+    padding-bottom: 0;
+    box-shadow: none;
+}
