@@ -20,17 +20,6 @@ html, body{
 	box-sizing: border-box;
 }
 
-:link{
-	color: var(--link-color);
-	text-decoration: none;
-}
-
-:link:hover{
-	color: var(--link-hover-color);
-	text-decoration: underline;
-	text-decoration-color: var(--link-hover-color);
-}
-
 
 body{
 	min-width: 300px;
@@ -82,7 +71,7 @@ body{
 
 .footer{
     box-sizing: content-box;
-    background: var(--footer-bg);
+    background: #4c90dc;
     margin: 0;
     color: #ffffff;
     padding: 5px;
