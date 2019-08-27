@@ -140,7 +140,7 @@
 }
 
 .maintable .jumpButtons{
-	display: inline-block
+	display: inline-block;
 }
 
 .maintable .float-right{
