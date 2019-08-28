@@ -75,7 +75,8 @@
 .teachersContainer > select, 
 .roomsContainer > select {
     width: 100%;
-    background: #fafafa;
+    /* background: #fafafa; */
+    background: blue;
 }
 
 .unitsContainer > label, 
@@ -86,9 +87,9 @@
 }
 
 .unitsContainer, .roomsContainer, .teachersContainer {
-    width: 30%;
-    display: inline;
-    margin: unset !important;
+    width: 20%;
+    /* margin: unset !important; */
+    float: left;
 }
 
 
