@@ -181,10 +181,10 @@ app.ui = {
 		}
 
 		select_units.options[0] = new Option("Klasa", "default");
-		for (unit in data.units) {
-			select_units.options[select_units.options.length] = new Option(data.units[unit], data.units[unit]);
+		for (var _i = 0; _i < data.units.length; _i++) {
+			select_units.options[select_units.options.length] = new Option(data.units[_i], data.units[_i]);
 			// data_googleindex_info_text += "<a href='index.html#k"+data.units[unit]+"'>plan "+data.units[unit]+"</a>, ";
-			data_googleindex_info_text += "plan "+data.units[unit]+", ";
+			data_googleindex_info_text += "plan "+data.units[_i]+", ";
 			//quicksearch.add("Klasa "+data.units[unit], "K"+data.units[unit]);
 		};
 
