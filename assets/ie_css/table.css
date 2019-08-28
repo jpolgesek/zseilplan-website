@@ -124,7 +124,9 @@
 
 .maintable .jumpButtons{
 	display: inline-block;
-	width: 40px;
+	width: 60px;
+	background: #eee;
+	border: 1px solid #ddd;
 }
 
 .pName{
