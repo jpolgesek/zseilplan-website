@@ -78,17 +78,19 @@
     background: #fafafa;
 }
 
-.unitsContainer, .roomsContainer {
-    flex: 0 0 22%;
-    margin: unset !important;
-    width: unset !important;
+.unitsContainer > label, 
+.teachersContainer > label, 
+.roomsContainer > label {
+    width: 30%;
+    font-weight: bold;
 }
 
-.teachersContainer {
-    flex: 0 0 52%;
+.unitsContainer, .roomsContainer, .teachersContainer {
+    width: 30%;
+    display: inline;
     margin: unset !important;
-    width: unset !important;
 }
+
 
 .bar {
     flex: 2;
