@@ -210,8 +210,8 @@ app.ui = {
 		}
 
 		select_rooms.options[0] = new Option("Sala", "default");
-		for (i in data.classrooms) {
-			select_rooms.options[select_rooms.options.length] = new Option(data.classrooms[i], data.classrooms[i]);
+		for (var _i = 0; _i < data.classrooms.length; _i++) {
+			select_rooms.options[select_rooms.options.length] = new Option(data.classrooms[_i], data.classrooms[_i]);
 			//quicksearch.add("Sala "+data.classrooms[i], "S"+data.classrooms[i]);
 		}
 
