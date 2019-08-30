@@ -16,6 +16,7 @@
 		["src"]
 	],
 	"static_files": [
+		".htaccess",
 		"manifest.json", 
 		"sw.js", 
 		"ie_index.html", 
