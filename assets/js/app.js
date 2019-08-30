@@ -759,13 +759,6 @@ function dbg_clearCache(){
 	return;
 }
 
-function updateData(){
-	alert("USAGE OF GLOBAL FUNCTION - updatedate!");
-	return console.warn("USAGE OF GLOBAL FUNCTION!");
-	location.reload();
-}
-
-
 function tempTest(){
 	alert("USAGE OF GLOBAL FUNCTION - temptest!");
 	return console.warn("USAGE OF GLOBAL FUNCTION!");

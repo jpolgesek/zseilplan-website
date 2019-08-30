@@ -165,7 +165,7 @@ app.ui = {
 			if (Object.keys(data.overrideData).length > 0){
 				this.updateStatus("<br>Zastępstwa na "+Object.keys(data.overrideData).map(function(s){return s.substr(0,5)}).sort().join());
 			}
-			this.updateStatus("<br><a href='javascript:void(0)' onclick='updateData()'>Odśwież</a>");
+			this.updateStatus("<br><a href='javascript:void(0)' onclick='document.location.reload()'>Odśwież</a>");
 		} catch (e) {}
 
 	},
