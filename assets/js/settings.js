@@ -125,11 +125,12 @@ var settings = {
 						type: "button",
 						onclick: function(){
 							if (app.currentView.selectedType == ""){
-								return alert("Nic nie jest wybrane"); //TODO: User friendly message
+								this.innerHTML = "Wybierz najpierw jakiś plan";
 							}
 							preferences.set("app.homeType", app.currentView.selectedType, true);
 							preferences.set("app.homeValue", app.currentView.selectedValue, true);
-							alert("OK!");
+							this.innerHTML = `Ustawiono plan ${app.currentView.selectedValue} jako domyślny.`;
+							this.onclick = null;
 						},
 						desc: "Ustaw obecnie wyświetlany plan jako domyślny"
 					},
