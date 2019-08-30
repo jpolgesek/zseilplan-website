@@ -34,7 +34,12 @@ var app = {
 			prefs_enable: true,
 			prefs_transition: true,
 			overrides_summaryModal: false,
-			new_settings: true
+			new_settings: true,
+			app_tools_global: false,
+			app_tools_findfreerooms: false,
+			app_tools_timetravel: false,
+			app_tools_diffview: false,
+			app_tools_bugreport: false
 		},
 	
 		dev: {
@@ -47,7 +52,12 @@ var app = {
 			prefs_enable: true,
 			prefs_transition: true,
 			overrides_summaryModal: true,
-			new_settings: true
+			new_settings: true,
+			app_tools_global: true,
+			app_tools_findfreerooms: true,
+			app_tools_timetravel: true,
+			app_tools_diffview: true,
+			app_tools_bugreport: true
 		},
 	
 		internal: {
@@ -60,7 +70,12 @@ var app = {
 			prefs_transition: true,
 			prefs_enable: true,
 			overrides_summaryModal: true,
-			new_settings: true
+			new_settings: true,
+			app_tools_global: true,
+			app_tools_findfreerooms: true,
+			app_tools_timetravel: true,
+			app_tools_diffview: true,
+			app_tools_bugreport: true
 		}
 	},
 	
@@ -225,7 +240,9 @@ var app = {
 
 		if (this._ui_loaded) return;
 		
-		app.ui.createNavbarButton('<i class="icon-toolbox"></i>', "Narzędzia", function(){app.tools.selectToolModal()});
+		if (this.isEnabled("app_tools_global")){
+			app.ui.createNavbarButton('<i class="icon-toolbox"></i>', "Narzędzia", function(){app.tools.selectToolModal()});
+		}
 
 		if (this.isEnabled("new_settings")){
 			app.ui.createNavbarButton('<i class="icon-cog"></i>', "Ustawienia", function(){settings.createModal()});
@@ -248,10 +265,6 @@ var app = {
 				}
 			}
 		}
-
-		//if (this.isEnabled("diff_diff")){
-		//	app.element.navbar.buttons.history.style.display = null;
-		//}
 
 		window.addEventListener("hashchange", app.parseHash, false);
 		this._ui_loaded = true;

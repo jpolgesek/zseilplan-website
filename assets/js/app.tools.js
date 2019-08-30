@@ -31,7 +31,12 @@ app.tools = {
 			app.bugreport.modal();
 		}
 		
-		btns_row = app.ui.modal.createRow([btn1, btn2, btn3, btn4]);
+		btns_row = app.ui.modal.createRow([
+			(app.isEnabled("app_tools_findfreerooms")) ? btn1 : document.createElement("div"), 
+			(app.isEnabled("app_tools_timetravel")) ? btn2 : document.createElement("div"), 
+			(app.isEnabled("app_tools_diffview")) ? btn3 : document.createElement("div"), 
+			(app.isEnabled("app_tools_bugreport")) ? btn4 : document.createElement("div")
+		]);
 		btns_row.classList.add("flex", "wrap");
 
 		toolselectDiv.sectionContent.appendChildren([
