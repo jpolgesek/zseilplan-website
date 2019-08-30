@@ -65,7 +65,7 @@ var preferences = {
 				result = this.convert();
 				this.save();
 				if (result){
-					alert("Migracja ustawień do formatu SCP2Data zakończona pomyślnie."); //TODO: user friendly messages
+					utils.log("NewPrefs", "SCP2Data migration ok!");
 				}
 			}else{
 				return;
