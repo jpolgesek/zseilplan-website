@@ -495,7 +495,7 @@ function refreshView(){
 				
 				case 'teacher':
 					newURL += "nauczyciel/";
-					newValue = data.teachermap[app.currentView.selectedValue].split('-').join(" ").toLowerCase().split(' ').join("-");
+					newValue = data.teachermap[app.currentView.selectedValue].split('-').join(" ").toLowerCase().split(' ').join("-").replace("(", "").replace(")", "");
 					break;
 				
 				case 'room':
