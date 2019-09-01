@@ -28,7 +28,7 @@ var urlsToCache = [
 	'./data.php?ver=localstorage'
 ];
 
-if (ENABLE_CACHE){
+if (ENABLE_CACHE && false){
 	console.log("cache is enabled");
 	
 	self.addEventListener('install', function(event) {
