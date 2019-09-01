@@ -1,3 +1,3 @@
 /* Config */
-maxHours = 10;
+maxHours = 13;
 weekDays = 5;
