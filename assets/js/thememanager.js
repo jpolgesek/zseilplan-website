@@ -1,8 +1,10 @@
 app.themeManager = {
+	currentTheme: -1,
+	currentVersion: -1,
 	darkModeOverrided: false,
 	themes: [
 		{
-			"name": "Domyślny",
+			"name": "Klasyczny",
 			"darkCompatible": false,
 			"css": "",
 			"js": "",
@@ -17,8 +19,8 @@ app.themeManager = {
 			"css": "assets/themes/christmas/christmas.css",
 			"js": "assets/themes/christmas/christmas.js",
 			"versions": [
-				{"name": "Czerwony (domyślny)", "className": "c_default"},
-				{"name": "Ciemny", "className": "c_dark"},
+				{"name": "Czerwony (DEVTEST)", "className": "c_default"},
+				{"name": "Ciemny (DEVTEST)", "className": "c_dark"},
 				{"name": "Niebieski (DEVTEST)", "className": "c_blue"},
 				{"name": "Zielony (DEVTEST)", "className": "c_green"}
 			]
@@ -49,6 +51,8 @@ app.themeManager = {
 			utils.error("themeMgr", "There is no theme with index: " + themeIndex);
 			return false;
 		}
+		this.currentTheme = themeIndex;
+		this.currentVersion = versionIndex;
 
 		utils.log("themeMgr", "Activating theme with index: " + themeIndex);
 
@@ -77,12 +81,12 @@ app.themeManager = {
 			document.getElementById('thememanager_css').parentElement.removeChild(document.getElementById('thememanager_css'));
 		}
 
-		if (selectedTheme.css != null) {
+		if (selectedTheme.css != null && selectedTheme.css.length) {
 			utils.log("themeMgr", "Loading CSS: " + selectedTheme.css);
 			document.head.insertAdjacentHTML( "beforeend", "<link id='thememanager_css' rel='stylesheet' media='screen' href='" + selectedTheme.css + "?rand=" + Date.now() + "'>");
 		}
 
-		if (selectedTheme.js != null) {
+		if (selectedTheme.js != null && selectedTheme.css.length) {
 			utils.log("themeMgr", "Loading JS: " + selectedTheme.js);
 			if (document.getElementById('thememanager_js') != undefined){
 				document.getElementById('thememanager_js').parentElement.removeChild(document.getElementById('thememanager_js'));
@@ -115,84 +119,16 @@ app.themeManager = {
 		var out = [];
 		for (var i = 0; i < this.themes.length; i++){
 			var currentTheme = this.themes[i];
-			console.log(currentTheme.versions);
 			for (var j = 0; j < currentTheme.versions.length; j++){
-				out.push({
-					name: currentTheme.name + " - " + currentTheme.versions[j].name,
-					value: i + ":" + j
-				});
+				if (currentTheme.versions[j].name.indexOf("DEVTEST") == -1 || app.testMode){
+					out.push({
+						name: currentTheme.name + " - " + currentTheme.versions[j].name,
+						value: i + ":" + j,
+						selected: i == this.currentTheme && j == this.currentVersion
+					});
+				}
 			}
 		}
 		return out;
-	},
-
-	createModal: function(){
-		themeManagerModal = modal.create('thememanagermodal', "Wybierz motyw", "Wybierz motyw", function(){themeManagerModal.parentElement.removeChild(themeManagerModal);ui.containerBlur(false)});
-
-		row = modal.createRow();
-		row.style.margin.bottom = "-10px";
-		row.style.fontSize = "1.5em";
-		section_title = document.createElement('span');
-		section_title.innerHTML = "Wybierz motyw";
-		row.appendChild(section_title);
-		themeManagerModal.appendChild(row);
-
-		row = modal.createRow();
-
-		input = document.createElement('select');
-		input.type = "";
-		input.checked = true;
-		for (var i = 0; i < this.themes.length; i++){
-			var currentTheme = this.themes[i];
-			console.log(currentTheme.name);
-			console.log(currentTheme.versions);
-			for (var j = 0; j < currentTheme.versions.length; j++){
-				input.options[input.options.length] = new Option(currentTheme.name + " - " + currentTheme.versions[j].name, i + ":" + j);
-			}
-		}
-		
-		input.onchange = function(){
-			var themeIndex = input.value.split(":")[0];
-			var versionIndex = input.value.split(":")[1];
-			app.themeManager.activate(themeIndex, versionIndex);
-		};
-		
-		
-		title = document.createElement("span");
-		title.className = "desc";
-		title.innerHTML = "Wybierz motyw";
-
-		row.appendChild(input);
-		row.appendChild(title);
-		themeManagerModal.appendChild(row);
-		
-		row = modal.createRow();
-
-		prefsBtnSave = document.createElement('button');
-		prefsBtnSave.innerHTML = "Zastosuj";
-		prefsBtnSave.onclick = function(){
-			var themeIndex = input.value.split(":")[0];
-			var versionIndex = input.value.split(":")[1];
-			app.themeManager.activate(themeIndex, versionIndex);
-			console.log("TODO: thememanager modal save");
-			themeManagerModal.parentElement.removeChild(themeManagerModal);
-			ui.containerBlur(false);
-		};
-		prefsBtnSave.className = "btn-primary";
-		// prefsBtnSave.title = "Wyświetl wybrany plan";
-		row.appendChild(prefsBtnSave);
-
-		prefsBtnCancel = document.createElement('button');
-		prefsBtnCancel.innerHTML = "Zamknij";
-		prefsBtnCancel.onclick = function(){themeManagerModal.parentElement.removeChild(themeManagerModal);ui.containerBlur(false)};
-		row.appendChild(prefsBtnCancel);
-		themeManagerModal.appendChild(row);
-
-		ui.containerBlur(true);
-		document.body.appendChild(themeManagerModal);
-		setTimeout(function(){
-			dom.addClass(themeManagerModal, "modal-anim");
-		}, 1)
-		return true;
 	}
 };

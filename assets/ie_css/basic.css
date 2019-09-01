@@ -1,4 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,500,600');
+:root{
+	--site-container-bg: #fbfbfb;
+
+	--link-color: #1a63b1;
+	--link-hover-color: #2e73bd;
+
+	--footer-bg: #4c90dc;
+}
 
 html, body{
 	margin: 0;
@@ -7,18 +14,18 @@ html, body{
 
 *{
 	outline-style: none;
+	box-sizing: border-box;
 }
+
 
 body{
 	min-width: 300px;
 	overflow-x: hidden;
 	font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-	/* font-weight: 500; */
 	font-style: normal;
 	font-display: fallback;
-	background: linear-gradient(180deg,#fbfbfb,#ececec);
-   	/* height: 100vh; */
-  	min-height: 100vh;
+	background: url("../img/stripes-light.png");
+	min-height: 100vh;
 }
 
 .container{
@@ -26,8 +33,10 @@ body{
 	margin-left: auto;
 	margin-right: auto;
 	opacity: 1;
+	transition: opacity 0.3s;
 	padding: 1%;
-	border-radius: 3px; 
+	border-radius: 3px;
+	/* transition: filter 0.2s;    */
 }
 
 .separator{
@@ -58,7 +67,8 @@ body{
 }
 
 .footer{
-    background: #0b60ca;
+    box-sizing: content-box;
+    background: #4c90dc;
     margin: 0;
     color: #ffffff;
     padding: 5px;
@@ -66,7 +76,6 @@ body{
     position: static;
     bottom: 0;
     left: 0;
-    /* width: 100%; */
 	height: 20px;
 	position: relative;
 }
@@ -93,7 +102,7 @@ body{
 	margin-left: auto;
 	margin-right: auto;
 	min-width: 600px;
-	max-width: 900px;
+	max-width: 1000px;
 	margin-top: 1%;
 	z-index: 250;
 	top: -100%;
@@ -112,15 +121,16 @@ body{
 .android-desc{
 	display: block;
 	font-size: 2.3em;
+	/* text-align: center; */
 }
 
 .android-step{
 	display: block;
-	font-size: 1.4em;
+	font-size: 1.3em;
 }
 
 .android-img{
-	height: 123px;
+	height: 90px;
 	display: block;
 }
 
@@ -142,7 +152,7 @@ body{
 	height: 150px;
 	position: absolute;
 	top: 0;
-	left: 170px;
+	left: 160px;
 }
 
 .android-step-div{
@@ -166,4 +176,35 @@ body{
 	background: #0b60ca;
 	cursor: pointer;
 	color: #FAFAFA;
+}
+
+.html-fullscreen{
+	width: 100vw;
+    height: 100vh;
+    background: #000000d6;
+	position: fixed;
+	overflow-y: scroll;
+    top: 0;
+	left: 0;
+	
+	animation: modal-in-out 1s;
+}
+
+.android-step {
+    padding: 10px 0px;
+}
+
+.android-step-div::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: calc(100% - 75px);
+    margin-left: 75px;
+	z-index: -1;
+	background: linear-gradient(180deg, rgba(4,110,221,1) 0%, rgba(23,70,169,1) 100%);
+	opacity: 0.3;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
 }

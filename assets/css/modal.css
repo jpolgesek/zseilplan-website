@@ -12,8 +12,8 @@
 	transition: all 0.5s;
 	transition-timing-function: ease-in-out;*/
 	
-	transform: scale(0.7) translate(-50%, -50%);
-	opacity: 0;
+	/* transform: scale(0.7) translate(-50%, -50%); */
+	/* opacity: 0; */
 	transition: all 0.3s;
 	position: fixed;
 }

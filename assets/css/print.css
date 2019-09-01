@@ -6,6 +6,20 @@
 		margin: 5mm 5mm 5mm 5mm; /* change the margins as you want them to be. */
 	}
 
+	body, .maintable, .navbar, tr, td, th, 
+	.clickable, .footer, .maintable .currentTimeFull, 
+	.dark .maintable .currentTimeFull{
+		background: none !important;
+	}
+
+	.footer {
+		color: rgb(46, 46, 46) !important;
+	}
+
+	.maintable tr:nth-child(even) {
+		background-color: #f2f2f2;
+	}
+
 	.bar, #storageControl, #networkStatus{
 		display: none !important;
 	}
@@ -25,12 +39,17 @@
 		padding: 1.5px;
 	}
 
+	.maintable tr.header > th{
+		border: 1px solid #565656;
+	}
+
 	td, th, tr, body, .item, .clickable, h1, #status, .copyright{
 		color: #000000 !important;
 	}
 	
 	.clickable{
 		font-style: italic;
+		border: none !important;
 	}
 
 	h1{
@@ -54,8 +73,21 @@
 		margin-bottom: 0;
 	}
 
+	.navbar__title,
+	.navbar-info{
+		white-space: nowrap;
+	}
+
+	.navbar__icon{
+		display: none;
+	}
+
+	.border-top-blue{
+		border: none !important;
+	}
+
 	.print-logo{
-		margin-left: 10px;
+		margin: 0 10px;
 	}
 
 	.print-logo{
@@ -63,7 +95,15 @@
 		font-size: 1.5em;
 	}
 
-	.navbar-title{
+	.navbar__title{
 		margin-left: 5px;
+	}
+
+	.shadow {
+		box-shadow: none;
+	}
+
+	.navbar-copyright{
+		width: 100%;
 	}
 }

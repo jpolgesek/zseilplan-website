@@ -16,34 +16,6 @@
 	.wideBtn {
 		width: calc(100% - 10px) !important;
 	}
-	.modal{
-		width: 100%;
-		height: 100%;
-		display: block;
-		position: fixed;
-		top: 0;
-		left: 0;
-		margin: 0;
-		box-sizing: border-box;
-		padding: 10px;
-		-webkit-transform: none;
-	   	transform: none;
-		/* font-size: 14px; */
-	}
-	.modal .title{
-		padding-left: 15px;
-	}
-	.modal .row {
-		margin: 5px;
-	 	margin-top: 15px;
-	}
-	.modal .desc {
-		margin-left: 8px;
-	}
-	.modal .mdesc {
-		margin-top: 40px;
-		margin-left: 2px;
-	}
 	button:hover .text {
 		width: inherit;
 	}
@@ -61,20 +33,15 @@
 	.mobile-only-flex	{ display: flex; }
 	.desktop-only		{ display: none !important;}
 
-	.navbar-buttons {
-		top: 0;
-		position: absolute;
-		right: 0;
+	.navbar__title {
+		font-size: 1.4em;
 	}
+	
 	.navbar button {
 		background: none;
 		height: 52px;
 		padding: 0;
 	  	margin-left: 1px;
-	}
-	.navbar button .icon {
-		background: rgb(239, 239, 239);
-		color: #0a61cc;
 	}
 	.navbar button:hover .text span {
 		opacity: 0;

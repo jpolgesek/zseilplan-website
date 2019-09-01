@@ -17,6 +17,7 @@ var themeloader = {
 			
 
 		modal.create = function(id ,title, desc, closeAction){
+			//TODO: Might be broken.
 			console.log("OVERRIDE!");
 			if (document.getElementById(id) != undefined){
 				modalContainer = document.getElementById(id);
@@ -48,10 +49,10 @@ var themeloader = {
 
 		}	
 
-		app.modal.create = modal.create;
+		app.ui.modal.create = modal.create;
 
 		//app.themeLoaded = true;
-		ui.setDarkMode(false); //sorry :/
+		app.ui.setDarkMode(false); //sorry :/
 		//this.importCSS();
 		this.prepareWindow(undefined, undefined, "Navbar", document.querySelector("#navbar-container"));
 		window_timetable = this.prepareWindow("calendar-5.png", undefined, "Plan lekcji", table);
@@ -82,7 +83,7 @@ var themeloader = {
 		//this.prepareWindow("msg_information-2.png", undefined, "Dni Technika", document.querySelector("#dnitechnika_ad"));
 		// this.prepareWindow("template_empty-3.png", undefined, "Porównanie planów", document.querySelector("#diff-help"));
 
-		document.querySelector("#footer-text").innerHTML = "<i>Microsoft® Windows® XP Professional 5.1 Build 2600</i>";
+		document.querySelector("#footer__build").innerHTML = "<i>Microsoft® Windows® XP Professional 5.1 Build 2600</i>";
 		
 		document.querySelector("#remote_info").style.display = '';
 		document.querySelector("#remote_info").innerHTML = "<b>Tryb retro sponsorowany przez 18 urodziny Windowsa XP. Świętujmy je razem z salą 116.</b>";
@@ -135,10 +136,10 @@ var themeloader = {
 	closeClick: function(t){
 		console.log(t);
 
-		try { ui.showPreferences(0); } catch (e) {}
+		try { app.ui.showPreferences(0); } catch (e) {}
 		try { changelogDiv.parentElement.removeChild(changelogDiv); } catch (e) {}
 		try { datasourcepickerDiv.parentElement.removeChild(datasourcepickerDiv); } catch (e) {}
-		try { ui.containerBlur(false); } catch (e) {}
+		try { app.ui.containerBlur(false); } catch (e) {}
 
 		return;
 	}

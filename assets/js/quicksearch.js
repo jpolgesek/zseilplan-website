@@ -6,14 +6,14 @@ var quicksearch = {
 		document.getElementById('suggestions').innerHTML = "";
 	},
 	show: function(){
-		ui.containerBlur(true);
+		app.ui.containerBlur(true);
 		document.getElementById("quicksearch").style.display = "flex";
 		document.getElementById("search").value = "";
 		document.getElementById("search").focus();
 		app.ae('quicksearch', 'show', "show");
 	},
 	hide: function(){
-		ui.containerBlur(false);
+		app.ui.containerBlur(false);
 		document.getElementById("quicksearch").style.display = "none";
 		document.getElementById("search").value = "";
 		// document.getElementById("preferences").style.display = "none";
@@ -23,18 +23,16 @@ var quicksearch = {
 		if (e.keyCode == 27) 				quicksearch.hide(); //Escape
 	},
 	parse: function(code){
-		app.ae('quicksearch', 'code', 'code='+term);
+		app.ae('quicksearch', 'code', 'code='+code);
 		raw_code = code;
 		code = code.toLowerCase().split(":");
 		switch(code[0]){
 			case "test":
 				if (code[1] == "1"){
 					alert("Włączam funkcje testowe");
-					localStorage.setItem("tests_enabled", "true");
 					location.reload();
 				}else{
 					alert("Wyłączam funkcje testowe");
-					localStorage.setItem("tests_enabled", "false");
 					location.reload();
 				}
 				break;
@@ -50,9 +48,7 @@ var quicksearch = {
 				break;
 				
 			case "95":
-				localStorage.removeItem("disable_116_birthday");
-				localStorage.removeItem("disable_116_birthday_once");
-				themeloader.prepareHTML();
+				// themeloader.prepareHTML();
 				break;
 				
 			case "@":
@@ -65,9 +61,9 @@ var quicksearch = {
 			var raw_term = document.getElementById('search').value;
 			term = raw_term.toUpperCase();
 			app.ae('quicksearch', 'search', 'search='+term);
-			if 		(term[0] == "N") jumpTo(0, term.substr(1,2))
-			else if (term[0] == "K") jumpTo(2, term.substr(1))
-			else if (term[0] == "S") jumpTo(1, term.substr(1))
+			if 		(term[0] == "N") app.jumpTo(0, term.substr(1,2))
+			else if (term[0] == "K") app.jumpTo(2, term.substr(1))
+			else if (term[0] == "S") app.jumpTo(1, term.substr(1))
 			else if (term[0] == "!") quicksearch.parse(raw_term.substr(1))
 			quicksearch.hide();
 		}

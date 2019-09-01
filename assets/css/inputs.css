@@ -6,7 +6,7 @@
 	display: inline-block;
 	width: 60px;
 	height: 34px;
-	/* margin: 5px; */
+    margin-right: 8px;
 }
   
 /* Hide default HTML checkbox */
@@ -62,7 +62,9 @@ input:checked + .slider:before {
 
 
 
-input[type="text"]{
+textarea,
+input[type="text"],
+input[type="email"]{
 	padding: 5px;
     font-size: 1em;
     border-radius: 5px;

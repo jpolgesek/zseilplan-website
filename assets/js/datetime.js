@@ -95,6 +95,26 @@ var columns = {
 	} 
 }
 
+app.datetime = {
+	getLessonHourByTime: function(time_string){
+		out = -1;
+		timeSteps.forEach((timestep, i) => {			
+			if ((Date.parse('01/01/1970 '+time_string+':00') < Date.parse('01/01/1970 '+timestep+':00')) && out == -1){
+				if (step%2) {
+					out = i;
+				}
+			}
+		});
+		return out;
+	},
+
+	getCurrentLessonHour: function(){
+		d = new Date();
+		c_time =  d.getHours() + ":" + d.getMinutes();
+		return app.datetime.getLessonHourByTime(c_time);
+	} 
+}
+
 var myTime = {
 	time: d.getHours() + ":" + d.getMinutes(),
 	table: document.getElementById("maintable"),

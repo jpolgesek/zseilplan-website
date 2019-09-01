@@ -2,98 +2,107 @@
 <html lang="pl">
 	<head>
 		<meta charset="UTF-8">
-		<!--[if !(IE)]>
-		<meta HTTP-EQUIV="REFRESH" content="0; url=index.html">
-		<![endif]-->
-		<script>
-		ua = navigator.userAgent;
-		if (!(ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1)){
-			document.location.href = "index.html";
-		}
-		</script>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<meta name="description" content="Ładny i wygodny plan ZSEiL.">
-		<title>Super Clever Plan - IE</title>
+		<meta name="theme-color" content="#046edd">
+		<meta name="description" content="Przeglądaj plan ZSEiL szybko i wygodnie. Do tego aplikacja mobilna, powiadomienia o zmianach planu, wyszukiwanie wolnych sal i wiele innych. Sprawdź teraz!">
+		<title>Super Clever Plan</title>
 		
 		<!-- %compile_css_start%-->
 		<link rel="stylesheet" href="assets/ie_css/style.css?ver=%build%">
 		<!-- %compile_css_end%-->
 		
-		<link rel="manifest" href="/manifest.json">
 		<link rel="shortcut icon" type="image/png" href="assets/img/launcher-icon-256.png"/>
 		
-		<!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113628218-1"></script>
+		<!--%DEPLOYTOOL_ENABLE_START%
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113628218-1"></script>
 		<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
 		gtag('config', 'UA-113628218-1');
-		</script>-->
+		</script>
+		%DEPLOYTOOL_ENABLE_END%-->
+
+		<!--[if lte IE 8]> 
+		<script>
+		document.createElement('header'); 
+		document.createElement('nav'); 
+		document.createElement('article');
+		document.createElement('section'); 
+		document.createElement('aside'); 
+		document.createElement('footer');
+		document.createElement('label');
+		</script>
+		<style> 
+			header, nav, article, section, aside, footer, label{ display:block;} 
+			footer, nav{overflow: hidden;}
+			label{font-weight: 600; font-size: 1.4em;}
+			.shadow{border: 1px solid #bbb;}
+			.tableTopInfo{height: 120px;}
+			.navbar-info, .navbar__title{line-height: 46px;}
+		</style>
+		<![endif]-->
+
 	</head>
 	<body>
-		<div class="loader">
-			<h1 id='loader-title'>Ładuję Super Clever Plan</h1>
-			<div id='loader-status'>Uruchamianie aplikacji</div>
-		</div>
-
-		<div id='container' class='container opacity-0'>
+		<div id='container' class='container' style="width: 90%;">
+			<!-- TODO: create me dynamically-->
 			<div class="navbar-container" id="navbar-container">
 				<nav class="navbar shadow">
 					<span class="print-only print-logo">✌</span>
-					<h1 class="navbar-title">Super Clever Plan</h1>
-					<span class="copyright navbar-info" id="navbar-info"></span>
+					<h1 class="navbar__title">Super Clever Plan</h1>
+					<span class="copyright navbar-info" id="nav__datasrc"></span>
 					<div class="navbar-copyright print-only">
 						<div>dev.polgesek.pl/zseilplan</div>
 						<div>&copy; Jakub Półgęsek 2019</div>
-					</div>
+					</div> <!-- TODO: create me dynamically -->
 					
-					<div class="navbar-buttons">
-						<button class='print-hide' onclick="myStorage.generatePreferencesUI();ui.showPreferences(1)" id="navbar-btn-settings">
-							<div class='icon'><i class="icon-cog"></i></div>
-							<div class='text'>Ustawienia</div>
-						</button>
-						<button class='print-hide smallscreen-hide' onclick="ui.print()" id="navbar-btn-print">
+					<div class="navbar-buttons" id="navbar-buttons">
+						<button class='print-hide smallscreen-hide' onclick="app.ui.print()" id="navbar-btn-print">
 							<div class='icon'><i class="icon-print"></i></div>
 							<div class='text'>Drukuj</div>
 						</button>
 					</div>
 				</nav>
-
-				<div class="navbar-notification" id="notification-bar">
-					<span class="navbar-title" id="notification-text"></span>
-				</div>
 			</div>
 
 			<!-- TODO: create me dynamically -->	
 			<div id='data_info' class="shadow box-text print-hide" style="display: none;"></div>
 
-			<div class="tableTopInfo">
+			<div class="tableTopInfo shadow">
 				<!-- TODO: create me dynamically -->	
-				<div id='status' class="shadow box-text print-hide">Ładowanie skryptu...</div>
+				<div id='status' class="box-text print-hide">Ładowanie skryptu...</div>
 				
 				<!-- TODO: create me dynamically -->	
 				<!-- TODO: fix my css! -->
 				<div class='bar print-hide'>
-					<label style="width: 25%; margin: 3px;" class="unitsContainer">
-						<select style="width: 100%;" id='units'></select>
-					</label>
+					<div class="unitsContainer">
+						<label for="units">Klasa</label>
+						<select id='units'></select>
+					</div>
 
-					<label style="width: 44%; margin: 3px;" class="teachersContainer">
-						<select style="width: 100%;" id='teachers'></select>
-					</label>
+					<div class="teachersContainer">
+						<label for="teachers">Nauczyciel</label>
+						<select id='teachers'></select>
+					</div>
 
-					<label style="width: 25%; margin: 3px;" class="roomsContainer">
-						<select style="width: 100%;" id='rooms'></select>
-					</label>
+					<div class="roomsContainer">
+						<label for="rooms">Sala</label>
+						<select id='rooms'></select>
+					</div>
 				</div>
 			</div>
-
+			
 			<!-- TODO: create me dynamically -->	
-			<div id='remote_info' class="shadow box-text print-hide" style="display: none;"></div>
+			<div id='remote_info' style="width: 100%; padding: 10px; font-size: 1em; font-weight: 600; line-height: 1.6; text-align: center; background: #ac0e1b; color: #fafafa;" class="shadow box-text red print-hide">
+				Korzystasz z trybu kompatybilności wstecznej, jako że twoja przeglądarka nie wspiera pełnej wersji planu.<br>
+				Większość funkcji będzie niedostępna. Zaktualizuj przeglądarkę.<br>
+				<small><a style="color: #fafafa;" href="index.html">Spróbuj załadować pełną wersję</a></small>
+			</div>
 			
 			<!-- TODO: create me dynamically-->	
-			<div class='bar print-hide mobile-only-flex'>
+			<div class='bar print-hide mobile-only-flex flex-center' style="padding: 0 !important;">
 				<nav class="tabs">
 					<a href="#" onclick='columns.setActive(-1)' class="active" id='btn_-1'>
 						<span class="mobile-only">All</span>
@@ -121,12 +130,10 @@
 			</div>
 
 			<!-- TODO: create me dynamically-->
-			<div id='networkStatus' style="display: none;"></div>
+			<div id='networkStatus' style='display: none;'></div>
 			
 			<!-- TODO: create me dynamically-->	
 			<table id='maintable' class='maintable shadow'><tr><td><div class="info desktop-only print-hide">
-					<h2 style="font-size: 1.4em; text-decoration: underline; color: #dd0011;">Używasz przestarzałej przeglądarki. Rozważ jej zmianę.</h2>
-				
 					<h2>Czym jest Super Clever Plan</h2>
 					
 					<p>Super Clever Plan to aplikacja umożliwiająca przeglądanie planu ZSEiL (zseil.edu.pl) w cywilizowany sposób.</p>
@@ -140,28 +147,43 @@
 					<h3>Drukowanie planu</h3>
 					<p>Wyświetl plan który chcesz wydrukować a następnie kliknij <i class="icon-print"></i> w prawym górnym rogu.</p>
 	
+					<h3>Instalowanie Super Clever Planu na Androidzie</h3>
+					<p>Kliknij <i class="icon-android"></i> w prawym górnym rogu, a następnie podążaj za wyświetlonymi instrukcjami.</p>
+	
 					<h3>Dostosowywanie Super Clever Planu</h3>
 					<p>Kliknij <i class="icon-cog"></i> w prawym górnym rogu, a następnie ustaw opcje zgodnie ze swoimi preferencjami.</p>
 				</div>
 			</td></tr></table>
-
-			<div id="footer" class="footer">
-				<div class="left" id="button_comment"></div>
-				<div class="center-h" id="footer-text">Super Clever Build internal build</div>
-				<div class="right">&copy; 2019 Jakub Półgęsek</div>
+					
+			<div id="footer" class="footer shadow">
+				<div class="left" id="footer__datasrc"></div>
+				<div class="center-h" id="footer__build">Super Clever Build internal build</div>
+				<div class="right" id="footer__copyright">&copy; 2019 Jakub Półgęsek</div>
 			</div>
+
+			
 
 		</div>
 
 		<!-- %compile_js_start%-->
-		<script src="assets/ie_js/utils.js?ver=%build%"></script>
+		<script>
+			var app = {};
+			if (!window.console){
+				window.console = {
+					log: function(x){return;},
+					error: function(x){return;},
+					warn: function(x){return;},
+					clear: function(){return;}
+				}
+			}
+		</script>
 		<script src="assets/ie_js/dom.js?ver=%build%"></script>
-		<script src="assets/ie_js/modal.js?ver=%build%"></script>
-		<script src="assets/ie_js/overrides.js?ver=%build%"></script>
-		<script src="assets/ie_js/ui.js?ver=%build%"></script>
-		<script src="assets/ie_js/datetime.js?ver=%build%"></script>
-		<script src="assets/ie_js/storage.js?ver=%build%"></script>
+		<script src="assets/ie_js/app.config.js?ver=%build%"></script>
 		<script src="assets/ie_js/app.js?ver=%build%"></script>
+		<script src="assets/ie_js/app.ui.js?ver=%build%"></script>
+		<script src="assets/ie_js/utils.js?ver=%build%"></script>
+		<script src="assets/ie_js/overrides.js?ver=%build%"></script>
+		<script src="assets/ie_js/datetime.js?ver=%build%"></script>
 		<!-- %compile_js_end%-->
 	</body>
 </html>

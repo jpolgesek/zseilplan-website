@@ -26,70 +26,21 @@ var diff = {
 		});
 	},
 
-	createModal: function(){
-		diffDiv = modal.create('preferences', "Diff modal", "Tutaj możesz porównać aktualny plan z dowolnym starym", function(){ui.showPreferences(0)});
-
-		prefsList = [
-			//Source, Change, Name
-			["select", ui.breakLineInItem, function(x){ui.setLineBreak(x)}, "Zawijaj wiersze po nazwie przedmiotu", "ui.setLineBreak"],
-			["checkbox", ui.darkMode, function(x){ui.setDarkMode(x)}, "Tryb nocny", "ui.setDarkMode"],
-			//["checkbox", true, function(x){return false;}, "Ładuj zastępstwa"],
-			["checkbox", notifications_enabled, function(x){toggleNotifications(x);}, "Odbieraj powiadomienia", "toggleNotifications"],
-			["checkbox", overrides_disabled, function(x){return;}, "Tymczasowo ukryj zastępstwa", "toggleOverrides"],
-			["timetable", undefined, undefined, undefined, undefined]
-		];
-		
-		
-		for(var p_i=0; p_i<prefsList.length ; p_i++){
-			element = prefsList[p_i];
-			row = document.createElement('div');
-			row.className = "row";
-
-			if(element[0] == "checkbox"){
-				label = document.createElement('label');
-				label.className = "switch"
-	
-				input = document.createElement('input');
-				input.type = "checkbox";
-				input.checked = element[1];
-				
-				/* This is very bad. */
-				input.setAttribute("onclick",""+element[4]+"(this.checked)");
-				span = document.createElement('span');
-				span.className = "slider round";
-	
-				title = document.createElement("span");
-				title.className = "desc";
-				title.innerHTML = element[3];
-	
-				label.appendChild(input);
-				label.appendChild(span);
-				row.appendChild(label);
-				row.appendChild(title);
-			}
-
-			diffDiv.appendChild(row);
+	getPreviousTimetableVersions: function(){
+		var out = [];
+		for (i in diff.index.timetable_archives){
+			item = diff.index.timetable_archives[i];
+			if (!item.export_datetime){ item.export_datetime = item.date;}
+			
+			out.push({
+				name: item.export_datetime +  ' ('+item.hash+')',
+				value: 'data/' + item.filename,
+				selected: data.hash.substring(0, 8) == item.hash
+			});
 		}
-		
-		row = document.createElement('div');
-		row.className = "row";
-
-		prefsBtnSave = document.createElement('button');
-		prefsBtnSave.innerHTML = "Zapisz zmiany";
-		prefsBtnSave.onclick = function(){myStorage.save();ui.showPreferences(0);};
-		prefsBtnSave.className = "btn-primary";
-		row.appendChild(prefsBtnSave);
-
-		prefsBtnCancel = document.createElement('button');
-		prefsBtnCancel.innerHTML = "Anuluj";
-		prefsBtnCancel.onclick = function(){ui.showPreferences(0)};
-		row.appendChild(prefsBtnCancel);
-
-		diffDiv.appendChild(row);
-		
-		document.body.appendChild(diffDiv);
+		return out;
 	},
-
+	
 	updateIndexUI: function(){
 		for(i = 0; i < diff.index.timetable_archives.length; i++){
 			item = diff.index.timetable_archives[i];
@@ -139,7 +90,7 @@ var diff = {
 		}
 
 		/* Prepare table UI */
-		ui.jumpButtonsFloatRight = true;
+		app.ui.jumpButtonsFloatRight = true;
 		old_overrides_disabled = overrides_disabled;
 		overrides_disabled = true;
 		oldActiveColumn = columns.activeColumn;
@@ -163,7 +114,7 @@ var diff = {
 
 
 		for (day=1; day<6; day++){
-			for (hour=1; hour<maxHours; hour++){
+			for (hour=1; hour<(maxHours + 1); hour++){
 				try {
 					itemsContainer = table.rows[hour].cells[day];
 					cell = itemsContainer;
@@ -177,7 +128,7 @@ var diff = {
 							oldItem = this.data.teachers[select_teachers.value][day][hour];
 							if (oldItem != undefined){
 								oldItem.diff = "removed";
-								itemsContainer.append(ui.createItem(oldItem));
+								itemsContainer.append(app.ui.createItem(oldItem));
 							}
 						} else if (this.selectedType == "room"){
 							for (unit in this.data.timetable[day][hour]){
@@ -186,7 +137,7 @@ var diff = {
 									oldItem = oldItem[0];
 									oldItem.k = unit;
 									oldItem.diff = "removed";
-									itemsContainer.appendChild(ui.createItem(oldItem));
+									itemsContainer.appendChild(app.ui.createItem(oldItem));
 								}
 							}
 						} else if (this.selectedType == "unit"){
@@ -195,7 +146,7 @@ var diff = {
 								if (classesArr != undefined){
 									for (cls in classesArr){
 										classesArr[cls].diff = "removed";
-										itemsContainer.appendChild(ui.createItem(classesArr[cls]));
+										itemsContainer.appendChild(app.ui.createItem(classesArr[cls]));
 									}
 								}
 							} catch (e) {}
@@ -211,7 +162,7 @@ var diff = {
 
 							if (oldItem == undefined){
 								currentItem.diff = "added";
-								currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+								currentItemElement.parentNode.replaceChild(cell.appendChild(app.ui.createItem(currentItem)), currentItemElement);
 							} else {
 								if (oldItem.p != currentItem.p){
 									currentItem.diffModifiedP = "Był " + oldItem.p + "; Jest " + currentItem.p;
@@ -225,7 +176,7 @@ var diff = {
 									currentItem.diffModified1 = "Była " + oldItem.k + "; Jest " + currentItem.k;
 									currentItem.diff = "modified";
 								}
-								currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+								currentItemElement.parentNode.replaceChild(cell.appendChild(app.ui.createItem(currentItem)), currentItemElement);
 							}
 						} else if (this.selectedType == "room"){
 							wasEmpty = true;
@@ -251,12 +202,12 @@ var diff = {
 									currentItem.diff = "modified";
 								}
 
-								currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+								currentItemElement.parentNode.replaceChild(cell.appendChild(app.ui.createItem(currentItem)), currentItemElement);
 							}
 
 							if (wasEmpty){
 								currentItem.diff = "added";
-								currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+								currentItemElement.parentNode.replaceChild(cell.appendChild(app.ui.createItem(currentItem)), currentItemElement);
 							}
 						} else if (this.selectedType == "unit"){
 							//todo: tortury
@@ -308,7 +259,7 @@ var diff = {
 									}
 
 									if (currentItem.diff == "modified"){
-										currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+										currentItemElement.parentNode.replaceChild(cell.appendChild(app.ui.createItem(currentItem)), currentItemElement);
 									}else{
 										classesArr[cls].originalCLA = originalCLA;
 										notFound.push(classesArr[cls]);
@@ -327,9 +278,9 @@ var diff = {
 											try {
 												/* TODO: create pref item to control whether to display this as two separate entries or one */
 												currentItem.diff = "added";	
-												currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+												currentItemElement.parentNode.replaceChild(cell.appendChild(app.ui.createItem(currentItem)), currentItemElement);
 												oldItem.diff = "removed";
-												itemsContainer.appendChild(ui.createItem(oldItem));
+												itemsContainer.appendChild(app.ui.createItem(oldItem));
 											} catch (e) {console.error(e);}
 										}else{
 											for(q = 0; q < il; q++ ){
@@ -342,7 +293,7 @@ var diff = {
 												}else if ((oldItem.s == i_currentItem.s) && (oldItem.n == i_currentItem.n) && (oldItem.p == i_currentItem.p)){
 												}else{
 													notFound[nf_i].diff = "removed";
-													itemsContainer.appendChild(ui.createItem(notFound[nf_i]));
+													itemsContainer.appendChild(app.ui.createItem(notFound[nf_i]));
 												}
 											}
 
@@ -351,7 +302,7 @@ var diff = {
 								}
 							} else {
 								currentItem.diff = "added";
-								currentItemElement.parentNode.replaceChild(cell.appendChild(ui.createItem(currentItem)), currentItemElement);
+								currentItemElement.parentNode.replaceChild(cell.appendChild(app.ui.createItem(currentItem)), currentItemElement);
 							}
 						}
 					}

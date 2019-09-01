@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'zseilplan-icon';
-  src: url('../font/zseilplan-icon.eot?20998484');
-  src: url('../font/zseilplan-icon.eot?20998484#iefix') format('embedded-opentype'),
-       url('../font/zseilplan-icon.woff2?20998484') format('woff2'),
-       url('../font/zseilplan-icon.woff?20998484') format('woff'),
-       url('../font/zseilplan-icon.ttf?20998484') format('truetype'),
-       url('../font/zseilplan-icon.svg?20998484#zseilplan-icon') format('svg');
+  src: url('../font/zseilplan-icon.eot?92084438');
+  src: url('../font/zseilplan-icon.eot?92084438#iefix') format('embedded-opentype'),
+       url('../font/zseilplan-icon.woff2?92084438') format('woff2'),
+       url('../font/zseilplan-icon.woff?92084438') format('woff'),
+       url('../font/zseilplan-icon.ttf?92084438') format('truetype'),
+       url('../font/zseilplan-icon.svg?92084438#zseilplan-icon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'zseilplan-icon';
-    src: url('../font/zseilplan-icon.svg?20998484#zseilplan-icon') format('svg');
+    src: url('../font/zseilplan-icon.svg?92084438#zseilplan-icon') format('svg');
   }
 }
 */
@@ -57,9 +57,17 @@
  
 .icon-cog:before { content: '\e800'; } /* '' */
 .icon-print:before { content: '\e801'; } /* '' */
-.icon-calendar:before { content: '\e802'; } /* '' */
-.icon-cancel:before { content: '\e803'; } /* '' */
-.icon-ok:before { content: '\e804'; } /* '' */
+.icon-toolbox:before { content: '\e802'; } /* '' */
+.icon-search-location:before { content: '\e803'; } /* '' */
+.icon-dice:before { content: '\e804'; } /* '' */
+.icon-history:before { content: '\e805'; } /* '' */
+.icon-bars:before { content: '\e806'; } /* '' */
+.icon-pencil-ruler:before { content: '\e807'; } /* '' */
+.icon-database:before { content: '\e808'; } /* '' */
+.icon-home:before { content: '\e809'; } /* '' */
+.icon-flask:before { content: '\e80a'; } /* '' */
+.icon-save:before { content: '\e80b'; } /* '' */
+.icon-sad-tear:before { content: '\e80c'; } /* '' */
+.icon-times:before { content: '\e80d'; } /* '' */
+.icon-user-ninja:before { content: '\e80e'; } /* '' */
 .icon-android:before { content: '\f17b'; } /* '' */
-.icon-bug:before { content: '\f188'; } /* '' */
-.icon-history:before { content: '\f1da'; } /* '' */

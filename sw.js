@@ -8,18 +8,29 @@ var SW_CHECKSUM = "%compiler_checksums%";
 var ENABLE_CACHE = false;
 
 var CACHE_NAME = 'dev-zseilplan-'+SW_CHECKSUM;
-//var CACHE_NAME = 'my-site-cache-A';
+
 var urlsToCache = [
+	'./',
+	'./manifest.json',
 	'./index.html',
 	'./index.html?launcher=true',
-	'./data.php?ver=localstorage',
+	
 	'./assets/js/c_app.js?ver=%build%',
 	'./assets/css/c_style.css?ver=%build%',
-	'./',
+	'./assets/img/launcher-icon-256.png',
+	'./assets/img/icon_square.png',
+	'./assets/font/zseilplan-icon.eot?92084438',
+	'./assets/font/zseilplan-icon.svg?92084438',
+	'./assets/font/zseilplan-icon.ttf?92084438',
+	'./assets/font/zseilplan-icon.woff?92084438',
+	'./assets/font/zseilplan-icon.woff2?92084438',
+
+	'./data.php?ver=localstorage'
 ];
 
-if (ENABLE_CACHE){
+if (ENABLE_CACHE && false){
 	console.log("cache is enabled");
+	
 	self.addEventListener('install', function(event) {
 		// Perform install steps
 		event.waitUntil(
@@ -34,13 +45,44 @@ if (ENABLE_CACHE){
 
 	
 	self.addEventListener('fetch', function(event) {
-		// console.log("Fetch event");
-		// console.log(event);
+		console.log("Fetch event: ");
+		console.log(event);
+
 		event.respondWith(
-		  fetch(event.request).catch(function() {
-			return caches.match(event.request);
-		  })
+			fetch(event.request)
+			.catch(function(e) {
+				if (event.request.method == "POST"){
+					return;
+				}
+				console.log("event.respondWith E:");
+				console.log(e);
+				console.log("ER: ");
+				console.log(event.request);
+				console.log(event.request.url);
+				new_url = "./" + event.request.url.split(".pl/")[1];
+				new_url = new_url.replace("klasa/", "");
+				new_url = new_url.replace("nauczyciel/", "");
+				new_url = new_url.replace("sala/", "");
+				console.log(new_url);
+				console.log("CM:");
+				return caches.match(new_url).then(resp => {
+					console.log("resp");
+					console.log(resp);
+					if (typeof resp == "undefined"){
+						console.log("Eundefined!!!!!!");
+						return caches.match('./index.html');
+					}
+					return resp;
+				}).catch(e => {
+					console.log("E!!!!!!!");
+					console.log(e);
+					return caches.match('./index.html');
+				})
+				//console.log(cm);
+				//return cm;
+			})
 		);
+
 	});
 	
 	/*
@@ -76,13 +118,14 @@ if (ENABLE_CACHE){
 				// Return true if you want to remove this cache,
 				// but remember that caches are shared across
 				// the whole origin
-				return true;
+				return (cacheName != CACHE_NAME);
 			  }).map(function(cacheName) {
 				return caches.delete(cacheName);
 			  })
 			);
 		  })
 		);
+
 	  });
 	/*self.addEventListener('fetch', function(event) {
 		console.log("Cache used, network status: "+navigator.onLine);

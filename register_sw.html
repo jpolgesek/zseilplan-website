@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body>
+	<script>
+		document.body.onload = function(){
+			if (!('serviceWorker' in navigator)) return;
+			navigator.serviceWorker.register('sw.js').then(function(registration) {
+				console.log("app - ServiceWorker registration successful with scope: " + registration.scope);
+			}, function(err) {
+				console.log("app - ServiceWorker registration failed: " + err);
+			});
+		}
+	</script>
+</body>
+</html>

@@ -1,4 +1,51 @@
 var utils = {
+	fetchJson: function(url, callback, failCallback){
+		var compat = false;
+		try {
+			var a = "Found fetch" + fetch.toString().substr(0,0);
+		} catch (error) {
+			compat = true;
+		}
+			
+		if (compat){
+			if (window.XMLHttpRequest){
+				var fetchDataCompatXHR = new XMLHttpRequest();
+			}else{
+				var fetchDataCompatXHR = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			fetchDataCompatXHR.onreadystatechange = function() {
+				if (fetchDataCompatXHR.readyState == 4 && fetchDataCompatXHR.status == 200) {
+					if (window.JSON){
+						jdata = JSON.parse(fetchDataCompatXHR.responseText);
+					}else{
+						// So sorry for this...
+						// Thank you IE...
+						jdata = eval("window.jdata = " + fetchDataCompatXHR.responseText + ";");
+						try {
+							document.getElementById("remote_info").innerHTML += "<hr><b>Używasz wybitnie starej przeglądarki (tak minimum 10-letniej obstawiam).<br> Z jednej strony gratuluję, bo uwielbiam sprzęt i soft retro, ale jednak jeśli używasz tego codziennie to trochę współczuję.</b>";
+						} catch (e) {}
+					}
+					callback(jdata);
+				} else if (fetchDataCompatXHR.readyState == 4 && fetchDataCompatXHR.status != 200){
+					failCallback(fetchDataCompatXHR);
+				}
+			};
+			fetchDataCompatXHR.open("GET", url, true);
+			fetchDataCompatXHR.send();
+			return true;
+		};
+		
+		fetch(url).then(function(response) {
+			return response.json();
+		}).then(function(jdata) {
+			callback(jdata);
+		})["catch"](function(error){
+			failCallback(error);
+		});
+
+		return true;
+	},
+	
 	log: function(caller, text){
 		caller = caller.rpad(" ",10);
 		text = caller + "\t" + text;
@@ -48,95 +95,36 @@ var utils = {
 		console.table(content);
 	},
 	androidDemo: function(){
-		
-		instruction = "<div class='android-close-btn' onclick='location.reload()'><i class='icon-cancel'></i> Wróć do planu</div>";
-
-		instruction += "<div id='android_instruction' class='android-instruction'>";
-		
-		instruction += "<div class='android-desc'>Jak zainstalować Super Clever Plan na Androidzie</div>";
-
-		instruction += "<div class='android-step-div'>";
-		instruction += "<div class='android-step-no'>1</div>";
-		instruction += "<div class='android-step-desc'>"; 
-		instruction += "<div class='android-step'>Otwórz Super Clever Plan w przeglądarce (najlepiej Chrome)</div>";
-		instruction += "<img class='android-img' src='assets/img/android_step_1.png'>";
-		instruction += "</div>";
-		instruction += "</div>";
-
-		instruction += "<div class='android-step-div'>";
-		instruction += "<div class='android-step-no'>2</div>";
-		instruction += "<div class='android-step-desc'>"; 
-		instruction += "<div class='android-step'>Otwórz menu</div>";
-		instruction += "<img class='android-img' src='assets/img/android_step_2.png'>";
-		instruction += "</div>";
-		instruction += "</div>";
-
-		instruction += "<div class='android-step-div'>";
-		instruction += "<div class='android-step-no'>3</div>";
-		instruction += "<div class='android-step-desc'>"; 
-		instruction += "<div class='android-step'>Wybierz 'dodaj do ekranu głównego'</div>";
-		instruction += "<img class='android-img' src='assets/img/android_step_3.png'>";
-		instruction += "</div>";
-		instruction += "</div>";
-
-		instruction += "<div class='android-step-div'>";
-		instruction += "<div class='android-step-no'>4</div>";
-		instruction += "<div class='android-step-desc'>"; 
-		instruction += "<div class='android-step'>Kliknij 'dodaj'</div>";
-		instruction += "<img class='android-img' src='assets/img/android_step_4.png'>";
-		instruction += "</div>";
-		instruction += "</div>";
-
-		instruction += "</div>";
-
-		document.body.innerHTML = instruction;
-
-		setTimeout(function(){
-			dom.addClass(document.getElementById("android_instruction"), "anim");
-		}, 1)
-	},
-	getFreeRooms: function(day, hour){
-		this.log("getFreeRooms", "Start: wolne sale");
-		var available_rooms = []
-		var dtt = data.timetable;
-		for (r in data.classrooms){
-			var classroom = data.classrooms[r];
-			try {
-				var found = false;
-				for (unit in dtt[day][hour]){
-					var itemsData = dtt[day][hour][unit];
-					itemsData = itemsData.filter(function(v){return v.s == classroom;});
-					if (itemsData.length != 0){
-						found = true;
-					}
-				}
-				if (!found){
-					available_rooms.push(classroom);
-				}
-			}catch (e){utils.err("utils.getFreeRooms", "Error: " + e);}
-		}
-		this.log("getFreeRooms", "Znaleziono " + available_rooms.length + " sal.");
-		return available_rooms;
+		return false;
 	},
 
 	getFreeRoomsUI: function(day, hour){
-		/*
-		var available_rooms = this.getFreeRooms(day, hour);
-		var htmlInfo = `<i>Szukano dla ${day} dnia tygodnia, ${hour} godziny lekcyjnej</i><br>`;
-		htmlInfo += `Znaleziono ${available_rooms.length} wolnych sal.<br>`;
-		if (available_rooms.length == 0){
-			htmlInfo += `Przykro mi :(`;
-		}else{
-			htmlInfo += `Kliknij aby podejrzeć zajętość sali <br><br>`;
-			for (r in available_rooms){
-				var room = available_rooms[r];
-				htmlInfo += `<span style="background: rgba(0,0,0,0.3); border: 1px solid #ddd; border-radius: 5px; padding: 4px; margin: 3px; text-align: center; cursor: pointer;" onclick="jumpTo(1, '${room}');">${room} </span>`;
+		return false;
+	},
+
+	createEWC: function(elementType, classList, innerHTML){
+		var element = document.createElement(elementType);
+		if (classList && classList.length){
+			for (var _i = 0; _i < classList.length; _i++){
+				dom.addClass(element, classList[_i]);
 			}
 		}
-		app.modal.alert(htmlInfo, "blue");
-		*/
-		return false; //Unavailable for now due to fucking IE
-	}
+		if (innerHTML && innerHTML.length){ element.innerHTML = innerHTML; }
+		if (elementType == "button") element.type = "button";
+		return element;
+	},
+
+    appendChildren: function (element, childList) {
+		if (typeof element == "undefined"){
+			return false;
+		}
+		for (var _i = 0; _i < childList.length; _i++){
+			if (childList[_i]){
+				element.appendChild(childList[_i]);
+			}
+		};
+        return element;
+    }
 };
 
 
@@ -164,7 +152,6 @@ if ( (!('innerText' in document.createElement('a'))) && ('getSelection' in windo
         // Deselect everything.
         selection.removeAllRanges();
 
-        // Select `el` and all child nodes.
         // 'this' is the element .innerText got called on
         selection.selectAllChildren(this);
 
@@ -188,3 +175,11 @@ if ( (!('innerText' in document.createElement('a'))) && ('getSelection' in windo
         this.innerHTML = str.replace(/\n/g, "<br />");
     });
 }
+
+try {
+	Element.prototype.appendChildren = function(childList){
+		app.utils.appendChildren(this, childList);
+	}
+} catch (e) {}
+
+app.utils = utils;

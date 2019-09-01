@@ -1,104 +1,6 @@
 {
   "timetable_archives": [
     {
-      "date": "28.09.2018",
-      "export_datetime": "28.09.2018 19:10:10 (aktualny)",
-      "filename": "2018-10-01-d4763863d84213242a8ce747c84e69af0cc6c8df6e4ad6a1ec48ee91ed6f6845.json",
-      "hash": "d4763863",
-      "time": "10:50"
-    },
-    {
-      "date": "27.10.2018",
-      "export_datetime": "27.10.2018 17:40:12",
-      "filename": "2018-10-27-203fd75fab5c51ef95d80400222d11a8ba635918cab1c10bc696fe6ec0f2309f.json",
-      "hash": "203fd75f",
-      "time": "23:50"
-    },
-    {
-      "date": "23.09.2018",
-      "export_datetime": "23.09.2018 12:00:15",
-      "filename": "2018-09-27-aa92764633373e0ca44ae03a3679ddfed68e6fc7fceba9f6c63416556896f0be.json",
-      "hash": "aa927646",
-      "time": "23:50"
-    },
-    {
-      "date": "15.09.2018",
-      "export_datetime": "19.09.2018 21:34:41",
-      "filename": "2018-09-21-160dbf2d944d628e04b52a0bb9244b2efb2d103a5713a160633941a76783036f.json",
-      "hash": "160dbf2d",
-      "time": "23:50"
-    },
-    {
-      "date": "15.09.2018",
-      "export_datetime": "19.09.2018 21:31:21",
-      "filename": "2018-09-19-e26b4f39bb4cc3fc7f15eeb3683c908771745da2829f05439e3268faa26ea456.json",
-      "hash": "e26b4f39",
-      "time": "21:31"
-    },
-    {
-      "date": "15.09.2018 - [objectified branch]",
-      "export_datetime": "18.09.2018 09:30:04",
-      "filename": "2018-09-18-48718a3ec7b929f6739bd0a500d38d7db2f595475a6ca1be324e668943efac4b.json",
-      "hash": "48718a3e",
-      "time": "09:30"
-    },
-    {
-      "date": "28.09.2018",
-      "export_datetime": "16.10.2018 19:33:15",
-      "filename": "2018-10-24-a4ef89090d3a5c14ac0238a41fe6e48e125e4ec8de5fd3ea29baf92260028dde.json",
-      "hash": "a4ef8909",
-      "time": "23:50"
-    },
-    {
-      "date": "28.09.2018",
-      "export_datetime": "15.10.2018 22:49:42",
-      "filename": "2018-10-16-55e663dd3e586bd348ad8f4e5d233d8a35d21be8a5b642c2cbc8f1f1ba83aaa0.json",
-      "hash": "55e663dd",
-      "time": "19:30"
-    },
-    {
-      "date": "09.09.2018",
-      "export_datetime": "11.09.2018 20:02:37",
-      "filename": "2018-09-11-eeab9684feb0b0385adbadacadc31d85319ff297086ea82a9fe5ffa1c219b222.json",
-      "hash": "eeab9684",
-      "time": "21:27"
-    },
-    {
-      "date": "09.09.2018",
-      "export_datetime": "10.09.2018 20:10:11",
-      "filename": "2018-09-10-a0e89b49b755eea13751bd6c0703a00c96809d045ac7eb3c17a2bfac5da0e8fc.json",
-      "hash": "a0e89b49",
-      "time": "22:26"
-    },
-    {
-      "date": "03.09.2018",
-      "export_datetime": "06.09.2018 16:04:38",
-      "filename": "2018-09-06-c8ea83a7f77eb8cb8269ef95c1fb3887711e0366abdf1294c54e023cd6832d79.json",
-      "hash": "c8ea83a7",
-      "time": "16:04"
-    },
-    {
-      "date": "03.09.2018",
-      "export_datetime": "05.09.2018 21:40:55",
-      "filename": "2018-09-05-08eb5df7802a760d4e1062d9014960c4e63551397e64002529de96843217ec3e.json",
-      "hash": "08eb5df7",
-      "time": "21:49"
-    },
-    {
-      "date": "03.09.2018",
-      "export_datetime": "05.09.2018 21:36:31",
-      "filename": "2018-09-05-887e6ea7de9bcaaf64b05b18b8a03198f6af9aefbf65feeb366d5a89e66e1178.json",
-      "hash": "887e6ea7",
-      "time": "21:37"
-    },
-    {
-      "date": "03.09.2018",
-      "export_datetime": "04.09.2018 18:45:54",
-      "filename": "2018-09-04-7ff43b0d4e865ba63663fcc93f9372a3162c5532a58fe007d8da5e0b70cfbea2.json",
-      "hash": "7ff43b0d",
-      "time": "18:45"
-    },
-    {
       "date": "02.09.2018",
       "export_datetime": "03.09.2018 18:40:10",
       "filename": "2018-09-03-9bf20f1b14f2022b09785f4a2cb0a51c94ff1022b1cc443bc2a15ea16be31533.json",
@@ -107,17 +9,17 @@
     },
     {
       "date": "28.09.2018",
-      "export_datetime": "01.10.2018 13:30:19",
-      "filename": "2018-10-04-a9048546d5224085bd6aacfea9d9084b9926820049d71d03f7e100b152c0acb5.json",
-      "hash": "a9048546",
-      "time": "23:50"
-    },
-    {
-      "date": "28.09.2018",
       "export_datetime": "01.10.2018 11:00:23",
       "filename": "2018-10-01-1acf3d4726fbce04e170f56f80f0718ea95de9fc3ab61776a763a53337fe76bd.json",
       "hash": "1acf3d47",
       "time": "13:20"
+    },
+    {
+      "date": "24.11.2018",
+      "export_datetime": "01.10.2018 11:00:23",
+      "filename": "2018-11-24-69e311226c4b19600274955536f6d36d0c7345ad266a87adde5a088d4787fff5.json",
+      "hash": "69e31122",
+      "time": "12:34"
     }
   ]
 }

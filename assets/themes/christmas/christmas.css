@@ -269,7 +269,7 @@ body::before{
     box-shadow: none;
 }
 
-.navbar-title{
+.navbar__title{
     color: var(--navbar-text-color);
     font-weight: 600;
     text-shadow: none;
@@ -293,7 +293,7 @@ body::before{
     background: transparent;
 }
 
-.navbar-title {
+.navbar__title {
     margin-left: 55px;
 }
 
