@@ -19,6 +19,8 @@ function addURL(&$xml, $url){
     $track->addChild('lastmod', $last_mod);
 }
 
+addURL($xml, "");
+
 foreach ($data['teachermap'] as $short => $long) {
 	$long = strtolower($long);
 	$long = str_ireplace(" ", "-", $long);
