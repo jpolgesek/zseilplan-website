@@ -45,7 +45,7 @@
 		<![endif]-->
 
 	</head>
-	<body>
+	<body onload="app.init()">
 		<div id='container' class='container' style="width: 90%;">
 			<!-- TODO: create me dynamically-->
 			<div class="navbar-container" id="navbar-container">
@@ -165,7 +165,6 @@
 
 		</div>
 
-		<!-- %compile_js_start%-->
 		<script>
 			var app = {};
 			if (!window.console){
@@ -177,6 +176,7 @@
 				}
 			}
 		</script>
+		<!-- %compile_js_start%-->
 		<script src="assets/ie_js/dom.js?ver=%build%"></script>
 		<script src="assets/ie_js/app.config.js?ver=%build%"></script>
 		<script src="assets/ie_js/app.js?ver=%build%"></script>
@@ -184,6 +184,7 @@
 		<script src="assets/ie_js/utils.js?ver=%build%"></script>
 		<script src="assets/ie_js/overrides.js?ver=%build%"></script>
 		<script src="assets/ie_js/datetime.js?ver=%build%"></script>
+		<script>app.init()</script>
 		<!-- %compile_js_end%-->
 	</body>
 </html>

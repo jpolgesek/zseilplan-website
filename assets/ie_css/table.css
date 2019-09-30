@@ -4,6 +4,7 @@
 	margin-bottom: 1%;
 	background: #fafafa;
 	color: black;
+	clear: both;
 }
 
 .maintable td, .maintable th {
