@@ -24,6 +24,7 @@ Deploy to production:
   - python3 deploy.py _ _ --path $app_dir --http-rootdir-app=/zseilplan/ --http-rootdir-manifest=/zseilplan/ --hostname=dev.polgesek.pl --uploader=ftp --username=$zseilplan_dev_polgesek_pl_ftp_user --password=$zseilplan_dev_polgesek_pl_ftp_pass --uploader-rootdir-manifest=/ --uploader-rootdir-app=/zseilplan/
 
 Deploy to plan.zseil.pl (staging):
+  when: manual
   script:
   - apt update -qq
   - apt install -y --force-yes -qq git
