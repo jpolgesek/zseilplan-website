@@ -57,7 +57,7 @@ var app = {
 			app_tools_findfreerooms: true,
 			app_tools_timetravel: true,
 			app_tools_diffview: true,
-			app_tools_bugreport: true
+			app_tools_bugreport: false
 		},
 	
 		internal: {
@@ -75,7 +75,7 @@ var app = {
 			app_tools_findfreerooms: true,
 			app_tools_timetravel: true,
 			app_tools_diffview: true,
-			app_tools_bugreport: true
+			app_tools_bugreport: false
 		}
 	},
 	
