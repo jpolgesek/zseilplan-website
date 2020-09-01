@@ -21,4 +21,5 @@
 
 @import url("responsive.css");
 @import url("print.css");
+@import url("adhoc.css");
 @import url("../themes/dark.css");

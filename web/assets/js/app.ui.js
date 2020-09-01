@@ -345,7 +345,7 @@ app.ui = {
 	 * Creates a single item (lesson)
 	 * @param {object} 	itemData		Data for new item (TODO: write structure somewhere)
 	 */
-	createItem: function(itemData){
+	createItem: function(itemData, metadata){
 		if (itemData.p.length >= 30){
 			itemData.p = itemData.p.split(" ")[0];
 		}
@@ -357,50 +357,61 @@ app.ui = {
 			document.createElement('span')
 		];
 
-		if (app.testMode == true) {
-			if (app.prefs["ui.normalize_subject"] === true){
-				if (itemData.p.indexOf("JM") != -1){
-					//to pewnie modul
-					mod_name = itemData.p.split("JM")[0];
-					if ((mod_name[0] == mod_name[1]) && (mod_name[0] == "I")){
-						mod_name = mod_name.substr(1);
-					}
-				}else{
-					mod_name = itemData.p;
-				}
-				try {
-					newName = mod_name;
-					newName = data.normalizationData[newName];
-					if (newName != undefined){
-						itemData.p = newName;
-						span[0].innerHTML = newName;
-					} 
-				} catch (error) {
-					console.log("Normalization not found for '"+mod_name+"'")
-				}
-			}
-			
-			grp = itemData.g;
-			if ((grp != undefined) && (grp != -1)) {
-				if (grp.indexOf("-") != -1) {
-					grp = grp.split("-")[1];
-				}
-			}
-			
-			if ((typeof grp != 'undefined') && (grp != "-1")){
-				if (app.prefs["ui.show_group_info"]){
-					span[3].innerHTML = "G" + grp;
-					span[3].className = 'clickable';
-				}
-		
-				if (app.prefs["ui.show_only_selected_group"]) {
-					if (app.prefs["ui.selected_groups"].indexOf(grp) == -1){
-						return document.createElement("span");
-					}
-				}
-			}
+		let adhoc_covid_entry = app.utils.createEWC("span", ["clickable", "adhoc_covid_entry"]);
+		if (typeof metadata == "object" && metadata.hour == 1) {
+			adhoc_covid_entry.entrymethod = app.adhoc_covid_entry_getEntrance(itemData.s);
+			console.log(itemData.s);
+			console.log(adhoc_covid_entry.entrymethod);
+			adhoc_covid_entry.innerHTML = adhoc_covid_entry.entrymethod.short_string;
+			adhoc_covid_entry.onclick = function () {alert(this.entrymethod.full_message)};
+			console.log(metadata);
+		} 
 
-		}
+		// Not used
+		// if (app.testMode == true) {
+		// 	if (app.prefs["ui.normalize_subject"] === true){
+		// 		if (itemData.p.indexOf("JM") != -1){
+		// 			//to pewnie modul
+		// 			mod_name = itemData.p.split("JM")[0];
+		// 			if ((mod_name[0] == mod_name[1]) && (mod_name[0] == "I")){
+		// 				mod_name = mod_name.substr(1);
+		// 			}
+		// 		}else{
+		// 			mod_name = itemData.p;
+		// 		}
+		// 		try {
+		// 			newName = mod_name;
+		// 			newName = data.normalizationData[newName];
+		// 			if (newName != undefined){
+		// 				itemData.p = newName;
+		// 				span[0].innerHTML = newName;
+		// 			} 
+		// 		} catch (error) {
+		// 			console.log("Normalization not found for '"+mod_name+"'")
+		// 		}
+		// 	}
+			
+		// 	grp = itemData.g;
+		// 	if ((grp != undefined) && (grp != -1)) {
+		// 		if (grp.indexOf("-") != -1) {
+		// 			grp = grp.split("-")[1];
+		// 		}
+		// 	}
+			
+		// 	if ((typeof grp != 'undefined') && (grp != "-1")){
+		// 		if (app.prefs["ui.show_group_info"]){
+		// 			span[3].innerHTML = "G" + grp;
+		// 			span[3].className = 'clickable';
+		// 		}
+		
+		// 		if (app.prefs["ui.show_only_selected_group"]) {
+		// 			if (app.prefs["ui.selected_groups"].indexOf(grp) == -1){
+		// 				return document.createElement("span");
+		// 			}
+		// 		}
+		// 	}
+
+		// }
 
 		if (this.itemDisplayType == 0){
 			span[1].innerHTML = itemData.k;
@@ -509,6 +520,10 @@ app.ui = {
 				if (span[3].innerHTML.length > 0){
 					jumpButtonsDiv.appendChild(span[3]);
 				}
+			}
+
+			if (adhoc_covid_entry.innerHTML != "") {
+				jumpButtonsDiv.appendChild(adhoc_covid_entry);
 			}
 
 			jumpButtonsDiv.appendChild(span[1]);

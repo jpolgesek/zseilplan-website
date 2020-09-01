@@ -30,7 +30,7 @@ var app = {
 			theme_manager: true,
 			theme_manager_ui: false,
 			theme_christmas_by_default: false,
-			new_hashparser: true,
+			new_hashparser: false,
 			prefs_enable: true,
 			prefs_transition: true,
 			overrides_summaryModal: false,
@@ -48,7 +48,7 @@ var app = {
 			theme_manager: true,
 			theme_manager_ui: false,
 			theme_christmas_by_default: false,
-			new_hashparser: true,
+			new_hashparser: false,
 			prefs_enable: true,
 			prefs_transition: true,
 			overrides_summaryModal: true,
@@ -66,7 +66,7 @@ var app = {
 			theme_manager: true,
 			theme_manager_ui: false,
 			theme_christmas_by_default: false,
-			new_hashparser: true,
+			new_hashparser: false,
 			prefs_transition: true,
 			prefs_enable: true,
 			overrides_summaryModal: true,
@@ -355,11 +355,72 @@ var app = {
 			select_units.value = value;
 			select_units.onchange();
 		}
+	},
+
+	adhoc_covid_entry_getEntrance: function (room_number) {
+		let entranceMethods = {
+			"parking": [132,136,139,140,151,155,159,239,240,241,249,251,257,332,333,337,347,351],
+			"glowne": [120,124,128,130,133,135,216,220,221,226,228,230,233,312,316,320,324,328,329],
+			"metro": [101,104,108,112,113,116,117,201,204,208,212,301,303,304,306,308,310,313]
+		};
+		
+		let entrancePlaceString = {
+			"parking": "wejście boczne od strony parkingu",
+			"glowne": "wejście główne",
+			"metro": "wejście boczne od strony metra"
+		};
+		
+		let foundEntranceHour = null;
+		
+		room_number = parseInt(room_number);
+
+		switch (room_number.toString().charAt(0)) {
+			case '1': 
+				foundEntranceHour = "7:40";
+				break;
+			
+			case '2': 
+				foundEntranceHour = "7:35";
+				break;
+			
+			case '3': 
+				foundEntranceHour = "7:30";
+				break;
+			
+			default: 
+				foundEntranceHour = "której tylko chcesz (brak danych)";
+				break;
+		}
+
+		let foundEntrance = null;
+
+		Object.keys(entranceMethods).forEach(key => {
+			if (entranceMethods[key].indexOf(room_number) != -1) {
+				foundEntrance = key;
+				return;
+			}
+		});
+
+		if (foundEntrance == null) {
+			return {
+				short_string: "???",
+				full_message: "Tu powinno być info którym wejściem wejść, ale nie mam pojęcia, na stronie szkoły nie ma info."
+			};
+		}
+
+		return {
+			short_string: capitalizeFirstLetter(foundEntrance),
+			full_message: `Wejdź do szkoły przez ${entrancePlaceString[foundEntrance]} o godzinie ${foundEntranceHour}. Więcej info na stronie zseil.edu.pl.`
+		};
 	}
 }
 
 function sortAsc (a, b) {
 	return a.localeCompare(b);
+}
+
+function capitalizeFirstLetter(string) {
+	return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 
@@ -534,7 +595,7 @@ function refreshView(){
 				try {
 					classesArr = data.timetable[day][hour][select_units.value];
 					for (cls in classesArr){
-						cell.appendChild(app.ui.createItem(classesArr[cls]));
+						cell.appendChild(app.ui.createItem(classesArr[cls], {day: day, hour: hour}));
 					}
 				}catch (e){}
 				
@@ -547,11 +608,11 @@ function refreshView(){
 						//New - fixed view of teachers timetable
 						itemData = data.teachers_new[select_teachers.value][day][hour];
 						for (var i in itemData){
-							cell.appendChild(app.ui.createItem(itemData[i]));
+							cell.appendChild(app.ui.createItem(itemData[i], {day: day, hour: hour}));
 						}
 					}else{
 						itemData = data.teachers[select_teachers.value][day][hour];
-						cell.appendChild(app.ui.createItem(itemData));
+						cell.appendChild(app.ui.createItem(itemData, {day: day, hour: hour}));
 					}
 				}catch (e){}
 			
@@ -564,7 +625,7 @@ function refreshView(){
 						if (itemData.length > 0){
 							itemData = itemData[0];
 							itemData.k = unit;
-							cell.appendChild(app.ui.createItem(itemData));
+							cell.appendChild(app.ui.createItem(itemData, {day: day, hour: hour}));
 						}
 					}
 				}catch (e){}
