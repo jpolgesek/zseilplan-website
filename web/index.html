@@ -15,13 +15,12 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<meta name="theme-color" content="#046edd">
 		<meta name="description" content="Przeglądaj plan ZSEiL szybko i wygodnie. Do tego aplikacja mobilna, powiadomienia o zmianach planu, wyszukiwanie wolnych sal i wiele innych. Sprawdź teraz!">
-		<link rel="canonical" href="https://dev.polgesek.pl/zseilplan" />
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.php" />
 		<title>Super Clever Plan</title>
 		
 		<!-- %compile_css_start%-->
-		<link rel="stylesheet" href="assets/css/style.css">
+		<link rel="stylesheet" href="assets/css/style.css?ver=%build%">
 		<!-- %compile_css_end%-->
 		
 		<link rel="manifest" href="/manifest.json">
@@ -127,7 +126,12 @@
 			</div>
 			
 			<!-- TODO: create me dynamically -->	
-			<div id='remote_info' class="shadow box-text print-hide row" style="display: none;"></div>
+			<div id='remote_info' class="shadow box-text print-hide row" style="padding: 15px; width: 100%; text-align: center; font-size: 1.1em;">
+				Hej, witajcie w nowym <i>(dość ciekawym)</i> roku szkolnym!<br>
+				Przez kilka(naście) dni nie będzie jeszcze nazwisk nowych nauczycieli.<br>
+				Dodałem też wyświetlanie <a style="color: white; text-decoration: underline;" href="http://zseil.edu.pl/aktualnosci/?id=793" target="_blank">wejść do szkoły zgodnie ze stroną</a>.<br>
+				Jeśli są jakieś błędy to piszcie na <i>zseilplan[@]polgesek.pl</i>
+			</div>
 			
 			<!-- TODO: create me dynamically-->	
 			<div class='bar print-hide mobile-only-flex flex-center' style="padding: 0 !important;">
@@ -213,24 +217,24 @@
 		</div>
 
 		<!-- %compile_js_start%-->
-		<script src="assets/js/compattest.js"></script>
-		<script src="assets/js/app.config.js"></script>
-		<script src="assets/js/app.js"></script>
-		<script src="assets/js/app.ui.js"></script>
-		<script src="assets/js/app.tools.js"></script>
-		<script src="assets/js/utils.js"></script>
-		<script src="assets/js/diff.js"></script>
-		<script src="assets/js/dom.js"></script>
-		<script src="assets/js/app.ui.modal.js"></script>
-		<script src="assets/js/overrides.js"></script>
-		<script src="assets/js/datetime.js"></script>
-		<script src="assets/js/storage.js"></script>
-		<script src="assets/js/quicksearch.js"></script>
-		<script src="assets/js/touchgestures.js"></script>
-		<script src="assets/js/app.bugreport.js"></script>
-		<script src="assets/js/easteregg.js"></script>
-		<script src="assets/js/thememanager.js"></script>
-		<script src="assets/js/settings.js"></script>
+		<script src="assets/js/compattest.js?ver=%build%"></script>
+		<script src="assets/js/app.config.js?ver=%build%"></script>
+		<script src="assets/js/app.js?ver=%build%"></script>
+		<script src="assets/js/app.ui.js?ver=%build%"></script>
+		<script src="assets/js/app.tools.js?ver=%build%"></script>
+		<script src="assets/js/utils.js?ver=%build%"></script>
+		<script src="assets/js/diff.js?ver=%build%"></script>
+		<script src="assets/js/dom.js?ver=%build%"></script>
+		<script src="assets/js/app.ui.modal.js?ver=%build%"></script>
+		<script src="assets/js/overrides.js?ver=%build%"></script>
+		<script src="assets/js/datetime.js?ver=%build%"></script>
+		<script src="assets/js/storage.js?ver=%build%"></script>
+		<script src="assets/js/quicksearch.js?ver=%build%"></script>
+		<script src="assets/js/touchgestures.js?ver=%build%"></script>
+		<script src="assets/js/app.bugreport.js?ver=%build%"></script>
+		<script src="assets/js/easteregg.js?ver=%build%"></script>
+		<script src="assets/js/thememanager.js?ver=%build%"></script>
+		<script src="assets/js/settings.js?ver=%build%"></script>
 		<!-- %compile_js_end%-->
 	</body>
 </html>
