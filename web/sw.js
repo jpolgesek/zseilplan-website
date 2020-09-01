@@ -25,7 +25,7 @@ var urlsToCache = [
 	'./assets/font/zseilplan-icon.woff?92084438',
 	'./assets/font/zseilplan-icon.woff2?92084438',
 
-	'./data.php?ver=localstorage'
+	'./data.json?ver=localstorage'
 ];
 
 if (ENABLE_CACHE && false){

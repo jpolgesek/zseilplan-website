@@ -125,7 +125,7 @@ var app = {
 			url = customURL;
 		}else{
 			timestamp = new Date().getTime();
-			url = "data.php?ver=" + timestamp;
+			url = "data.json?ver=" + timestamp;
 		}
 	
 		app.ui.loader.setStatus("Rozpoczynam pobieranie danych");

@@ -157,7 +157,7 @@ var app = {
 			}else{
 				timestamp = Date.now();
 			}
-			url = `data.php?ver=${timestamp}`;
+			url = `data.json?ver=${timestamp}`;
 		}
 	
 		app.ui.loader.setStatus("Rozpoczynam pobieranie danych");
