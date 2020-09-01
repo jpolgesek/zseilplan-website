@@ -503,8 +503,6 @@ app.getSWURL = function(){
 	return base_url.join("/") + "/";
 }
 
-document.body.onload = app.init;
-
 app.resetURL = function(){
 	history.pushState(null, null, app.getSWURL());
 }
