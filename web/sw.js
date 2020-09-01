@@ -15,8 +15,8 @@ var urlsToCache = [
 	'./index.html',
 	'./index.html?launcher=true',
 	
-	'./assets/js/c_app.js?ver=%build%',
-	'./assets/css/c_style.css?ver=%build%',
+	'./assets/js/c_app.js',
+	'./assets/css/c_style.css',
 	'./assets/img/launcher-icon-256.png',
 	'./assets/img/icon_square.png',
 	'./assets/font/zseilplan-icon.eot?92084438',
