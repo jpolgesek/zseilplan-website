@@ -1,8 +1,39 @@
-include:
-  - project: 'FlyingArmageddon/webifier'
-    file: '/external-ci.yml'
+image: registry.gitlab.com/flyingarmageddon/webifier
 
-deploy:
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - python /app/run.py "$(pwd)/web" build_output
+  artifacts:
+    paths:
+      - build_output/
+    expire_in: 1 week
+
+deploy to test:
+  stage: deploy
   variables:
-    WEB_DOMAIN: flyingarmageddon.pl
     WEB_SUBDOMAIN: testplan
+    WEB_DOMAIN: flyingarmageddon.pl
+  script:
+    - bash /app/check.sh
+    - cp "$ANSIBLE_SSH_PRIV" /etc/ansible/id_rsa
+    - chmod 400 /etc/ansible/id_rsa
+
+    - export WEB_SRC_FILES="$(pwd)/build_output/"
+    - ansible-playbook /app/ansible/install.yml
+
+    - echo "Your website should be available at $WEB_SUBDOMAIN.$WEB_DOMAIN"
+
+
+deploy to prod:
+  stage: deploy
+  when: manual
+  variables:
+    WEB_SUBDOMAIN: testplan
+    WEB_DOMAIN: flyingarmageddon.pl
+  script:
+    - echo "todo"
