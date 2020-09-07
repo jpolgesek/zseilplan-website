@@ -357,7 +357,7 @@ var app = {
 		}
 	},
 
-	adhoc_covid_entry_getEntrance: function (room_number) {
+	adhoc_covid_entry_getEntrance: function (room_number, hour) {
 		let entranceMethods = {
 			"parking": [132,136,139,140,151,155,159,239,240,241,249,251,257,332,333,337,347,351],
 			"glowne": [120,124,128,130,133,135,216,220,221,226,228,230,233,312,316,320,324,328,329],
@@ -370,26 +370,28 @@ var app = {
 			"metro": "wejście boczne od strony metra"
 		};
 		
+		room_number = parseInt(room_number);
+		
 		let foundEntranceHour = null;
 		
-		room_number = parseInt(room_number);
-
-		switch (room_number.toString().charAt(0)) {
-			case '1': 
-				foundEntranceHour = "7:40";
-				break;
-			
-			case '2': 
-				foundEntranceHour = "7:35";
-				break;
-			
-			case '3': 
-				foundEntranceHour = "7:30";
-				break;
-			
-			default: 
-				foundEntranceHour = "której tylko chcesz (brak danych)";
-				break;
+		if (hour == 1) {
+			switch (room_number.toString().charAt(0)) {
+				case '1': 
+					foundEntranceHour = "7:40";
+					break;
+				
+				case '2': 
+					foundEntranceHour = "7:35";
+					break;
+				
+				case '3': 
+					foundEntranceHour = "7:30";
+					break;
+				
+				default: 
+					foundEntranceHour = "której tylko chcesz (brak danych)";
+					break;
+			}
 		}
 
 		let foundEntrance = null;
@@ -407,11 +409,18 @@ var app = {
 				full_message: "Tu powinno być info którym wejściem wejść, ale nie mam pojęcia, na stronie szkoły nie ma info."
 			};
 		}
-
-		return {
-			short_string: capitalizeFirstLetter(foundEntrance),
-			full_message: `Wejdź do szkoły przez ${entrancePlaceString[foundEntrance]} o godzinie ${foundEntranceHour}. Więcej info na stronie zseil.edu.pl.`
-		};
+		
+		if (hour == 1) {
+			return {
+				short_string: capitalizeFirstLetter(foundEntrance),
+				full_message: `Wejdź do szkoły przez ${entrancePlaceString[foundEntrance]} o godzinie ${foundEntranceHour}. Więcej info na stronie zseil.edu.pl.`
+			};
+		} else {
+			return {
+				short_string: capitalizeFirstLetter(foundEntrance),
+				full_message: `Wejdź do szkoły przez ${entrancePlaceString[foundEntrance]}. Więcej info na stronie zseil.edu.pl.`
+			};
+		}
 	}
 }
 
@@ -583,6 +592,8 @@ function refreshView(){
 	app.ui.table.createHeader(table);
 	
 	/* This looks terrible */
+	let parsedDays = {};
+	let isFirst = true;
 
 	for (hour=1; hour<(maxHours + 1); hour++){
 		row = app.ui.table.insertNumber(table,hour);
@@ -595,7 +606,15 @@ function refreshView(){
 				try {
 					classesArr = data.timetable[day][hour][select_units.value];
 					for (cls in classesArr){
-						cell.appendChild(app.ui.createItem(classesArr[cls], {day: day, hour: hour}));
+
+						if ((parsedDays[day] == undefined) || (parsedDays[day] == hour)) {
+							parsedDays[day] = hour;
+							isFirst = true;
+						} else {
+							isFirst = false;
+						}
+
+						cell.appendChild(app.ui.createItem(classesArr[cls], {day: day, hour: hour, isFirst: isFirst}));
 					}
 				}catch (e){}
 				
@@ -608,7 +627,15 @@ function refreshView(){
 						//New - fixed view of teachers timetable
 						itemData = data.teachers_new[select_teachers.value][day][hour];
 						for (var i in itemData){
-							cell.appendChild(app.ui.createItem(itemData[i], {day: day, hour: hour}));
+							
+							if ((parsedDays[day] == undefined) || (parsedDays[day] == hour)) {
+								parsedDays[day] = hour;
+								isFirst = true;
+							} else {
+								isFirst = false;
+							}
+
+							cell.appendChild(app.ui.createItem(itemData[i], {day: day, hour: hour, isFirst: isFirst}));
 						}
 					}else{
 						itemData = data.teachers[select_teachers.value][day][hour];
@@ -621,11 +648,20 @@ function refreshView(){
 				app.ui.itemDisplayType = 1;
 				try {		
 					for (unit in data.timetable[day][hour]){
+
 						itemData = data.timetable[day][hour][unit].filter(function(v){return v.s == select_rooms.value;});
 						if (itemData.length > 0){
 							itemData = itemData[0];
 							itemData.k = unit;
-							cell.appendChild(app.ui.createItem(itemData, {day: day, hour: hour}));
+						
+							if ((parsedDays[day] == undefined) || (parsedDays[day] == hour)) {
+								parsedDays[day] = hour;
+								isFirst = true;
+							} else {
+								isFirst = false;
+							}
+							
+							cell.appendChild(app.ui.createItem(itemData, {day: day, hour: hour, isFirst: isFirst}));
 						}
 					}
 				}catch (e){}

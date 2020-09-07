@@ -358,13 +358,15 @@ app.ui = {
 		];
 
 		let adhoc_covid_entry = app.utils.createEWC("span", ["clickable", "adhoc_covid_entry"]);
-		if (typeof metadata == "object" && metadata.hour == 1) {
-			adhoc_covid_entry.entrymethod = app.adhoc_covid_entry_getEntrance(itemData.s);
-			console.log(itemData.s);
-			console.log(adhoc_covid_entry.entrymethod);
-			adhoc_covid_entry.innerHTML = adhoc_covid_entry.entrymethod.short_string;
-			adhoc_covid_entry.onclick = function () {try{app.ae('adhoc_covid_entry', 'adhoc_covid_entry_click', `k=${itemData.k}`)}catch(e){}; alert(this.entrymethod.full_message)};
-			console.log(metadata);
+
+		if (typeof metadata == "object" && metadata.isFirst) {
+			try {
+				adhoc_covid_entry.entrymethod = app.adhoc_covid_entry_getEntrance(itemData.s, metadata.hour);
+				adhoc_covid_entry.innerHTML = adhoc_covid_entry.entrymethod.short_string;
+				adhoc_covid_entry.onclick = function () {try{app.ae('adhoc_covid_entry', 'adhoc_covid_entry_click', `k=${itemData.k}`)}catch(e){}; alert(this.entrymethod.full_message)};
+			} catch (error) {
+				console.error(error);
+			}
 		} 
 
 		// Not used
