@@ -11,6 +11,7 @@ build:
     - mkdir build
     - cp -r prebuild/assets build/assets
     - cp prebuild/*.* build/.
+    - rm build/sw.js
   artifacts:
     paths:
       - build/
@@ -26,16 +27,20 @@ deploy to test:
     - cp "$ANSIBLE_SSH_PRIV" /etc/ansible/id_rsa
     - chmod 400 /etc/ansible/id_rsa
 
-    - export WEB_SRC_FILES="$(pwd)/build_output/"
+    - export WEB_SRC_FILES="$(pwd)/build/"
     - ansible-playbook /app/ansible/install.yml
 
     - echo "Your website should be available at $WEB_SUBDOMAIN.$WEB_DOMAIN"
 
+
 deploy to prod:
   stage: deploy
   when: manual
+  image: mwienk/docker-lftp:latest
   variables:
-    WEB_SUBDOMAIN: testplan
-    WEB_DOMAIN: flyingarmageddon.pl
-  script:
-    - echo "todo"
+    SRC_PATH: build
+    TARGET_PATH: zseilplan
+  script: 
+    - lftp -e "mirror -Rnv \"$SRC_PATH\" \"$TARGET_PATH\"; exit;" -u $PROD_FTP_USERNAME,$PROD_FTP_PASSWORD $PROD_FTP_HOST
+  # only:
+  #   - master
