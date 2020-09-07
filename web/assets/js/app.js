@@ -1,5 +1,5 @@
 /*    SUPER CLEVER PLAN    */
-/* (C) 2019 Jakub Półgęsek */
+/* (C) 2020 Jakub Półgęsek */
 
 /* Global ui */
 var table = document.getElementById("maintable");
@@ -23,6 +23,10 @@ var isIE = detectIE();
 
 var app = {
 	_ui_loaded: false,
+	config: {
+		build: "{{WBTPL:build_id:WBTPL}}",
+		env: "{{WBTPL:build_env:WBTPL}}",
+	},
 	_features: {
 		prod: {
 			diff_diff: true,
@@ -30,11 +34,16 @@ var app = {
 			theme_manager: true,
 			theme_manager_ui: false,
 			theme_christmas_by_default: false,
-			new_hashparser: true,
+			new_hashparser: false,
 			prefs_enable: true,
 			prefs_transition: true,
 			overrides_summaryModal: false,
-			new_settings: true
+			new_settings: true,
+			app_tools_global: false,
+			app_tools_findfreerooms: false,
+			app_tools_timetravel: false,
+			app_tools_diffview: false,
+			app_tools_bugreport: false
 		},
 	
 		dev: {
@@ -43,11 +52,16 @@ var app = {
 			theme_manager: true,
 			theme_manager_ui: false,
 			theme_christmas_by_default: false,
-			new_hashparser: true,
+			new_hashparser: false,
 			prefs_enable: true,
 			prefs_transition: true,
 			overrides_summaryModal: true,
-			new_settings: true
+			new_settings: true,
+			app_tools_global: true,
+			app_tools_findfreerooms: true,
+			app_tools_timetravel: true,
+			app_tools_diffview: true,
+			app_tools_bugreport: false
 		},
 	
 		internal: {
@@ -56,11 +70,16 @@ var app = {
 			theme_manager: true,
 			theme_manager_ui: false,
 			theme_christmas_by_default: false,
-			new_hashparser: true,
+			new_hashparser: false,
 			prefs_transition: true,
 			prefs_enable: true,
 			overrides_summaryModal: true,
-			new_settings: true
+			new_settings: true,
+			app_tools_global: true,
+			app_tools_findfreerooms: true,
+			app_tools_timetravel: true,
+			app_tools_diffview: true,
+			app_tools_bugreport: false
 		}
 	},
 	
@@ -107,7 +126,19 @@ var app = {
 		"ui.normalize_subject": false
 	},
 	isEnabled: function(feature_name){
-		return false;
+		if (app.config.env.indexOf("WBTPL") != -1){
+			var featureSet = this._features.internal;
+		}else if (app.config.env != "prod"){
+			var featureSet = this._features.dev;
+		}else{
+			var featureSet = this._features.prod;
+		}
+		if (typeof featureSet[feature_name] == "undefined"){
+			utils.warn("app", "isEnabled(" + feature_name + ") = undefined");
+			return false;
+		}else{
+			return featureSet[feature_name];
+		}
 	},
 	as: function(v){
 		//todo: disabler
@@ -124,8 +155,13 @@ var app = {
 			utils.log("app", "Will load custom timetable version: " + customURL);
 			url = customURL;
 		}else{
-			timestamp = new Date().getTime();
-			url = "data.php?ver=" + timestamp;
+			if (navigator.onLine === false) {
+				app.ui.loader.setStatus("Jesteś offline, próbuję pobrać plan z lokalnego cache");
+				timestamp = "localstorage";
+			}else{
+				timestamp = Date.now();
+			}
+			url = `data.json?ver=${timestamp}`;
 		}
 	
 		app.ui.loader.setStatus("Rozpoczynam pobieranie danych");
@@ -149,7 +185,7 @@ var app = {
 	
 			init2();
 		}, function(e){
-			app.ui.loader.setError("<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.", "<a style='color: white;' href='#' onclick='document.location.reload()'>Spróbuj ponownie</a>");
+			app.ui.loader.setError("<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.", `<a style='color: white;' href='#' onclick='document.location.reload()'>Spróbuj ponownie</a>`);
 			utils.error("app", "Failed to download data.json");
 		});
 	},
@@ -158,12 +194,33 @@ var app = {
 		//try {utils.consoleStartup();} catch (e) {}
 		utils.log("app", "Initializing");
 
+		app.ui.loader.setStatus("Ładuję preferencje");
+		app.ui.setStatus("Ładowanie preferencji...");
+
 		try {
-			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (preferences.get("tests_enabled") == "true") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
+			if ((preferences.get("tests_enabled") == "true") || (app.config.env != "prod")){
 				utils.warn("app","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
 				app.testMode = true;
 			}
 		} catch (e) {}
+
+		if (app.isEnabled("prefs_enable")){
+			preferences.load();
+
+			if (preferences.get("tests_enabled")){
+				this._features.prod = this._features.dev;
+			}
+			
+			if (preferences.get("app.testMode")){
+				app.testMode = true;
+			}
+			
+		}else{
+			/* If HTML5 storage is available, try to load user saved settings */
+			if (typeof(Storage) !== "undefined") {
+				myStorage.load();
+			}
+		}
 
 		app.ui.setStatus("Ładowanie danych planu...");
 		app.ui.loader.setStatus("Pobieram dane");
@@ -172,11 +229,24 @@ var app = {
 
 	init3: function(){
 		app.ui.modal = modal;
+		app.storage = myStorage;
 		app.refreshView = refreshView;
+		
+		data.normalizationData = {
+			"IM9": "Bazy danych",
+			"IM10": "PHP/JS",
+			"zaj. wych.": "Wychowawcza",
+			"j. polski": "Polski",
+			"j. angielski": "Angielski",
+			"j. niemiecki": "Niemiecki",
+			"hist. i społ": "Historia (his)"
+		};
 
 		if (this._ui_loaded) return;
 		
-		app.ui.createNavbarButton('<i class="icon-toolbox"></i>', "Narzędzia", function(){app.tools.selectToolModal()});
+		if (this.isEnabled("app_tools_global")){
+			app.ui.createNavbarButton('<i class="icon-toolbox"></i>', "Narzędzia", function(){app.tools.selectToolModal()});
+		}
 
 		if (this.isEnabled("new_settings")){
 			app.ui.createNavbarButton('<i class="icon-cog"></i>', "Ustawienia", function(){settings.createModal()});
@@ -199,6 +269,8 @@ var app = {
 				}
 			}
 		}
+
+		window.addEventListener("hashchange", app.parseHash, false);
 		this._ui_loaded = true;
 	},
 	getUrlRouter: function(){
@@ -287,11 +359,81 @@ var app = {
 			select_units.value = value;
 			select_units.onchange();
 		}
+	},
+
+	adhoc_covid_entry_getEntrance: function (room_number, hour) {
+		let entranceMethods = {
+			"parking": [132,136,139,140,151,155,159,239,240,241,249,251,257,332,333,337,347,351],
+			"glowne": [120,124,128,130,133,135,216,220,221,226,228,230,233,312,316,320,324,328,329],
+			"metro": [101,104,108,112,113,116,117,201,204,208,212,301,303,304,306,308,310,313]
+		};
+		
+		let entrancePlaceString = {
+			"parking": "wejście boczne od strony parkingu",
+			"glowne": "wejście główne",
+			"metro": "wejście boczne od strony metra"
+		};
+		
+		room_number = parseInt(room_number);
+		
+		let foundEntranceHour = null;
+		
+		if (hour == 1) {
+			switch (room_number.toString().charAt(0)) {
+				case '1': 
+					foundEntranceHour = "7:40";
+					break;
+				
+				case '2': 
+					foundEntranceHour = "7:35";
+					break;
+				
+				case '3': 
+					foundEntranceHour = "7:30";
+					break;
+				
+				default: 
+					foundEntranceHour = "której tylko chcesz (brak danych)";
+					break;
+			}
+		}
+
+		let foundEntrance = null;
+
+		Object.keys(entranceMethods).forEach(key => {
+			if (entranceMethods[key].indexOf(room_number) != -1) {
+				foundEntrance = key;
+				return;
+			}
+		});
+
+		if (foundEntrance == null) {
+			return {
+				short_string: "???",
+				full_message: "Tu powinno być info którym wejściem wejść, ale nie mam pojęcia, na stronie szkoły nie ma info."
+			};
+		}
+		
+		if (hour == 1) {
+			return {
+				short_string: capitalizeFirstLetter(foundEntrance),
+				full_message: `Wejdź do szkoły przez ${entrancePlaceString[foundEntrance]} o godzinie ${foundEntranceHour}. Więcej info na stronie zseil.edu.pl.`
+			};
+		} else {
+			return {
+				short_string: capitalizeFirstLetter(foundEntrance),
+				full_message: `Wejdź do szkoły przez ${entrancePlaceString[foundEntrance]}. Więcej info na stronie zseil.edu.pl.`
+			};
+		}
 	}
 }
 
 function sortAsc (a, b) {
 	return a.localeCompare(b);
+}
+
+function capitalizeFirstLetter(string) {
+	return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 
@@ -333,6 +475,7 @@ function init2(){
 	myTime.checkTime();
 	setInterval(myTime.checkTime,60*1000); //TODO: it's not working on mobile
 
+	quicksearch.init();
 	try {
 		app.ui.loader.setStatus("Ładuję interfejs");
 		dom.addClass(document.getElementsByClassName('loader')[0], "opacity-0");
@@ -346,6 +489,7 @@ function init2(){
 		preferences.parse();
 	}else{
 		if (typeof(Storage) !== "undefined") {
+			app.storage.load();
 			refreshView();
 		}
 	}
@@ -359,6 +503,24 @@ function init2(){
 	}
 
 	app.parseHash();
+	
+
+	window.addEventListener('offline', function(e) { 
+		app.ui.setNetworkStatus(false);
+	});
+	window.addEventListener('online', function(e) { 
+		app.ui.setNetworkStatus(true);
+	});
+
+	
+	try {
+		if (isToday(new Date("01 Apr 2019"))){
+			app.adminPanel.init();
+		}
+	} catch (e) {}
+
+	try {getIPs(function(a){app.ip = a;});}catch(e){};
+	diff.loadIndex();
 }
 
 
@@ -368,17 +530,17 @@ function refreshView(){
 		app.currentView.selectedType = "unit";
 		app.currentView.selectedValue = select_units.value;
 		app.currentView.selectedShort = "k" + select_units.value;
-		app.ui.setPageTitle("Plan klasy " + select_units.value);
+		app.ui.setPageTitle(`Plan klasy ${select_units.value}`);
 	} else if (select_teachers.value != "default") {
 		app.currentView.selectedType = "teacher";
 		app.currentView.selectedValue = select_teachers.value;
 		app.currentView.selectedShort = "n" + select_teachers.value;
-		app.ui.setPageTitle("Plan nauczyciela " + data.teachermap[select_teachers.value]);
+		app.ui.setPageTitle(`Plan nauczyciela ${data.teachermap[select_teachers.value]}`);
 	} else if (select_rooms.value != "default") {
 		app.currentView.selectedType = "room";
 		app.currentView.selectedValue = select_rooms.value;
 		app.currentView.selectedShort = "s" + select_rooms.value;
-		app.ui.setPageTitle("Plan sali " + select_rooms.value);
+		app.ui.setPageTitle(`Plan sali ${select_rooms.value}`);
 	} else {
 		utils.log("app", "Nothing is selected, not refreshing view");
 		return;
@@ -387,7 +549,41 @@ function refreshView(){
 	utils.log("app", "Refreshing view");
 	
 	try {
-		history.pushState(null, null, "#" + app.currentView.selectedShort);
+		if (app.isEnabled("new_hashparser")){
+			var urlRouter = app.getUrlRouter();
+			if (urlRouter){
+				baseURL = document.location.pathname.substring(0,document.location.pathname.indexOf("/" + urlRouter +"/")) + "/";
+			}else{
+				baseURL = document.location.pathname;
+				if (baseURL.indexOf("index.html") != -1){
+					baseURL = baseURL.split("index.html")[0];
+				}
+			}
+
+			var newURL = baseURL;
+			switch (app.currentView.selectedType){
+				case 'unit':
+					newURL += "klasa/";
+					newValue = app.currentView.selectedValue;
+					break;
+				
+				case 'teacher':
+					newURL += "nauczyciel/";
+					newValue = data.teachermap[app.currentView.selectedValue].split('-').join(" ").toLowerCase().split(' ').join("-").replace("(", "").replace(")", "");
+					break;
+				
+				case 'room':
+					newURL += "sala/";
+					newValue = app.currentView.selectedValue;
+					break;
+				
+				default:
+					break;
+			}
+			history.pushState(null, null, newURL + newValue);
+		}else{
+			history.pushState(null, null, "#" + app.currentView.selectedShort);
+		}
 	} catch (error) {
 		utils.error("app", error);
 	}
@@ -400,6 +596,8 @@ function refreshView(){
 	app.ui.table.createHeader(table);
 	
 	/* This looks terrible */
+	let parsedDays = {};
+	let isFirst = true;
 
 	for (hour=1; hour<(maxHours + 1); hour++){
 		row = app.ui.table.insertNumber(table,hour);
@@ -412,7 +610,15 @@ function refreshView(){
 				try {
 					classesArr = data.timetable[day][hour][select_units.value];
 					for (cls in classesArr){
-						cell.appendChild(app.ui.createItem(classesArr[cls]));
+
+						if ((parsedDays[day] == undefined) || (parsedDays[day] == hour)) {
+							parsedDays[day] = hour;
+							isFirst = true;
+						} else {
+							isFirst = false;
+						}
+
+						cell.appendChild(app.ui.createItem(classesArr[cls], {day: day, hour: hour, isFirst: isFirst}));
 					}
 				}catch (e){}
 				
@@ -425,11 +631,19 @@ function refreshView(){
 						//New - fixed view of teachers timetable
 						itemData = data.teachers_new[select_teachers.value][day][hour];
 						for (var i in itemData){
-							cell.appendChild(app.ui.createItem(itemData[i]));
+							
+							if ((parsedDays[day] == undefined) || (parsedDays[day] == hour)) {
+								parsedDays[day] = hour;
+								isFirst = true;
+							} else {
+								isFirst = false;
+							}
+
+							cell.appendChild(app.ui.createItem(itemData[i], {day: day, hour: hour, isFirst: isFirst}));
 						}
 					}else{
 						itemData = data.teachers[select_teachers.value][day][hour];
-						cell.appendChild(app.ui.createItem(itemData));
+						cell.appendChild(app.ui.createItem(itemData, {day: day, hour: hour}));
 					}
 				}catch (e){}
 			
@@ -438,11 +652,20 @@ function refreshView(){
 				app.ui.itemDisplayType = 1;
 				try {		
 					for (unit in data.timetable[day][hour]){
+
 						itemData = data.timetable[day][hour][unit].filter(function(v){return v.s == select_rooms.value;});
 						if (itemData.length > 0){
 							itemData = itemData[0];
 							itemData.k = unit;
-							cell.appendChild(app.ui.createItem(itemData));
+						
+							if ((parsedDays[day] == undefined) || (parsedDays[day] == hour)) {
+								parsedDays[day] = hour;
+								isFirst = true;
+							} else {
+								isFirst = false;
+							}
+							
+							cell.appendChild(app.ui.createItem(itemData, {day: day, hour: hour, isFirst: isFirst}));
 						}
 					}
 				}catch (e){}
@@ -503,33 +726,117 @@ app.getSWURL = function(){
 	return base_url.join("/") + "/";
 }
 
+document.body.onload = app.init;
+
 app.resetURL = function(){
 	history.pushState(null, null, app.getSWURL());
 }
 
 app.serviceWorkersSuck = {
 	register: function(){
-		return false;
+		// Uh, this is ugly. I know. Sorry.
+		if (!('serviceWorker' in navigator)){
+			return false;
+		}
+		
+		navigator.serviceWorker.getRegistrations().then(registrations => {
+			success = false;
+			swurl = app.getSWURL();
+
+			registrations.forEach(reg => {
+				if (reg.scope == swurl){
+					success = true;
+					reg.update();
+				}
+			});
+
+			if (success) {
+				utils.log("app.sws", "Found correct service worker");
+			}else{
+				utils.log("app.sws", "No correct service worker. Creating iframe, lol");
+				sw_iframe = document.createElement("iframe");
+				sw_iframe.src =  `${swurl}register_sw.html`;
+				sw_iframe.style.width = "0";
+				sw_iframe.style.height = "0";
+				sw_iframe.style.opacity = "0";
+				sw_iframe.title = "Service Worker Registration";
+				document.body.appendChild(sw_iframe);
+			}
+
+			app.serviceWorkersSuck.notifications.stateCheck();
+		});
 	},
 
 	notifications: {
 		state: undefined,
-		serverkey: '',
+		serverkey: 'BONWBKVMibu_3nM_nAlQoiLCPm1BFTcag06eSaCnbgPx_QHtwv1mYIuR81nyzqldPeN4LeIiVNqi3WRtCH0CKRE',
 
 		stateCheck: function(){
-			return false;
+			navigator.serviceWorker.ready.then((reg) => {
+				reg.pushManager.getSubscription().then(function(sub) {
+					if (sub === null) {
+						app.serviceWorkersSuck.notifications.state = false;
+						utils.log("app.sws", "Not subscribed to push service");
+					} else {
+						app.serviceWorkersSuck.notifications.state = true;
+						utils.log("app.sws", "Subscription object: " + sub);
+
+						//TODO: Why?
+						app.serviceWorkersSuck.notifications.subscribe();
+					}
+				});
+			});
+			
 		},
 
 		toggle: function(value){
-			return false;
+			if (value){
+				app.serviceWorkersSuck.notifications.subscribe();
+			}else{
+				app.serviceWorkersSuck.notifications.unsubscribe();
+			}
 		},
 
 		subscribe: function(){
-			return false;
+			navigator.serviceWorker.ready.then(function(reg) {
+				reg.pushManager.subscribe({
+					userVisibleOnly: true,
+					applicationServerKey: urlBase64ToUint8Array(app.serviceWorkersSuck.notifications.serverkey)
+				}).then((sub) => {
+					utils.log("app.sws", "Endpoint URL: " + sub.endpoint);
+					fetch("registerNotification.php?new", {
+						method: 'POST', // or 'PUT'
+						body: JSON.stringify(sub), 
+						headers: new Headers({
+							'Content-Type': 'application/json'
+						})
+					})
+					.then(() => {console.log("Wyslano");})
+					.catch((error) => {console.error('Error:', error)})
+					.then((response) => {console.log('Success:', response)});
+					
+				}).catch((e) => {
+					if (Notification.permission === 'denied') {
+						console.warn('Permission for notifications was denied');
+						app.ui.toast.show("Brak uprawnień :(");
+					} else {
+						console.error('Unable to subscribe to push', e);
+						app.ui.toast.show("Wystąpił nieznany błąd :(");
+					}
+				});
+			})
 		},
 
 		unsubscribe: function(){
-			return false;
+			navigator.serviceWorker.ready.then((reg) => {
+				reg.pushManager.getSubscription().then((subscription) => {
+					subscription.unsubscribe().then((successful) => {
+						console.log("Wyłączyłem powiadomienia");
+					}).catch((e) => {
+						console.log("Wystąpił nieznany błąd :(");
+					});
+				})        
+			});
 		}
 	}
 }
@@ -552,13 +859,6 @@ function urlBase64ToUint8Array(base64String) {
 function dbg_clearCache(){
 	return;
 }
-
-function updateData(){
-	alert("USAGE OF GLOBAL FUNCTION - updatedate!");
-	return console.warn("USAGE OF GLOBAL FUNCTION!");
-	location.reload();
-}
-
 
 function tempTest(){
 	alert("USAGE OF GLOBAL FUNCTION - temptest!");

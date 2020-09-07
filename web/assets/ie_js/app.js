@@ -1,5 +1,5 @@
 /*    SUPER CLEVER PLAN    */
-/* (C) 2019 Jakub Półgęsek */
+/* (C) 2020 Jakub Półgęsek */
 
 /* Global ui */
 var table = document.getElementById("maintable");
@@ -34,12 +34,7 @@ var app = {
 			prefs_enable: true,
 			prefs_transition: true,
 			overrides_summaryModal: false,
-			new_settings: true,
-			app_tools_global: false,
-			app_tools_findfreerooms: false,
-			app_tools_timetravel: false,
-			app_tools_diffview: false,
-			app_tools_bugreport: false
+			new_settings: true
 		},
 	
 		dev: {
@@ -52,12 +47,7 @@ var app = {
 			prefs_enable: true,
 			prefs_transition: true,
 			overrides_summaryModal: true,
-			new_settings: true,
-			app_tools_global: true,
-			app_tools_findfreerooms: true,
-			app_tools_timetravel: true,
-			app_tools_diffview: true,
-			app_tools_bugreport: true
+			new_settings: true
 		},
 	
 		internal: {
@@ -70,12 +60,7 @@ var app = {
 			prefs_transition: true,
 			prefs_enable: true,
 			overrides_summaryModal: true,
-			new_settings: true,
-			app_tools_global: true,
-			app_tools_findfreerooms: true,
-			app_tools_timetravel: true,
-			app_tools_diffview: true,
-			app_tools_bugreport: true
+			new_settings: true
 		}
 	},
 	
@@ -122,19 +107,7 @@ var app = {
 		"ui.normalize_subject": false
 	},
 	isEnabled: function(feature_name){
-		if (typeof(ZSEILPLAN_BUILD) == "undefined"){
-			var featureSet = this._features.internal;
-		}else if ((ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
-			var featureSet = this._features.dev;
-		}else{
-			var featureSet = this._features.prod;
-		}
-		if (typeof featureSet[feature_name] == "undefined"){
-			utils.warn("app", "isEnabled(" + feature_name + ") = undefined");
-			return false;
-		}else{
-			return featureSet[feature_name];
-		}
+		return false;
 	},
 	as: function(v){
 		//todo: disabler
@@ -151,13 +124,8 @@ var app = {
 			utils.log("app", "Will load custom timetable version: " + customURL);
 			url = customURL;
 		}else{
-			if (navigator.onLine === false) {
-				app.ui.loader.setStatus("Jesteś offline, próbuję pobrać plan z lokalnego cache");
-				timestamp = "localstorage";
-			}else{
-				timestamp = Date.now();
-			}
-			url = `data.php?ver=${timestamp}`;
+			timestamp = new Date().getTime();
+			url = "data.json?ver=" + timestamp;
 		}
 	
 		app.ui.loader.setStatus("Rozpoczynam pobieranie danych");
@@ -181,7 +149,7 @@ var app = {
 	
 			init2();
 		}, function(e){
-			app.ui.loader.setError("<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.", `<a style='color: white;' href='#' onclick='document.location.reload()'>Spróbuj ponownie</a>`);
+			app.ui.loader.setError("<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.", "<a style='color: white;' href='#' onclick='document.location.reload()'>Spróbuj ponownie</a>");
 			utils.error("app", "Failed to download data.json");
 		});
 	},
@@ -190,33 +158,12 @@ var app = {
 		//try {utils.consoleStartup();} catch (e) {}
 		utils.log("app", "Initializing");
 
-		app.ui.loader.setStatus("Ładuję preferencje");
-		app.ui.setStatus("Ładowanie preferencji...");
-
 		try {
 			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (preferences.get("tests_enabled") == "true") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
 				utils.warn("app","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
 				app.testMode = true;
 			}
 		} catch (e) {}
-
-		if (app.isEnabled("prefs_enable")){
-			preferences.load();
-
-			if (preferences.get("tests_enabled")){
-				this._features.prod = this._features.dev;
-			}
-			
-			if (preferences.get("app.testMode")){
-				app.testMode = true;
-			}
-			
-		}else{
-			/* If HTML5 storage is available, try to load user saved settings */
-			if (typeof(Storage) !== "undefined") {
-				myStorage.load();
-			}
-		}
 
 		app.ui.setStatus("Ładowanie danych planu...");
 		app.ui.loader.setStatus("Pobieram dane");
@@ -225,24 +172,11 @@ var app = {
 
 	init3: function(){
 		app.ui.modal = modal;
-		app.storage = myStorage;
 		app.refreshView = refreshView;
-		
-		data.normalizationData = {
-			"IM9": "Bazy danych",
-			"IM10": "PHP/JS",
-			"zaj. wych.": "Wychowawcza",
-			"j. polski": "Polski",
-			"j. angielski": "Angielski",
-			"j. niemiecki": "Niemiecki",
-			"hist. i społ": "Historia (his)"
-		};
 
 		if (this._ui_loaded) return;
 		
-		if (this.isEnabled("app_tools_global")){
-			app.ui.createNavbarButton('<i class="icon-toolbox"></i>', "Narzędzia", function(){app.tools.selectToolModal()});
-		}
+		app.ui.createNavbarButton('<i class="icon-toolbox"></i>', "Narzędzia", function(){app.tools.selectToolModal()});
 
 		if (this.isEnabled("new_settings")){
 			app.ui.createNavbarButton('<i class="icon-cog"></i>', "Ustawienia", function(){settings.createModal()});
@@ -265,8 +199,6 @@ var app = {
 				}
 			}
 		}
-
-		window.addEventListener("hashchange", app.parseHash, false);
 		this._ui_loaded = true;
 	},
 	getUrlRouter: function(){
@@ -401,7 +333,6 @@ function init2(){
 	myTime.checkTime();
 	setInterval(myTime.checkTime,60*1000); //TODO: it's not working on mobile
 
-	quicksearch.init();
 	try {
 		app.ui.loader.setStatus("Ładuję interfejs");
 		dom.addClass(document.getElementsByClassName('loader')[0], "opacity-0");
@@ -415,7 +346,6 @@ function init2(){
 		preferences.parse();
 	}else{
 		if (typeof(Storage) !== "undefined") {
-			app.storage.load();
 			refreshView();
 		}
 	}
@@ -429,24 +359,6 @@ function init2(){
 	}
 
 	app.parseHash();
-	
-
-	window.addEventListener('offline', function(e) { 
-		app.ui.setNetworkStatus(false);
-	});
-	window.addEventListener('online', function(e) { 
-		app.ui.setNetworkStatus(true);
-	});
-
-	
-	try {
-		if (isToday(new Date("01 Apr 2019"))){
-			app.adminPanel.init();
-		}
-	} catch (e) {}
-
-	try {getIPs(function(a){app.ip = a;});}catch(e){};
-	diff.loadIndex();
 }
 
 
@@ -456,17 +368,17 @@ function refreshView(){
 		app.currentView.selectedType = "unit";
 		app.currentView.selectedValue = select_units.value;
 		app.currentView.selectedShort = "k" + select_units.value;
-		app.ui.setPageTitle(`Plan klasy ${select_units.value}`);
+		app.ui.setPageTitle("Plan klasy " + select_units.value);
 	} else if (select_teachers.value != "default") {
 		app.currentView.selectedType = "teacher";
 		app.currentView.selectedValue = select_teachers.value;
 		app.currentView.selectedShort = "n" + select_teachers.value;
-		app.ui.setPageTitle(`Plan nauczyciela ${data.teachermap[select_teachers.value]}`);
+		app.ui.setPageTitle("Plan nauczyciela " + data.teachermap[select_teachers.value]);
 	} else if (select_rooms.value != "default") {
 		app.currentView.selectedType = "room";
 		app.currentView.selectedValue = select_rooms.value;
 		app.currentView.selectedShort = "s" + select_rooms.value;
-		app.ui.setPageTitle(`Plan sali ${select_rooms.value}`);
+		app.ui.setPageTitle("Plan sali " + select_rooms.value);
 	} else {
 		utils.log("app", "Nothing is selected, not refreshing view");
 		return;
@@ -475,41 +387,7 @@ function refreshView(){
 	utils.log("app", "Refreshing view");
 	
 	try {
-		if (app.isEnabled("new_hashparser")){
-			var urlRouter = app.getUrlRouter();
-			if (urlRouter){
-				baseURL = document.location.pathname.substring(0,document.location.pathname.indexOf("/" + urlRouter +"/")) + "/";
-			}else{
-				baseURL = document.location.pathname;
-				if (baseURL.indexOf("index.html") != -1){
-					baseURL = baseURL.split("index.html")[0];
-				}
-			}
-
-			var newURL = baseURL;
-			switch (app.currentView.selectedType){
-				case 'unit':
-					newURL += "klasa/";
-					newValue = app.currentView.selectedValue;
-					break;
-				
-				case 'teacher':
-					newURL += "nauczyciel/";
-					newValue = data.teachermap[app.currentView.selectedValue].split('-').join(" ").toLowerCase().split(' ').join("-").replace("(", "").replace(")", "");
-					break;
-				
-				case 'room':
-					newURL += "sala/";
-					newValue = app.currentView.selectedValue;
-					break;
-				
-				default:
-					break;
-			}
-			history.pushState(null, null, newURL + newValue);
-		}else{
-			history.pushState(null, null, "#" + app.currentView.selectedShort);
-		}
+		history.pushState(null, null, "#" + app.currentView.selectedShort);
 	} catch (error) {
 		utils.error("app", error);
 	}
@@ -625,117 +503,33 @@ app.getSWURL = function(){
 	return base_url.join("/") + "/";
 }
 
-document.body.onload = app.init;
-
 app.resetURL = function(){
 	history.pushState(null, null, app.getSWURL());
 }
 
 app.serviceWorkersSuck = {
 	register: function(){
-		// Uh, this is ugly. I know. Sorry.
-		if (!('serviceWorker' in navigator)){
-			return false;
-		}
-		
-		navigator.serviceWorker.getRegistrations().then(registrations => {
-			success = false;
-			swurl = app.getSWURL();
-
-			registrations.forEach(reg => {
-				if (reg.scope == swurl){
-					success = true;
-					reg.update();
-				}
-			});
-
-			if (success) {
-				utils.log("app.sws", "Found correct service worker");
-			}else{
-				utils.log("app.sws", "No correct service worker. Creating iframe, lol");
-				sw_iframe = document.createElement("iframe");
-				sw_iframe.src =  `${swurl}register_sw.html`;
-				sw_iframe.style.width = "0";
-				sw_iframe.style.height = "0";
-				sw_iframe.style.opacity = "0";
-				sw_iframe.title = "Service Worker Registration";
-				document.body.appendChild(sw_iframe);
-			}
-
-			app.serviceWorkersSuck.notifications.stateCheck();
-		});
+		return false;
 	},
 
 	notifications: {
 		state: undefined,
-		serverkey: 'BONWBKVMibu_3nM_nAlQoiLCPm1BFTcag06eSaCnbgPx_QHtwv1mYIuR81nyzqldPeN4LeIiVNqi3WRtCH0CKRE',
+		serverkey: '',
 
 		stateCheck: function(){
-			navigator.serviceWorker.ready.then((reg) => {
-				reg.pushManager.getSubscription().then(function(sub) {
-					if (sub === null) {
-						app.serviceWorkersSuck.notifications.state = false;
-						utils.log("app.sws", "Not subscribed to push service");
-					} else {
-						app.serviceWorkersSuck.notifications.state = true;
-						utils.log("app.sws", "Subscription object: " + sub);
-
-						//TODO: Why?
-						app.serviceWorkersSuck.notifications.subscribe();
-					}
-				});
-			});
-			
+			return false;
 		},
 
 		toggle: function(value){
-			if (value){
-				app.serviceWorkersSuck.notifications.subscribe();
-			}else{
-				app.serviceWorkersSuck.notifications.unsubscribe();
-			}
+			return false;
 		},
 
 		subscribe: function(){
-			navigator.serviceWorker.ready.then(function(reg) {
-				reg.pushManager.subscribe({
-					userVisibleOnly: true,
-					applicationServerKey: urlBase64ToUint8Array(app.serviceWorkersSuck.notifications.serverkey)
-				}).then((sub) => {
-					utils.log("app.sws", "Endpoint URL: " + sub.endpoint);
-					fetch("registerNotification.php?new", {
-						method: 'POST', // or 'PUT'
-						body: JSON.stringify(sub), 
-						headers: new Headers({
-							'Content-Type': 'application/json'
-						})
-					})
-					.then(() => {console.log("Wyslano");})
-					.catch((error) => {console.error('Error:', error)})
-					.then((response) => {console.log('Success:', response)});
-					
-				}).catch((e) => {
-					if (Notification.permission === 'denied') {
-						console.warn('Permission for notifications was denied');
-						app.ui.toast.show("Brak uprawnień :(");
-					} else {
-						console.error('Unable to subscribe to push', e);
-						app.ui.toast.show("Wystąpił nieznany błąd :(");
-					}
-				});
-			})
+			return false;
 		},
 
 		unsubscribe: function(){
-			navigator.serviceWorker.ready.then((reg) => {
-				reg.pushManager.getSubscription().then((subscription) => {
-					subscription.unsubscribe().then((successful) => {
-						console.log("Wyłączyłem powiadomienia");
-					}).catch((e) => {
-						console.log("Wystąpił nieznany błąd :(");
-					});
-				})        
-			});
+			return false;
 		}
 	}
 }
@@ -758,6 +552,13 @@ function urlBase64ToUint8Array(base64String) {
 function dbg_clearCache(){
 	return;
 }
+
+function updateData(){
+	alert("USAGE OF GLOBAL FUNCTION - updatedate!");
+	return console.warn("USAGE OF GLOBAL FUNCTION!");
+	location.reload();
+}
+
 
 function tempTest(){
 	alert("USAGE OF GLOBAL FUNCTION - temptest!");

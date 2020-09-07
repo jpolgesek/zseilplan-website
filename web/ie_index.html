@@ -2,30 +2,16 @@
 <html lang="pl">
 	<head>
 		<meta charset="UTF-8">
-		<!--[if IE]>
-		<meta HTTP-EQUIV="REFRESH" content="0; url=ie_index.html">
-		<![endif]-->
-		<script>
-		ua = navigator.userAgent;
-		if (ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1){
-			document.location.href = "ie_index.html";
-		}
-		</script>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<meta name="theme-color" content="#046edd">
 		<meta name="description" content="Przeglądaj plan ZSEiL szybko i wygodnie. Do tego aplikacja mobilna, powiadomienia o zmianach planu, wyszukiwanie wolnych sal i wiele innych. Sprawdź teraz!">
-		<link rel="canonical" href="https://dev.polgesek.pl/zseilplan" />
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.php" />
 		<title>Super Clever Plan</title>
 		
 		<!-- %compile_css_start%-->
-		<link rel="stylesheet" href="assets/css/style.css?ver=%build%">
+		<link rel="stylesheet" href="assets/ie_css/style.css">
 		<!-- %compile_css_end%-->
 		
-		<link rel="manifest" href="/manifest.json">
-		<link rel="apple-touch-icon" href="assets/img/icon_square.png">
 		<link rel="shortcut icon" type="image/png" href="assets/img/launcher-icon-256.png"/>
 		
 		<!--%DEPLOYTOOL_ENABLE_START%
@@ -37,66 +23,48 @@
 		gtag('config', 'UA-113628218-1');
 		</script>
 		%DEPLOYTOOL_ENABLE_END%-->
+
+		<!--[if lte IE 8]> 
+		<script>
+		document.createElement('header'); 
+		document.createElement('nav'); 
+		document.createElement('article');
+		document.createElement('section'); 
+		document.createElement('aside'); 
+		document.createElement('footer');
+		document.createElement('label');
+		</script>
+		<style> 
+			header, nav, article, section, aside, footer, label{ display:block;} 
+			footer, nav{overflow: hidden;}
+			label{font-weight: 600; font-size: 1.4em;}
+			.shadow{border: 1px solid #bbb;}
+			.tableTopInfo{height: 120px;}
+			.navbar-info, .navbar__title{line-height: 46px;}
+		</style>
+		<![endif]-->
+
 	</head>
-	<body style="background: rgb(33, 33, 35);">
-		<div id='quicksearch' style='display:none;'> <!-- TODO: create me dynamically-->
-			<input id='search' type='text' list="suggestions">
-			<datalist id="suggestions"></datalist>
-		</div>
-
-		<div class="loader">
-			<svg id="loading" viewbox="0 0 100 80">
-				<defs>
-				  <linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="0%">
-					<stop offset="0%" style="stop-color:rgb(4,110,221);stop-opacity:1" />
-					<stop offset="100%" style="stop-color:rgb(23,70,169);stop-opacity:1" />
-				  </linearGradient>
-				</defs>
-				<g transform="translate(50 0) scale(0.707 0.707) rotate(45 0 0)">
-					<rect class="rect" id="r1" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
-					<rect class="rect" id="r2" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
-					<rect class="rect" id="r3" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
-					<rect class="rect" id="r4" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
-					<rect class="rect" id="r5" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
-					<rect class="rect" id="r6" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
-					<rect class="rect" id="r7" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
-				</g>
-			</svg>
-			<h1 id='loader-title' style="color: #fafafa;">Ładuję Super Clever Plan</h1>
-			<div id="loader-status-container">
-				<div id='loader-status' style="color: #fafafa;">Uruchamianie aplikacji</div>
-			</div>
-			
-		</div>
-
-		<div id='container' class='container opacity-0'>
+	<body onload="app.init()">
+		<div id='container' class='container' style="width: 90%;">
 			<!-- TODO: create me dynamically-->
 			<div class="navbar-container" id="navbar-container">
 				<nav class="navbar shadow">
-					<img class="navbar__icon" src="assets/img/icon_square_test_new.png">
 					<span class="print-only print-logo">✌</span>
 					<h1 class="navbar__title">Super Clever Plan</h1>
 					<span class="copyright navbar-info" id="nav__datasrc"></span>
 					<div class="navbar-copyright print-only">
 						<div>dev.polgesek.pl/zseilplan</div>
-						<div>&copy; Jakub Półgęsek 2019</div>
+						<div>&copy; Jakub Półgęsek 2020</div>
 					</div> <!-- TODO: create me dynamically -->
 					
 					<div class="navbar-buttons" id="navbar-buttons">
-						<button class='print-hide desktop-only' onclick="utils.androidDemo()" id="navbar-btn-android">
-							<div class='icon'><i class="icon-android"></i></div>
-							<div class='text'>Aplikacja Mobilna</div>
-						</button>
-		
 						<button class='print-hide smallscreen-hide' onclick="app.ui.print()" id="navbar-btn-print">
 							<div class='icon'><i class="icon-print"></i></div>
 							<div class='text'>Drukuj</div>
 						</button>
 					</div>
 				</nav>
-				<div class="navbar-notification" id="notification-bar">
-					<span class="navbar__title" id="notification-text"></span>
-				</div>
 			</div>
 
 			<!-- TODO: create me dynamically -->	
@@ -127,7 +95,11 @@
 			</div>
 			
 			<!-- TODO: create me dynamically -->	
-			<div id='remote_info' class="shadow box-text print-hide row" style="display: none;"></div>
+			<div id='remote_info' style="width: 100%; padding: 10px; font-size: 1em; font-weight: 600; line-height: 1.6; text-align: center; background: #ac0e1b; color: #fafafa;" class="shadow box-text red print-hide">
+				Korzystasz z trybu kompatybilności wstecznej, jako że twoja przeglądarka nie wspiera pełnej wersji planu.<br>
+				Większość funkcji będzie niedostępna. Zaktualizuj przeglądarkę.<br>
+				<small><a style="color: #fafafa;" href="index.html">Spróbuj załadować pełną wersję</a></small>
+			</div>
 			
 			<!-- TODO: create me dynamically-->	
 			<div class='bar print-hide mobile-only-flex flex-center' style="padding: 0 !important;">
@@ -156,24 +128,9 @@
 					</a>
 				</nav>
 			</div>
-			
-			<!-- TODO: create me dynamically-->	
-			<div id='diff-help' class='diff-help print-hide'>
-				<h3>Zmiany w planie</h3>
-
-				<span id="diff-info"></span>
-
-				<div class="bar">
-					<span class="diff-demo diff added">Nowa lekcja</span>
-					<span class="diff-demo diff removed">Usunięta lekcja</span>
-					<span class="diff-demo diff modified">Zmodyfikowana lekcja</span>
-				</div>
-
-				<button type="button" onclick="app.isDiff = false; refreshView();">Zakończ porównywanie planu</button>
-			</div>
 
 			<!-- TODO: create me dynamically-->
-			<div id='networkStatus' style="display: none;"></div>
+			<div id='networkStatus' style='display: none;'></div>
 			
 			<!-- TODO: create me dynamically-->	
 			<table id='maintable' class='maintable shadow'><tr><td><div class="info desktop-only print-hide">
@@ -186,9 +143,6 @@
 	
 					<h3>Przeglądanie aktualnego planu</h3>
 					<p>Wybierz z listy rozwijanej klasę, nauczyciela lub salę.</p>
-	
-					<!--<h3>Przeglądanie poprzedniej wersji planu</h3>
-					<p>Kliknij <i class="icon-history"></i> w prawym górnym rogu, a następnie wybierz z listy rozwijanej klasę, nauczyciela lub salę.</p>-->
 	
 					<h3>Drukowanie planu</h3>
 					<p>Wyświetl plan który chcesz wydrukować a następnie kliknij <i class="icon-print"></i> w prawym górnym rogu.</p>
@@ -204,33 +158,33 @@
 			<div id="footer" class="footer shadow">
 				<div class="left" id="footer__datasrc"></div>
 				<div class="center-h" id="footer__build">Super Clever Build internal build</div>
-				<!-- <div class="right"><span class="button" onclick="app.bugreportModal()"><i class="icon-bug"></i> Zgłoś błąd</span></div> -->
-				<div class="right" id="footer__copyright">&copy; 2019 Jakub Półgęsek</div>
+				<div class="right" id="footer__copyright">&copy; 2020 Jakub Półgęsek</div>
 			</div>
 
 			
 
 		</div>
 
+		<script>
+			var app = {};
+			if (!window.console){
+				window.console = {
+					log: function(x){return;},
+					error: function(x){return;},
+					warn: function(x){return;},
+					clear: function(){return;}
+				}
+			}
+		</script>
 		<!-- %compile_js_start%-->
-		<script src="assets/js/compattest.js?ver=%build%"></script>
-		<script src="assets/js/app.config.js?ver=%build%"></script>
-		<script src="assets/js/app.js?ver=%build%"></script>
-		<script src="assets/js/app.ui.js?ver=%build%"></script>
-		<script src="assets/js/app.tools.js?ver=%build%"></script>
-		<script src="assets/js/utils.js?ver=%build%"></script>
-		<script src="assets/js/diff.js?ver=%build%"></script>
-		<script src="assets/js/dom.js?ver=%build%"></script>
-		<script src="assets/js/app.ui.modal.js?ver=%build%"></script>
-		<script src="assets/js/overrides.js?ver=%build%"></script>
-		<script src="assets/js/datetime.js?ver=%build%"></script>
-		<script src="assets/js/storage.js?ver=%build%"></script>
-		<script src="assets/js/quicksearch.js?ver=%build%"></script>
-		<script src="assets/js/touchgestures.js?ver=%build%"></script>
-		<script src="assets/js/app.bugreport.js?ver=%build%"></script>
-		<script src="assets/js/easteregg.js?ver=%build%"></script>
-		<script src="assets/js/thememanager.js?ver=%build%"></script>
-		<script src="assets/js/settings.js?ver=%build%"></script>
+		<script src="assets/ie_js/dom.js"></script>
+		<script src="assets/ie_js/app.config.js"></script>
+		<script src="assets/ie_js/app.js"></script>
+		<script src="assets/ie_js/app.ui.js"></script>
+		<script src="assets/ie_js/utils.js"></script>
+		<script src="assets/ie_js/overrides.js"></script>
+		<script src="assets/ie_js/datetime.js"></script>
+		<script>app.init()</script>
 		<!-- %compile_js_end%-->
 	</body>
 </html>

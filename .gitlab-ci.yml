@@ -1,36 +1,65 @@
-image: python:3.7.7-buster
+image: registry.gitlab.com/flyingarmageddon/webifier
 
-Deploy to development:
+stages:
+  - build
+  - deploy
+
+build prod:
+  stage: build
   script:
-  - apt update -qq
-  - apt install -y --force-yes -qq git
-  - app_dir=$(pwd)
-  - cd /tmp
-  - git clone https://gitlab.com/jpolgesek/superdeploytool
-  - cd superdeploytool
-  - python3 -m pip install -r req.txt
-  - python3 deploy.py _ _ --path $app_dir --dev --http-rootdir-app=/ --http-rootdir-manifest=/ --hostname=testplan.polgesek.pl --uploader=ftp --username=$testplan_polgesek_pl_ftp_user --password=$testplan_polgesek_pl_ftp_pass --uploader-rootdir-manifest=/ --uploader-rootdir-app=/
+    - python /app/run.py "$(pwd)/web" prebuild --enable-templates --set build_id="${CI_COMMIT_SHORT_SHA}-${CI_PIPELINE_ID}-$(date +'%d-%m-%Y-%H-%I-%S')" --set build_env=prod
+    - mkdir build
+    - cp -r prebuild/assets build/assets
+    - cp prebuild/*.* build/.
+    - rm build/sw.js build/data.json
+    - mv build build_prod
+  artifacts:
+    paths:
+      - build_prod/
+    expire_in: 1 week
 
-Deploy to production:
+build test:
+  stage: build
+  script:
+    - python /app/run.py "$(pwd)/web" prebuild --enable-templates --set build_id="${CI_COMMIT_SHORT_SHA}-${CI_PIPELINE_ID}-$(date +'%d-%m-%Y-%H-%I-%S')" --set build_env=test
+    - mkdir build
+    - cp -r prebuild/assets build/assets
+    - cp prebuild/*.* build/.
+    - rm build/sw.js build/data.json
+    - mv build build_test
+  artifacts:
+    paths:
+      - build_test/
+    expire_in: 1 week
+
+deploy to test:
+  stage: deploy
+  needs:
+    - build test
+  variables:
+    WEB_SUBDOMAIN: testplan
+    WEB_DOMAIN: flyingarmageddon.pl
+  script:
+    - bash /app/check.sh
+    - cp "$ANSIBLE_SSH_PRIV" /etc/ansible/id_rsa
+    - chmod 400 /etc/ansible/id_rsa
+
+    - export WEB_SRC_FILES="$(pwd)/build_test/"
+    - ansible-playbook /app/ansible/install.yml
+
+    - echo "Your website should be available at $WEB_SUBDOMAIN.$WEB_DOMAIN"
+
+
+deploy to prod:
+  stage: deploy
+  needs:
+    - build prod
   when: manual
-  script:
-  - apt update -qq
-  - apt install -y --force-yes -qq git
-  - app_dir=$(pwd)
-  - cd /tmp
-  - git clone https://gitlab.com/jpolgesek/superdeploytool
-  - cd superdeploytool
-  - python3 -m pip install -r req.txt
-  - python3 deploy.py _ _ --path $app_dir --http-rootdir-app=/zseilplan/ --http-rootdir-manifest=/zseilplan/ --hostname=dev.polgesek.pl --uploader=ftp --username=$zseilplan_dev_polgesek_pl_ftp_user --password=$zseilplan_dev_polgesek_pl_ftp_pass --uploader-rootdir-manifest=/ --uploader-rootdir-app=/zseilplan/
-
-Deploy to plan.zseil.pl (staging):
-  when: manual
-  script:
-  - apt update -qq
-  - apt install -y --force-yes -qq git
-  - app_dir=$(pwd)
-  - cd /tmp
-  - git clone https://gitlab.com/jpolgesek/superdeploytool
-  - cd superdeploytool
-  - python3 -m pip install -r req.txt
-  - python3 deploy.py _ _ --path $app_dir --http-rootdir-app=/ --http-rootdir-manifest=/ --hostname=plan.zseil.pl --uploader=scp --username=$plan_zseil_pl_scp_user --password=$plan_zseil_pl_scp_pass --uploader-rootdir-manifest=/var/www/zseil/plan/ --uploader-rootdir-app=/var/www/zseil/plan/
+  image: mwienk/docker-lftp:latest
+  variables:
+    SRC_PATH: build_prod
+    TARGET_PATH: zseilplan
+  script: 
+    - lftp -e "set ftp:ssl-allow false; mirror -Rnv \"$SRC_PATH\" \"$TARGET_PATH\"; exit;" -u $PROD_FTP_USERNAME,$PROD_FTP_PASSWORD $PROD_FTP_HOST
+  # only:
+  #   - master

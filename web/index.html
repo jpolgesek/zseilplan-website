@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pl">
+	<head>
+		<meta charset="UTF-8">
+		<!--[if IE]>
+		<meta HTTP-EQUIV="REFRESH" content="0; url=ie_index.html">
+		<![endif]-->
+		<script>
+		ua = navigator.userAgent;
+		if (ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1){
+			document.location.href = "ie_index.html";
+		}
+		</script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta name="theme-color" content="#046edd">
+		<meta name="description" content="Przeglądaj plan ZSEiL szybko i wygodnie. Do tego aplikacja mobilna, powiadomienia o zmianach planu, wyszukiwanie wolnych sal i wiele innych. Sprawdź teraz!">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.php" />
+		<title>Super Clever Plan</title>
+		
+		<link rel="stylesheet" href="assets/css/style.css">
+		
+		<link rel="manifest" href="manifest.json">
+		<link rel="apple-touch-icon" href="assets/img/icon_square.png">
+		<link rel="shortcut icon" type="image/png" href="assets/img/launcher-icon-256.png"/>
+		
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113628218-1"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-113628218-1');
+		</script>
+	</head>
+	<body style="background: rgb(33, 33, 35);">
+		<div id='quicksearch' style='display:none;'> <!-- TODO: create me dynamically-->
+			<input id='search' type='text' list="suggestions">
+			<datalist id="suggestions"></datalist>
+		</div>
+
+		<div class="loader">
+			<svg id="loading" viewbox="0 0 100 80">
+				<defs>
+				  <linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="0%">
+					<stop offset="0%" style="stop-color:rgb(4,110,221);stop-opacity:1" />
+					<stop offset="100%" style="stop-color:rgb(23,70,169);stop-opacity:1" />
+				  </linearGradient>
+				</defs>
+				<g transform="translate(50 0) scale(0.707 0.707) rotate(45 0 0)">
+					<rect class="rect" id="r1" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
+					<rect class="rect" id="r2" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
+					<rect class="rect" id="r3" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
+					<rect class="rect" id="r4" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
+					<rect class="rect" id="r5" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
+					<rect class="rect" id="r6" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
+					<rect class="rect" id="r7" x="0" y="0" rx="5" ry="5" fill="url(#a)"/>
+				</g>
+			</svg>
+			<h1 id='loader-title' style="color: #fafafa;">Ładuję Super Clever Plan</h1>
+			<div id="loader-status-container">
+				<div id='loader-status' style="color: #fafafa;">Uruchamianie aplikacji</div>
+			</div>
+			
+		</div>
+
+		<div id='container' class='container opacity-0'>
+			<!-- TODO: create me dynamically-->
+			<div class="navbar-container" id="navbar-container">
+				<nav class="navbar shadow">
+					<img class="navbar__icon" alt="Ikona Super Clever Plan" src="assets/img/icon_square_test_new.png">
+					<span class="print-only print-logo">✌</span>
+					<h1 class="navbar__title">Super Clever Plan</h1>
+					<span class="copyright navbar-info" id="nav__datasrc"></span>
+					<div class="navbar-copyright print-only">
+						<div>dev.polgesek.pl/zseilplan</div>
+						<div>&copy; Jakub Półgęsek 2020</div>
+					</div> <!-- TODO: create me dynamically -->
+					
+					<div class="navbar-buttons" id="navbar-buttons">
+						<button class='print-hide desktop-only' onclick="utils.androidDemo()" id="navbar-btn-android">
+							<div class='icon'><i class="icon-android"></i></div>
+							<div class='text'>Aplikacja Mobilna</div>
+						</button>
+		
+						<button class='print-hide smallscreen-hide' onclick="app.ui.print()" id="navbar-btn-print">
+							<div class='icon'><i class="icon-print"></i></div>
+							<div class='text'>Drukuj</div>
+						</button>
+					</div>
+				</nav>
+				<div class="navbar-notification" id="notification-bar">
+					<span class="navbar__title" id="notification-text"></span>
+				</div>
+			</div>
+
+			<!-- TODO: create me dynamically -->	
+			<div id='data_info' class="shadow box-text print-hide" style="display: none;"></div>
+
+			<div class="tableTopInfo shadow">
+				<!-- TODO: create me dynamically -->	
+				<div id='status' class="box-text print-hide">Ładowanie skryptu...</div>
+				
+				<!-- TODO: create me dynamically -->	
+				<!-- TODO: fix my css! -->
+				<div class='bar print-hide'>
+					<div class="unitsContainer">
+						<label for="units">Klasa</label>
+						<select id='units'></select>
+					</div>
+
+					<div class="teachersContainer">
+						<label for="teachers">Nauczyciel</label>
+						<select id='teachers'></select>
+					</div>
+
+					<div class="roomsContainer">
+						<label for="rooms">Sala</label>
+						<select id='rooms'></select>
+					</div>
+				</div>
+			</div>
+			
+			<!-- TODO: create me dynamically -->	
+			<div id='remote_info' class="shadow box-text print-hide row" style="padding: 15px; width: 100%; text-align: center; font-size: 1.1em;">
+				Hej, witajcie w nowym <i>(dość ciekawym)</i> roku szkolnym!<br>
+				Przez kilka(naście) dni nie będzie jeszcze nazwisk nowych nauczycieli.<br>
+				Dodałem też wyświetlanie <a style="color: white; text-decoration: underline;" rel="noopener" href="http://zseil.edu.pl/aktualnosci/?id=793" target="_blank">wejść do szkoły zgodnie ze stroną</a>.<br>
+				Jeśli są jakieś błędy to piszcie na <i>zseilplan[@]polgesek.pl</i>
+			</div>
+			
+			<!-- TODO: create me dynamically-->	
+			<div class='bar print-hide mobile-only-flex flex-center' style="padding: 0 !important;">
+				<nav class="tabs">
+					<a href="#" onclick='columns.setActive(-1)' class="active" id='btn_-1'>
+						<span class="mobile-only">All</span>
+					</a>
+					<a href="#" onclick='columns.setActive(0)' id='btn_0' class="smallscreen-hide">Dziś</a>
+
+					<div class="separator smallscreen-hide">&nbsp;</div>
+
+					<a href="#" onclick='columns.setActive(1)' id='btn_1'>
+						<span class="mobile-only">Pn</span>
+					</a>
+					<a href="#" onclick='columns.setActive(2)' id='btn_2'>
+						<span class="mobile-only">Wt</span>
+					</a>
+					<a href="#" onclick='columns.setActive(3)' id='btn_3'>
+						<span class="mobile-only">Śr</span>
+					</a>
+					<a href="#" onclick='columns.setActive(4)' id='btn_4'>
+						<span class="mobile-only">Cz</span>
+					</a>
+					<a href="#" onclick='columns.setActive(5)' id='btn_5'>
+						<span class="mobile-only">Pt</span>
+					</a>
+				</nav>
+			</div>
+			
+			<!-- TODO: create me dynamically-->	
+			<div id='diff-help' class='diff-help print-hide'>
+				<h3>Zmiany w planie</h3>
+
+				<span id="diff-info"></span>
+
+				<div class="bar">
+					<span class="diff-demo diff added">Nowa lekcja</span>
+					<span class="diff-demo diff removed">Usunięta lekcja</span>
+					<span class="diff-demo diff modified">Zmodyfikowana lekcja</span>
+				</div>
+
+				<button type="button" onclick="app.isDiff = false; refreshView();">Zakończ porównywanie planu</button>
+			</div>
+
+			<!-- TODO: create me dynamically-->
+			<div id='networkStatus' style="display: none;"></div>
+			
+			<!-- TODO: create me dynamically-->	
+			<table id='maintable' class='maintable shadow'><tr><td><div class="info desktop-only print-hide">
+					<h2>Czym jest Super Clever Plan</h2>
+					
+					<p>Super Clever Plan to aplikacja umożliwiająca przeglądanie planu ZSEiL (zseil.edu.pl) w cywilizowany sposób.</p>
+					<p id="data-googleindex-info">W indeksie znajduje się dane takie jak:</p>
+	
+					<h2>Jak Używać Super Clever Planu?</h2>
+	
+					<h3>Przeglądanie aktualnego planu</h3>
+					<p>Wybierz z listy rozwijanej klasę, nauczyciela lub salę.</p>
+	
+					<!--<h3>Przeglądanie poprzedniej wersji planu</h3>
+					<p>Kliknij <i class="icon-history"></i> w prawym górnym rogu, a następnie wybierz z listy rozwijanej klasę, nauczyciela lub salę.</p>-->
+	
+					<h3>Drukowanie planu</h3>
+					<p>Wyświetl plan który chcesz wydrukować a następnie kliknij <i class="icon-print"></i> w prawym górnym rogu.</p>
+	
+					<h3>Instalowanie Super Clever Planu na Androidzie</h3>
+					<p>Kliknij <i class="icon-android"></i> w prawym górnym rogu, a następnie podążaj za wyświetlonymi instrukcjami.</p>
+	
+					<h3>Dostosowywanie Super Clever Planu</h3>
+					<p>Kliknij <i class="icon-cog"></i> w prawym górnym rogu, a następnie ustaw opcje zgodnie ze swoimi preferencjami.</p>
+				</div>
+			</td></tr></table>
+					
+			<div id="footer" class="footer shadow">
+				<div class="left" id="footer__datasrc"></div>
+				<div class="center-h" id="footer__build">Super Clever Build internal build</div>
+				<!-- <div class="right"><span class="button" onclick="app.bugreportModal()"><i class="icon-bug"></i> Zgłoś błąd</span></div> -->
+				<div class="right" id="footer__copyright">&copy; 2020 Jakub Półgęsek</div>
+			</div>
+
+			
+
+		</div>
+
+		<!-- %compile_js_start%-->
+		<script src="assets/js/compattest.js"></script>
+		<script src="assets/js/app.config.js"></script>
+		<script src="assets/js/app.js"></script>
+		<script src="assets/js/app.ui.js"></script>
+		<script src="assets/js/app.tools.js"></script>
+		<script src="assets/js/utils.js"></script>
+		<script src="assets/js/diff.js"></script>
+		<script src="assets/js/dom.js"></script>
+		<script src="assets/js/app.ui.modal.js"></script>
+		<script src="assets/js/overrides.js"></script>
+		<script src="assets/js/datetime.js"></script>
+		<script src="assets/js/storage.js"></script>
+		<script src="assets/js/quicksearch.js"></script>
+		<script src="assets/js/touchgestures.js"></script>
+		<script src="assets/js/app.bugreport.js"></script>
+		<script src="assets/js/easteregg.js"></script>
+		<script src="assets/js/thememanager.js"></script>
+		<script src="assets/js/settings.js"></script>
+		<!-- %compile_js_end%-->
+	</body>
+</html>
