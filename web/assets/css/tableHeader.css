@@ -39,7 +39,9 @@
     .unitsContainer > label,
     .teachersContainer > label,
     .roomsContainer > label{
-        display: none;
+        /* display: none; */
+        margin-left: 9px;
+        opacity: 0.7;
     }
 }
 
