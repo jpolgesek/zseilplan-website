@@ -1,5 +1,5 @@
 /*    SUPER CLEVER PLAN    */
-/* (C) 2019 Jakub Półgęsek */
+/* (C) 2020 Jakub Półgęsek */
 
 /* Global ui */
 var table = document.getElementById("maintable");
@@ -510,7 +510,7 @@ function init2(){
 
 	
 	try {
-		if (isToday(new Date("01 Apr 2019"))){
+		if (isToday(new Date("01 Apr 2020"))){
 			app.adminPanel.init();
 		}
 	} catch (e) {}

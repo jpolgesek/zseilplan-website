@@ -1,5 +1,5 @@
 /*    SUPER CLEVER PLAN    */
-/* (C) 2019 Jakub Półgęsek */
+/* (C) 2020 Jakub Półgęsek */
 
 /* Global ui */
 var table = document.getElementById("maintable");

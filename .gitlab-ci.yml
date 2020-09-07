@@ -11,7 +11,7 @@ build:
     - mkdir build
     - cp -r prebuild/assets build/assets
     - cp prebuild/*.* build/.
-    - rm build/sw.js
+    - rm build/{sw.js, data.json}
   artifacts:
     paths:
       - build/
