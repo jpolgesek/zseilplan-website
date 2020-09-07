@@ -4,21 +4,38 @@ stages:
   - build
   - deploy
 
-build:
+build prod:
   stage: build
   script:
-    - python /app/run.py "$(pwd)/web" prebuild
+    - python /app/run.py "$(pwd)/web" prebuild --enable-templates --set build_id="${CI_COMMIT_SHORT_SHA}-${CI_PIPELINE_ID}-$(date +'%d-%m-%Y-%H-%I-%S')" --set build_env=prod
     - mkdir build
     - cp -r prebuild/assets build/assets
     - cp prebuild/*.* build/.
     - rm build/sw.js build/data.json
+    - mv build build_prod
   artifacts:
     paths:
-      - build/
+      - build_prod/
+    expire_in: 1 week
+
+build test:
+  stage: build
+  script:
+    - python /app/run.py "$(pwd)/web" prebuild --enable-templates --set build_id="${CI_COMMIT_SHORT_SHA}-${CI_PIPELINE_ID}-$(date +'%d-%m-%Y-%H-%I-%S')" --set build_env=test
+    - mkdir build
+    - cp -r prebuild/assets build/assets
+    - cp prebuild/*.* build/.
+    - rm build/sw.js build/data.json
+    - mv build build_test
+  artifacts:
+    paths:
+      - build_test/
     expire_in: 1 week
 
 deploy to test:
   stage: deploy
+  needs:
+    - build test
   variables:
     WEB_SUBDOMAIN: testplan
     WEB_DOMAIN: flyingarmageddon.pl
@@ -27,7 +44,7 @@ deploy to test:
     - cp "$ANSIBLE_SSH_PRIV" /etc/ansible/id_rsa
     - chmod 400 /etc/ansible/id_rsa
 
-    - export WEB_SRC_FILES="$(pwd)/build/"
+    - export WEB_SRC_FILES="$(pwd)/build_test/"
     - ansible-playbook /app/ansible/install.yml
 
     - echo "Your website should be available at $WEB_SUBDOMAIN.$WEB_DOMAIN"
@@ -35,10 +52,12 @@ deploy to test:
 
 deploy to prod:
   stage: deploy
+  needs:
+    - build prod
   when: manual
   image: mwienk/docker-lftp:latest
   variables:
-    SRC_PATH: build
+    SRC_PATH: build_prod
     TARGET_PATH: zseilplan
   script: 
     - lftp -e "set ftp:ssl-allow false; mirror -Rnv \"$SRC_PATH\" \"$TARGET_PATH\"; exit;" -u $PROD_FTP_USERNAME,$PROD_FTP_PASSWORD $PROD_FTP_HOST

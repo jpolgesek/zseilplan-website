@@ -23,6 +23,10 @@ var isIE = detectIE();
 
 var app = {
 	_ui_loaded: false,
+	config: {
+		build: "{{WBTPL:build_id:WBTPL}}",
+		env: "{{WBTPL:build_env:WBTPL}}",
+	},
 	_features: {
 		prod: {
 			diff_diff: true,
@@ -122,9 +126,9 @@ var app = {
 		"ui.normalize_subject": false
 	},
 	isEnabled: function(feature_name){
-		if (typeof(ZSEILPLAN_BUILD) == "undefined"){
+		if (app.config.env.indexOf("WBTPL") != -1){
 			var featureSet = this._features.internal;
-		}else if ((ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
+		}else if (app.config.env != "prod"){
 			var featureSet = this._features.dev;
 		}else{
 			var featureSet = this._features.prod;
@@ -194,7 +198,7 @@ var app = {
 		app.ui.setStatus("Ładowanie preferencji...");
 
 		try {
-			if ((typeof(ZSEILPLAN_BUILD) == "undefined") || (preferences.get("tests_enabled") == "true") || (ZSEILPLAN_BUILD.indexOf("DEV") != -1)){
+			if ((preferences.get("tests_enabled") == "true") || (app.config.env != "prod")){
 				utils.warn("app","[X] TESTS ARE ENABLED, MAKE SURE YOU KNOW WHAT ARE YOU DOING! [X]");
 				app.testMode = true;
 			}

@@ -134,8 +134,8 @@ app.ui = {
 	},
 
 	showBuild: function(){
-		if (window.ZSEILPLAN_BUILD){
-			this.setElementText("footer.build_text", `Super Clever Plan build ${ZSEILPLAN_BUILD}`);
+		if (app.config.env.indexOf("WBTPL") != -1){
+			this.setElementText("footer.build_text", `Super Clever Plan build ${app.config.env}-${app.config.build}`);
 		} else {
 			this.setElementText("footer.build_text", "Super Clever Plan internal build");
 		}
