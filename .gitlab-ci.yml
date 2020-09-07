@@ -31,7 +31,6 @@ deploy to test:
 
     - echo "Your website should be available at $WEB_SUBDOMAIN.$WEB_DOMAIN"
 
-
 deploy to prod:
   stage: deploy
   when: manual
