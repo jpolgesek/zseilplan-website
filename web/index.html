@@ -19,15 +19,12 @@
 		<link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.php" />
 		<title>Super Clever Plan</title>
 		
-		<!-- %compile_css_start%-->
-		<link rel="stylesheet" href="assets/css/style.css?ver=%build%">
-		<!-- %compile_css_end%-->
+		<link rel="stylesheet" href="assets/css/style.css">
 		
-		<link rel="manifest" href="/manifest.json">
+		<link rel="manifest" href="manifest.json">
 		<link rel="apple-touch-icon" href="assets/img/icon_square.png">
 		<link rel="shortcut icon" type="image/png" href="assets/img/launcher-icon-256.png"/>
 		
-		<!--%DEPLOYTOOL_ENABLE_START%
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113628218-1"></script>
 		<script>
 		window.dataLayer = window.dataLayer || [];
@@ -35,7 +32,6 @@
 		gtag('js', new Date());
 		gtag('config', 'UA-113628218-1');
 		</script>
-		%DEPLOYTOOL_ENABLE_END%-->
 	</head>
 	<body style="background: rgb(33, 33, 35);">
 		<div id='quicksearch' style='display:none;'> <!-- TODO: create me dynamically-->
@@ -72,13 +68,13 @@
 			<!-- TODO: create me dynamically-->
 			<div class="navbar-container" id="navbar-container">
 				<nav class="navbar shadow">
-					<img class="navbar__icon" src="assets/img/icon_square_test_new.png">
+					<img class="navbar__icon" alt="Ikona Super Clever Plan" src="assets/img/icon_square_test_new.png">
 					<span class="print-only print-logo">✌</span>
 					<h1 class="navbar__title">Super Clever Plan</h1>
 					<span class="copyright navbar-info" id="nav__datasrc"></span>
 					<div class="navbar-copyright print-only">
 						<div>dev.polgesek.pl/zseilplan</div>
-						<div>&copy; Jakub Półgęsek 2019</div>
+						<div>&copy; Jakub Półgęsek 2020</div>
 					</div> <!-- TODO: create me dynamically -->
 					
 					<div class="navbar-buttons" id="navbar-buttons">
@@ -126,7 +122,12 @@
 			</div>
 			
 			<!-- TODO: create me dynamically -->	
-			<div id='remote_info' class="shadow box-text red print-hide row" style="padding: 15px; width: 100%; text-align: center; font-size: 1.2em;">Hej, witajcie w nowym roku szkolnym! <br>Przez kilka dni nie będzie jeszcze nazwisk nowych nauczycieli (ich plany będą jednak dalej dostępne przez inicjały na końcu listy)</div>
+			<div id='remote_info' class="shadow box-text print-hide row" style="padding: 15px; width: 100%; text-align: center; font-size: 1.1em;">
+				Hej, witajcie w nowym <i>(dość ciekawym)</i> roku szkolnym!<br>
+				Przez kilka(naście) dni nie będzie jeszcze nazwisk nowych nauczycieli.<br>
+				Dodałem też wyświetlanie <a style="color: white; text-decoration: underline;" rel="noopener" href="http://zseil.edu.pl/aktualnosci/?id=793" target="_blank">wejść do szkoły zgodnie ze stroną</a>.<br>
+				Jeśli są jakieś błędy to piszcie na <i>zseilplan[@]polgesek.pl</i>
+			</div>
 			
 			<!-- TODO: create me dynamically-->	
 			<div class='bar print-hide mobile-only-flex flex-center' style="padding: 0 !important;">
@@ -204,7 +205,7 @@
 				<div class="left" id="footer__datasrc"></div>
 				<div class="center-h" id="footer__build">Super Clever Build internal build</div>
 				<!-- <div class="right"><span class="button" onclick="app.bugreportModal()"><i class="icon-bug"></i> Zgłoś błąd</span></div> -->
-				<div class="right" id="footer__copyright">&copy; 2019 Jakub Półgęsek</div>
+				<div class="right" id="footer__copyright">&copy; 2020 Jakub Półgęsek</div>
 			</div>
 
 			
@@ -212,24 +213,24 @@
 		</div>
 
 		<!-- %compile_js_start%-->
-		<script src="assets/js/compattest.js?ver=%build%"></script>
-		<script src="assets/js/app.config.js?ver=%build%"></script>
-		<script src="assets/js/app.js?ver=%build%"></script>
-		<script src="assets/js/app.ui.js?ver=%build%"></script>
-		<script src="assets/js/app.tools.js?ver=%build%"></script>
-		<script src="assets/js/utils.js?ver=%build%"></script>
-		<script src="assets/js/diff.js?ver=%build%"></script>
-		<script src="assets/js/dom.js?ver=%build%"></script>
-		<script src="assets/js/app.ui.modal.js?ver=%build%"></script>
-		<script src="assets/js/overrides.js?ver=%build%"></script>
-		<script src="assets/js/datetime.js?ver=%build%"></script>
-		<script src="assets/js/storage.js?ver=%build%"></script>
-		<script src="assets/js/quicksearch.js?ver=%build%"></script>
-		<script src="assets/js/touchgestures.js?ver=%build%"></script>
-		<script src="assets/js/app.bugreport.js?ver=%build%"></script>
-		<script src="assets/js/easteregg.js?ver=%build%"></script>
-		<script src="assets/js/thememanager.js?ver=%build%"></script>
-		<script src="assets/js/settings.js?ver=%build%"></script>
+		<script src="assets/js/compattest.js"></script>
+		<script src="assets/js/app.config.js"></script>
+		<script src="assets/js/app.js"></script>
+		<script src="assets/js/app.ui.js"></script>
+		<script src="assets/js/app.tools.js"></script>
+		<script src="assets/js/utils.js"></script>
+		<script src="assets/js/diff.js"></script>
+		<script src="assets/js/dom.js"></script>
+		<script src="assets/js/app.ui.modal.js"></script>
+		<script src="assets/js/overrides.js"></script>
+		<script src="assets/js/datetime.js"></script>
+		<script src="assets/js/storage.js"></script>
+		<script src="assets/js/quicksearch.js"></script>
+		<script src="assets/js/touchgestures.js"></script>
+		<script src="assets/js/app.bugreport.js"></script>
+		<script src="assets/js/easteregg.js"></script>
+		<script src="assets/js/thememanager.js"></script>
+		<script src="assets/js/settings.js"></script>
 		<!-- %compile_js_end%-->
 	</body>
 </html>

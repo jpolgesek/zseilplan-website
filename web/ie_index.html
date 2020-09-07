@@ -9,7 +9,7 @@
 		<title>Super Clever Plan</title>
 		
 		<!-- %compile_css_start%-->
-		<link rel="stylesheet" href="assets/ie_css/style.css?ver=%build%">
+		<link rel="stylesheet" href="assets/ie_css/style.css">
 		<!-- %compile_css_end%-->
 		
 		<link rel="shortcut icon" type="image/png" href="assets/img/launcher-icon-256.png"/>
@@ -45,7 +45,7 @@
 		<![endif]-->
 
 	</head>
-	<body>
+	<body onload="app.init()">
 		<div id='container' class='container' style="width: 90%;">
 			<!-- TODO: create me dynamically-->
 			<div class="navbar-container" id="navbar-container">
@@ -55,7 +55,7 @@
 					<span class="copyright navbar-info" id="nav__datasrc"></span>
 					<div class="navbar-copyright print-only">
 						<div>dev.polgesek.pl/zseilplan</div>
-						<div>&copy; Jakub Półgęsek 2019</div>
+						<div>&copy; Jakub Półgęsek 2020</div>
 					</div> <!-- TODO: create me dynamically -->
 					
 					<div class="navbar-buttons" id="navbar-buttons">
@@ -158,14 +158,13 @@
 			<div id="footer" class="footer shadow">
 				<div class="left" id="footer__datasrc"></div>
 				<div class="center-h" id="footer__build">Super Clever Build internal build</div>
-				<div class="right" id="footer__copyright">&copy; 2019 Jakub Półgęsek</div>
+				<div class="right" id="footer__copyright">&copy; 2020 Jakub Półgęsek</div>
 			</div>
 
 			
 
 		</div>
 
-		<!-- %compile_js_start%-->
 		<script>
 			var app = {};
 			if (!window.console){
@@ -177,13 +176,15 @@
 				}
 			}
 		</script>
-		<script src="assets/ie_js/dom.js?ver=%build%"></script>
-		<script src="assets/ie_js/app.config.js?ver=%build%"></script>
-		<script src="assets/ie_js/app.js?ver=%build%"></script>
-		<script src="assets/ie_js/app.ui.js?ver=%build%"></script>
-		<script src="assets/ie_js/utils.js?ver=%build%"></script>
-		<script src="assets/ie_js/overrides.js?ver=%build%"></script>
-		<script src="assets/ie_js/datetime.js?ver=%build%"></script>
+		<!-- %compile_js_start%-->
+		<script src="assets/ie_js/dom.js"></script>
+		<script src="assets/ie_js/app.config.js"></script>
+		<script src="assets/ie_js/app.js"></script>
+		<script src="assets/ie_js/app.ui.js"></script>
+		<script src="assets/ie_js/utils.js"></script>
+		<script src="assets/ie_js/overrides.js"></script>
+		<script src="assets/ie_js/datetime.js"></script>
+		<script>app.init()</script>
 		<!-- %compile_js_end%-->
 	</body>
 </html>

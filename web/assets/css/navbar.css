@@ -89,6 +89,9 @@
     font-size: 1.8em;
 	transition: .2s color;
 	border-radius: 2px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 @supports (-moz-appearance:none) {

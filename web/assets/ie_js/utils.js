@@ -31,7 +31,7 @@ var utils = {
 				}
 			};
 			fetchDataCompatXHR.open("GET", url, true);
-			fetchDataCompatXHR.send();
+			fetchDataCompatXHR.send(null);
 			return true;
 		};
 		
