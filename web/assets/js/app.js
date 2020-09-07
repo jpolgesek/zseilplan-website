@@ -510,7 +510,7 @@ function init2(){
 
 	
 	try {
-		if (isToday(new Date("01 Apr 2020"))){
+		if (isToday(new Date("01 Apr 2019"))){
 			app.adminPanel.init();
 		}
 	} catch (e) {}
