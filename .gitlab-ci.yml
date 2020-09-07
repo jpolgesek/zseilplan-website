@@ -10,7 +10,7 @@ build:
     - python /app/run.py "$(pwd)/web" prebuild
     - mkdir build
     - cp -r prebuild/assets build/assets
-    - cp  prebuild/* build/.
+    - cp prebuild/*.* build/.
   artifacts:
     paths:
       - build/
