@@ -134,7 +134,7 @@ app.ui = {
 	},
 
 	showBuild: function(){
-		if (app.config.env.indexOf("WBTPL") != -1){
+		if (app.config.env.indexOf("WBTPL") == -1){
 			this.setElementText("footer.build_text", `Super Clever Plan build ${app.config.env}-${app.config.build}`);
 		} else {
 			this.setElementText("footer.build_text", "Super Clever Plan internal build");
