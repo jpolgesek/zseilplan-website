@@ -327,18 +327,20 @@ app.ui = {
 	 * @param {number} 	n 				Column where ZMark should be shown
 	 */
 	createZMark: function(n){
-		if (document.getElementsByClassName("header")[0].children[n].children.length == 0){
-			zMark = document.createElement('span');
-			zMark.className = "zMark";
-			zMark.innerHTML = "Z";
-			zMark.title = "Załadowano zastępstwa na ten dzień";
-			if (app.isEnabled("overrides_summaryModal")){
-				zMark.onclick = function(){
-					overrides.summaryModal(n, "old_teacher");
+		try {
+			if (document.getElementsByClassName("header")[0].children[n].children.length == 0){
+				zMark = document.createElement('span');
+				zMark.className = "zMark";
+				zMark.innerHTML = "Z";
+				zMark.title = "Załadowano zastępstwa na ten dzień";
+				if (app.isEnabled("overrides_summaryModal")){
+					zMark.onclick = function(){
+						overrides.summaryModal(n, "old_teacher");
+					}
 				}
+				document.getElementsByClassName("header")[0].children[n].appendChild(zMark);
 			}
-			document.getElementsByClassName("header")[0].children[n].appendChild(zMark);
-		}
+		} catch (error) {}
 	},
 
 	/**
