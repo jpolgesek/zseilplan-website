@@ -106,4 +106,8 @@
 	.navbar-copyright{
 		width: 100%;
 	}
+
+	#adhoc_221020 {
+		display: none !important;
+	}
 }
