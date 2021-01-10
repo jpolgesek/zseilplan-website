@@ -13,6 +13,7 @@
     margin-bottom: 5px;
     align-items: center;
     justify-content: center;
+    display: none !important;
 }
 
 #adhoc_221020 ._content {
