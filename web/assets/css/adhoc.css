@@ -70,3 +70,22 @@
         margin-left: 10px;
     }
 }
+
+.adhoc_10_02_2021 {
+    min-height: 70vh;
+}
+.adhoc_10_02_2021 h4 {
+    font-size: 4.4rem;
+    margin: 40px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid white;
+}
+
+.adhoc_10_02_2021 h6 {
+    font-size: 2rem;
+    margin: 10px;
+}
+
+.adhoc_10_02_2021 a {
+    color: rgb(189, 21, 21);
+}

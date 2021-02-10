@@ -442,6 +442,13 @@ function init2(){
 	utils.log("app", "Loading app");
 	
 	try{
+		if (document.location.search.indexOf("xd") != -1) {
+			document.querySelector("div.info").classList.remove("desktop-only")
+			document.querySelector("div.info").innerHTML = `<div class="adhoc_10_02_2021"><h4>Tu miał być twój ulubiony plan</h4><h6>Czytaj nasz list otwarty na <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">www.discopolomusic.pl</a></h6></div>`;
+			setTimeout(() => {
+				document.querySelector("td.col_0").style.background = "black";
+			}, 100);
+		}
 		app.init3();
 		app.serviceWorkersSuck.register();
 	} catch(e) {}
