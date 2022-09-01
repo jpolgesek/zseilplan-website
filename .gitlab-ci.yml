@@ -58,7 +58,7 @@ deploy to prod:
   image: mwienk/docker-lftp:latest
   variables:
     SRC_PATH: build_prod
-    TARGET_PATH: zseilplan
+    TARGET_PATH: .
   script: 
     - lftp -e "set ftp:ssl-allow false; mirror -Rnv \"$SRC_PATH\" \"$TARGET_PATH\"; exit;" -u $PROD_FTP_USERNAME,$PROD_FTP_PASSWORD $PROD_FTP_HOST
   # only:
