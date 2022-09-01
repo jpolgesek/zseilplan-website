@@ -287,9 +287,11 @@ var app = {
 	parseHash: function(){
 		if (app.isEnabled("new_hashparser")){
 			var path = document.location.pathname;
+
 			if (path.indexOf("/klasa/") != -1){
 				value = document.location.pathname.substring(document.location.pathname.indexOf("/klasa/")).split("/")[2];
-				app.jumpTo(2,value.toUpperCase());
+				return app.jumpTo(2,value.toUpperCase());
+			
 			}else if (path.indexOf("/nauczyciel/") != -1){
 				value = document.location.pathname.substring(document.location.pathname.indexOf("/nauczyciel/")).split("/")[2];
 				if (typeof data.teachermap[value] == "undefined"){
@@ -299,23 +301,26 @@ var app = {
 						}
 					}
 				}
-				app.jumpTo(0,value.toUpperCase());
+				return app.jumpTo(0,value.toUpperCase());
+			
 			}else if (path.indexOf("/sala/") != -1){
 				value = document.location.pathname.substring(document.location.pathname.indexOf("/sala/")).split("/")[2];
-				app.jumpTo(1,value.toUpperCase());
-			}
-		}else{
-			/* Allow to link directly to specific timetable */
-			if (location.hash.length > 2){
-				if(location.hash[1] == "n"){
-					app.jumpTo(0,location.hash.substr(2).toUpperCase());
-				}else if(location.hash[1] == "s"){
-					app.jumpTo(1,location.hash.substr(2).toUpperCase());
-				}else if(location.hash[1] == "k"){
-					app.jumpTo(2,location.hash.substr(2).toUpperCase());
-				}
+				return app.jumpTo(1,value.toUpperCase());
 			}
 		}
+		
+		// Allow to link directly to specific timetable
+		// Fallback if new hashparser didn't work
+		if (location.hash.length > 2){
+			if(location.hash[1] == "n"){
+				app.jumpTo(0,location.hash.substr(2).toUpperCase());
+			}else if(location.hash[1] == "s"){
+				app.jumpTo(1,location.hash.substr(2).toUpperCase());
+			}else if(location.hash[1] == "k"){
+				app.jumpTo(2,location.hash.substr(2).toUpperCase());
+			}
+		}
+		
 	},
 
 	setDataSource: function(dataSource){
