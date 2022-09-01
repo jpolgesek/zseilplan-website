@@ -1,3 +1,6 @@
+var GLOBAL_DEBUG_ALERT = false;
+var GLOBAL_DEBUG_ELEMENT = true;
+
 var utils = {
 	fetchJson: function(url, callback, failCallback){
 		var compat = false;
@@ -20,9 +23,10 @@ var utils = {
 					}else{
 						// So sorry for this...
 						// Thank you IE...
+						// alert("Fallback json parsing")
 						jdata = eval("window.jdata = " + fetchDataCompatXHR.responseText + ";");
 						try {
-							document.getElementById("remote_info").innerHTML += "<hr><b>Używasz wybitnie starej przeglądarki (tak minimum 10-letniej obstawiam).<br> Z jednej strony gratuluję, bo uwielbiam sprzęt i soft retro, ale jednak jeśli używasz tego codziennie to trochę współczuję.</b>";
+							document.getElementById("remote_info").innerHTML = "<b>Gratulacje! Używasz wybitnie starej przeglądarki (tak minimum 10-letniej obstawiam).</b>";
 						} catch (e) {}
 					}
 					callback(jdata);
@@ -47,18 +51,24 @@ var utils = {
 	},
 	
 	log: function(caller, text){
+		if (GLOBAL_DEBUG_ALERT) {return alert("[LOG] " + caller + ": " + text);}
+		if (GLOBAL_DEBUG_ELEMENT) {document.getElementById("debuglog").innerHTML += "[LOG] " + caller + ": " + text + "<BR>"; return;}
 		caller = caller.rpad(" ",10);
 		text = caller + "\t" + text;
 		// console.log(text, 'color: #EEE; text-shadow: 1px 1px 1px #333; font-weight: 900;', 'color: #EEE; text-shadow: 1px 1px 1px #333;');
 		console.log(text);
 	},
 	warn: function(caller, text){
+		if (GLOBAL_DEBUG_ALERT) {return alert("[WARN] " + caller + ": " + text);}
+		if (GLOBAL_DEBUG_ELEMENT) {document.getElementById("debuglog").innerHTML += "[WARN] " + caller + ": " + text + "<BR>"; return;}
 		caller = caller.rpad(" ",10);
 		text = caller + "\t" + text;
 		// console.log(text, 'color: #dca920; text-shadow: 1px 1px 1px #333; font-weight: 900;', 'color: #dca920; text-shadow: 1px 1px 1px #333;');
 		console.log(text);
 	},
 	error: function(caller, text){
+		if (GLOBAL_DEBUG_ALERT) {return alert("[ERROR] " + caller + ": " + text);}
+		if (GLOBAL_DEBUG_ELEMENT) {document.getElementById("debuglog").innerHTML += "[ERROR] " + caller + ": " + text + "<BR>"; return;}
 		caller = caller.rpad(" ",10);
 		text = caller + "\t" + text;
 		// console.log(text, 'color: #dd4433; text-shadow: 1px 1px 1px #333; font-weight: 900;', 'color: #dd4433; text-shadow: 1px 1px 1px #333;');
@@ -137,8 +147,8 @@ String.prototype.rpad = function(padString, length) {
     return str;
 }
 
-if ( (!('innerText' in document.createElement('a'))) && ('getSelection' in window) ) {
-	utils.log("Starszych przeglądarek nie było?");
+if ( (typeof document.createElement('a').innerText == 'undefined') && (typeof window.getSelection == 'undefined') ) {
+    // utils.log("Starszych przeglądarek nie było?");
     HTMLElement.prototype.__defineGetter__("innerText", function() {
         var selection = window.getSelection(),
             ranges    = [],

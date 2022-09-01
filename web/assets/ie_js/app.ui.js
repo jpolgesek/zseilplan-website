@@ -35,13 +35,13 @@ app.ui = {
 	},
 
 	toast: {
-		timerID: undefined,
+		timerID: null,
 		inProgress: false,
 		show: function(text, time){
 			if (app.ui.toast.inProgress) return false;
 			app.ui.toast.inProgress = true;
-			if (app.ui.toast.timerID != undefined) clearTimeout(app.ui.toast.timerID);
-			if (time == undefined) time = 2400;
+			if (app.ui.toast.timerID != null) clearTimeout(app.ui.toast.timerID);
+			if (typeof time == 'undefined') time = 2400;
 			app.element.notification.text.innerHTML = text;
 			app.element.notification.bar.style.display = "inherit";
 			dom.addClass(app.element.navbar.container, "notification");
@@ -114,8 +114,8 @@ app.ui = {
 			var cell = row.insertCell(-1); //-1 for backwards compatibility
 		
 			timespan = timeSteps[(y*2-2)] + " - "+ timeSteps[(y*2)-1];
-		
-			cell.appendChild(app.utils.createEWC("b", ["col-lesson-number"], y.toString()));
+
+			cell.appendChild(app.utils.createEWC("b", ["col-lesson-number"], y));
 			cell.appendChild(app.utils.createEWC("span", ["col-lesson-timespan"], timespan));
 			
 			return row;
@@ -163,7 +163,7 @@ app.ui = {
 		/* TODO: fix me */
 		try {
 			if (Object.keys(data.overrideData).length > 0){
-				this.updateStatus("<br>Zastępstwa na "+Object.keys(data.overrideData).map(function(s){return s.substr(0,5)}).sort().join());
+				this.updateStatus(" | Zastępstwa na "+Object.keys(data.overrideData).map(function(s){return s.substr(0,5)}).sort().join());
 			}
 		} catch (e) {}
 
@@ -251,7 +251,11 @@ app.ui = {
 	 * @returns {boolean} 				True on success, false on failure
 	 */
 	setStatus: function(text, update){
-		return this.setElementText("info.status_text", text, update);
+		if (update) {
+			document.getElementById("status").innerHTML += text;
+		} else {
+			document.getElementById("status").innerHTML = text;
+		}
 	},
 
 	/**
@@ -274,11 +278,15 @@ app.ui = {
 	setElementText: function(el_path, text, update){
 		el_path = el_path.split(".");
 		if (el_path.length > 10) return false;
-
+		
 		el = this.elements;
-
-		while (el_path.length){
-			el = el[el_path.shift()];
+		
+		while (el_path.length) {
+			if (el_path.shift) {
+				el = el[el_path.shift()];
+			} else {
+				break;
+			}
 		}
 
 		try{
@@ -403,7 +411,7 @@ app.ui = {
 			element.className = 'item';
 		}
 		
-		if (itemData.diff != undefined){
+		if (typeof itemData.diff != "undefined"){
 			if (itemData.diff == "removed"){
 				element.className += ' diff removed';
 			} else if (itemData.diff == "added"){
@@ -412,7 +420,7 @@ app.ui = {
 		}
 		
 
-		if (itemData.diff != undefined){
+		if (typeof itemData.diff != "undefined"){
 			if (itemData.diff == "removed"){
 				span[1].style.background = 'rgba(0,0,0,0.3)';
 				span[2].style.background = 'rgba(0,0,0,0.3)';
@@ -420,15 +428,15 @@ app.ui = {
 				span[1].style.background = 'rgba(0,0,0,0.3)';
 				span[2].style.background = 'rgba(0,0,0,0.3)';
 			} else if (itemData.diff == "modified"){
-				if (itemData.diffModifiedP != undefined){
+				if (typeof itemData.diffModifiedP != "undefined"){
 					span[0].className += " diff modified";
 					span[0].title = itemData.diffModifiedP;
 				}
-				if (itemData.diffModified1 != undefined){
+				if (typeof itemData.diffModified1 != "undefined"){
 					span[1].className += " diff modified";
 					span[1].title = itemData.diffModified1;
 				}
-				if (itemData.diffModified2 != undefined){
+				if (typeof itemData.diffModified2 != "undefined"){
 					span[2].className += " diff modified";
 					span[2].title = itemData.diffModified2;
 				}
@@ -444,19 +452,19 @@ app.ui = {
 
 		if (itemData.n == "Uczniowie przychodzą p&#243;źniej"){
 			span[0].innerHTML = "Uczniowie przychodzą później";
-			if(itemData.g != undefined){
+			if(typeof itemData.g != "undefined"){
 				// span[0].innerHTML += " ([info2]Grupa "+itemData.g+")";
 				span[0].innerHTML += "-"+itemData.g+"";
 			}
 		}else if(itemData.n == "-1"){
 			span[0].innerHTML = "Uczniowie zwolnieni";
-			if(itemData.g != undefined){
+			if(typeof itemData.g != "undefined"){
 				// span[0].innerHTML += " (Grupa "+itemData.g+")";
 				span[0].innerHTML += "-"+itemData.g+"";
 			}
 
 		}else{
-			if((itemData.g != undefined) && (itemData.g != "-1")){
+			if((typeof itemData.g != "undefined") && (itemData.g != "-1")){
 				if (span[0].innerText.indexOf(itemData.g) == -1){
 					// span[0].innerHTML += " (Grupa "+itemData.g+")";
 					if (app.testMode != true) span[0].innerHTML += "-"+itemData.g+"";
@@ -474,7 +482,7 @@ app.ui = {
 			element.appendChild(jumpButtonsDiv);	
 		}
 
-		if (itemData.diff != undefined){
+		if (typeof itemData.diff != "undefined"){
 			itemData.diff = true;
 		} else {
 			itemData.diff = false;
@@ -633,11 +641,16 @@ app.ui = {
 	 * @returns HTMLElement <div>
 	 */
 	resetSelects: function(without){
-		if (detectIE() && document.super_fucking_old_ie) return;
+		if (detectIE() && document.super_fucking_old_ie) {
+			// utils.log("IE DETECTED, resetSelects can fail");
+			// return;
+		};
 		toClear = ["units", "rooms", "teachers"];
-		toClear.splice(toClear.indexOf(without),1);
-		for (x in toClear){
-			document.getElementById(toClear[x]).value = "default";
+		for (var i = 0; i < 3; i++){
+			if (toClear[i] == without) {
+				continue;
+			}
+			document.getElementById(toClear[i]).value = "default";
 		}
 	},
 

@@ -140,7 +140,8 @@ var app = {
 			teachermap = data.teachermap;
 			teacherMapping = data.teachermap;		
 			
-			if ((getTextDate() in data.timesteps) && myTime.time < "17:00"){
+			var has_special_timesteps = (typeof data.timesteps[getTextDate()]) != 'undefined';
+			if (has_special_timesteps && myTime.time < "17:00"){
 				console.log("Specjalny rozklad godzin dla dnia "+getTextDate()+" - laduje");
 				timeSteps = data.timesteps[getTextDate()];
 			}else{
@@ -164,9 +165,11 @@ var app = {
 				app.testMode = true;
 			}
 		} catch (e) {}
-
+		utils.log("app", "a1");
 		app.ui.setStatus("Ładowanie danych planu...");
+		utils.log("app", "a2");
 		app.ui.loader.setStatus("Pobieram dane");
+		utils.log("app", "a3");
 		app.fetchData();
 	},
 
@@ -183,7 +186,7 @@ var app = {
 		}
 
 		if (this.isEnabled("theme_manager")){
-			if (app.themeManager != undefined){
+			if (typeof app.themeManager != 'undefined'){
 				utils.log("app", "Found theme manager");
 				app.themeManager.init();
 			}
@@ -262,7 +265,7 @@ var app = {
 	
 		if (type == 0){
 			if(!isIE){
-				if (data.teachermap[value] == undefined){
+				if (typeof data.teachermap[value] == 'undefined'){
 					return;
 				}
 			}
@@ -271,7 +274,7 @@ var app = {
 	
 		}else if (type == 1){
 			if(!isIE){
-				if (data.classrooms.find(function(x){return x == value}) == undefined){
+				if (data.classrooms.indexOf(value) != -1){
 					return;
 				}
 			}
@@ -280,7 +283,7 @@ var app = {
 	
 		}else if (type == 2){
 			if(!isIE){
-				if (data.units.find(function(x){return x == value}) == undefined){
+				if (data.units.indexOf(value) != -1){
 					return;
 				}
 			}
@@ -306,7 +309,7 @@ function init2(){
 	
 	if (!navigator.onLine) {
 		utils.warn("app", "App is offline, be careful!");
-		app.ui.setNetworkStatus(false);
+		// app.ui.setNetworkStatus(false);
 	}
 	
 	app.ui.loader.setStatus("Wczytuję dane");
@@ -317,7 +320,7 @@ function init2(){
 	overrideData = data.overrideData; //Quick fix, overrides were not loading on 08.11.2018
 
 	if (app.testMode) {
-		app.ui.updateStatus("<b>Tryb testowy, uważaj!</b><br>");
+		app.ui.updateStatus("<b>Tryb testowy, uważaj!</b> | ");
 	}
 
 	app.ui.initComments();
@@ -363,7 +366,7 @@ function init2(){
 
 
 function refreshView(){
-	console.warn("USAGE OF GLOBAL FUNCTION - refreshview!");
+	utils.warn("app", "USAGE OF GLOBAL FUNCTION - refreshview!");
 	if (select_units.value != "default") {
 		app.currentView.selectedType = "unit";
 		app.currentView.selectedValue = select_units.value;
@@ -389,18 +392,17 @@ function refreshView(){
 	try {
 		history.pushState(null, null, "#" + app.currentView.selectedShort);
 	} catch (error) {
-		utils.error("app", error);
+		utils.error("app", "history push fail: " + error);
 	}
-
-	if (this.id != undefined){
+	if (typeof this.id != 'undefined'){
 		app.ui.resetSelects(this.id);
 	}
-
+	
 	app.ui.clearTable();
 	app.ui.table.createHeader(table);
 	
 	/* This looks terrible */
-
+	
 	for (hour=1; hour<(maxHours + 1); hour++){
 		row = app.ui.table.insertNumber(table,hour);
 		for (day=1; day<6; day++){
@@ -473,14 +475,14 @@ function refreshView(){
 
 	try {
 		data_info = document.getElementById("data_info");
-		if (data._info == undefined){
+		if (typeof data._info == "undefined"){
 			data_info.parentElement.removeChild(data_info);
 		}else{
 			data_info_src = data._info;
 		}
-		if (data_info_src.text != undefined && 
+		if (typeof data_info_src.text != "undefined" && 
 			data_info_src.text != "" && 
-			data_info_src.style != undefined && 
+			typeof data_info_src.style != "undefined" && 
 			data_info_src.style != "" && 
 			data_info_src.style != "none" && 
 			data_info_src.style != "hide"){
@@ -513,7 +515,7 @@ app.serviceWorkersSuck = {
 	},
 
 	notifications: {
-		state: undefined,
+		state: null,
 		serverkey: '',
 
 		stateCheck: function(){

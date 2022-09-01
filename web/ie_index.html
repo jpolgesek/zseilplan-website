@@ -45,8 +45,8 @@
 		<![endif]-->
 
 	</head>
-	<body onload="app.init()">
-		<div id='container' class='container' style="width: 90%;">
+	<body style="overflow: scroll;">
+		<div id='container' class='container' >
 			<!-- TODO: create me dynamically-->
 			<div class="navbar-container" id="navbar-container">
 				<nav class="navbar shadow">
@@ -160,10 +160,9 @@
 				<div class="center-h" id="footer__build">Super Clever Build internal build</div>
 				<div class="right" id="footer__copyright">&copy; 2020 Jakub Półgęsek</div>
 			</div>
-
-			
-
 		</div>
+
+		<pre style="height: 500px; overflow: scroll;" id="debuglog"></pre>
 
 		<script>
 			var app = {};

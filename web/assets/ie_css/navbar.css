@@ -46,7 +46,6 @@
 	margin: 0;
 	margin-left: 60px;
     line-height: 54px;
-    height: 100%;
 }
 
 .navbar-notification .navbar__title{
@@ -170,7 +169,6 @@
 	padding-left: 10px;
     display: inline-block;
     line-height: 54px;
-    height: 100%;
 }
 
 .navbar-copyright{

@@ -11,7 +11,8 @@ var dom = {
 			if (classList.indexOf(className) != -1){
 				return false; //element ma już taką klasę
 			}
-			classList.push(className);
+			classList += (" " + className);
+			classList = classList.split(" ");
 			elementObject.className = classList.join(" ");
 			return true;
 		}else{
@@ -59,6 +60,7 @@ var dom = {
 		if (!document.getElementsByClassName) {
 			console.log("wow, przeglądarka nie ma nawet getelementsbyclassname. Czyżby IE?");
 			document.super_fucking_old_ie = true;
+
 			document.getElementsByClassName = function(search) {
 			  var d = document, elements, pattern, i, results = [];
 			  if (d.querySelectorAll) { // IE8
@@ -82,7 +84,27 @@ var dom = {
 			  return results;
 			}
 		}
-		if(!Array.prototype.indexOf){document.super_fucking_old_ie = true;Array.prototype.indexOf=function(b){var a=this.length>>>0;var c=Number(arguments[1])||0;c=(c<0)?Math.ceil(c):Math.floor(c);if(c<0){c+=a}for(;c<a;c++){if(c in this&&this[c]===b){return c}}return -1}};
+		if(!Array.prototype.indexOf){
+			document.super_fucking_old_ie = true;
+
+			Array.prototype.indexOf = function(b){
+				var a=this.length>>>0;
+				var c=Number(arguments[1])||0;
+				c = (c < 0) ? Math.ceil(c) : Math.floor(c);
+				if (c < 0) {
+					c += a
+				}
+
+				for(;c<a;c++){
+					if (this[c]==b) {
+						// return c;
+					}
+				}
+
+				return -1;
+
+			}
+		};
 	}
 }
 

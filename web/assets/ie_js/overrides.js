@@ -34,10 +34,10 @@ var overrides = {
 				}
 
 				//There are no overrides for this day, skip this loop
-				if (overrideData[date] == undefined) continue; 
+				if (typeof overrideData[date] == "undefined") continue; 
 
 				//TODO: This should never happen. Send alert if it does!
-				if (overrideData[date][day] == undefined) continue; 
+				if (typeof overrideData[date][day] == "undefined") continue; 
 				
 				//Show (Z) mark to indicate that overrides for this day are loaded correctly
 				app.ui.createZMark(day);
@@ -45,7 +45,7 @@ var overrides = {
 				override = overrideData[date][day][hour];
 
 				//There are no overrides for this hour, skip this loop
-				if (override == undefined) continue; 
+				if (typeof override == "undefined") continue; 
 
 				//TODO: use cell.zseilplanitem
 				cell = table.rows[hour].cells[day];
@@ -245,13 +245,13 @@ function checkForOverrides(){
 				ind = IEgetDay(x);
 			}
 
-			if (overrideData[ind] == undefined) continue; //There are no overrides for this day, skip this loop
-			if (overrideData[ind][x] == undefined) continue; //There are no overrides for this day, skip this loop
+			if (typeof overrideData[ind] == "undefined") continue; //There are no overrides for this day, skip this loop
+			if (typeof overrideData[ind][x] == "undefined") continue; //There are no overrides for this day, skip this loop
 			
 			app.ui.createZMark(x);
 
 			override = overrideData[ind][x][y];
-			if (override == undefined) continue; //There are no overrides for this hour, skip this loop
+			if (typeof override == "undefined") continue; //There are no overrides for this hour, skip this loop
 
 			cell = table.rows[y].cells[x];
 			if (type == "unit"){
@@ -268,7 +268,7 @@ function checkForOverrides(){
 
 function unitParse(unit, override, cell){
 	override = override[value];
-	if (override == undefined) return;
+	if (typeof override == "undefined") return;
 	try{
 		for (o=0; o<override.length; o++){
 			for (i=0; i<cell.children.length; i++){
@@ -329,7 +329,7 @@ function teacherParse(teacher, override, cell){
 				temp_data = Object();
 				temp_data.k = unit;
 				temp_data.p = override[unit][o].subject;
-				if (override[unit][o].guessedGroup != undefined){
+				if (typeof override[unit][o].guessedGroup != "undefined"){
 					temp_data.p += " (Grupa "+override[unit][o].guessedGroup+")";
 				}
 				temp_data.s = override[unit][o].s;
@@ -365,7 +365,7 @@ function roomParse(room, override, cell){
 				temp_data = Object();
 				temp_data.k = unit;
 				temp_data.p = override[unit][o].subject;
-				if (override[unit][o].guessedGroup != undefined){
+				if (typeof override[unit][o].guessedGroup != "undefined"){
 					temp_data.p += " (Grupa "+override[unit][o].guessedGroup+")";
 				}
 				temp_data.s = override[unit][o].s;

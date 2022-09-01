@@ -5,7 +5,7 @@
     align-items: center;
     width: 100%;
     background: #fbfbfb;
-    margin: 10px 0px;
+    margin: 0px 0px;
 }
 
 .tableTopInfo > div#status{
@@ -14,7 +14,8 @@
     box-shadow: none;
     flex: 1;
     min-width: 200px;
-    border-left: 1px solid #efefef;
+    height: 100%;
+    /* border-left: 1px solid #efefef; */
 }
 
 .tableTopInfo > div#remote_info{
