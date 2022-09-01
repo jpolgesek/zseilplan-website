@@ -261,7 +261,7 @@ var myStorage = {
 		
 		var skip = false;
 
-		if (app.testMode == "asdasdasd"){
+		if (app.testMode == true){
 			skip = (app.getUrlRouter() != false);
 		}else{
 			if (typeof document.location.hash.startsWith != "undefined" && !detectIE()){
