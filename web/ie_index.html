@@ -8,6 +8,18 @@
 		<meta name="description" content="Przeglądaj plan ZSEiL szybko i wygodnie. Do tego aplikacja mobilna, powiadomienia o zmianach planu, wyszukiwanie wolnych sal i wiele innych. Sprawdź teraz!">
 		<title>Super Clever Plan</title>
 		
+		<script>
+			var app = {};
+			if (!window.console){
+				window.console = {
+					log: function(x){return;},
+					error: function(x){return;},
+					warn: function(x){return;},
+					clear: function(){return;}
+				}
+			}
+		</script>
+		
 		<!-- %compile_css_start%-->
 		<link rel="stylesheet" href="assets/ie_css/style.css">
 		<!-- %compile_css_end%-->
@@ -164,17 +176,6 @@
 
 		<pre style="height: 500px; overflow: scroll;" id="debuglog"></pre>
 
-		<script>
-			var app = {};
-			if (!window.console){
-				window.console = {
-					log: function(x){return;},
-					error: function(x){return;},
-					warn: function(x){return;},
-					clear: function(){return;}
-				}
-			}
-		</script>
 		<!-- %compile_js_start%-->
 		<script src="assets/ie_js/dom.js"></script>
 		<script src="assets/ie_js/app.config.js"></script>
