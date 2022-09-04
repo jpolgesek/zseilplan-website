@@ -12,8 +12,6 @@ var data_googleindex_info = document.getElementById("data-googleindex-info");
 
 /* Global variables */
 var data = "wait";
-var teachermap = "wait"; 
-var teacherMapping = "wait"; 
 var timeSteps = "wait";
 var overrideData = "wait";
 var overrides_disabled = false;
@@ -173,8 +171,6 @@ var app = {
 			// TODO: This should be a separate function
 			data = jdata;
 			app.data = data;
-			teachermap = data.teachermap;
-			teacherMapping = data.teachermap;		
 			
 			if ((getTextDate() in data.timesteps) && myTime.time < "17:00"){
 				console.log("Specjalny rozklad godzin dla dnia "+getTextDate()+" - laduje");
@@ -447,13 +443,6 @@ function init2(){
 	utils.log("app", "Loading app");
 	
 	try{
-		if (document.location.search.indexOf("xd") != -1) {
-			document.querySelector("div.info").classList.remove("desktop-only")
-			document.querySelector("div.info").innerHTML = `<div class="adhoc_10_02_2021"><h4>Tu miał być twój ulubiony plan</h4><h6>Czytaj nasz list otwarty na <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">www.discopolomusic.pl</a></h6></div>`;
-			setTimeout(() => {
-				document.querySelector("td.col_0").style.background = "black";
-			}, 100);
-		}
 		app.init3();
 		app.serviceWorkersSuck.register();
 	} catch(e) {}

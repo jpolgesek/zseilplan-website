@@ -103,7 +103,8 @@ var diff = {
 			this.diffInfoElement.innerHTML += "Porównujesz plan klasy "+select_units.value + "<br>";
 		}else if (select_teachers.value != "default"){
 			this.selectedType = "teacher";
-			this.diffInfoElement.innerHTML += "Porównujesz plan "+teacherMapping[select_teachers.value] + "<br>";
+			// FIXME: Do not use raw value - translate it using data.teachermap
+			this.diffInfoElement.innerHTML += "Porównujesz plan "+select_teachers.value + "<br>";
 		}else if (select_rooms.value != "default"){
 			this.selectedType = "room";
 			this.diffInfoElement.innerHTML += "Porównujesz plan sali "+select_rooms.value + "<br>";

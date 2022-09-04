@@ -12,8 +12,6 @@ var data_googleindex_info = document.getElementById("data-googleindex-info");
 
 /* Global variables */
 var data = "wait";
-var teachermap = "wait"; 
-var teacherMapping = "wait"; 
 var timeSteps = "wait";
 var overrideData = "wait";
 var overrides_disabled = false;
@@ -137,8 +135,6 @@ var app = {
 			// TODO: This should be a separate function
 			data = jdata;
 			app.data = data;
-			teachermap = data.teachermap;
-			teacherMapping = data.teachermap;		
 			
 			var has_special_timesteps = (typeof data.timesteps[getTextDate()]) != 'undefined';
 			if (has_special_timesteps && myTime.time < "17:00"){
