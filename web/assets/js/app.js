@@ -178,11 +178,26 @@ var app = {
 			}else{
 				timeSteps = data.timesteps['default'];
 			}
+
+			// Fixme: Hacky way to hide teachers that do not have any classes
+			try {
+				Object.keys(app.data.teachermap).map(teacher_short => {
+					if (typeof(app.data.teachers_new[teacher_short]) == "undefined") {
+						delete app.data.teachermap[teacher_short];
+					}
+				});
+			} catch (e) {
+				console.error("Failed to filter teachers", e);
+				if (Object.keys(app.data.teachermap).length < 10) {
+					alert("Missing teacher list!")
+				}
+			}
 	
 			init2();
 		}, function(e){
 			app.ui.loader.setError("<b>Nie udało się pobrać planu lekcji</b><br>Sprawdź czy masz połączenie z internetem.", `<a style='color: white;' href='#' onclick='document.location.reload()'>Spróbuj ponownie</a>`);
 			utils.error("app", "Failed to download data.json");
+			console.error(e);
 		});
 	},
 	
